@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useScroll, useSpring } from 'motion/react';
+import { ArrowUpRight, MessageCircle, Moon, Phone, Send, Sun } from 'lucide-react';
+import { AppProvider, useApp } from './context/AppContext';
+import { CONTACT } from './data';
 import Nav from './sections/Nav';
 import Hero from './sections/Hero';
 import Marquee from './sections/Marquee';
@@ -10,6 +13,7 @@ import Why from './sections/Why';
 import Ceo from './sections/Ceo';
 import Branches from './sections/Branches';
 import Team from './sections/Team';
+import Careers from './sections/Careers';
 import Insights from './sections/Insights';
 import Quote from './sections/Quote';
 import Footer from './sections/Footer';
@@ -32,15 +36,9 @@ function RebarBackdrop() {
         className="texture-rebar absolute -inset-[340px]"
         style={{ animation: 'rebar-drift 80s linear infinite' }}
       />
-      {/* legibility dimmer + vignette */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(10,11,14,0.62) 0%, rgba(10,11,14,0.72) 45%, rgba(10,11,14,0.9) 100%)',
-        }}
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(1100px_700px_at_50%_38%,transparent_30%,rgba(10,11,14,0.55)_100%)]" />
+      {/* Light/Dark adaptive overlays defined in style.css */}
+      <div className="backdrop-overlay absolute inset-0" />
+      <div className="backdrop-vignette absolute inset-0" />
       {/* traveling sheen */}
       <div className="rebar-sheen absolute inset-y-0 left-[-40%] w-[180%]" />
     </div>
@@ -70,13 +68,50 @@ function CursorGlow() {
         x: sx,
         y: sy,
         background:
-          'radial-gradient(circle, rgba(255,90,31,0.055) 0%, rgba(255,90,31,0.02) 40%, transparent 70%)',
+          'radial-gradient(circle, rgba(245,124,0,0.06) 0%, rgba(245,124,0,0.02) 40%, transparent 70%)',
       }}
     />
   );
 }
 
-export default function App() {
+// Mobile Sticky Action Bar (Spec Requirement 7 #2)
+function MobileStickyBar() {
+  const { t } = useApp();
+
+  return (
+    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 shadow-2xl backdrop-blur-xl md:hidden">
+      <div className="mx-auto flex max-w-md items-center justify-between gap-2">
+        <a
+          href={`tel:${CONTACT.phoneClean}`}
+          className="border-line bg-panel2 text-ink hover:text-ember flex flex-1 items-center justify-center gap-1.5 rounded-xl border py-2.5 text-xs font-bold transition-all shadow-sm"
+        >
+          <Phone className="text-ember h-3.5 w-3.5" />
+          <span>{t('Call Now', 'ደውል')}</span>
+        </a>
+
+        <a
+          href="#quote"
+          className="bg-ember text-white hover:bg-ember/90 flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-bold shadow-md transition-all"
+        >
+          <span>{t('Get Quote', 'ዋጋ ጠይቅ')}</span>
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </a>
+
+        <a
+          href="https://t.me/yegnatrading"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Telegram"
+          className="border-line bg-panel2 text-ink hover:text-ember grid h-10 w-10 shrink-0 place-items-center rounded-xl border text-xs font-bold"
+        >
+          <Send className="text-ember h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function MainApp() {
   const [quotePrefill, setQuotePrefill] = useState<QuotePrefill | null>(null);
 
   const handleQuote = (p: QuotePrefill) => {
@@ -85,7 +120,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-bg text-ink font-body min-h-screen">
+    <div className="bg-bg text-ink font-body min-h-screen pb-14 md:pb-0">
       <RebarBackdrop />
       <ScrollProgress />
       <CursorGlow />
@@ -100,10 +135,20 @@ export default function App() {
         <Ceo />
         <Branches />
         <Team />
+        <Careers />
         <Insights />
         <Quote prefill={quotePrefill} />
       </main>
       <Footer />
+      <MobileStickyBar />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AppProvider>
+      <MainApp />
+    </AppProvider>
   );
 }

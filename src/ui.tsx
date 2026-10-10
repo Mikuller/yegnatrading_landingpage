@@ -117,8 +117,8 @@ export function EmberButton({
     'group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 font-display text-sm font-semibold tracking-wide transition-all duration-300 cursor-pointer';
   const styles =
     variant === 'solid'
-      ? 'bg-ember text-bg hover:shadow-[0_0_36px_rgba(255,90,31,0.5)] hover:-translate-y-0.5'
-      : 'border border-line text-ink hover:border-ember/60 hover:text-ember hover:-translate-y-0.5';
+      ? 'bg-ember text-white shadow-sm hover:shadow-[0_0_30px_rgba(245,124,0,0.45)] hover:-translate-y-0.5'
+      : 'border border-line bg-panel2/60 text-ink hover:border-ember/60 hover:text-ember hover:-translate-y-0.5';
   const inner = (
     <>
       <span className="relative z-10 flex items-center gap-2">{children}</span>

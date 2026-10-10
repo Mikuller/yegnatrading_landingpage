@@ -1,6 +1,8 @@
-import { ArrowUpRight, Mail, Phone } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
+import { ArrowUpRight, CheckCircle2, Download, Mail, Phone, Send } from 'lucide-react';
 import { BRANCHES, CONTACT, SOCIALS } from '../data';
 import { Reveal } from '../ui';
+import { useApp } from '../context/AppContext';
 
 const SOCIAL_PATHS: Record<string, string> = {
   Facebook:
@@ -26,91 +28,169 @@ function BrandIcon({ label, className = '' }: { label: string; className?: strin
 }
 
 export default function Footer() {
+  const { theme, t } = useApp();
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleNewsletter = (e: FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubscribed(true);
+  };
+
   return (
-    <footer className="border-line relative overflow-hidden border-t">
+    <footer className="border-line bg-panel2/50 relative overflow-hidden border-t">
       <div
-        className="absolute inset-0 bg-[radial-gradient(800px_300px_at_50%_100%,rgba(255,90,31,0.08),transparent_65%)]"
+        className="absolute inset-0 bg-[radial-gradient(800px_300px_at_50%_100%,rgba(245,124,0,0.06),transparent_65%)]"
         aria-hidden
       />
       <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8">
         <Reveal>
-          <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
+          <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center border-b border-line pb-12">
             <div>
-              <img
-                src="/logo-full.png"
-                alt="ዬኘ ትሬዲንግ ኃ/የተ/የግ/ማ — Yegna Trading PLC"
-                className="h-24 w-auto max-w-full sm:h-28"
-              />
-              <p className="font-serif-i text-mute mt-3 text-xl">
+              <div className="flex items-center gap-3">
+                <img
+                  src={theme === 'dark' ? '/images/logo-white.png' : '/images/logo-main.png'}
+                  alt="Yegna Trading PLC"
+                  className="h-16 w-auto max-w-full sm:h-20 object-contain"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/logo-full.png';
+                  }}
+                />
+              </div>
+              <p className="font-serif-i text-ink mt-3 text-lg sm:text-xl">
                 For a stronger tomorrow — ባለበት ላይ አብረን።
               </p>
+              <p className="text-mute text-xs mt-1">
+                {t('Trade with Trust & Integrity!', 'ንግድ በእምነትና በታማኝነት!')}
+              </p>
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              {SOCIALS.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={s.label}
-                    className="border-line text-mute hover:border-ember hover:text-ember hover:shadow-[0_0_18px_rgba(255,90,31,0.3)] grid h-11 w-11 place-items-center rounded-full border transition-all duration-300"
+
+            {/* Newsletter: Get Industry & Product Insights (Spec 4.1 & 7 #9) */}
+            <div className="w-full max-w-md">
+              <p className="font-display text-ink text-sm font-bold">
+                {t('Get Industry & Product Insights', 'የዘርፉን አዳዲስ መረጃዎች ያግኙ')}
+              </p>
+              <p className="text-mute text-xs mt-1">
+                {t(
+                  'Receive weekly rebar price alerts and construction technical bulletins.',
+                  'ሳምንታዊ የዋጋ ዝርዝሮችንና ቴክኒካል መረጃዎችን በኢሜይልዎ ያግኙ።'
+                )}
+              </p>
+
+              {subscribed ? (
+                <div className="mt-3 flex items-center gap-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-2.5 text-xs text-emerald-600 dark:text-emerald-400">
+                  <CheckCircle2 className="h-4 w-4 shrink-0" />
+                  <span>{t('Thank you for subscribing!', 'ስለተመዘገቡ እናመሰግናለን!')}</span>
+                </div>
+              ) : (
+                <form onSubmit={handleNewsletter} className="mt-3 flex gap-2">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={t('Enter your email address', 'ኢሜይል አድራሻዎን ያስገቡ')}
+                    className="border-line bg-panel text-ink placeholder:text-mute/60 w-full rounded-xl border px-3.5 py-2.5 text-xs outline-none focus:border-ember"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-ember hover:bg-ember/90 text-white font-display shrink-0 rounded-xl px-4 py-2.5 text-xs font-bold transition-all shadow-sm"
                   >
-                    <BrandIcon label={s.label} className="h-[18px] w-[18px]" />
-                  </a>
-                ))}
+                    <Send className="h-3.5 w-3.5" />
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="border-line text-mute hover:border-ember hover:text-ember bg-panel grid h-10 w-10 place-items-center rounded-full border transition-all duration-300 shadow-sm"
+                >
+                  <BrandIcon label={s.label} className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
         </Reveal>
 
-        <div className="border-line mt-14 grid gap-10 border-t pt-12 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Middle Navigation & Branches */}
+        <div className="border-line mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-display text-[0.65rem] font-bold tracking-[0.3em] text-ember uppercase">
-              Head Office
+            <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
+              {t('Head Office', 'ዋናው መሥሪያ ቤት')}
             </p>
-            <p className="text-mute mt-4 text-sm leading-relaxed">{CONTACT.hq}</p>
+            <p className="text-mute mt-3 text-xs sm:text-sm leading-relaxed">{CONTACT.hq}</p>
+            <p className="text-mute text-xs mt-1">Plus Code: {CONTACT.hqPlusCode}</p>
+
             <a
-              href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}
-              className="hover:text-ember mt-3 flex items-center gap-2 text-sm transition-colors"
+              href={`tel:${CONTACT.phoneClean}`}
+              className="hover:text-ember mt-3 flex items-center gap-2 text-xs sm:text-sm font-semibold transition-colors"
             >
-              <Phone className="h-3.5 w-3.5" /> {CONTACT.phone}
+              <Phone className="text-ember h-3.5 w-3.5" /> {CONTACT.phone}
             </a>
             <a
               href={`mailto:${CONTACT.email}`}
-              className="hover:text-ember mt-2 flex items-center gap-2 text-sm transition-colors"
+              className="hover:text-ember mt-2 flex items-center gap-2 text-xs sm:text-sm transition-colors text-mute"
             >
-              <Mail className="h-3.5 w-3.5" /> {CONTACT.email}
+              <Mail className="text-ember h-3.5 w-3.5" /> {CONTACT.email}
             </a>
+
+            <div className="mt-4">
+              <a
+                href={CONTACT.companyProfileUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="border-line bg-panel hover:bg-panel2 hover:text-ember text-ink text-xs inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-semibold transition-all"
+              >
+                <Download className="h-3 w-3 text-ember" />
+                <span>{t('Download Profile (PDF)', 'የድርጅት መገለጫ (PDF)')}</span>
+              </a>
+            </div>
           </div>
 
           <div className="sm:col-span-2 lg:col-span-3">
-            <p className="font-display text-[0.65rem] font-bold tracking-[0.3em] text-ember uppercase">
-              Branch Network
+            <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
+              {t('Branch Network (7 Locations)', 'የቅርንጫፎች አውታረ መረብ')}
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
               {BRANCHES.map((b) => (
                 <a
                   key={b.name}
-                  href={`tel:${b.phone.replace(/\s/g, '')}`}
-                  className="group text-sm"
+                  href={`tel:${b.tel}`}
+                  className="group rounded-xl border border-line/60 bg-panel/50 p-2.5 transition-all hover:border-ember/50 hover:bg-panel"
                 >
-                  <span className="group-hover:text-ember block font-medium transition-colors">
-                    {b.name}
-                    {b.outside ? ' · Regional' : ''}
+                  <span className="group-hover:text-ember block font-bold text-xs transition-colors text-ink">
+                    {t(b.name, b.amName)}
                   </span>
-                  <span className="text-mute text-xs tabular-nums">{b.phone}</span>
+                  <span className="text-mute text-[0.68rem] font-mono tabular-nums block mt-0.5">
+                    {b.phone}
+                  </span>
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="border-line mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row">
-          <p className="text-mute text-xs">
-            © {new Date().getFullYear()} Yegna Trading PLC. All rights reserved.
-          </p>
-          <p className="text-mute text-xs tracking-[0.2em] uppercase">
-            Legally Certified · Grade 75 Rebar
-          </p>
+        {/* Footer bottom bar with updated copyright year 2026 */}
+        <div className="border-line mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row text-xs text-mute">
+          <p>© {new Date().getFullYear()} Yegna Trading PLC. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <span className="tracking-wider uppercase">
+              {t('Legally Certified · Grade 75 Rebar', 'ሕጋዊ የተረጋገጠ · Grade 75')}
+            </span>
+            <span>·</span>
+            <a href="#top" className="hover:text-ember transition-colors">
+              {t('Back to Top ↑', 'ወደ ላይ ውጣ ↑')}
+            </a>
+          </div>
         </div>
       </div>
     </footer>
