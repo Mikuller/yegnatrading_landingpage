@@ -365,7 +365,13 @@ export default function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-12 px-5 py-8 sm:px-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12">
         {/* left column: copy & CTA */}
-        <div>
+        <div className="relative">
+          {/* Soft ambient text-protective scrim halo ensuring 100% crisp legibility over background weave */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-6 sm:-inset-10 -z-10 rounded-3xl bg-radial-[ellipse_85%_85%_at_35%_40%] from-bg/95 via-bg/75 to-transparent dark:from-bg/95 dark:via-bg/80 dark:to-transparent blur-2xl"
+          />
+
           {/* Eyebrow badge */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}

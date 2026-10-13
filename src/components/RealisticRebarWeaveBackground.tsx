@@ -26,12 +26,12 @@ export default function RealisticRebarWeaveBackground({
   const mouseY = useMotionValue<number>(
     typeof window !== 'undefined' ? window.innerHeight / 2 : 400
   );
-  const mouseIntensity = useMotionValue<number>(0.18);
+  const mouseIntensity = useMotionValue<number>(0.14);
 
-  // Ball gliding physics: calibrated momentum with silky smooth rolling inertia
-  const springX = useSpring(mouseX, { stiffness: 175, damping: 22, mass: 0.55 });
-  const springY = useSpring(mouseY, { stiffness: 175, damping: 22, mass: 0.55 });
-  const springIntensity = useSpring(mouseIntensity, { stiffness: 140, damping: 20 });
+  // Ball gliding physics: responsive, silky smooth rolling momentum
+  const springX = useSpring(mouseX, { stiffness: 220, damping: 24, mass: 0.35 });
+  const springY = useSpring(mouseY, { stiffness: 220, damping: 24, mass: 0.35 });
+  const springIntensity = useSpring(mouseIntensity, { stiffness: 160, damping: 20 });
 
   // Watch for html.dark class changes
   useEffect(() => {
@@ -87,13 +87,13 @@ export default function RealisticRebarWeaveBackground({
       wakeUp();
     };
 
-    // Mesh & Gliding Ball Parameters
-    const GRID_SPACING = 94; // Mesh cell size
-    const BASE_DIAMETER = 13.5; // Heavy authentic steel rebar gauge
-    const RIB_SPACING = 13; // Distinctive transverse rib pitch
-    const BALL_RADIUS = 300; // Gliding sphere radius of influence
+    // Mesh & Focused Gliding Ball Parameters (Moderately sized, non-overpowering)
+    const GRID_SPACING = 96; // Breathable mesh cell size
+    const BASE_DIAMETER = 12.5; // Authentic structural steel rebar gauge
+    const RIB_SPACING = 13.5; // Transverse rib spacing
+    const BALL_RADIUS = 145; // Moderately sized focus radius (~290px diameter, tight & elegant)
     const BALL_RADIUS_SQ = BALL_RADIUS * BALL_RADIUS;
-    const MAX_BALL_ELEVATION = 32; // 3D dome height at the ball apex
+    const MAX_BALL_ELEVATION = 18; // Tasteful 3D elevation dome height
 
     // Fast spherical dome height & displacement math
     const getBallDome = (x: number, y: number, bx: number, by: number, intensity: number) => {
@@ -107,7 +107,7 @@ export default function RealisticRebarWeaveBackground({
 
       const dist = Math.sqrt(distSq);
       const u = dist / BALL_RADIUS;
-      // Smooth spherical bell dome curve
+      // Smooth spherical dome curve
       const weight = Math.pow(1 - u * u, 2) * intensity;
       const z = weight * MAX_BALL_ELEVATION;
 
@@ -124,84 +124,88 @@ export default function RealisticRebarWeaveBackground({
       const curIntensity = springIntensity.get();
       const isDark = document.documentElement.classList.contains('dark');
 
-      // Update gliding ball velocity for directional momentum wake
+      // Update gliding ball velocity for subtle directional wake
       const instantVx = (curX - prevX) / dt;
       const instantVy = (curY - prevY) / dt;
-      smoothVx += (instantVx - smoothVx) * 0.22;
-      smoothVy += (instantVy - smoothVy) * 0.22;
+      smoothVx += (instantVx - smoothVx) * 0.25;
+      smoothVy += (instantVy - smoothVy) * 0.25;
 
       ctx.save();
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, width, height);
 
-      // Pre-cached authentic industrial steel palettes (matching photos)
+      // Subdued, architectural palettes that do NOT overpower text
       const p = isDark
         ? {
-            // Dark Mode: Cold-rolled dark structural steel, chrome ridges & warm amber glints
-            floorBaseShadow: 'rgba(0, 0, 0, 0.25)',
-            barRim: '#151921',
-            barCoreDark: '#202632',
-            barMidtone: '#354050',
-            barSpecular: '#7d8fa6',
-            barPeakWhite: '#e2e8f0',
-            ribGroove: '#0c0f14',
-            ribHighlight: 'rgba(148, 163, 184, 0.42)',
-            popRibHot: '#f59e0b',
-            popRibGlint: '#fbbf24',
-            weldNode: '#2d3542',
+            // Dark Mode: Moody, deep architectural steel, non-distracting
+            floorBaseShadow: 'rgba(0, 0, 0, 0.16)',
+            barRim: 'rgba(18, 22, 29, 0.40)',
+            barCoreDark: 'rgba(28, 34, 45, 0.45)',
+            barMidtone: 'rgba(48, 58, 74, 0.45)',
+            barSpecular: 'rgba(110, 125, 148, 0.35)',
+            ribGroove: 'rgba(10, 13, 18, 0.35)',
+            ribHighlight: 'rgba(148, 163, 184, 0.28)',
+            // Popped zone (focused, refined amber glints - NOT neon yellow stripes)
+            popBarCore: 'rgba(42, 52, 68, 0.70)',
+            popBarSpecular: 'rgba(226, 232, 240, 0.75)',
+            popRibCrest: 'rgba(226, 232, 240, 0.65)',
+            popRibAmberGlint: 'rgba(245, 158, 11, 0.45)',
+            weldNode: 'rgba(45, 53, 66, 0.55)',
             weldHot: '#f59e0b',
-            ballShadow: 'rgba(0, 0, 0, 0.65)',
-            ballHaloInner: 'rgba(245, 124, 0, 0.20)',
-            ballHaloMid: 'rgba(245, 124, 0, 0.05)',
+            ballShadow: 'rgba(0, 0, 0, 0.45)',
+            ballHaloInner: 'rgba(245, 124, 0, 0.12)',
+            ballHaloMid: 'rgba(245, 124, 0, 0.025)',
           }
         : {
-            // Light Mode: High-tensile slate steel reinforcement fabric with crisp architectural shadows
-            floorBaseShadow: 'rgba(15, 23, 42, 0.08)',
-            barRim: '#334155',
-            barCoreDark: '#475569',
-            barMidtone: '#64748b',
-            barSpecular: '#94a3b8',
-            barPeakWhite: '#ffffff',
-            ribGroove: '#1e293b',
-            ribHighlight: 'rgba(203, 213, 225, 0.55)',
-            popRibHot: '#d97706',
-            popRibGlint: '#b45309',
-            weldNode: '#475569',
+            // Light Mode: Architectural blueprint slate steel, clean & legible
+            floorBaseShadow: 'rgba(15, 23, 42, 0.05)',
+            barRim: 'rgba(51, 65, 85, 0.22)',
+            barCoreDark: 'rgba(71, 85, 105, 0.24)',
+            barMidtone: 'rgba(100, 116, 139, 0.22)',
+            barSpecular: 'rgba(148, 163, 184, 0.26)',
+            ribGroove: 'rgba(30, 41, 59, 0.20)',
+            ribHighlight: 'rgba(203, 213, 225, 0.32)',
+            // Popped zone
+            popBarCore: 'rgba(71, 85, 105, 0.60)',
+            popBarSpecular: 'rgba(248, 250, 252, 0.75)',
+            popRibCrest: 'rgba(203, 213, 225, 0.65)',
+            popRibAmberGlint: 'rgba(217, 119, 6, 0.40)',
+            weldNode: 'rgba(71, 85, 105, 0.50)',
             weldHot: '#d97706',
-            ballShadow: 'rgba(15, 23, 42, 0.35)',
-            ballHaloInner: 'rgba(180, 83, 9, 0.14)',
-            ballHaloMid: 'rgba(180, 83, 9, 0.035)',
+            ballShadow: 'rgba(15, 23, 42, 0.22)',
+            ballHaloInner: 'rgba(180, 83, 9, 0.09)',
+            ballHaloMid: 'rgba(180, 83, 9, 0.02)',
           };
 
       const cols = Math.ceil(width / GRID_SPACING) + 2;
       const rows = Math.ceil(height / GRID_SPACING) + 2;
 
-      // Active bounding indices for the gliding ball
+      // Active bounding indices for the moderately sized gliding ball
       const minActiveCol = Math.max(0, Math.floor((curX - BALL_RADIUS) / GRID_SPACING));
       const maxActiveCol = Math.min(cols - 1, Math.ceil((curX + BALL_RADIUS) / GRID_SPACING));
       const minActiveRow = Math.max(0, Math.floor((curY - BALL_RADIUS) / GRID_SPACING));
       const maxActiveRow = Math.min(rows - 1, Math.ceil((curY + BALL_RADIUS) / GRID_SPACING));
 
       // =========================================================================
-      // STEP 1: THE GLIDING BALL SPHERE EFFECT (SHADOW, LIGHT & AURA)
-      // This restores the iconic ball gliding underneath the rebar cage!
+      // STEP 1: MODERATE GLIDING BALL EFFECT (SHADOW & AURA)
+      // Compact, elegant focus radius (~145px) that highlights without blinding
       // =========================================================================
       if (curIntensity > 0.03 && !shouldReduceMotion) {
-        // 1A. Deep 3D Contact Shadow cast by the heavy gliding sphere
-        const shadowOffsetX = 14 + smoothVx * 0.015;
-        const shadowOffsetY = 18 + smoothVy * 0.015;
-        const shadowRad = BALL_RADIUS * 0.85;
+        // 1A. Soft 3D Contact Shadow beneath the gliding ball
+        const shadowOffsetX = 7 + smoothVx * 0.01;
+        const shadowOffsetY = 8 + smoothVy * 0.01;
+        const shadowRad = BALL_RADIUS * 0.72;
 
         const sphereShadow = ctx.createRadialGradient(
           curX + shadowOffsetX,
           curY + shadowOffsetY,
-          20,
+          8,
           curX + shadowOffsetX,
           curY + shadowOffsetY,
           shadowRad
         );
         sphereShadow.addColorStop(0, p.ballShadow);
-        sphereShadow.addColorStop(0.5, isDark ? 'rgba(0, 0, 0, 0.35)' : 'rgba(15, 23, 42, 0.16)');
+        sphereShadow.addColorStop(0.55, isDark ? 'rgba(0, 0, 0, 0.16)' : 'rgba(15, 23, 42, 0.06)');
         sphereShadow.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.fillStyle = sphereShadow;
@@ -209,56 +213,42 @@ export default function RealisticRebarWeaveBackground({
         ctx.arc(curX + shadowOffsetX, curY + shadowOffsetY, shadowRad, 0, Math.PI * 2);
         ctx.fill();
 
-        // 1B. Luminous Gliding Sphere Aura & Specular Flare
-        const auraRad = BALL_RADIUS * 1.05;
-        const ballLight = ctx.createRadialGradient(curX, curY, 15, curX, curY, auraRad);
+        // 1B. Luminous Gliding Ball Aura (Soft amber light, non-distracting)
+        const auraRad = BALL_RADIUS * 0.85;
+        const ballLight = ctx.createRadialGradient(curX, curY, 8, curX, curY, auraRad);
         ballLight.addColorStop(0, p.ballHaloInner);
-        ballLight.addColorStop(0.45, p.ballHaloMid);
+        ballLight.addColorStop(0.4, p.ballHaloMid);
         ballLight.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.fillStyle = ballLight;
         ctx.beginPath();
         ctx.arc(curX, curY, auraRad, 0, Math.PI * 2);
         ctx.fill();
-
-        // 1C. Specular apex hotspot on the gliding sphere
-        const spotX = curX - 25;
-        const spotY = curY - 25;
-        const apexSpot = ctx.createRadialGradient(spotX, spotY, 0, spotX, spotY, 90);
-        apexSpot.addColorStop(0, isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.35)');
-        apexSpot.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-        ctx.fillStyle = apexSpot;
-        ctx.beginPath();
-        ctx.arc(spotX, spotY, 90, 0, Math.PI * 2);
-        ctx.fill();
       }
 
       // =========================================================================
-      // STEP 2: BASE REALISTIC REBAR WEAVE (BACKGROUND GRID)
-      // High-fidelity cylindrical steel bars with realistic herringbone ribs
+      // STEP 2: BASE REBAR WEAVE (BACKGROUND LAYER - QUIET & SUBDUED)
       // =========================================================================
 
-      // 2A. Base floor cast shadows (Batched single draw call)
+      // 2A. Base floor cast shadows (Single batched GPU draw call)
       ctx.beginPath();
       ctx.strokeStyle = p.floorBaseShadow;
-      ctx.lineWidth = BASE_DIAMETER * 1.15;
+      ctx.lineWidth = BASE_DIAMETER * 1.1;
       ctx.lineCap = 'round';
 
       for (let c = 0; c < cols; c++) {
-        const x = c * GRID_SPACING + 3;
+        const x = c * GRID_SPACING + 2.5;
         ctx.moveTo(x, -GRID_SPACING);
         ctx.lineTo(x, height + GRID_SPACING);
       }
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING + 4;
+        const y = r * GRID_SPACING + 3;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
       ctx.stroke();
 
       // 2B. Vertical Rebar Cylinders (Layer 1)
-      // Dark rim
       ctx.beginPath();
       ctx.strokeStyle = p.barRim;
       ctx.lineWidth = BASE_DIAMETER;
@@ -269,10 +259,9 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // Midtone steel core
       ctx.beginPath();
       ctx.strokeStyle = p.barMidtone;
-      ctx.lineWidth = BASE_DIAMETER - 4;
+      ctx.lineWidth = BASE_DIAMETER - 3.5;
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING;
         ctx.moveTo(x, -GRID_SPACING);
@@ -280,31 +269,17 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // Crisp specular steel highlight ridge line
       ctx.beginPath();
       ctx.strokeStyle = p.barSpecular;
-      ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.2;
       for (let c = 0; c < cols; c++) {
-        const x = c * GRID_SPACING - 2.2;
+        const x = c * GRID_SPACING - 1.8;
         ctx.moveTo(x, -GRID_SPACING);
         ctx.lineTo(x, height + GRID_SPACING);
       }
       ctx.stroke();
 
       // 2C. Horizontal Rebar Cylinders (Layer 2 - Crossing on top)
-      // Contact shadow at crossings
-      ctx.beginPath();
-      ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.45)' : 'rgba(15, 23, 42, 0.22)';
-      for (let c = 0; c < cols; c++) {
-        const x = c * GRID_SPACING;
-        for (let r = 0; r < rows; r++) {
-          const y = r * GRID_SPACING;
-          ctx.rect(x - BASE_DIAMETER / 2, y - 4, BASE_DIAMETER, 8);
-        }
-      }
-      ctx.fill();
-
-      // Horizontal outer rim
       ctx.beginPath();
       ctx.strokeStyle = p.barRim;
       ctx.lineWidth = BASE_DIAMETER;
@@ -315,10 +290,9 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // Horizontal midtone core
       ctx.beginPath();
       ctx.strokeStyle = p.barMidtone;
-      ctx.lineWidth = BASE_DIAMETER - 4;
+      ctx.lineWidth = BASE_DIAMETER - 3.5;
       for (let r = 0; r < rows; r++) {
         const y = r * GRID_SPACING;
         ctx.moveTo(-GRID_SPACING, y);
@@ -326,80 +300,77 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // Horizontal specular highlight ridge line
       ctx.beginPath();
       ctx.strokeStyle = p.barSpecular;
-      ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.2;
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING - 2.2;
+        const y = r * GRID_SPACING - 1.8;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
       ctx.stroke();
 
-      // 2D. Realistic Herringbone Transverse Ribs (Grooves + Raised Metallic Crests)
-      // Dark indented groove behind every rib
+      // 2D. Base Transverse Ribs (Contoured deformed ridges, quiet & subtle)
       ctx.beginPath();
       ctx.strokeStyle = p.ribGroove;
-      ctx.lineWidth = 2.2;
+      ctx.lineWidth = 1.8;
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING;
         for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
-          ctx.moveTo(x - 5.5, y - 3.5);
-          ctx.lineTo(x + 5.5, y + 3.5);
+          ctx.moveTo(x - 5, y - 3);
+          ctx.quadraticCurveTo(x, y + 1, x + 5, y + 3);
         }
       }
       for (let r = 0; r < rows; r++) {
         const y = r * GRID_SPACING;
         for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
-          ctx.moveTo(x - 3.5, y - 5.5);
-          ctx.lineTo(x + 3.5, y + 5.5);
+          ctx.moveTo(x - 3, y - 5);
+          ctx.quadraticCurveTo(x + 1, y, x + 3, y + 5);
         }
       }
       ctx.stroke();
 
-      // Raised metallic crest on every rib
       ctx.beginPath();
       ctx.strokeStyle = p.ribHighlight;
-      ctx.lineWidth = 1.4;
+      ctx.lineWidth = 1.1;
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING;
         for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
-          ctx.moveTo(x - 5, y - 4.2);
-          ctx.lineTo(x + 5, y + 2.8);
+          ctx.moveTo(x - 4.5, y - 3.8);
+          ctx.quadraticCurveTo(x, y + 0.2, x + 4.5, y + 2.2);
         }
       }
       for (let r = 0; r < rows; r++) {
         const y = r * GRID_SPACING;
         for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
-          ctx.moveTo(x - 4.2, y - 5);
-          ctx.lineTo(x + 2.8, y + 5);
+          ctx.moveTo(x - 3.8, y - 4.5);
+          ctx.quadraticCurveTo(x + 0.2, y, x + 2.2, y + 4.5);
         }
       }
       ctx.stroke();
 
-      // 2E. Base Welded Intersection Nuggets
+      // Base weld intersection dots
       ctx.beginPath();
       ctx.fillStyle = p.weldNode;
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING;
         for (let r = 0; r < rows; r++) {
           const y = r * GRID_SPACING;
-          ctx.moveTo(x + 3, y);
-          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.moveTo(x + 2.5, y);
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
         }
       }
       ctx.fill();
 
       // =========================================================================
-      // STEP 3: THE 3D POPPING DOME (REBARS BULGING AROUND THE GLIDING BALL)
-      // When the ball glides, the rebars bulge out in a 3D spherical dome with
-      // perspective magnification, deep dynamic shadows, and glowing hot amber ribs!
+      // STEP 3: TASTEFUL 3D POP DOME (UNDER THE GLIDING BALL ONLY)
+      // Focused, authentic deformed steel look with subtle amber reflection
+      // (NO harsh solid yellow hatching stripes)
       // =========================================================================
       if (curIntensity > 0.03 && !shouldReduceMotion) {
-        // 3A. 3D Elevated Pop Shadows for bars on the ball dome
+        // 3A. Dynamic 3D Drop Shadows on the ball dome
         ctx.beginPath();
-        ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.75)' : 'rgba(15, 23, 42, 0.40)';
+        ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.55)' : 'rgba(15, 23, 42, 0.25)';
 
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
@@ -408,9 +379,9 @@ export default function RealisticRebarWeaveBackground({
             if (dome.weight <= 0.03) continue;
 
             const z = dome.z;
-            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.75);
-            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.75);
-            const sw = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.55);
+            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.65);
+            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.65);
+            const sw = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.45);
 
             ctx.rect(baseX + 3 + dirX - sw / 2, y + 4 + dirY, sw, 19);
           }
@@ -423,16 +394,16 @@ export default function RealisticRebarWeaveBackground({
             if (dome.weight <= 0.03) continue;
 
             const z = dome.z;
-            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.75);
-            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.75);
-            const sh = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.55);
+            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.65);
+            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.65);
+            const sh = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.45);
 
             ctx.rect(x + 3 + dirX, baseY + 4 + dirY - sh / 2, 19, sh);
           }
         }
         ctx.fill();
 
-        // 3B. Popped Vertical Bars Riding Over the Gliding Ball
+        // 3B. Vertical Bars Popping over the Gliding Ball
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
           const segStep = 16;
@@ -444,26 +415,18 @@ export default function RealisticRebarWeaveBackground({
             const y1 = y + segStep;
             const dome0 = getBallDome(baseX, y0, curX, curY, curIntensity);
             const dome1 = getBallDome(baseX, y1, curX, curY, curIntensity);
-            if (dome0.weight <= 0.015 && dome1.weight <= 0.015) continue;
+            if (dome0.weight <= 0.02 && dome1.weight <= 0.02) continue;
 
-            // Bar diameter swells as it climbs the ball dome
-            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.5);
-            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.5);
+            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.42);
 
-            // Lateral elastic deflection (rebar bows over the spherical ball)
-            const flexX0 = (dome0.dx / (dome0.dist + 0.1)) * (dome0.z * 0.14);
-            const flexX1 = (dome1.dx / (dome1.dist + 0.1)) * (dome1.z * 0.14);
+            const flexX0 = (dome0.dx / (dome0.dist + 0.1)) * (dome0.z * 0.12);
+            const flexX1 = (dome1.dx / (dome1.dist + 0.1)) * (dome1.z * 0.12);
 
             const x0 = baseX + flexX0;
             const x1 = baseX + flexX1;
-            const midDome = getBallDome(baseX, (y0 + y1) / 2, curX, curY, curIntensity);
-            const alpha = 0.35 + midDome.weight * 0.65;
 
-            // 3D cylindrical polygon body
-            ctx.fillStyle = isDark
-              ? `rgba(40, 50, 65, ${alpha})`
-              : `rgba(80, 95, 115, ${alpha})`;
-
+            ctx.fillStyle = p.popBarCore;
             ctx.beginPath();
             ctx.moveTo(x0 - r0, y0);
             ctx.lineTo(x1 - r1, y1);
@@ -472,19 +435,17 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular chrome ridge gleam
-            ctx.strokeStyle = isDark
-              ? `rgba(240, 246, 255, ${alpha})`
-              : `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = 2.2;
+            // Specular ridge line
+            ctx.strokeStyle = p.popBarSpecular;
+            ctx.lineWidth = 1.6;
             ctx.beginPath();
-            ctx.moveTo(x0 - r0 * 0.4, y0);
-            ctx.lineTo(x1 - r1 * 0.4, y1);
+            ctx.moveTo(x0 - r0 * 0.35, y0);
+            ctx.lineTo(x1 - r1 * 0.35, y1);
             ctx.stroke();
           }
         }
 
-        // 3C. Popped Horizontal Bars Riding Over the Gliding Ball
+        // 3C. Horizontal Bars Popping over the Gliding Ball
         for (let r = minActiveRow; r <= maxActiveRow; r++) {
           const baseY = r * GRID_SPACING;
           const segStep = 16;
@@ -496,23 +457,18 @@ export default function RealisticRebarWeaveBackground({
             const x1 = x + segStep;
             const dome0 = getBallDome(x0, baseY, curX, curY, curIntensity);
             const dome1 = getBallDome(x1, baseY, curX, curY, curIntensity);
-            if (dome0.weight <= 0.015 && dome1.weight <= 0.015) continue;
+            if (dome0.weight <= 0.02 && dome1.weight <= 0.02) continue;
 
-            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.5);
-            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.5);
+            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.42);
 
-            const flexY0 = (dome0.dy / (dome0.dist + 0.1)) * (dome0.z * 0.14);
-            const flexY1 = (dome1.dy / (dome1.dist + 0.1)) * (dome1.z * 0.14);
+            const flexY0 = (dome0.dy / (dome0.dist + 0.1)) * (dome0.z * 0.12);
+            const flexY1 = (dome1.dy / (dome1.dist + 0.1)) * (dome1.z * 0.12);
 
             const y0 = baseY + flexY0;
             const y1 = baseY + flexY1;
-            const midDome = getBallDome((x0 + x1) / 2, baseY, curX, curY, curIntensity);
-            const alpha = 0.35 + midDome.weight * 0.65;
 
-            ctx.fillStyle = isDark
-              ? `rgba(40, 50, 65, ${alpha})`
-              : `rgba(80, 95, 115, ${alpha})`;
-
+            ctx.fillStyle = p.popBarCore;
             ctx.beginPath();
             ctx.moveTo(x0, y0 - r0);
             ctx.lineTo(x1, y1 - r1);
@@ -521,22 +477,21 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular ridge gleam
-            ctx.strokeStyle = isDark
-              ? `rgba(240, 246, 255, ${alpha})`
-              : `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = 2.2;
+            // Specular ridge line
+            ctx.strokeStyle = p.popBarSpecular;
+            ctx.lineWidth = 1.6;
             ctx.beginPath();
-            ctx.moveTo(x0, y0 - r0 * 0.4);
-            ctx.lineTo(x1, y1 - r1 * 0.4);
+            ctx.moveTo(x0, y0 - r0 * 0.35);
+            ctx.lineTo(x1, y1 - r1 * 0.35);
             ctx.stroke();
           }
         }
 
-        // 3D. Hot Amber Transverse Ribs Popping on the Gliding Ball
+        // 3D. Contoured Transverse Ribs with Subtle Metallic Amber Glints
+        // (Authentic curved ribs - NO flat solid yellow stripes)
         ctx.beginPath();
-        ctx.strokeStyle = isDark ? p.popRibGlint : p.popRibHot;
-        ctx.lineWidth = 2.8;
+        ctx.strokeStyle = p.popRibCrest;
+        ctx.lineWidth = 1.6;
 
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
@@ -544,12 +499,12 @@ export default function RealisticRebarWeaveBackground({
             const dome = getBallDome(baseX, y, curX, curY, curIntensity);
             if (dome.weight < 0.1) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.5);
-            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.14);
+            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
             const rx = baseX + flexX;
 
-            ctx.moveTo(rx - r * 0.88, y - 4.5);
-            ctx.lineTo(rx + r * 0.88, y + 4.5);
+            ctx.moveTo(rx - r * 0.85, y - 3.8);
+            ctx.quadraticCurveTo(rx, y + 0.4, rx + r * 0.85, y + 2.4);
           }
         }
 
@@ -559,12 +514,48 @@ export default function RealisticRebarWeaveBackground({
             const dome = getBallDome(x, baseY, curX, curY, curIntensity);
             if (dome.weight < 0.1) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.5);
-            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.14);
+            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
             const ry = baseY + flexY;
 
-            ctx.moveTo(x - 4.5, ry - r * 0.88);
-            ctx.lineTo(x + 4.5, ry + r * 0.88);
+            ctx.moveTo(x - 3.8, ry - r * 0.85);
+            ctx.quadraticCurveTo(x + 0.4, ry, x + 2.4, ry + r * 0.85);
+          }
+        }
+        ctx.stroke();
+
+        // Subtle amber warmth on ribs directly under the spotlight
+        ctx.beginPath();
+        ctx.strokeStyle = p.popRibAmberGlint;
+        ctx.lineWidth = 1.3;
+
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const baseX = c * GRID_SPACING;
+          for (let y = curY - BALL_RADIUS * 0.6; y <= curY + BALL_RADIUS * 0.6; y += RIB_SPACING) {
+            const dome = getBallDome(baseX, y, curX, curY, curIntensity);
+            if (dome.weight < 0.22) continue;
+
+            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const rx = baseX + flexX;
+
+            ctx.moveTo(rx - r * 0.6, y - 2.5);
+            ctx.lineTo(rx + r * 0.6, y + 1.5);
+          }
+        }
+
+        for (let r = minActiveRow; r <= maxActiveRow; r++) {
+          const baseY = r * GRID_SPACING;
+          for (let x = curX - BALL_RADIUS * 0.6; x <= curX + BALL_RADIUS * 0.6; x += RIB_SPACING) {
+            const dome = getBallDome(x, baseY, curX, curY, curIntensity);
+            if (dome.weight < 0.22) continue;
+
+            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const ry = baseY + flexY;
+
+            ctx.moveTo(x - 2.5, ry - r * 0.6);
+            ctx.lineTo(x + 1.5, ry + r * 0.6);
           }
         }
         ctx.stroke();
@@ -575,24 +566,22 @@ export default function RealisticRebarWeaveBackground({
           for (let r = minActiveRow; r <= maxActiveRow; r++) {
             const iy = r * GRID_SPACING;
             const dome = getBallDome(ix, iy, curX, curY, curIntensity);
-            if (dome.weight < 0.08) continue;
+            if (dome.weight < 0.1) continue;
 
-            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.14);
-            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.14);
+            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
             const nx = ix + flexX;
             const ny = iy + flexY;
-            const weldR = 4.0 + (dome.z / MAX_BALL_ELEVATION) * 2.2;
+            const weldR = 3.2 + (dome.z / MAX_BALL_ELEVATION) * 1.2;
 
-            // Weld bead body
             ctx.beginPath();
-            ctx.fillStyle = dome.dist < 130 ? p.weldHot : p.weldNode;
+            ctx.fillStyle = dome.dist < 65 ? p.weldHot : p.weldNode;
             ctx.arc(nx, ny, weldR, 0, Math.PI * 2);
             ctx.fill();
 
-            // Specular molten glint
             ctx.beginPath();
-            ctx.fillStyle = p.barPeakWhite;
-            ctx.arc(nx - 1, ny - 1, Math.max(1, weldR * 0.36), 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.arc(nx - 0.7, ny - 0.7, Math.max(0.6, weldR * 0.32), 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -655,13 +644,13 @@ export default function RealisticRebarWeaveBackground({
 
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
-        mouseIntensity.set(0.18);
+        mouseIntensity.set(0.14);
         wakeUp();
-      }, 2400);
+      }, 2200);
     };
 
     const handlePointerLeave = () => {
-      mouseIntensity.set(0.1);
+      mouseIntensity.set(0.08);
       wakeUp();
     };
 
@@ -679,9 +668,9 @@ export default function RealisticRebarWeaveBackground({
 
         if (idleTimer) clearTimeout(idleTimer);
         idleTimer = setTimeout(() => {
-          mouseIntensity.set(0.18);
+          mouseIntensity.set(0.14);
           wakeUp();
-        }, 2200);
+        }, 2000);
       }
     };
 
@@ -714,20 +703,23 @@ export default function RealisticRebarWeaveBackground({
       aria-hidden="true"
       className={`pointer-events-none fixed inset-0 z-0 overflow-hidden select-none ${className}`}
     >
-      {/* 1. Realistic Rebar Weave with Gliding Ball Mechanics Canvas */}
+      {/* 1. Realistic Rebar Weave Canvas (Calibrated opacity so it never overpowers text) */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 block h-full w-full opacity-90 transition-opacity duration-300"
+        className="absolute inset-0 block h-full w-full opacity-55 dark:opacity-60 transition-opacity duration-300"
       />
 
       {/* 2. Soft Content Column Scrim: softly washes rebar behind reading zones while letting margins and hover pop */}
-      <div className="absolute inset-0 bg-radial-[ellipse_80%_65%_at_50%_45%] from-bg/30 via-bg/15 to-transparent dark:from-bg/35 dark:via-bg/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-radial-[ellipse_80%_65%_at_50%_45%] from-bg/60 via-bg/35 to-transparent dark:from-bg/65 dark:via-bg/40 to-transparent pointer-events-none" />
 
       {/* 3. Soft Edge Vignette to keep viewport perimeter clean */}
-      <div className="absolute inset-0 bg-radial-[ellipse_90%_75%_at_50%_50%] from-transparent via-transparent to-bg/75 dark:to-bg/85 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial-[ellipse_90%_75%_at_50%_50%] from-transparent via-transparent to-bg/80 dark:to-bg/90 pointer-events-none" />
 
       {/* 4. Subtle page-level vertical gradient preserving top/bottom hierarchy */}
-      <div className="absolute inset-0 bg-gradient-to-b from-bg/35 via-transparent to-bg/50 dark:from-bg/45 dark:via-transparent dark:to-bg/65 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-transparent to-bg/75 dark:from-bg/70 dark:via-transparent dark:to-bg/85 pointer-events-none" />
+
+      {/* 5. Left-side Reading Scrim: gently softens rebar specifically under left-aligned headlines and copy */}
+      <div className="absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-bg/75 via-bg/45 to-transparent dark:from-bg/80 dark:via-bg/50 to-transparent pointer-events-none" />
     </div>
   );
 }
