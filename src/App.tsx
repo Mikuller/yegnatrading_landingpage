@@ -17,6 +17,7 @@ import Careers from './sections/Careers';
 import Insights from './sections/Insights';
 import Quote from './sections/Quote';
 import Footer from './sections/Footer';
+import RealisticRebarWeaveBackground from './components/RealisticRebarWeaveBackground';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -30,19 +31,7 @@ function ScrollProgress() {
 }
 
 function RebarBackdrop() {
-  return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div
-        className="texture-rebar absolute -inset-[340px]"
-        style={{ animation: 'rebar-drift 80s linear infinite' }}
-      />
-      {/* Light/Dark adaptive overlays defined in style.css */}
-      <div className="backdrop-overlay absolute inset-0" />
-      <div className="backdrop-vignette absolute inset-0" />
-      {/* traveling sheen */}
-      <div className="rebar-sheen absolute inset-y-0 left-[-40%] w-[180%]" />
-    </div>
-  );
+  return <RealisticRebarWeaveBackground />;
 }
 
 // Mobile Sticky Action Bar (Spec Requirement 7 #2)
