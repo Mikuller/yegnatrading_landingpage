@@ -47,6 +47,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   useEffect(() => {
+    document.documentElement.lang = lang;
     localStorage.setItem('yegna_lang', lang);
   }, [lang]);
 

@@ -178,7 +178,10 @@ export default function Products() {
                       <th className="px-5 py-3.5 sm:px-6">{t('Description', 'የእቃው ዝርዝር')}</th>
                       <th className="px-5 py-3.5 sm:px-6">{t('Diameter', 'ዲያሜትር')}</th>
                       <th className="px-5 py-3.5 sm:px-6 text-right">
-                        {t('Standard Conversion (Pcs/Kg)', 'የክብደት ልወጣ (Pcs/Kg)')}
+                        {t('Weight / 12m Bar (kg)', 'የአንድ 12ሜ ቁራጭ ክብደት (ኪ.ግ)')}
+                      </th>
+                      <th className="px-5 py-3.5 sm:px-6 hidden lg:table-cell text-right">
+                        {t('Unit Weight', 'ክብደት በሜትር')}
                       </th>
                       <th className="px-5 py-3.5 sm:px-6 hidden md:table-cell">
                         {t('Primary Application', 'ዋና አጠቃቀም')}
@@ -209,9 +212,12 @@ export default function Products() {
                             </span>
                           </td>
                           <td className="px-5 py-3.5 sm:px-6 text-right font-mono font-bold text-ink">
-                            {typeof row.pcsPerKg === 'number'
-                              ? `${row.pcsPerKg.toFixed(3)} Pcs/Kg`
-                              : row.pcsPerKg}
+                            {typeof row.weightPer12mKg === 'number'
+                              ? `${row.weightPer12mKg.toFixed(2)} kg / pc`
+                              : row.weightPer12mKg}
+                          </td>
+                          <td className="px-5 py-3.5 sm:px-6 text-right font-mono text-mute hidden lg:table-cell text-xs">
+                            {row.unitWeightKgM}
                           </td>
                           <td className="px-5 py-3.5 sm:px-6 text-mute hidden md:table-cell text-xs">
                             {row.application}
@@ -237,12 +243,18 @@ export default function Products() {
                     </div>
                     <div>
                       <p className="text-mute text-xs uppercase font-semibold">
-                        {t('Selected Specification', 'የተመረጠው የብረት መጠን')}
+                        {t('Selected Metric Specification', 'የተመረጠው የብረት መለኪያ')}
                       </p>
                       <p className="font-display text-ink text-lg font-bold sm:text-xl">
                         {selectedSize.description} —{' '}
-                        <span className="text-ember font-mono">{selectedSize.pcsPerKg}</span>{' '}
-                        {typeof selectedSize.pcsPerKg === 'number' ? 'Pcs/Kg' : ''}
+                        <span className="text-ember font-mono">
+                          {typeof selectedSize.weightPer12mKg === 'number'
+                            ? `${selectedSize.weightPer12mKg} kg / pc`
+                            : selectedSize.weightPer12mKg}
+                        </span>{' '}
+                        <span className="text-mute font-mono text-sm font-normal">
+                          ({selectedSize.unitWeightKgM} · {selectedSize.pcsPerQuintal})
+                        </span>
                       </p>
                     </div>
                   </div>

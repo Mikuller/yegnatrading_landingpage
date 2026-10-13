@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useScroll, useSpring } from 'motion/react';
-import { ArrowUpRight, MessageCircle, Moon, Phone, Send, Sun } from 'lucide-react';
+import { useState } from 'react';
+import { motion, useScroll, useSpring } from 'motion/react';
+import { ArrowUpRight, Phone, Send } from 'lucide-react';
 import { AppProvider, useApp } from './context/AppContext';
 import { CONTACT } from './data';
 import Nav from './sections/Nav';
@@ -45,64 +45,35 @@ function RebarBackdrop() {
   );
 }
 
-function CursorGlow() {
-  const x = useMotionValue(-400);
-  const y = useMotionValue(-400);
-  const sx = useSpring(x, { stiffness: 90, damping: 22 });
-  const sy = useSpring(y, { stiffness: 90, damping: 22 });
-
-  useEffect(() => {
-    const move = (e: PointerEvent) => {
-      x.set(e.clientX - 250);
-      y.set(e.clientY - 250);
-    };
-    window.addEventListener('pointermove', move, { passive: true });
-    return () => window.removeEventListener('pointermove', move);
-  }, [x, y]);
-
-  return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed z-0 hidden h-[500px] w-[500px] rounded-full md:block"
-      style={{
-        x: sx,
-        y: sy,
-        background:
-          'radial-gradient(circle, rgba(245,124,0,0.06) 0%, rgba(245,124,0,0.02) 40%, transparent 70%)',
-      }}
-    />
-  );
-}
-
 // Mobile Sticky Action Bar (Spec Requirement 7 #2)
 function MobileStickyBar() {
   const { t } = useApp();
 
   return (
-    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 shadow-2xl backdrop-blur-xl md:hidden">
-      <div className="mx-auto flex max-w-md items-center justify-between gap-2">
+    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xl md:hidden">
+      <div className="mx-auto flex max-w-md items-center justify-between gap-2.5">
         <a
           href={`tel:${CONTACT.phoneClean}`}
-          className="border-line bg-panel2 text-ink hover:text-ember flex flex-1 items-center justify-center gap-1.5 rounded-xl border py-2.5 text-xs font-bold transition-all shadow-sm"
+          className="border-line bg-panel2 text-ink hover:text-ember flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all shadow-sm"
         >
-          <Phone className="text-ember h-3.5 w-3.5" />
+          <Phone className="text-ember h-4 w-4 shrink-0" />
           <span>{t('Call Now', 'ደውል')}</span>
         </a>
 
         <a
           href="#quote"
-          className="bg-ember text-white hover:bg-ember/90 flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-bold shadow-md transition-all"
+          className="bg-ember text-white hover:bg-ember/90 flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold shadow-md transition-all"
         >
           <span>{t('Get Quote', 'ዋጋ ጠይቅ')}</span>
-          <ArrowUpRight className="h-3.5 w-3.5" />
+          <ArrowUpRight className="h-4 w-4 shrink-0" />
         </a>
 
         <a
           href="https://t.me/yegnatrading"
           target="_blank"
           rel="noreferrer"
-          aria-label="Telegram"
-          className="border-line bg-panel2 text-ink hover:text-ember grid h-10 w-10 shrink-0 place-items-center rounded-xl border text-xs font-bold"
+          aria-label="Chat on Telegram"
+          className="border-line bg-panel2 text-ink hover:text-ember grid h-11 w-11 shrink-0 place-items-center rounded-xl border text-xs font-bold"
         >
           <Send className="text-ember h-4 w-4" />
         </a>
@@ -120,10 +91,9 @@ function MainApp() {
   };
 
   return (
-    <div className="bg-bg text-ink font-body min-h-screen pb-14 md:pb-0">
+    <div className="bg-bg text-ink font-body min-h-screen pb-24 md:pb-0">
       <RebarBackdrop />
       <ScrollProgress />
-      <CursorGlow />
       <Nav />
       <main className="relative z-10">
         <Hero />

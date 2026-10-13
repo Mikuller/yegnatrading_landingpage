@@ -37,6 +37,9 @@ export default function Team() {
                 <img
                   src={m.photo}
                   alt={m.name}
+                  loading="lazy"
+                  width={144}
+                  height={144}
                   className="border-line relative h-36 w-36 rounded-2xl object-cover object-top border shadow-md transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     // Fallback avatar if needed
@@ -103,6 +106,9 @@ export default function Team() {
                     <img
                       src={p.url}
                       alt={p.caption}
+                      loading="lazy"
+                      width={400}
+                      height={224}
                       className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end">

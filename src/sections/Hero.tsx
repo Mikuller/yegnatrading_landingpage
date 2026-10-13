@@ -60,6 +60,8 @@ function RealRebarCard() {
               <motion.img
                 src="/rebar-hero.png"
                 alt="Yegna Grade 75 certified steel reinforcement bars bundle"
+                width={340}
+                height={360}
                 className="relative z-10 mx-auto max-h-[300px] w-auto max-w-[280px] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.35)] transition-transform duration-700 sm:max-h-[360px] sm:max-w-[340px] group-hover:scale-[1.03]"
                 initial={{ opacity: 0, scale: 0.9, y: 24 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -78,9 +80,9 @@ function RealRebarCard() {
             </div>
             <div className="text-right">
               <p className="font-display text-ember text-lg font-bold sm:text-xl">
-                {t('7 Branches', '7 ቅርንጫፎች')}
+                {t('Kazanchis HQ', 'ዋናው ቢሮ')}
               </p>
-              <p className="text-mute text-xs">Addis Ababa · Bahirdar</p>
+              <p className="text-mute text-xs">Joburg Bldg, 5th Fl (2Q7F+J6X)</p>
             </div>
           </div>
         </div>

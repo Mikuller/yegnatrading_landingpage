@@ -67,7 +67,7 @@ export default function Careers() {
                     {t('Current Open Positions', 'ወቅታዊ ክፍት የሥራ ቦታዎች')}
                   </h3>
                   <p className="text-mute text-xs">
-                    {t('Addis Ababa & Regional Branches', 'አዲስ አበባ እና የክልል ቅርንጫፎች')}
+                    {t('Head Office — Kazanchis, Addis Ababa', 'ዋና መሥሪያ ቤት — ካዛንቺስ፣ አዲስ አበባ')}
                   </p>
                 </div>
               </div>
@@ -171,12 +171,13 @@ export default function Careers() {
                   <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <label className="text-ink block text-xs font-semibold mb-1.5">
+                        <label htmlFor="career-name" className="text-ink block text-xs font-semibold mb-1.5">
                           {t('Full Name *', 'ሙሉ ስም *')}
                         </label>
                         <div className="relative">
                           <User className="text-mute absolute left-3.5 top-3.5 h-4 w-4" />
                           <input
+                            id="career-name"
                             required
                             type="text"
                             placeholder="Abebe Kebede"
@@ -188,12 +189,13 @@ export default function Careers() {
                       </div>
 
                       <div>
-                        <label className="text-ink block text-xs font-semibold mb-1.5">
+                        <label htmlFor="career-phone" className="text-ink block text-xs font-semibold mb-1.5">
                           {t('Phone Number *', 'ስልክ ቁጥር *')}
                         </label>
                         <div className="relative">
                           <Phone className="text-mute absolute left-3.5 top-3.5 h-4 w-4" />
                           <input
+                            id="career-phone"
                             required
                             type="tel"
                             placeholder="+251 9..."
@@ -207,12 +209,13 @@ export default function Careers() {
 
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <label className="text-ink block text-xs font-semibold mb-1.5">
+                        <label htmlFor="career-email" className="text-ink block text-xs font-semibold mb-1.5">
                           {t('Email Address', 'ኢሜይል አድራሻ')}
                         </label>
                         <div className="relative">
                           <Mail className="text-mute absolute left-3.5 top-3.5 h-4 w-4" />
                           <input
+                            id="career-email"
                             type="email"
                             placeholder="applicant@example.com"
                             value={form.email}
@@ -223,31 +226,32 @@ export default function Careers() {
                       </div>
 
                       <div>
-                        <label className="text-ink block text-xs font-semibold mb-1.5">
+                        <label htmlFor="career-position" className="text-ink block text-xs font-semibold mb-1.5">
                           {t('Desired Role / Department', 'የሚፈልጉት የሥራ ዘርፍ')}
                         </label>
                         <select
+                          id="career-position"
                           value={form.position}
                           onChange={(e) => setForm({ ...form, position: e.target.value })}
                           className="border-line bg-panel2 text-ink focus:border-ember w-full rounded-xl border px-4 py-3 text-xs sm:text-sm outline-none transition-all"
                         >
                           <option value="General / Spontaneous Application">
-                            General / Spontaneous Application
+                            {t('General / Spontaneous Application', 'አጠቃላይ / ክፍት ማመልከቻ')}
                           </option>
                           <option value="Sales & Customer Relations">
-                            Sales & Customer Relations
+                            {t('Sales & Customer Relations', 'ሽያጭና የደንበኞች ግንኙነት')}
                           </option>
                           <option value="Supply Chain & Warehouse Logistics">
-                            Supply Chain & Warehouse Logistics
+                            {t('Supply Chain & Warehouse Logistics', 'አቅርቦት ሰንሰለትና መጋዘን')}
                           </option>
                           <option value="Accounting & Financial Analysis">
-                            Accounting & Financial Analysis
+                            {t('Accounting & Financial Analysis', 'ሒሳብና ፋይናንስ')}
                           </option>
                           <option value="Structural & Rebar Estimation">
-                            Structural & Rebar Estimation
+                            {t('Structural & Rebar Estimation', 'የኮንስትራክሽን ብረት ስሌት')}
                           </option>
                           <option value="Fleet & Delivery Operations">
-                            Fleet & Delivery Operations
+                            {t('Fleet & Delivery Operations', 'ትራንስፖርትና ማጓጓዣ')}
                           </option>
                         </select>
                       </div>
@@ -255,10 +259,10 @@ export default function Careers() {
 
                     {/* CV Upload */}
                     <div>
-                      <label className="text-ink block text-xs font-semibold mb-1.5">
+                      <span className="text-ink block text-xs font-semibold mb-1.5">
                         {t('Upload CV / Resume (PDF / DOCX)', 'የሕይወት ታሪክ (CV) ያያይዙ')}
-                      </label>
-                      <label className="border-line bg-panel2/60 hover:bg-panel2 hover:border-ember flex cursor-pointer items-center justify-between rounded-xl border border-dashed px-4 py-3 transition-all">
+                      </span>
+                      <label htmlFor="career-cv" className="border-line bg-panel2/60 hover:bg-panel2 hover:border-ember flex cursor-pointer items-center justify-between rounded-xl border border-dashed px-4 py-3 transition-all">
                         <div className="flex items-center gap-2.5">
                           <FileUp className="text-ember h-4 w-4" />
                           <span className="text-mute text-xs">
@@ -269,6 +273,7 @@ export default function Careers() {
                           {t('Browse', 'ምረጥ')}
                         </span>
                         <input
+                          id="career-cv"
                           type="file"
                           accept=".pdf,.doc,.docx"
                           className="hidden"
@@ -281,10 +286,11 @@ export default function Careers() {
                     </div>
 
                     <div>
-                      <label className="text-ink block text-xs font-semibold mb-1.5">
+                      <label htmlFor="career-note" className="text-ink block text-xs font-semibold mb-1.5">
                         {t('Cover Note / Summary', 'አጭር ማስታወሻ')}
                       </label>
                       <textarea
+                        id="career-note"
                         rows={3}
                         placeholder={t(
                           'Briefly describe your experience or background...',

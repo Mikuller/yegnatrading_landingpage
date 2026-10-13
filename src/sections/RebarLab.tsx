@@ -312,8 +312,18 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 1.4 + i * 0.1, type: 'spring', stiffness: 260, damping: 16 }}
-                      className="cursor-pointer"
+                      className="cursor-pointer outline-none focus:ring-2 focus:ring-ember"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Select structural part: ${PARTS.find((p) => p.id === h.id)?.label || h.id}`}
+                      aria-pressed={isActive}
                       onClick={() => select(h.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          select(h.id);
+                        }
+                      }}
                     >
                       {isActive && (
                         <circle cx={h.x} cy={h.y} r="15" fill="none" stroke={rebarColor} strokeWidth="1.5" className="animate-pulse-dot" />

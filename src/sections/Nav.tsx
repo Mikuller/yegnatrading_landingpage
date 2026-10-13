@@ -22,6 +22,8 @@ export function Logo({ className = '' }: { className?: string }) {
         <img
           src="/images/logo-icon.png"
           alt="Yegna Trading PLC icon"
+          width={40}
+          height={40}
           className="h-full w-full object-contain p-1"
           onError={(e) => {
             // fallback if needed

@@ -24,7 +24,7 @@ export const NAV_LINKS = [
   { label: 'Products', amLabel: 'ምርቶች', href: '#products' },
   { label: 'Why Yegna', amLabel: 'ለምን የኛ?', href: '#why' },
   { label: 'Team', amLabel: 'ቡድናችን', href: '#team' },
-  { label: 'Branches', amLabel: 'ቅርንጫፎች', href: '#branches' },
+  { label: 'Head Office', amLabel: 'ዋና መሥሪያ ቤት', href: '#branches' },
   { label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች', href: '#jobs' },
   { label: 'Blog', amLabel: 'ብሎግ', href: '#insights' },
   { label: 'Contact', amLabel: 'ያግኙን', href: '#contact' },
@@ -40,7 +40,7 @@ export const SOCIALS = [
 
 export const STATS = [
   { value: 7, suffix: '+', label: 'Years delivering quality', amLabel: 'ዓመታት በስኬት' },
-  { value: 7, suffix: '', label: 'Branches nationwide', amLabel: 'ቅርንጫፎች' },
+  { value: 100, suffix: '%', label: 'Mill test certified', amLabel: 'የተረጋገጠ ጥራት' },
   { value: 9, suffix: '', label: 'Certified bar sizes', amLabel: 'የብረት ዓይነቶች' },
   { value: 98, suffix: '%', label: 'Satisfied contractors', amLabel: 'ረክተው የወጡ ደንበኞች' },
 ];
@@ -100,7 +100,10 @@ export interface RebarSizeSpec {
   amDescription: string;
   diameter: string;
   mm: number;
-  pcsPerKg: number | string;
+  weightPer12mKg: number | string;
+  unitWeightKgM: string;
+  pcsPerKg: number | string; // legacy alias for backward compatibility
+  pcsPerQuintal: string;
   application: string;
 }
 
@@ -111,7 +114,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'ስታፋ 6ሚሜ የብረት ጥቅል',
     diameter: '6mm',
     mm: 6,
-    pcsPerKg: 'Coil / Variable',
+    weightPer12mKg: 'Coil / Variable',
+    unitWeightKgM: '0.222 kg/m',
+    pcsPerKg: 'Variable',
+    pcsPerQuintal: 'Coil bundle',
     application: 'Column stirrups, structural links, tie rings',
   },
   {
@@ -120,7 +126,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 8ሚሜ',
     diameter: '8mm',
     mm: 8,
+    weightPer12mKg: 4.74,
+    unitWeightKgM: '0.395 kg/m',
     pcsPerKg: 4.74,
+    pcsPerQuintal: '~21 pcs / quintal',
     application: 'Slab distribution bars, stairways, light foundations',
   },
   {
@@ -129,7 +138,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 10ሚሜ',
     diameter: '10mm',
     mm: 10,
+    weightPer12mKg: 7.404,
+    unitWeightKgM: '0.617 kg/m',
     pcsPerKg: 7.404,
+    pcsPerQuintal: '~13.5 pcs / quintal',
     application: 'Floor slabs, grade beams, lintels, retaining walls',
   },
   {
@@ -138,7 +150,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 12ሚሜ',
     diameter: '12mm',
     mm: 12,
+    weightPer12mKg: 10.656,
+    unitWeightKgM: '0.888 kg/m',
     pcsPerKg: 10.656,
+    pcsPerQuintal: '~9.4 pcs / quintal',
     application: 'Foundation pads, residential columns, cantilever beams',
   },
   {
@@ -147,7 +162,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 14ሚሜ',
     diameter: '14mm',
     mm: 14,
+    weightPer12mKg: 14.52,
+    unitWeightKgM: '1.210 kg/m',
     pcsPerKg: 14.52,
+    pcsPerQuintal: '~6.9 pcs / quintal',
     application: 'Heavy foundation footings, framed structures, shear walls',
   },
   {
@@ -156,7 +174,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 16ሚሜ',
     diameter: '16mm',
     mm: 16,
+    weightPer12mKg: 18.96,
+    unitWeightKgM: '1.580 kg/m',
     pcsPerKg: 18.96,
+    pcsPerQuintal: '~5.3 pcs / quintal',
     application: 'Multi-story structural columns, heavy transfer beams',
   },
   {
@@ -165,7 +186,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 20ሚሜ',
     diameter: '20mm',
     mm: 20,
+    weightPer12mKg: 29.64,
+    unitWeightKgM: '2.470 kg/m',
     pcsPerKg: 29.64,
+    pcsPerQuintal: '~3.4 pcs / quintal',
     application: 'High-rise structural columns, bridges, deep footings',
   },
   {
@@ -174,7 +198,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 24ሚሜ',
     diameter: '24mm',
     mm: 24,
+    weightPer12mKg: 42.66,
+    unitWeightKgM: '3.550 kg/m',
     pcsPerKg: 42.66,
+    pcsPerQuintal: '~2.3 pcs / quintal',
     application: 'Heavy commercial towers, mega raft foundations',
   },
   {
@@ -183,7 +210,10 @@ export const REBAR_CONVERSION_TABLE: RebarSizeSpec[] = [
     amDescription: 'የብረት ቆራጭ 32ሚሜ',
     diameter: '32mm',
     mm: 32,
+    weightPer12mKg: 75.72,
+    unitWeightKgM: '6.310 kg/m',
     pcsPerKg: 75.72,
+    pcsPerQuintal: '~1.3 pcs / quintal',
     application: 'Mega infrastructure, deep pile caps, industrial facilities',
   },
 ];
@@ -207,8 +237,8 @@ export const PILLARS = [
     n: '03',
     title: 'Timely Delivery',
     amTitle: 'ወቅቱን የጠበቀ አቅርቦት',
-    copy: 'Construction timelines are non-negotiable. Seven strategically positioned branches ensure prompt dispatch to your site.',
-    amCopy: 'የግንባታ ጊዜ ውድ ነው፤ በ7 ቅርንጫፎቻችን በኩል ወደ ማንኛውም ቦታ በወቅቱ እናደርሳለን።',
+    copy: 'Construction timelines are non-negotiable. Direct logistics dispatch from our central Addis Ababa hub ensures prompt delivery directly to your job site.',
+    amCopy: 'የግንባታ ጊዜ ውድ ነው፤ ከዋናው የአዲስ አበባ ማዕከላችን በቀጥታ ወደ ግንባታ ቦታዎ በወቅቱ እናደርሳለን።',
   },
   {
     n: '04',
@@ -234,95 +264,25 @@ export type Branch = {
   phone: string;
   tel: string;
   address: string;
+  plusCode: string;
   lat: number;
   lng: number;
   mapUrl: string;
-  outside?: boolean;
 };
 
-export const BRANCHES: Branch[] = [
-  {
-    name: 'Head Office (Kazanchis)',
-    amName: 'ዋናው ቢሮ (ካዛንቺስ)',
-    phone: '+251 943 00 00 07',
-    tel: '+251943000007',
-    address: 'Kazanchis Joburg Building, 5th Floor, Addis Ababa',
-    lat: 9.0175,
-    lng: 38.7685,
-    mapUrl: 'https://maps.google.com/maps?q=9.0175,38.7685',
-  },
-  {
-    name: 'Bole',
-    amName: 'ቦሌ',
-    phone: '+251 943 18 18 18',
-    tel: '+251943181818',
-    address: 'Bole Road near Airport Corridor, Addis Ababa',
-    lat: 8.997386,
-    lng: 38.786621,
-    mapUrl: 'https://maps.google.com/maps?q=8.997386,38.786621',
-  },
-  {
-    name: 'Piasa',
-    amName: 'ፒያሳ',
-    phone: '+251 943 00 00 04',
-    tel: '+251943000004',
-    address: 'Piasa Commercial Center, Addis Ababa',
-    lat: 9.029436,
-    lng: 38.751989,
-    mapUrl: 'https://maps.google.com/maps?q=9.029436,38.751989',
-  },
-  {
-    name: 'Lebu',
-    amName: 'ለቡ',
-    phone: '+251 903 69 69 69',
-    tel: '+251903696969',
-    address: 'Lebu Industry & Construction Hub, Addis Ababa',
-    lat: 8.948693,
-    lng: 38.728718,
-    mapUrl: 'https://maps.google.com/maps?q=8.948693,38.728718',
-  },
-  {
-    name: 'Tekelehaimanot',
-    amName: 'ተክለሃይማኖት',
-    phone: '+251 943 17 17 17',
-    tel: '+251943171717',
-    address: 'Tekelehaimanot Building Materials Market, Addis Ababa',
-    lat: 9.026407,
-    lng: 38.741033,
-    mapUrl: 'https://maps.google.com/maps?q=9.026407,38.741033',
-  },
-  {
-    name: 'Megenagna',
-    amName: 'መገናኛ',
-    phone: '+251 943 19 19 19',
-    tel: '+251943191919',
-    address: 'Megenagna Square & Ring Road junction, Addis Ababa',
-    lat: 9.020318,
-    lng: 38.81046,
-    mapUrl: 'https://maps.google.com/maps?q=9.020318,38.810460',
-  },
-  {
-    name: 'Ayat',
-    amName: 'አያት',
-    phone: '+251 943 00 00 06',
-    tel: '+251943000006',
-    address: 'Ayat Real Estate Corridor & Tafo Highway, Addis Ababa',
-    lat: 9.0297,
-    lng: 38.8663,
-    mapUrl: 'https://maps.google.com/maps?q=9.029700,38.866300',
-  },
-  {
-    name: 'Bahirdar',
-    amName: 'ባሕር ዳር',
-    phone: '+251 943 00 00 55',
-    tel: '+251943000055',
-    address: 'Bahirdar Regional Depot, Amhara Region',
-    lat: 11.5936,
-    lng: 37.3908,
-    mapUrl: 'https://goo.gl/maps/juCZuxgsxVUHky8r5',
-    outside: true,
-  },
-];
+export const HEAD_OFFICE: Branch = {
+  name: 'Kazanchis Head Office',
+  amName: 'የካዛንቺስ ዋና መሥሪያ ቤት',
+  phone: '+251 943 00 00 07',
+  tel: '+251943000007',
+  address: 'Kazanchis Joburg Bldg, 5th Floor, Addis Ababa',
+  plusCode: '2Q7F+J6X',
+  lat: 9.0175,
+  lng: 38.7685,
+  mapUrl: 'https://maps.google.com/maps?q=9.0175,38.7685',
+};
+
+export const BRANCHES: Branch[] = [HEAD_OFFICE];
 
 export const TEAM = [
   {
