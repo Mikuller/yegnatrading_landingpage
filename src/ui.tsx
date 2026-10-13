@@ -51,7 +51,7 @@ export function SectionHead({
         </p>
       </Reveal>
       <Reveal delay={0.08}>
-        <h2 className="font-display mt-5 text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        <h2 className="font-display headline-elevated text-ink mt-5 text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
           {title}{' '}
           {accent ? <span className="font-serif-i text-gradient-ember pr-2">{accent}</span> : null}
           {after ? <span>{after}</span> : null}
@@ -59,7 +59,7 @@ export function SectionHead({
       </Reveal>
       {sub ? (
         <Reveal delay={0.16}>
-          <p className={`text-mute mt-6 max-w-2xl text-base leading-relaxed sm:text-lg ${align === 'center' ? 'mx-auto' : ''}`}>
+          <p className={`text-mute text-elevated mt-6 max-w-2xl text-base leading-relaxed sm:text-lg ${align === 'center' ? 'mx-auto' : ''}`}>
             {sub}
           </p>
         </Reveal>

@@ -41,7 +41,7 @@ export default function About() {
             />
 
             <Reveal delay={0.15}>
-              <p className="text-mute mt-6 text-base leading-relaxed sm:text-lg">
+              <p className="text-mute text-elevated mt-6 text-base leading-relaxed sm:text-lg">
                 {t(
                   'Yegna Trading PLC is a locally owned Ethiopian business established in 2017 in the center city of Addis Ababa. For more than 7 years, we have been delivering certified steel rebar (Grade 75), portland cement, staffa steel coil, and construction plywood.',
                   'የኛ ትሬዲንግ በ2017 ዓ.ም የተመሠረተ በአዲስ አበባ እምብርት የሚገኝ የሀገር ውስጥ የግንባታ ግብአቶች አቅራቢ ድርጅት ነው። ላለፉት 7+ ዓመታት ደረጃቸውን የጠበቁ ሬባር፣ ሲሚንቶ፣ ስታፋ እና ፕላይዉድ ለኮንስትራክሽን ዘርፍ አስተማማኝ በሆነ መንገድ እያቀረበ ይገኛል።'
@@ -50,7 +50,7 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={0.22}>
-              <p className="text-mute mt-4 text-base leading-relaxed">
+              <p className="text-mute text-elevated mt-4 text-base leading-relaxed">
                 {t(
                   'Our well-experienced staff provides personal, up-front service to commercial contractors, building owners, real estate developers, government & public enterprises, and residential builders nationwide.',
                   'ልምድ ያካበቱ ባለሙያዎቻችን ለግንባታ ተቋራጮች፣ ለሪል እስቴት አልሚዎች፣ ለመንግሥትና የግል ተቋማት እንዲሁም ለግለሰቦች ፈጣን እና ቀጥተኛ አገልግሎት ይሰጣሉ።'
@@ -61,7 +61,7 @@ export default function About() {
             {/* Mission & Vision Cards */}
             <Reveal delay={0.3}>
               <div className="border-line mt-8 grid grid-cols-1 gap-5 border-t pt-8 sm:grid-cols-2">
-                <div className="border-line bg-panel/80 rounded-2xl border p-5 shadow-sm">
+                <div className="border-line bg-panel/95 card-glow backdrop-blur-xl rounded-2xl border p-5 shadow-md">
                   <div className="flex items-center gap-2">
                     <Target className="text-ember h-4 w-4" />
                     <p className="font-display text-ember text-xs font-bold tracking-[0.2em] uppercase">
@@ -76,7 +76,7 @@ export default function About() {
                   </p>
                 </div>
 
-                <div className="border-line bg-panel/80 rounded-2xl border p-5 shadow-sm">
+                <div className="border-line bg-panel/95 card-glow backdrop-blur-xl rounded-2xl border p-5 shadow-md">
                   <div className="flex items-center gap-2">
                     <Eye className="text-ember h-4 w-4" />
                     <p className="font-display text-ember text-xs font-bold tracking-[0.2em] uppercase">
@@ -95,7 +95,7 @@ export default function About() {
 
             {/* Business Principle & Download Profile */}
             <Reveal delay={0.38}>
-              <div className="border-line bg-panel2/60 mt-6 rounded-2xl border p-5">
+              <div className="border-line bg-panel2/90 card-glow backdrop-blur-xl mt-6 rounded-2xl border p-5">
                 <div className="flex items-center gap-2 text-primary dark:text-amber">
                   <Award className="h-4 w-4 text-ember" />
                   <span className="font-display text-xs font-bold tracking-wider uppercase">

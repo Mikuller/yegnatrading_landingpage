@@ -141,8 +141,8 @@ export default function Nav() {
       <div
         className={`transition-all duration-400 ${
           scrolled
-            ? 'border-line bg-panel/90 shadow-md backdrop-blur-xl border-b'
-            : 'border-b border-line/40 bg-panel/60 backdrop-blur-md'
+            ? 'border-line bg-panel/95 shadow-lg backdrop-blur-2xl border-b'
+            : 'border-b border-line/40 bg-panel/85 backdrop-blur-xl'
         }`}
       >
         <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-5 sm:px-8">

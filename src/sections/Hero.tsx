@@ -90,7 +90,7 @@ function RealRebarCard() {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
         whileHover={shouldReduceMotion ? {} : { scale: 1.015 }}
-        className="border-line bg-panel/90 dark:bg-panel/75 card-glow relative overflow-hidden rounded-3xl border p-6 shadow-2xl backdrop-blur-xl sm:p-9 transition-colors duration-500"
+        className="border-line bg-panel/96 dark:bg-panel/92 card-glow relative overflow-hidden rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl sm:p-9 transition-colors duration-500"
       >
         {/* Subtle grid texture surface */}
         <div className="texture-grid absolute inset-0 opacity-40 dark:opacity-60" aria-hidden />
@@ -385,7 +385,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Main Headline */}
-          <h1 className="font-display text-ink mt-6 text-[clamp(2.7rem,7.5vw,5.6rem)] leading-[1.02] font-extrabold tracking-[-0.02em]">
+          <h1 className="font-display headline-elevated text-ink mt-6 text-[clamp(2.7rem,7.5vw,5.6rem)] leading-[1.02] font-extrabold tracking-[-0.02em]">
             <HeadlineWord word={t('FOR A', 'ለተሻለ')} delay={0.35} />{' '}
             <span className="text-gradient-ember inline-block pr-2">
               <HeadlineWord word={t('STRONGER', 'ጠንካራ')} delay={0.45} />
@@ -400,7 +400,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
-            className="text-primary dark:text-amber font-display mt-4 text-base font-semibold tracking-wide sm:text-lg"
+            className="text-primary dark:text-amber font-display text-elevated mt-4 text-base font-semibold tracking-wide sm:text-lg"
           >
             {t(
               "We're your best partner for building a better future.",
@@ -412,7 +412,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.82, ease: EASE }}
-            className="text-mute mt-4 max-w-xl text-sm leading-relaxed sm:text-base"
+            className="text-mute text-elevated mt-4 max-w-xl text-sm leading-relaxed sm:text-base"
           >
             {t(
               'Yegna Trading supplies legally certified Grade 75 steel rebar, cement, staffa and formwork plywood across Ethiopia. Direct mill supplies, fair weight pricing, and on-time site dispatch.',
@@ -425,7 +425,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.95, ease: EASE }}
-            className="border-line bg-panel2/60 mt-6 grid gap-3 rounded-2xl border p-4 sm:grid-cols-2"
+            className="border-line bg-panel2/90 card-glow backdrop-blur-xl mt-6 grid gap-3 rounded-2xl border p-4 sm:grid-cols-2"
           >
             <div className="flex items-start gap-2.5">
               <Clock className="text-ember mt-0.5 h-4 w-4 shrink-0" />
