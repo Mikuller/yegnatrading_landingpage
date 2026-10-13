@@ -28,10 +28,11 @@ export default function RealisticRebarWeaveBackground({
   );
   const mouseIntensity = useMotionValue<number>(0.14);
 
-  // Ball gliding physics: responsive, silky smooth rolling momentum
-  const springX = useSpring(mouseX, { stiffness: 220, damping: 24, mass: 0.35 });
-  const springY = useSpring(mouseY, { stiffness: 220, damping: 24, mass: 0.35 });
-  const springIntensity = useSpring(mouseIntensity, { stiffness: 160, damping: 20 });
+  // Ball gliding physics: critically-damped, instantaneous & silky luxury momentum
+  // (Zero perceptible latency, zero rubbery overshoot, ultra-smooth 120fps feel)
+  const springX = useSpring(mouseX, { stiffness: 280, damping: 28, mass: 0.28 });
+  const springY = useSpring(mouseY, { stiffness: 280, damping: 28, mass: 0.28 });
+  const springIntensity = useSpring(mouseIntensity, { stiffness: 180, damping: 22 });
 
   // Watch for html.dark class changes
   useEffect(() => {
@@ -71,6 +72,7 @@ export default function RealisticRebarWeaveBackground({
     let prevIntensity = springIntensity.get();
     let smoothVx = 0;
     let smoothVy = 0;
+    let scrollY = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
     let lastTime = performance.now();
     let settledFrames = 0;
 
@@ -95,23 +97,36 @@ export default function RealisticRebarWeaveBackground({
     const BALL_RADIUS_SQ = BALL_RADIUS * BALL_RADIUS;
     const MAX_BALL_ELEVATION = 18; // Tasteful 3D elevation dome height
 
-    // Fast spherical dome height & displacement math
-    const getBallDome = (x: number, y: number, bx: number, by: number, intensity: number) => {
+    // Zero-allocation reusable scratch values for ultra-fast 120 FPS frame math
+    let domeZ = 0;
+    let domeWeight = 0;
+    let domeDx = 0;
+    let domeDy = 0;
+    let domeDist = 0;
+
+    const calcDome = (x: number, y: number, bx: number, by: number, intensity: number): boolean => {
       const dx = x - bx;
       const dy = y - by;
       const distSq = dx * dx + dy * dy;
 
       if (distSq >= BALL_RADIUS_SQ || intensity <= 0.01) {
-        return { z: 0, weight: 0, dx, dy, dist: 999 };
+        domeZ = 0;
+        domeWeight = 0;
+        domeDx = dx;
+        domeDy = dy;
+        domeDist = 999;
+        return false;
       }
 
       const dist = Math.sqrt(distSq);
       const u = dist / BALL_RADIUS;
-      // Smooth spherical dome curve
-      const weight = Math.pow(1 - u * u, 2) * intensity;
-      const z = weight * MAX_BALL_ELEVATION;
-
-      return { z, weight, dx, dy, dist };
+      const weight = (1 - u * u) * (1 - u * u) * intensity;
+      domeWeight = weight;
+      domeZ = weight * MAX_BALL_ELEVATION;
+      domeDx = dx;
+      domeDy = dy;
+      domeDist = dist;
+      return true;
     };
 
     // Frame rendering routine
@@ -124,7 +139,7 @@ export default function RealisticRebarWeaveBackground({
       const curIntensity = springIntensity.get();
       const isDark = document.documentElement.classList.contains('dark');
 
-      // Update gliding ball velocity for subtle directional wake
+      // Update gliding ball velocity for subtle directional lighting bias
       const instantVx = (curX - prevX) / dt;
       const instantVy = (curY - prevY) / dt;
       smoothVx += (instantVx - smoothVx) * 0.25;
@@ -137,63 +152,70 @@ export default function RealisticRebarWeaveBackground({
       // Subdued, architectural palettes that do NOT overpower text
       const p = isDark
         ? {
-            // Dark Mode: Moody, deep architectural steel, non-distracting
-            floorBaseShadow: 'rgba(0, 0, 0, 0.16)',
-            barRim: 'rgba(18, 22, 29, 0.40)',
-            barCoreDark: 'rgba(28, 34, 45, 0.45)',
-            barMidtone: 'rgba(48, 58, 74, 0.45)',
-            barSpecular: 'rgba(110, 125, 148, 0.35)',
-            ribGroove: 'rgba(10, 13, 18, 0.35)',
+            // Dark Mode: Moody, deep architectural carbon steel
+            floorBaseShadow: 'rgba(0, 0, 0, 0.20)',
+            barRim: 'rgba(18, 23, 31, 0.45)',
+            barCoreDark: 'rgba(28, 35, 48, 0.45)',
+            barMidtone: 'rgba(48, 58, 75, 0.45)',
+            barSpecular: 'rgba(110, 126, 150, 0.35)',
+            ribGroove: 'rgba(10, 14, 20, 0.38)',
             ribHighlight: 'rgba(148, 163, 184, 0.28)',
-            // Popped zone (focused, refined amber glints - NOT neon yellow stripes)
-            popBarCore: 'rgba(42, 52, 68, 0.70)',
-            popBarSpecular: 'rgba(226, 232, 240, 0.75)',
+            jointOcclusion: 'rgba(0, 0, 0, 0.50)',
+            // Popped zone: Brushed titanium & platinum sheen with warm champagne/amber caustics
+            popBarCore: 'rgba(42, 53, 70, 0.75)',
+            popBarSpecular: 'rgba(240, 246, 255, 0.85)',
             popRibCrest: 'rgba(226, 232, 240, 0.65)',
             popRibAmberGlint: 'rgba(245, 158, 11, 0.45)',
-            weldNode: 'rgba(45, 53, 66, 0.55)',
+            weldHAZ: 'rgba(15, 20, 28, 0.70)',
+            weldNode: 'rgba(48, 58, 74, 0.60)',
             weldHot: '#f59e0b',
             ballShadow: 'rgba(0, 0, 0, 0.45)',
-            ballHaloInner: 'rgba(245, 124, 0, 0.12)',
+            ballHaloInner: 'rgba(245, 158, 11, 0.10)',
             ballHaloMid: 'rgba(245, 124, 0, 0.025)',
           }
         : {
-            // Light Mode: Architectural blueprint slate steel, clean & legible
-            floorBaseShadow: 'rgba(15, 23, 42, 0.05)',
+            // Light Mode: Architectural blueprint slate & satin stainless steel
+            floorBaseShadow: 'rgba(15, 23, 42, 0.06)',
             barRim: 'rgba(51, 65, 85, 0.22)',
             barCoreDark: 'rgba(71, 85, 105, 0.24)',
             barMidtone: 'rgba(100, 116, 139, 0.22)',
             barSpecular: 'rgba(148, 163, 184, 0.26)',
             ribGroove: 'rgba(30, 41, 59, 0.20)',
             ribHighlight: 'rgba(203, 213, 225, 0.32)',
+            jointOcclusion: 'rgba(15, 23, 42, 0.18)',
             // Popped zone
-            popBarCore: 'rgba(71, 85, 105, 0.60)',
-            popBarSpecular: 'rgba(248, 250, 252, 0.75)',
-            popRibCrest: 'rgba(203, 213, 225, 0.65)',
+            popBarCore: 'rgba(71, 85, 105, 0.65)',
+            popBarSpecular: 'rgba(255, 255, 255, 0.90)',
+            popRibCrest: 'rgba(203, 213, 225, 0.70)',
             popRibAmberGlint: 'rgba(217, 119, 6, 0.40)',
-            weldNode: 'rgba(71, 85, 105, 0.50)',
+            weldHAZ: 'rgba(30, 41, 59, 0.45)',
+            weldNode: 'rgba(71, 85, 105, 0.55)',
             weldHot: '#d97706',
             ballShadow: 'rgba(15, 23, 42, 0.22)',
-            ballHaloInner: 'rgba(180, 83, 9, 0.09)',
+            ballHaloInner: 'rgba(217, 119, 6, 0.08)',
             ballHaloMid: 'rgba(180, 83, 9, 0.02)',
           };
 
+      // Subtle scroll parallax depth (seamless modulo repeat)
+      const scrollShiftY = (scrollY * 0.14) % GRID_SPACING;
+
       const cols = Math.ceil(width / GRID_SPACING) + 2;
-      const rows = Math.ceil(height / GRID_SPACING) + 2;
+      const rows = Math.ceil(height / GRID_SPACING) + 3;
 
       // Active bounding indices for the moderately sized gliding ball
       const minActiveCol = Math.max(0, Math.floor((curX - BALL_RADIUS) / GRID_SPACING));
       const maxActiveCol = Math.min(cols - 1, Math.ceil((curX + BALL_RADIUS) / GRID_SPACING));
-      const minActiveRow = Math.max(0, Math.floor((curY - BALL_RADIUS) / GRID_SPACING));
-      const maxActiveRow = Math.min(rows - 1, Math.ceil((curY + BALL_RADIUS) / GRID_SPACING));
+      const minActiveRow = Math.max(0, Math.floor((curY - BALL_RADIUS - scrollShiftY) / GRID_SPACING));
+      const maxActiveRow = Math.min(rows - 1, Math.ceil((curY + BALL_RADIUS - scrollShiftY) / GRID_SPACING));
 
       // =========================================================================
       // STEP 1: MODERATE GLIDING BALL EFFECT (SHADOW & AURA)
       // Compact, elegant focus radius (~145px) that highlights without blinding
       // =========================================================================
       if (curIntensity > 0.03 && !shouldReduceMotion) {
-        // 1A. Soft 3D Contact Shadow beneath the gliding ball
-        const shadowOffsetX = 7 + smoothVx * 0.01;
-        const shadowOffsetY = 8 + smoothVy * 0.01;
+        // 1A. Soft 3D Contact Shadow beneath the gliding ball with subtle velocity bias
+        const shadowOffsetX = 7 + Math.max(-10, Math.min(10, smoothVx * 0.012));
+        const shadowOffsetY = 8 + Math.max(-10, Math.min(10, smoothVy * 0.012));
         const shadowRad = BALL_RADIUS * 0.72;
 
         const sphereShadow = ctx.createRadialGradient(
@@ -213,7 +235,7 @@ export default function RealisticRebarWeaveBackground({
         ctx.arc(curX + shadowOffsetX, curY + shadowOffsetY, shadowRad, 0, Math.PI * 2);
         ctx.fill();
 
-        // 1B. Luminous Gliding Ball Aura (Soft amber light, non-distracting)
+        // 1B. Luminous Gliding Ball Aura (Soft champagne/amber light, non-distracting)
         const auraRad = BALL_RADIUS * 0.85;
         const ballLight = ctx.createRadialGradient(curX, curY, 8, curX, curY, auraRad);
         ballLight.addColorStop(0, p.ballHaloInner);
@@ -242,7 +264,7 @@ export default function RealisticRebarWeaveBackground({
         ctx.lineTo(x, height + GRID_SPACING);
       }
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING + 3;
+        const y = r * GRID_SPACING + scrollShiftY + 3;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
@@ -279,12 +301,22 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // 2C. Horizontal Rebar Cylinders (Layer 2 - Crossing on top)
+      // 2C. Inter-Layer Contact Occlusion (Horizontal bar casts micro-shadow on Vertical bar)
+      ctx.fillStyle = p.jointOcclusion;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        for (let r = 0; r < rows; r++) {
+          const y = r * GRID_SPACING + scrollShiftY;
+          ctx.fillRect(x - BASE_DIAMETER * 0.45, y - BASE_DIAMETER * 0.45, BASE_DIAMETER * 0.9, BASE_DIAMETER * 0.9);
+        }
+      }
+
+      // 2D. Horizontal Rebar Cylinders (Layer 2 - Crossing on top)
       ctx.beginPath();
       ctx.strokeStyle = p.barRim;
       ctx.lineWidth = BASE_DIAMETER;
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING;
+        const y = r * GRID_SPACING + scrollShiftY;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
@@ -294,7 +326,7 @@ export default function RealisticRebarWeaveBackground({
       ctx.strokeStyle = p.barMidtone;
       ctx.lineWidth = BASE_DIAMETER - 3.5;
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING;
+        const y = r * GRID_SPACING + scrollShiftY;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
@@ -304,13 +336,13 @@ export default function RealisticRebarWeaveBackground({
       ctx.strokeStyle = p.barSpecular;
       ctx.lineWidth = 1.2;
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING - 1.8;
+        const y = r * GRID_SPACING + scrollShiftY - 1.8;
         ctx.moveTo(-GRID_SPACING, y);
         ctx.lineTo(width + GRID_SPACING, y);
       }
       ctx.stroke();
 
-      // 2D. Base Transverse Ribs (Contoured deformed ridges, quiet & subtle)
+      // 2E. Base Transverse Ribs (Contoured deformed ridges, quiet & subtle)
       ctx.beginPath();
       ctx.strokeStyle = p.ribGroove;
       ctx.lineWidth = 1.8;
@@ -322,7 +354,7 @@ export default function RealisticRebarWeaveBackground({
         }
       }
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING;
+        const y = r * GRID_SPACING + scrollShiftY;
         for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
           ctx.moveTo(x - 3, y - 5);
           ctx.quadraticCurveTo(x + 1, y, x + 3, y + 5);
@@ -341,7 +373,7 @@ export default function RealisticRebarWeaveBackground({
         }
       }
       for (let r = 0; r < rows; r++) {
-        const y = r * GRID_SPACING;
+        const y = r * GRID_SPACING + scrollShiftY;
         for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
           ctx.moveTo(x - 3.8, y - 4.5);
           ctx.quadraticCurveTo(x + 0.2, y, x + 2.2, y + 4.5);
@@ -349,23 +381,22 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // Base weld intersection dots
+      // 2F. Base weld intersection dots (Clean welded wire fabric nodes)
       ctx.beginPath();
       ctx.fillStyle = p.weldNode;
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING;
         for (let r = 0; r < rows; r++) {
-          const y = r * GRID_SPACING;
-          ctx.moveTo(x + 2.5, y);
-          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          const y = r * GRID_SPACING + scrollShiftY;
+          ctx.moveTo(x + 2.6, y);
+          ctx.arc(x, y, 2.6, 0, Math.PI * 2);
         }
       }
       ctx.fill();
 
       // =========================================================================
       // STEP 3: TASTEFUL 3D POP DOME (UNDER THE GLIDING BALL ONLY)
-      // Focused, authentic deformed steel look with subtle amber reflection
-      // (NO harsh solid yellow hatching stripes)
+      // Focused, authentic deformed steel look with traveling optical caustics
       // =========================================================================
       if (curIntensity > 0.03 && !shouldReduceMotion) {
         // 3A. Dynamic 3D Drop Shadows on the ball dome
@@ -375,35 +406,31 @@ export default function RealisticRebarWeaveBackground({
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
           for (let y = curY - BALL_RADIUS; y <= curY + BALL_RADIUS; y += 18) {
-            const dome = getBallDome(baseX, y, curX, curY, curIntensity);
-            if (dome.weight <= 0.03) continue;
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight <= 0.03) continue;
 
-            const z = dome.z;
-            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.65);
-            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.65);
-            const sw = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.45);
+            const dirX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.65);
+            const dirY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.65);
+            const sw = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.45);
 
             ctx.rect(baseX + 3 + dirX - sw / 2, y + 4 + dirY, sw, 19);
           }
         }
 
         for (let r = minActiveRow; r <= maxActiveRow; r++) {
-          const baseY = r * GRID_SPACING;
+          const baseY = r * GRID_SPACING + scrollShiftY;
           for (let x = curX - BALL_RADIUS; x <= curX + BALL_RADIUS; x += 18) {
-            const dome = getBallDome(x, baseY, curX, curY, curIntensity);
-            if (dome.weight <= 0.03) continue;
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight <= 0.03) continue;
 
-            const z = dome.z;
-            const dirX = (dome.dx / (dome.dist + 0.1)) * (z * 0.65);
-            const dirY = (dome.dy / (dome.dist + 0.1)) * (z * 0.65);
-            const sh = BASE_DIAMETER * (1 + (z / MAX_BALL_ELEVATION) * 0.45);
+            const dirX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.65);
+            const dirY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.65);
+            const sh = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.45);
 
             ctx.rect(x + 3 + dirX, baseY + 4 + dirY - sh / 2, 19, sh);
           }
         }
         ctx.fill();
 
-        // 3B. Vertical Bars Popping over the Gliding Ball
+        // 3B. Vertical Bars Popping over the Gliding Ball with Traveling Optical Caustics
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
           const segStep = 16;
@@ -413,15 +440,21 @@ export default function RealisticRebarWeaveBackground({
           for (let y = startY; y < endY; y += segStep) {
             const y0 = y;
             const y1 = y + segStep;
-            const dome0 = getBallDome(baseX, y0, curX, curY, curIntensity);
-            const dome1 = getBallDome(baseX, y1, curX, curY, curIntensity);
-            if (dome0.weight <= 0.02 && dome1.weight <= 0.02) continue;
+            const hasDome0 = calcDome(baseX, y0, curX, curY, curIntensity);
+            const z0 = domeZ;
+            const w0 = domeWeight;
+            const flexX0 = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.42);
-            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.42);
+            const hasDome1 = calcDome(baseX, y1, curX, curY, curIntensity);
+            const z1 = domeZ;
+            const w1 = domeWeight;
+            const flexX1 = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            const flexX0 = (dome0.dx / (dome0.dist + 0.1)) * (dome0.z * 0.12);
-            const flexX1 = (dome1.dx / (dome1.dist + 0.1)) * (dome1.z * 0.12);
+            if (!hasDome0 && !hasDome1) continue;
+            if (w0 <= 0.02 && w1 <= 0.02) continue;
+
+            const r0 = (BASE_DIAMETER / 2) * (1 + (z0 / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (z1 / MAX_BALL_ELEVATION) * 0.42);
 
             const x0 = baseX + flexX0;
             const x1 = baseX + flexX1;
@@ -435,19 +468,33 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular ridge line
+            // Traveling Caustic Specular Flare (Glint brightens and flares right at light apex)
+            const midY = (y0 + y1) * 0.5;
+            const distToLight = Math.hypot(baseX - curX, midY - curY);
+            const lightProximity = Math.max(0, 1 - distToLight / (BALL_RADIUS * 0.8));
+
             ctx.strokeStyle = p.popBarSpecular;
-            ctx.lineWidth = 1.6;
+            ctx.lineWidth = 1.4 + lightProximity * 1.2;
             ctx.beginPath();
             ctx.moveTo(x0 - r0 * 0.35, y0);
             ctx.lineTo(x1 - r1 * 0.35, y1);
             ctx.stroke();
+
+            // Diamond-sharp platinum highlight core at closest light proximity
+            if (lightProximity > 0.25) {
+              ctx.strokeStyle = isDark ? '#ffffff' : '#ffffff';
+              ctx.lineWidth = 1.0;
+              ctx.beginPath();
+              ctx.moveTo(x0 - r0 * 0.32, y0);
+              ctx.lineTo(x1 - r1 * 0.32, y1);
+              ctx.stroke();
+            }
           }
         }
 
-        // 3C. Horizontal Bars Popping over the Gliding Ball
+        // 3C. Horizontal Bars Popping over the Gliding Ball with Traveling Optical Caustics
         for (let r = minActiveRow; r <= maxActiveRow; r++) {
-          const baseY = r * GRID_SPACING;
+          const baseY = r * GRID_SPACING + scrollShiftY;
           const segStep = 16;
           const startX = Math.max(-GRID_SPACING, curX - BALL_RADIUS - segStep);
           const endX = Math.min(width + GRID_SPACING, curX + BALL_RADIUS + segStep);
@@ -455,15 +502,21 @@ export default function RealisticRebarWeaveBackground({
           for (let x = startX; x < endX; x += segStep) {
             const x0 = x;
             const x1 = x + segStep;
-            const dome0 = getBallDome(x0, baseY, curX, curY, curIntensity);
-            const dome1 = getBallDome(x1, baseY, curX, curY, curIntensity);
-            if (dome0.weight <= 0.02 && dome1.weight <= 0.02) continue;
+            const hasDome0 = calcDome(x0, baseY, curX, curY, curIntensity);
+            const z0 = domeZ;
+            const w0 = domeWeight;
+            const flexY0 = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            const r0 = (BASE_DIAMETER / 2) * (1 + (dome0.z / MAX_BALL_ELEVATION) * 0.42);
-            const r1 = (BASE_DIAMETER / 2) * (1 + (dome1.z / MAX_BALL_ELEVATION) * 0.42);
+            const hasDome1 = calcDome(x1, baseY, curX, curY, curIntensity);
+            const z1 = domeZ;
+            const w1 = domeWeight;
+            const flexY1 = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            const flexY0 = (dome0.dy / (dome0.dist + 0.1)) * (dome0.z * 0.12);
-            const flexY1 = (dome1.dy / (dome1.dist + 0.1)) * (dome1.z * 0.12);
+            if (!hasDome0 && !hasDome1) continue;
+            if (w0 <= 0.02 && w1 <= 0.02) continue;
+
+            const r0 = (BASE_DIAMETER / 2) * (1 + (z0 / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (z1 / MAX_BALL_ELEVATION) * 0.42);
 
             const y0 = baseY + flexY0;
             const y1 = baseY + flexY1;
@@ -477,30 +530,41 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular ridge line
+            // Traveling Caustic Specular Flare
+            const midX = (x0 + x1) * 0.5;
+            const distToLight = Math.hypot(midX - curX, baseY - curY);
+            const lightProximity = Math.max(0, 1 - distToLight / (BALL_RADIUS * 0.8));
+
             ctx.strokeStyle = p.popBarSpecular;
-            ctx.lineWidth = 1.6;
+            ctx.lineWidth = 1.4 + lightProximity * 1.2;
             ctx.beginPath();
             ctx.moveTo(x0, y0 - r0 * 0.35);
             ctx.lineTo(x1, y1 - r1 * 0.35);
             ctx.stroke();
+
+            if (lightProximity > 0.25) {
+              ctx.strokeStyle = isDark ? '#ffffff' : '#ffffff';
+              ctx.lineWidth = 1.0;
+              ctx.beginPath();
+              ctx.moveTo(x0, y0 - r0 * 0.32);
+              ctx.lineTo(x1, y1 - r1 * 0.32);
+              ctx.stroke();
+            }
           }
         }
 
         // 3D. Contoured Transverse Ribs with Subtle Metallic Amber Glints
-        // (Authentic curved ribs - NO flat solid yellow stripes)
         ctx.beginPath();
         ctx.strokeStyle = p.popRibCrest;
-        ctx.lineWidth = 1.6;
+        ctx.lineWidth = 1.5;
 
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
           for (let y = curY - BALL_RADIUS; y <= curY + BALL_RADIUS; y += RIB_SPACING) {
-            const dome = getBallDome(baseX, y, curX, curY, curIntensity);
-            if (dome.weight < 0.1) continue;
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight < 0.1) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
-            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
             const rx = baseX + flexX;
 
             ctx.moveTo(rx - r * 0.85, y - 3.8);
@@ -509,13 +573,12 @@ export default function RealisticRebarWeaveBackground({
         }
 
         for (let r = minActiveRow; r <= maxActiveRow; r++) {
-          const baseY = r * GRID_SPACING;
+          const baseY = r * GRID_SPACING + scrollShiftY;
           for (let x = curX - BALL_RADIUS; x <= curX + BALL_RADIUS; x += RIB_SPACING) {
-            const dome = getBallDome(x, baseY, curX, curY, curIntensity);
-            if (dome.weight < 0.1) continue;
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight < 0.1) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
-            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
             const ry = baseY + flexY;
 
             ctx.moveTo(x - 3.8, ry - r * 0.85);
@@ -532,11 +595,10 @@ export default function RealisticRebarWeaveBackground({
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const baseX = c * GRID_SPACING;
           for (let y = curY - BALL_RADIUS * 0.6; y <= curY + BALL_RADIUS * 0.6; y += RIB_SPACING) {
-            const dome = getBallDome(baseX, y, curX, curY, curIntensity);
-            if (dome.weight < 0.22) continue;
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight < 0.22) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
-            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
             const rx = baseX + flexX;
 
             ctx.moveTo(rx - r * 0.6, y - 2.5);
@@ -545,13 +607,12 @@ export default function RealisticRebarWeaveBackground({
         }
 
         for (let r = minActiveRow; r <= maxActiveRow; r++) {
-          const baseY = r * GRID_SPACING;
+          const baseY = r * GRID_SPACING + scrollShiftY;
           for (let x = curX - BALL_RADIUS * 0.6; x <= curX + BALL_RADIUS * 0.6; x += RIB_SPACING) {
-            const dome = getBallDome(x, baseY, curX, curY, curIntensity);
-            if (dome.weight < 0.22) continue;
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight < 0.22) continue;
 
-            const r = (BASE_DIAMETER / 2) * (1 + (dome.z / MAX_BALL_ELEVATION) * 0.42);
-            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
             const ry = baseY + flexY;
 
             ctx.moveTo(x - 2.5, ry - r * 0.6);
@@ -560,28 +621,41 @@ export default function RealisticRebarWeaveBackground({
         }
         ctx.stroke();
 
-        // 3E. 3D Elevated Resistance Weld Nodes on the Ball Dome
+        // 3E. 3D Precision Welded Nodes on the Ball Dome with Light-Directed Specular Glint
         for (let c = minActiveCol; c <= maxActiveCol; c++) {
           const ix = c * GRID_SPACING;
           for (let r = minActiveRow; r <= maxActiveRow; r++) {
-            const iy = r * GRID_SPACING;
-            const dome = getBallDome(ix, iy, curX, curY, curIntensity);
-            if (dome.weight < 0.1) continue;
+            const iy = r * GRID_SPACING + scrollShiftY;
+            if (!calcDome(ix, iy, curX, curY, curIntensity) || domeWeight < 0.1) continue;
 
-            const flexX = (dome.dx / (dome.dist + 0.1)) * (dome.z * 0.12);
-            const flexY = (dome.dy / (dome.dist + 0.1)) * (dome.z * 0.12);
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
             const nx = ix + flexX;
             const ny = iy + flexY;
-            const weldR = 3.2 + (dome.z / MAX_BALL_ELEVATION) * 1.2;
+            const weldR = 3.2 + (domeZ / MAX_BALL_ELEVATION) * 1.2;
 
+            // Heat-affected zone collar
             ctx.beginPath();
-            ctx.fillStyle = dome.dist < 65 ? p.weldHot : p.weldNode;
+            ctx.fillStyle = p.weldHAZ;
+            ctx.arc(nx, ny, weldR + 1.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Weld bead core
+            ctx.beginPath();
+            ctx.fillStyle = domeDist < 65 ? p.weldHot : p.weldNode;
             ctx.arc(nx, ny, weldR, 0, Math.PI * 2);
             ctx.fill();
 
+            // Specular gleam offset dynamically towards the light source
+            const lightDirX = curX - nx;
+            const lightDirY = curY - ny;
+            const lightLen = Math.hypot(lightDirX, lightDirY) + 0.1;
+            const glintOffsetX = (lightDirX / lightLen) * (weldR * 0.35);
+            const glintOffsetY = (lightDirY / lightLen) * (weldR * 0.35);
+
             ctx.beginPath();
             ctx.fillStyle = '#ffffff';
-            ctx.arc(nx - 0.7, ny - 0.7, Math.max(0.6, weldR * 0.32), 0, Math.PI * 2);
+            ctx.arc(nx + glintOffsetX, ny + glintOffsetY, Math.max(0.6, weldR * 0.30), 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -597,7 +671,7 @@ export default function RealisticRebarWeaveBackground({
       prevY = curY;
       prevIntensity = curIntensity;
 
-      if (deltaX < 0.06 && deltaY < 0.06 && deltaI < 0.004 && curIntensity <= 0.2) {
+      if (deltaX < 0.05 && deltaY < 0.05 && deltaI < 0.003 && curIntensity <= 0.2) {
         settledFrames++;
       } else {
         settledFrames = 0;
@@ -634,6 +708,13 @@ export default function RealisticRebarWeaveBackground({
     wakeUp();
 
     window.addEventListener('resize', resize, { passive: true });
+
+    // Scroll parallax tracking
+    const handleScroll = () => {
+      scrollY = window.scrollY || 0;
+      wakeUp();
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Global pointer tracking
     const handlePointerMove = (e: PointerEvent) => {
@@ -682,6 +763,7 @@ export default function RealisticRebarWeaveBackground({
         cancelAnimationFrame(animationFrameId);
       }
       window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('touchmove', handleTouchMove);
