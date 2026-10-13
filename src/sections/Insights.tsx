@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUpRight, CalendarDays, ExternalLink, Tag, X } from 'lucide-react';
 import { POSTS } from '../data';
@@ -9,6 +9,15 @@ export default function Insights() {
   const { t } = useApp();
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [activePost, setActivePost] = useState<(typeof POSTS)[number] | null>(null);
+
+  useEffect(() => {
+    if (!activePost) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActivePost(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activePost]);
 
   const categories = ['All', 'Rebar', 'Cement', 'Plywood', 'Offers'];
 
@@ -69,8 +78,17 @@ export default function Insights() {
           {filteredPosts.map((p, i) => (
             <Reveal key={p.id} delay={i * 0.07}>
               <div
+                role="button"
+                tabIndex={0}
+                aria-label={`Read article: ${p.title}`}
                 onClick={() => setActivePost(p)}
-                className="border-line bg-panel card-glow group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border p-6 shadow-sm cursor-pointer"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActivePost(p);
+                  }
+                }}
+                className="border-line bg-panel card-glow group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border p-6 shadow-sm cursor-pointer outline-none focus:ring-2 focus:ring-ember"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -115,6 +133,9 @@ export default function Insights() {
               onClick={() => setActivePost(null)}
             >
               <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="insight-modal-title"
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
@@ -128,13 +149,14 @@ export default function Insights() {
                   <button
                     type="button"
                     onClick={() => setActivePost(null)}
-                    className="border-line text-mute hover:text-ink grid h-8 w-8 place-items-center rounded-full border cursor-pointer"
+                    aria-label={t('Close article modal', 'መስኮቱን ዝጋ')}
+                    className="border-line text-mute hover:text-ink grid h-9 w-9 place-items-center rounded-full border cursor-pointer min-h-[36px]"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 </div>
 
-                <h3 className="font-display text-ink mt-4 text-xl font-bold sm:text-2xl">
+                <h3 id="insight-modal-title" className="font-display text-ink mt-4 text-xl font-bold sm:text-2xl">
                   {activePost.title}
                 </h3>
 
@@ -157,7 +179,7 @@ export default function Insights() {
                     href={activePost.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="bg-ember hover:bg-ember/90 text-white font-display inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold shadow-md"
+                    className="bg-ember hover:bg-ember/90 text-white font-display inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold shadow-md min-h-[44px]"
                   >
                     <span>{t('View Full Article on Live Site', 'ሙሉውን ጽሑፍ በድረ-ገጹ ላይ ይመልከቱ')}</span>
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -165,7 +187,7 @@ export default function Insights() {
                   <button
                     type="button"
                     onClick={() => setActivePost(null)}
-                    className="border-line text-mute hover:text-ink rounded-xl border px-4 py-2 text-xs font-semibold"
+                    className="border-line text-mute hover:text-ink rounded-xl border px-4 py-2 text-xs font-semibold min-h-[44px] cursor-pointer"
                   >
                     {t('Close', 'ዝጋ')}
                   </button>

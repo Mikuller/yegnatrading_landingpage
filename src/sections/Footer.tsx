@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowUpRight, CheckCircle2, Download, Mail, Phone, Send } from 'lucide-react';
-import { BRANCHES, CONTACT, SOCIALS } from '../data';
+import { CONTACT, NAV_LINKS, SOCIALS } from '../data';
 import { Reveal } from '../ui';
 import { useApp } from '../context/AppContext';
 
@@ -52,6 +52,9 @@ export default function Footer() {
                 <img
                   src={theme === 'dark' ? '/images/logo-white.png' : '/images/logo-main.png'}
                   alt="Yegna Trading PLC"
+                  loading="lazy"
+                  width={180}
+                  height={64}
                   className="h-16 w-auto max-w-full sm:h-20 object-contain"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = '/logo-full.png';
@@ -121,7 +124,7 @@ export default function Footer() {
           </div>
         </Reveal>
 
-        {/* Middle Navigation & Branches */}
+        {/* Middle Navigation & Contact Desks */}
         <div className="border-line mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
@@ -156,26 +159,63 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="sm:col-span-2 lg:col-span-3">
+          <div>
             <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
-              {t('Branch Network (7 Locations)', 'የቅርንጫፎች አውታረ መረብ')}
+              {t('Support & Order Desks', 'የቀጥታ ስልክ መስመሮች')}
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
-              {BRANCHES.map((b) => (
+            <div className="mt-3 space-y-2.5">
+              {CONTACT.phones.map((p) => (
                 <a
-                  key={b.name}
-                  href={`tel:${b.tel}`}
-                  className="group rounded-xl border border-line/60 bg-panel/50 p-2.5 transition-all hover:border-ember/50 hover:bg-panel"
+                  key={p.number}
+                  href={`tel:${p.tel}`}
+                  className="group block text-xs"
                 >
-                  <span className="group-hover:text-ember block font-bold text-xs transition-colors text-ink">
-                    {t(b.name, b.amName)}
-                  </span>
-                  <span className="text-mute text-[0.68rem] font-mono tabular-nums block mt-0.5">
-                    {b.phone}
+                  <span className="text-mute block text-[0.7rem]">{p.label}</span>
+                  <span className="text-ink font-mono font-semibold group-hover:text-ember transition-colors">
+                    {p.number}
                   </span>
                 </a>
               ))}
             </div>
+          </div>
+
+          <div>
+            <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
+              {t('Hours & Dispatch', 'የሥራ ሰዓትና አቅርቦት')}
+            </p>
+            <div className="mt-3 space-y-2 text-xs">
+              {CONTACT.hours.map((h) => (
+                <div key={h.day}>
+                  <span className="text-ink font-semibold block">{h.day}</span>
+                  <span className="text-mute block text-[0.72rem]">{h.time}</span>
+                </div>
+              ))}
+              <div className="border-t border-line/60 pt-2.5 mt-2.5">
+                <span className="text-ember font-semibold block">{t('Nationwide Dispatch', 'አገር አቀፍ አቅርቦት')}</span>
+                <span className="text-mute block text-[0.72rem] mt-0.5">
+                  {t('Direct delivery to job sites across Ethiopia', 'ወደ ማንኛውም የሥራ ቦታ ፈጣን አቅርቦት')}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p className="font-display text-[0.68rem] font-bold tracking-[0.25em] text-ember uppercase">
+              {t('Navigation', 'ፈጣን ማውጫ')}
+            </p>
+            <ul className="mt-3 space-y-2 text-xs">
+              {NAV_LINKS.slice(1, 8).map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-mute hover:text-ember transition-colors flex items-center justify-between"
+                  >
+                    <span>{t(link.label, link.amLabel)}</span>
+                    <ArrowUpRight className="h-3 w-3 opacity-60" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

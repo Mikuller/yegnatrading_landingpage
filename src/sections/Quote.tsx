@@ -162,8 +162,8 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
               title={t('Any Quantity, Any Size', 'በማንኛውም መጠንና ልኬት')}
               accent={t('Delivered Anywhere!', 'ወደ የትኛውም ቦታ እናደርሳለን!')}
               sub={t(
-                'Please enter your message and our supply solutions representative will contact you within 24–48 business hours with verified pricing.',
-                'መልክትዎን ያስቀምጡ፤ የሽያጭ ባለሙያዎቻችን በ24–48 የሥራ ሰዓታት ውስጥ ትክክለኛውን ዋጋ ይዘው በስልክ ያነጋግሩዎታል።'
+                'Submit your bill of quantities below. Our sales desk responds within 1–2 hours during business hours (Mon–Sat) with verified rates and site delivery schedules. For immediate pour scheduling, call our direct hotlines.',
+                'የግንባታ ፍላጎትዎን ከታች ያስገቡ፤ የሽያጭ ባለሙያዎቻችን በሥራ ሰዓት ከ1–2 ሰዓታት ውስጥ ትክክለኛውን ዋጋ እና የማጓጓዣ መርሃ-ግብር ይዘው ያነጋግሩዎታል። ለአስቸኳይ ትዕዛዝ በቀጥታ ስልክ ይደውሉ።'
               )}
             />
 
@@ -281,8 +281,8 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                         {summary ? `“${summary}”` : ''}
                         <br />
                         {t(
-                          'A Yegna Trading supply representative will contact you via phone or email within 24–48 business hours with official rates.',
-                          'የኛ ትሬዲንግ የሽያጭ ባለሙያ በ24–48 የሥራ ሰዓታት ውስጥ በስልክ ወይም በኢሜይል ያነጋግርዎታል።'
+                          'A Yegna Trading supply representative will contact you via phone or email within 1–2 hours during business hours with official rates and truck dispatch options.',
+                          'የኛ ትሬዲንግ የሽያጭ ባለሙያ በሥራ ሰዓት ከ1–2 ሰዓታት ውስጥ በስልክ ወይም በኢሜይል ፈጣን ምላሽ ይሰጥዎታል።'
                         )}
                       </p>
                       <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -290,7 +290,7 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                           href={tgHref}
                           target="_blank"
                           rel="noreferrer"
-                          className="bg-ember text-white rounded-xl px-5 py-2.5 text-xs font-bold shadow-md inline-flex items-center gap-2"
+                          className="bg-ember text-white rounded-xl px-5 py-2.5 text-xs font-bold shadow-md inline-flex items-center gap-2 min-h-[44px]"
                         >
                           <Send className="h-3.5 w-3.5" />
                           <span>{t('Chat on Telegram Now', 'በቴሌግራም ያናግሩን')}</span>
@@ -298,7 +298,7 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                         <button
                           type="button"
                           onClick={() => setStatus('idle')}
-                          className="border-line bg-panel2 text-ink rounded-xl border px-5 py-2.5 text-xs font-semibold"
+                          className="border-line bg-panel2 text-ink rounded-xl border px-5 py-2.5 text-xs font-semibold min-h-[44px]"
                         >
                           {t('Submit Another Request', 'ሌላ ጥያቄ ያስገቡ')}
                         </button>
@@ -311,25 +311,28 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                           <ShoppingCart className="h-4 w-4" />
                           {t('Request Price Quotation', 'የዋጋ መጠየቂያ ቅጽ')}
                         </p>
-                        <span className="text-mute text-[0.7rem]">
-                          {t('Fast 24h Response', 'በ24 ሰዓት ምላሽ')}
+                        <span className="text-mute text-[0.7rem] font-medium">
+                          {t('Fast 1–2h Response', 'ፈጣን የ1-2 ሰዓት ምላሽ')}
                         </span>
                       </div>
 
                       {/* Step 1: Product & Size */}
-                      <div>
-                        <p className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold">
+                      <fieldset className="border-0 p-0 m-0">
+                        <legend className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold">
                           <span className={stepNumCls}>1</span>
                           {t('Select Material & Diameter', 'የእቃውን ዓይነትና መጠን ይምረጡ')}
-                        </p>
+                        </legend>
 
-                        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" role="radiogroup" aria-label="Product categories">
                           {PRODUCTS.map((p) => (
                             <button
                               key={p.id}
                               type="button"
+                              role="radio"
+                              aria-checked={productId === p.id}
+                              aria-label={t(p.name, p.amName)}
                               onClick={() => switchProduct(p.id)}
-                              className={`flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border p-2.5 transition-all ${
+                              className={`flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border p-2.5 transition-all min-h-[58px] ${
                                 productId === p.id
                                   ? 'border-ember bg-ember/15 text-ember font-bold shadow-sm'
                                   : 'border-line bg-panel2/60 text-mute hover:border-ember/40 hover:text-ink'
@@ -344,13 +347,16 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                         </div>
 
                         {/* Sizes */}
-                        <div className="mt-3 flex flex-wrap gap-1.5">
+                        <div className="mt-3 flex flex-wrap gap-1.5" role="group" aria-label="Available specifications">
                           {product.sizes.map((s) => (
                             <button
                               key={s}
                               type="button"
+                              role="checkbox"
+                              aria-checked={sizes.includes(s)}
+                              aria-label={`Select diameter ${s}`}
                               onClick={() => toggleSize(s)}
-                              className={`rounded-full border px-3 py-1 text-xs font-semibold transition-all cursor-pointer ${
+                              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer min-h-[36px] ${
                                 sizes.includes(s)
                                   ? 'border-ember bg-ember text-white shadow-sm'
                                   : 'border-line bg-panel2/60 text-mute hover:border-ember/40 hover:text-ink'
@@ -361,77 +367,110 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
                           ))}
                         </div>
 
-                        <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                          <div className="relative">
-                            <Package className="text-mute pointer-events-none absolute left-3.5 top-3.5 h-4 w-4" />
-                            <input
-                              value={quantity}
-                              onChange={(e) => setQuantity(e.target.value)}
-                              placeholder={t('Quantity (e.g. 15 tons, 200 pcs)', 'ብዛት (ምሳሌ፡ 15 ቶን)')}
-                              className={`${inputCls} pl-10`}
-                            />
+                        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                          <div>
+                            <label htmlFor="quote-quantity" className="block text-xs font-semibold text-ink mb-1.5">
+                              {t('Quantity & Measurement Unit *', 'የሚፈለገው መጠንና መለኪያ *')}
+                            </label>
+                            <div className="relative">
+                              <Package className="text-mute pointer-events-none absolute left-3.5 top-3.5 h-4 w-4" />
+                              <input
+                                id="quote-quantity"
+                                required
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                placeholder={t('e.g. 25 Quintals, 10 Tons, or 500 Pcs', 'ምሳሌ፡ 25 ኩንታል፣ 10 ቶን ወይም 500 ብረት')}
+                                className={`${inputCls} pl-10`}
+                              />
+                            </div>
                           </div>
-                          <div className="relative">
-                            <MapPin className="text-mute pointer-events-none absolute left-3.5 top-3.5 h-4 w-4" />
-                            <input
-                              value={location}
-                              onChange={(e) => setLocation(e.target.value)}
-                              placeholder={t('Delivery site / city', 'የማድረሻ ቦታ (አድራሻ)')}
-                              className={`${inputCls} pl-10`}
-                            />
+                          <div>
+                            <label htmlFor="quote-location" className="block text-xs font-semibold text-ink mb-1.5">
+                              {t('Delivery Site / Project Location *', 'የማድረሻ ቦታ / ፕሮጀክት አድራሻ *')}
+                            </label>
+                            <div className="relative">
+                              <MapPin className="text-mute pointer-events-none absolute left-3.5 top-3.5 h-4 w-4" />
+                              <input
+                                id="quote-location"
+                                required
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                placeholder={t('e.g. Bole Atlas, Lebu, Ayat, Bahirdar…', 'ምሳሌ፡ ቦሌ አትላስ፣ ለቡ፣ አያት፣ ባሕር ዳር…')}
+                                className={`${inputCls} pl-10`}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </fieldset>
 
                       {/* Step 2: Contact Info */}
-                      <div className="border-t border-line pt-4">
-                        <p className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold">
+                      <fieldset className="border-t border-line pt-4 border-0 p-0 m-0">
+                        <legend className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold">
                           <span className={stepNumCls}>2</span>
                           {t('Your Contact Information', 'የእርስዎ አድራሻ')}
-                        </p>
-                        <div className="mt-3 grid gap-2.5 sm:grid-cols-3">
-                          <input
-                            required
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder={t('Full Name *', 'ሙሉ ስም *')}
-                            className={inputCls}
-                          />
-                          <input
-                            required
-                            type="tel"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder={t('Phone Number *', 'ስልክ ቁጥር *')}
-                            className={inputCls}
-                          />
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder={t('Email (optional)', 'ኢሜይል (አስፈላጊ ከሆነ)')}
-                            className={inputCls}
-                          />
+                        </legend>
+                        <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                          <div>
+                            <label htmlFor="quote-name" className="block text-xs font-semibold text-ink mb-1.5">
+                              {t('Full Name *', 'ሙሉ ስም *')}
+                            </label>
+                            <input
+                              id="quote-name"
+                              required
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder={t('Ato Abebe / Eng. Sara', 'አቶ አበበ / ኢንጂነር ሳራ')}
+                              className={inputCls}
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="quote-phone" className="block text-xs font-semibold text-ink mb-1.5">
+                              {t('Phone Number *', 'ስልክ ቁጥር *')}
+                            </label>
+                            <input
+                              id="quote-phone"
+                              required
+                              type="tel"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              placeholder="+251 9... / 09..."
+                              className={inputCls}
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="quote-email" className="block text-xs font-semibold text-ink mb-1.5">
+                              {t('Email Address (Optional)', 'ኢሜይል (አማራጭ)')}
+                            </label>
+                            <input
+                              id="quote-email"
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="contractor@example.com"
+                              className={inputCls}
+                            />
+                          </div>
                         </div>
-                      </div>
+                      </fieldset>
 
                       {/* Step 3: Message / Note */}
-                      <div className="border-t border-line pt-4">
-                        <p className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold">
+                      <fieldset className="border-t border-line pt-4 border-0 p-0 m-0">
+                        <label htmlFor="quote-note" className="font-display text-ink flex items-center gap-2 text-xs sm:text-sm font-bold mb-2 cursor-pointer">
                           <span className={stepNumCls}>3</span>
-                          {t('Message or Project Note', 'ተጨማሪ መልእክት ወይም ማስታወሻ')}
-                        </p>
+                          {t('Message, Bar Bending Schedule (BBS) or Pour Timeline', 'ተጨማሪ መልእክት ወይም ማስታወሻ')}
+                        </label>
                         <textarea
+                          id="quote-note"
                           rows={2}
                           value={note}
                           onChange={(e) => setNote(e.target.value)}
                           placeholder={t(
-                            'Enter specific project requirements, timeline, delivery schedule…',
+                            'Enter specific project requirements, bar bending schedule specifications, delivery timeline…',
                             'የግንባታ ዝርዝር፣ የሚፈለግበት ጊዜ ወይም ልዩ ማስታወሻ…'
                           )}
-                          className={`${inputCls} mt-2 resize-none`}
+                          className={`${inputCls} resize-none`}
                         />
-                      </div>
+                      </fieldset>
 
                       {/* Summary pill */}
                       <div className="border-ember/30 bg-ember/10 flex items-center gap-2 rounded-xl border px-3.5 py-2 text-xs text-ink">

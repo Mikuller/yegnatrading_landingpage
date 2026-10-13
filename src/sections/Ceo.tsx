@@ -21,16 +21,19 @@ export default function Ceo() {
                   <div className="bg-ember/20 absolute -inset-2 rounded-2xl blur-lg transition-opacity group-hover:opacity-100" />
                   <img
                     src="/images/ceo.jpg"
-                    alt="Temesgen Alemayehu — Chief Executive Officer of Yegna Trading PLC"
+                    alt="Ato Zelalem Alene — General Manager of Yegna Trading PLC"
+                    loading="lazy"
+                    width={176}
+                    height={192}
                     className="border-line relative h-48 w-44 rounded-2xl object-cover object-top border shadow-md"
                   />
                 </div>
                 <div className="mt-4 text-center">
                   <h3 className="font-display text-ink text-base font-bold">
-                    Temesgen Alemayehu
+                    {t('Ato Zelalem Alene', 'አቶ ዘላለም አለነ')}
                   </h3>
                   <p className="text-ember text-xs font-semibold tracking-wider uppercase">
-                    {t('Chief Executive Officer', 'ዋና ሥራ አስፈፃሚ (CEO)')}
+                    {t('General Manager & Founder', 'ዋና ሥራ አስኪያጅና መሥራች')}
                   </p>
                   <p className="text-mute text-[0.7rem]">Yegna Trading PLC</p>
                 </div>
@@ -41,7 +44,7 @@ export default function Ceo() {
                 <Quote className="text-ember/30 absolute -top-4 -left-2 h-12 w-12 md:left-6 md:-top-4" />
                 <div className="relative z-10">
                   <span className="font-display text-ember text-[0.68rem] font-bold tracking-[0.28em] uppercase">
-                    {t('Executive Message', 'የዋና ሥራ አስፈፃሚው መልእክት')}
+                    {t('Leadership Message', 'የሥራ አመራር መልእክት')}
                   </span>
 
                   <blockquote className="text-ink mt-3 text-base sm:text-lg leading-relaxed font-medium">

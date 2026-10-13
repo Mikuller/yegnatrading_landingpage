@@ -11,15 +11,15 @@ export default function Marquee() {
     t('Any Quantity', 'በማንኛውም መጠን'),
     t('Any Size', 'በማንኛውም ልኬት'),
     t('Delivered Anywhere', 'የትም ቦታ እናደርሳለን'),
-    t('7 Nationwide Branches', '7 ቅርንጫፎች'),
+    t('Kazanchis Joburg Bldg (2Q7F+J6X)', 'ካዛንቺስ ጆበርግ ሕንፃ (2Q7F+J6X)'),
   ];
 
   const row = [...items, ...items];
 
   return (
-    <section aria-hidden className="relative z-10 -my-2 overflow-hidden">
-      <div className="rotate-[-1.2deg] scale-[1.02]">
-        <div className="bg-ember text-white flex overflow-hidden py-3.5 shadow-[0_0_35px_rgba(245,124,0,0.3)]">
+    <section aria-hidden className="relative z-10 my-0 overflow-hidden border-y border-line/40">
+      <div className="w-full">
+        <div className="bg-ember text-white flex overflow-hidden py-3 shadow-md">
           <div className="animate-marquee flex shrink-0 items-center">
             {row.map((item, i) => (
               <span key={i} className="font-display flex items-center text-xs sm:text-sm font-bold tracking-[0.18em] whitespace-nowrap uppercase">

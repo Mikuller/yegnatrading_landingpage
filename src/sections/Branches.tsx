@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { ExternalLink, MapPin, Navigation, Phone } from 'lucide-react';
-import { BRANCHES, type Branch } from '../data';
-import { EASE, Reveal, SectionHead } from '../ui';
+import { ExternalLink, MapPin, Navigation, Phone, Clock, Truck, ShieldCheck } from 'lucide-react';
+import { CONTACT, HEAD_OFFICE } from '../data';
+import { Reveal, SectionHead } from '../ui';
 import { useApp } from '../context/AppContext';
 
 export default function Branches() {
   const { t } = useApp();
-  const [selected, setSelected] = useState<Branch>(BRANCHES[0]);
 
   return (
     <section id="branches" className="texture-noise relative overflow-hidden py-24 sm:py-32">
@@ -17,128 +14,150 @@ export default function Branches() {
       />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHead
-          eyebrow={t('Branch Network', 'የቅርንጫፎች አውታረ መረብ')}
-          title={t('Seven Branches Ready', '7 ቅርንጫፎች በተሟላ ስቶክ')}
-          accent={t('To Supply Your Site.', 'ለእርስዎ ዝግጁ ናቸው።')}
+          eyebrow={t('Central Headquarters & Location', 'ዋና መሥሪያ ቤትና መገኛ')}
+          title={t('Kazanchis Head Office', 'የካዛንቺስ ዋና መሥሪያ ቤት')}
+          accent={t('Joburg Building, 5th Floor.', 'ጆበርግ ሕንፃ 5ኛ ፎቅ።')}
           sub={t(
-            'From Addis Ababa commercial hubs to our regional depot in Bahirdar — pick up directly or arrange fast transport to your project.',
-            'በአዲስ አበባ ዋና ዋና የንግድ ማዕከላት እንዲሁም በባሕር ዳር ባሉን ቅርንጫፎች በኩል ምርቱን በቦታው ይረከቡ ወይም በፈጣን ማጓጓዣ ወደ ግንባታ ቦታዎ እንልካለን።'
+            'Our sole active headquarters coordinates all procurement, client agreements, mill test verifications, and direct heavy logistics dispatch across Ethiopia.',
+            'ዋናውና ንቁ የሥራ መሥሪያ ቤታችን፤ ማንኛውንም የግንባታ ውል፣ የጥራት ማረጋገጫ ሰነዶችና የቀጥታ የትራንስፖርት አቅርቦት የሚያስተባብርበት ማዕከል ነው።'
           )}
         />
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-start">
-          {/* Branch Grid Selector */}
-          <div className="grid gap-3.5 sm:grid-cols-2">
-            {BRANCHES.map((b) => {
-              const isActive = selected.name === b.name;
-              return (
-                <button
-                  key={b.name}
-                  type="button"
-                  onClick={() => setSelected(b)}
-                  className={`border-line text-left rounded-2xl border p-5 transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-panel border-ember shadow-lg ring-1 ring-ember/40'
-                      : 'bg-panel/70 hover:bg-panel hover:border-ember/40'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="text-ember text-[0.68rem] font-bold tracking-wider uppercase">
-                        {b.outside
-                          ? t('Regional Branch', 'የክልል ቅርንጫፍ')
-                          : b.name.includes('Head')
-                          ? t('Headquarters', 'ዋናው መሥሪያ ቤት')
-                          : t('Addis Ababa Branch', 'የአዲስ አበባ ቅርንጫፍ')}
-                      </span>
-                      <h4 className="font-display text-ink mt-1 text-base font-bold">
-                        {t(b.name, b.amName)}
-                      </h4>
-                    </div>
-                    <MapPin
-                      className={`h-4 w-4 ${isActive ? 'text-ember' : 'text-mute'}`}
-                    />
-                  </div>
-
-                  <p className="text-mute mt-2 text-xs line-clamp-1">{b.address}</p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-line/60 pt-3">
-                    <span className="text-ink font-mono text-xs font-semibold">
-                      {b.phone}
-                    </span>
-                    <span
-                      className={`text-[0.7rem] font-bold ${
-                        isActive ? 'text-ember' : 'text-mute'
-                      }`}
-                    >
-                      {isActive ? t('Selected', 'የተመረጠ') : t('View Details', 'ዝርዝር እይ')}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active Branch Focus Card with Directions & Map */}
-          <Reveal delay={0.15}>
-            <div className="border-line bg-panel card-glow relative overflow-hidden rounded-3xl border p-7 sm:p-9 shadow-xl">
-              <div className="texture-grid absolute inset-0 opacity-30" aria-hidden />
+        <div className="mt-14 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-stretch">
+          {/* Active Head Office Focus Card */}
+          <Reveal delay={0.1}>
+            <div className="border-line bg-panel card-glow relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border p-7 sm:p-9 shadow-xl">
+              <div className="texture-grid absolute inset-0 opacity-20 pointer-events-none" aria-hidden />
 
               <div className="relative">
-                <div className="flex items-center justify-between">
-                  <span className="bg-ember/15 text-ember rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                    {selected.outside ? 'Regional Center' : 'Addis Ababa Hub'}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <span className="bg-ember/15 text-ember rounded-full px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
+                    {t('Sole Active Headquarters', 'ብቸኛው ንቁ ዋና መሥሪያ ቤት')}
                   </span>
-                  <Navigation className="text-ember h-5 w-5" />
+                  <div className="flex items-center gap-1.5 text-xs font-mono text-ember font-bold">
+                    <Navigation className="h-4 w-4" />
+                    <span>2Q7F+J6X</span>
+                  </div>
                 </div>
 
                 <h3 className="font-display text-ink mt-4 text-2xl font-bold sm:text-3xl">
-                  {t(selected.name, selected.amName)}
+                  {t('Kazanchis Joburg Building', 'ካዛንቺስ ጆበርግ ሕንፃ')}
                 </h3>
-                <p className="text-mute mt-2 text-sm leading-relaxed">{selected.address}</p>
+                <p className="text-ember text-sm font-semibold mt-1">
+                  {t('5th Floor, Addis Ababa, Ethiopia', '5ኛ ፎቅ፣ አዲስ አበባ፣ ኢትዮጵያ')}
+                </p>
+                <p className="text-mute mt-3 text-xs sm:text-sm leading-relaxed">
+                  {t(
+                    'Conveniently located in the commercial heart of Addis Ababa. Visit our corporate office for bulk contract execution, certified mill test sheets, and direct dispatch arrangements.',
+                    'በአዲስ አበባ የንግድ ማዕከል ካዛንቺስ ይጎብኙን፤ ለጅምላ ውል ስምምነቶች፣ ለምርመራ ሰነዶችና ለቀጥታ አቅርቦት ዝግጁ ነን።'
+                  )}
+                </p>
+
+                {/* Visiting Hours & Contact Desks */}
+                <div className="mt-6 grid gap-3 sm:grid-cols-2 border-y border-line/60 py-5">
+                  <div className="flex items-start gap-3">
+                    <Clock className="h-4 w-4 text-ember shrink-0 mt-0.5" />
+                    <div className="text-xs">
+                      <span className="text-ink font-bold block">{t('Business Hours', 'የሥራ ሰዓት')}</span>
+                      <span className="text-mute block mt-0.5">Mon – Fri: 08:30 AM – 5:30 PM</span>
+                      <span className="text-mute block">Sat: 08:30 AM – 12:30 PM</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <MapPin className="h-4 w-4 text-ember shrink-0 mt-0.5" />
+                    <div className="text-xs">
+                      <span className="text-ink font-bold block">{t('Plus Code & Landmark', 'ፕላስ ኮድና መለያ')}</span>
+                      <span className="font-mono text-ember font-semibold block mt-0.5">2Q7F+J6X, Addis Ababa</span>
+                      <span className="text-mute block">Kazanchis Business Corridor</span>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Direct Action Buttons */}
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <a
-                    href={`tel:${selected.tel}`}
+                    href={`tel:${HEAD_OFFICE.tel}`}
                     className="bg-ember hover:bg-ember/90 text-white font-display inline-flex items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold shadow-md transition-all"
                   >
                     <Phone className="h-4 w-4" />
                     <span>
-                      {t('Call This Branch', 'ለዚህ ቅርንጫፍ ይደውሉ')} ({selected.phone})
+                      {t('Call Head Office', 'ዋናውን ቢሮ ይደውሉ')} ({HEAD_OFFICE.phone})
                     </span>
                   </a>
 
                   <a
-                    href={selected.mapUrl}
+                    href={HEAD_OFFICE.mapUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="border-line bg-panel2 hover:bg-panel text-ink inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-xs font-semibold transition-all"
                   >
                     <ExternalLink className="h-4 w-4 text-ember" />
-                    <span>{t('Get Direction on Google Maps', 'አቅጣጫ በGoogle Maps አሳይ')}</span>
+                    <span>{t('Open in Google Maps', 'አቅጣጫ በGoogle Maps')}</span>
                   </a>
                 </div>
+              </div>
 
-                {/* Interactive Map embed frame preview */}
-                <div className="border-line mt-7 overflow-hidden rounded-2xl border bg-panel2/80">
-                  <iframe
-                    title={`Google Map for ${selected.name}`}
-                    src={`https://maps.google.com/maps?q=${selected.lat},${selected.lng}&hl=en&z=14&output=embed`}
-                    className="h-64 w-full border-0"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
+              {/* Nationwide Dispatch Reassurance */}
+              <div className="relative mt-8 rounded-2xl border border-line/60 bg-panel2/60 p-4">
+                <div className="flex items-start gap-3">
+                  <div className="bg-ember/15 text-ember rounded-lg p-2 shrink-0">
+                    <Truck className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-ink text-xs font-bold">
+                      {t('Nationwide Project Site Dispatch', 'ወደ ማንኛውም የግንባታ ቦታ ቀጥታ ማድረስ')}
+                    </h4>
+                    <p className="text-mute mt-1 text-[0.72rem] leading-relaxed">
+                      {t(
+                        'Although client administration operates centrally from Kazanchis Joburg Building, certified rebar, cement, and materials are dispatched directly from regional depots to your job site across Ethiopia.',
+                        'ምንም እንኳን የቢሮ አስተዳደራችን በካዛንቺስ ጆበርግ ሕንፃ ብቻ የሚገኝ ቢሆንም፣ ምርቶች በቀጥታ ወደ ማንኛውም የግንባታ ቦታዎ በከባድ መኪኖች ይደርሳሉ።'
+                      )}
+                    </p>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </Reveal>
 
-                <div className="mt-4 flex items-center justify-between text-xs text-mute">
-                  <span>
-                    {t('Stock Available: All metric sizes Ø6mm–32mm', 'ስቶክ፡ ሁሉም የሜትሪክ መጠኖች')}
-                  </span>
-                  <span className="font-mono text-ember font-semibold">
-                    GPS: {selected.lat.toFixed(4)}, {selected.lng.toFixed(4)}
+          {/* Interactive Map embed frame preview */}
+          <Reveal delay={0.2}>
+            <div className="border-line bg-panel card-glow relative flex h-full flex-col overflow-hidden rounded-3xl border p-7 sm:p-9 shadow-xl">
+              <div className="flex items-center justify-between pb-4 border-b border-line/60">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-ember" />
+                  <span className="font-display text-ink text-xs font-bold uppercase tracking-wider">
+                    {t('Location Blueprint', 'የመገኛ ካርታ')}
                   </span>
                 </div>
+                <span className="font-mono text-xs text-mute font-semibold">
+                  9.0175° N, 38.7685° E
+                </span>
+              </div>
+
+              <div className="border-line mt-4 flex-1 overflow-hidden rounded-2xl border bg-panel2/80 min-h-[340px]">
+                <iframe
+                  title="Google Map for Kazanchis Joburg Building 5th Floor"
+                  src="https://maps.google.com/maps?q=9.0175,38.7685&hl=en&z=15&output=embed"
+                  className="h-full w-full min-h-[340px] border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-mute">
+                <span>
+                  {t('Kazanchis Joburg Bldg, 5th Floor, Addis Ababa', 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅ')}
+                </span>
+                <a
+                  href={HEAD_OFFICE.mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-ember font-semibold hover:underline inline-flex items-center gap-1"
+                >
+                  <span>{t('View Larger Map', 'ትልቁን ካርታ እይ')}</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
               </div>
             </div>
           </Reveal>
