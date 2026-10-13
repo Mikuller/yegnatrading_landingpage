@@ -28,7 +28,7 @@ const PARTS: Part[] = [
     amTitle: 'ከመሬት ጋር የሚደረግ ጽኑ ትስስር',
     copy: 'Everything the structure carries ends up here. A cage of stout bars spreads the load evenly into the soil — so your building never tells stories with cracks later.',
     amCopy: 'የህንጻው አጠቃላይ ክብደት እዚህ ያርፋል። ጠንካራ የሬባር መዋቅር ክብደቱን ወደ መሬቱ እኩል በማሰራጨት ስንጥቆችን ይከላከላል።',
-    sizes: ['Ø12mm', 'Ø14mm', 'Ø16mm'],
+    sizes: ['12mm', '14mm', '16mm'],
   },
   {
     id: 'column',
@@ -39,7 +39,7 @@ const PARTS: Part[] = [
     amTitle: 'የህንጻው ዋና ደጋፊ ምሰሶ',
     copy: 'Vertical bars tied with close-spaced stirrups take the crushing load floor by floor — and keep the frame standing through wind, quake and time.',
     amCopy: 'በስታፋ የታሰሩ የቁም ብረቶች የፎቆቹን ክብደት በየደረጃው በመሸከም ህንጻውን በንፋስና በመሬት መንቀጥቀጥ ጸንቶ እንዲቆም ያደርጉታል።',
-    sizes: ['Ø16mm', 'Ø20mm', 'Ø24mm'],
+    sizes: ['16mm', '20mm', '24mm'],
   },
   {
     id: 'beam',
@@ -50,7 +50,7 @@ const PARTS: Part[] = [
     amTitle: 'በአምዶች መካከል ያለ ድልድይ',
     copy: 'Top bars hug the compression zone while bottom steel fights bending — the quiet teamwork that keeps spans open and sag-free.',
     amCopy: 'የላይኛውና የታችኛው የብረት አደራደር መተጣጠፍን በመቋቋም ሰፋፊ ክፍተቶች ያለምንም ዝቅጠት ጸንተው እንዲቆዩ ያደርጋል።',
-    sizes: ['Ø12mm', 'Ø16mm', 'Ø20mm'],
+    sizes: ['12mm', '16mm', '20mm'],
   },
   {
     id: 'slab',
@@ -61,7 +61,7 @@ const PARTS: Part[] = [
     amTitle: 'የወለልና ጣሪያ መደላድል',
     copy: 'A rhythm of main bars and distributors spaced like graph paper, so live loads walk smoothly into the beams below.',
     amCopy: 'ዋናና አጋዥ የብረት አደራደር ወለል ላይ የሚመጡ ጫናዎችን በቀጥታ ወደ ጋሪዎች (Beams) በማስተላለፍ ጥንካሬን ያረጋግጣል።',
-    sizes: ['Ø8mm', 'Ø10mm', 'Ø12mm'],
+    sizes: ['08mm', '10mm', '12mm'],
   },
   {
     id: 'stair',
@@ -72,7 +72,7 @@ const PARTS: Part[] = [
     amTitle: 'አስተማማኝ መወጣጫ',
     copy: 'Waist steel runs the slope while the steps take the traffic — engineered so every flight feels solid underfoot.',
     amCopy: 'በተዳፋቱ የሚዘረጋው ጠንካራ ብረት የሰው እንቅስቃሴን በሙሉ በጽናት ይሸከማል።',
-    sizes: ['Ø12mm', 'Ø16mm'],
+    sizes: ['12mm', '16mm'],
   },
 ];
 

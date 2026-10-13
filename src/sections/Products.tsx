@@ -208,7 +208,7 @@ export default function Products() {
                           </td>
                           <td className="px-5 py-3.5 sm:px-6">
                             <span className="border-line bg-panel rounded-md border px-2 py-0.5 font-mono text-xs font-bold text-ember">
-                              Ø{row.diameter}
+                              {row.mm < 10 ? `0${row.diameter}` : row.diameter}
                             </span>
                           </td>
                           <td className="px-5 py-3.5 sm:px-6 text-right font-mono font-bold text-ink">

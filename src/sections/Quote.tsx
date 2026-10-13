@@ -26,10 +26,10 @@ const PRODUCTS = [
     id: 'rebar',
     name: 'Steel Rebar',
     amName: 'ሬባር',
-    sizes: ['Ø8mm', 'Ø10mm', 'Ø12mm', 'Ø14mm', 'Ø16mm', 'Ø20mm', 'Ø24mm', 'Ø32mm', '6mm Coil'],
+    sizes: ['06mm Coil', '08mm', '10mm', '12mm', '14mm', '16mm', '20mm', '24mm', '32mm'],
   },
   { id: 'cement', name: 'Cement', amName: 'ሲሚንቶ', sizes: ['OPC (Ordinary)', 'PPC (Pozzolana)'] },
-  { id: 'coil', name: 'Staffa Coil', amName: 'ስታፋ', sizes: ['6mm High Tensile'] },
+  { id: 'coil', name: 'Staffa Coil', amName: 'ስታፋ', sizes: ['06mm High Tensile'] },
   {
     id: 'plywood',
     name: 'Plywood',
@@ -84,7 +84,7 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
   const [flash, setFlash] = useState(false);
 
   const [productId, setProductId] = useState('rebar');
-  const [sizes, setSizes] = useState<string[]>(['Ø14mm']);
+  const [sizes, setSizes] = useState<string[]>(['14mm']);
   const [quantity, setQuantity] = useState('');
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
@@ -97,7 +97,9 @@ export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
   useEffect(() => {
     if (!prefill) return;
     setProductId('rebar');
-    const size = prefill.size.replace('mm', 'mm');
+    let size = prefill.size.replace('Ø', '');
+    if (size === '8mm') size = '08mm';
+    if (size === '6mm' || size === '6mm Coil') size = '06mm Coil';
     setSizes((prev) => (prev.includes(size) ? prev : [...prev, size]));
     setNote(prefill.message);
     setFlash(true);
