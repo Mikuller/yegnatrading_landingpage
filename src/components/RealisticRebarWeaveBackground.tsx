@@ -89,14 +89,13 @@ export default function RealisticRebarWeaveBackground({
       wakeUp();
     };
 
-    // Mesh & 3D Gliding Dome Parameters (Moderately sized, realistic proportions)
+    // Mesh & Focused Gliding Ball Parameters (Moderately sized, non-overpowering)
     const GRID_SPACING = 96; // Breathable mesh cell size
     const BASE_DIAMETER = 12.5; // Authentic structural steel rebar gauge
-    const BASE_RADIUS = BASE_DIAMETER / 2;
-    const RIB_SPACING = 14; // Transverse rib spacing
-    const BALL_RADIUS = 165; // Focused, elegant dome radius (~330px diameter)
+    const RIB_SPACING = 13.5; // Transverse rib spacing
+    const BALL_RADIUS = 145; // Moderately sized focus radius (~290px diameter, tight & elegant)
     const BALL_RADIUS_SQ = BALL_RADIUS * BALL_RADIUS;
-    const MAX_BALL_ELEVATION = 28; // Pronounced, tangible 3D pop elevation
+    const MAX_BALL_ELEVATION = 18; // Tasteful 3D elevation dome height
 
     // Zero-allocation reusable scratch values for ultra-fast 120 FPS frame math
     let domeZ = 0;
@@ -121,7 +120,6 @@ export default function RealisticRebarWeaveBackground({
 
       const dist = Math.sqrt(distSq);
       const u = dist / BALL_RADIUS;
-      // Smooth C2 hermite bell curve: (1 - u^2)^2 with smooth tangent at perimeter
       const weight = (1 - u * u) * (1 - u * u) * intensity;
       domeWeight = weight;
       domeZ = weight * MAX_BALL_ELEVATION;
@@ -155,22 +153,21 @@ export default function RealisticRebarWeaveBackground({
       const p = isDark
         ? {
             // Dark Mode: Moody, deep architectural carbon steel
-            floorBaseShadow: 'rgba(0, 0, 0, 0.22)',
-            domeDropShadow: 'rgba(0, 0, 0, 0.55)',
-            barRim: 'rgba(18, 23, 31, 0.50)',
-            barCoreDark: 'rgba(28, 35, 48, 0.48)',
-            barMidtone: 'rgba(48, 58, 75, 0.48)',
+            floorBaseShadow: 'rgba(0, 0, 0, 0.20)',
+            barRim: 'rgba(18, 23, 31, 0.45)',
+            barCoreDark: 'rgba(28, 35, 48, 0.45)',
+            barMidtone: 'rgba(48, 58, 75, 0.45)',
             barSpecular: 'rgba(110, 126, 150, 0.35)',
-            ribGroove: 'rgba(10, 14, 20, 0.40)',
-            ribHighlight: 'rgba(148, 163, 184, 0.30)',
-            jointOcclusion: 'rgba(0, 0, 0, 0.52)',
+            ribGroove: 'rgba(10, 14, 20, 0.38)',
+            ribHighlight: 'rgba(148, 163, 184, 0.28)',
+            jointOcclusion: 'rgba(0, 0, 0, 0.50)',
             // Popped zone: Brushed titanium & platinum sheen with warm champagne/amber caustics
-            popBarCore: 'rgba(42, 53, 70, 0.82)',
-            popBarSpecular: 'rgba(240, 246, 255, 0.90)',
-            popRibCrest: 'rgba(226, 232, 240, 0.72)',
-            popRibAmberGlint: 'rgba(245, 158, 11, 0.48)',
-            weldHAZ: 'rgba(15, 20, 28, 0.75)',
-            weldNode: 'rgba(48, 58, 74, 0.65)',
+            popBarCore: 'rgba(42, 53, 70, 0.75)',
+            popBarSpecular: 'rgba(240, 246, 255, 0.85)',
+            popRibCrest: 'rgba(226, 232, 240, 0.65)',
+            popRibAmberGlint: 'rgba(245, 158, 11, 0.45)',
+            weldHAZ: 'rgba(15, 20, 28, 0.70)',
+            weldNode: 'rgba(48, 58, 74, 0.60)',
             weldHot: '#f59e0b',
             ballShadow: 'rgba(0, 0, 0, 0.45)',
             ballHaloInner: 'rgba(245, 158, 11, 0.10)',
@@ -179,21 +176,20 @@ export default function RealisticRebarWeaveBackground({
         : {
             // Light Mode: Architectural blueprint slate & satin stainless steel
             floorBaseShadow: 'rgba(15, 23, 42, 0.06)',
-            domeDropShadow: 'rgba(15, 23, 42, 0.28)',
-            barRim: 'rgba(51, 65, 85, 0.24)',
-            barCoreDark: 'rgba(71, 85, 105, 0.26)',
-            barMidtone: 'rgba(100, 116, 139, 0.24)',
-            barSpecular: 'rgba(148, 163, 184, 0.28)',
-            ribGroove: 'rgba(30, 41, 59, 0.22)',
-            ribHighlight: 'rgba(203, 213, 225, 0.35)',
-            jointOcclusion: 'rgba(15, 23, 42, 0.20)',
+            barRim: 'rgba(51, 65, 85, 0.22)',
+            barCoreDark: 'rgba(71, 85, 105, 0.24)',
+            barMidtone: 'rgba(100, 116, 139, 0.22)',
+            barSpecular: 'rgba(148, 163, 184, 0.26)',
+            ribGroove: 'rgba(30, 41, 59, 0.20)',
+            ribHighlight: 'rgba(203, 213, 225, 0.32)',
+            jointOcclusion: 'rgba(15, 23, 42, 0.18)',
             // Popped zone
-            popBarCore: 'rgba(71, 85, 105, 0.70)',
-            popBarSpecular: 'rgba(255, 255, 255, 0.92)',
-            popRibCrest: 'rgba(203, 213, 225, 0.75)',
-            popRibAmberGlint: 'rgba(217, 119, 6, 0.42)',
-            weldHAZ: 'rgba(30, 41, 59, 0.50)',
-            weldNode: 'rgba(71, 85, 105, 0.60)',
+            popBarCore: 'rgba(71, 85, 105, 0.65)',
+            popBarSpecular: 'rgba(255, 255, 255, 0.90)',
+            popRibCrest: 'rgba(203, 213, 225, 0.70)',
+            popRibAmberGlint: 'rgba(217, 119, 6, 0.40)',
+            weldHAZ: 'rgba(30, 41, 59, 0.45)',
+            weldNode: 'rgba(71, 85, 105, 0.55)',
             weldHot: '#d97706',
             ballShadow: 'rgba(15, 23, 42, 0.22)',
             ballHaloInner: 'rgba(217, 119, 6, 0.08)',
@@ -206,16 +202,22 @@ export default function RealisticRebarWeaveBackground({
       const cols = Math.ceil(width / GRID_SPACING) + 2;
       const rows = Math.ceil(height / GRID_SPACING) + 3;
 
-      const shadowOffsetX = 8 + Math.max(-10, Math.min(10, smoothVx * 0.012));
-      const shadowOffsetY = 10 + Math.max(-10, Math.min(10, smoothVy * 0.012));
+      // Active bounding indices for the moderately sized gliding ball
+      const minActiveCol = Math.max(0, Math.floor((curX - BALL_RADIUS) / GRID_SPACING));
+      const maxActiveCol = Math.min(cols - 1, Math.ceil((curX + BALL_RADIUS) / GRID_SPACING));
+      const minActiveRow = Math.max(0, Math.floor((curY - BALL_RADIUS - scrollShiftY) / GRID_SPACING));
+      const maxActiveRow = Math.min(rows - 1, Math.ceil((curY + BALL_RADIUS - scrollShiftY) / GRID_SPACING));
 
       // =========================================================================
       // STEP 1: MODERATE GLIDING BALL EFFECT (SHADOW & AURA)
-      // Compact, elegant focus radius (~165px) that highlights without blinding
+      // Compact, elegant focus radius (~145px) that highlights without blinding
       // =========================================================================
       if (curIntensity > 0.03 && !shouldReduceMotion) {
-        // 1A. Soft 3D Contact Shadow beneath the gliding ball with directional velocity bias
-        const shadowRad = BALL_RADIUS * 0.75;
+        // 1A. Soft 3D Contact Shadow beneath the gliding ball with subtle velocity bias
+        const shadowOffsetX = 7 + Math.max(-10, Math.min(10, smoothVx * 0.012));
+        const shadowOffsetY = 8 + Math.max(-10, Math.min(10, smoothVy * 0.012));
+        const shadowRad = BALL_RADIUS * 0.72;
+
         const sphereShadow = ctx.createRadialGradient(
           curX + shadowOffsetX,
           curY + shadowOffsetY,
@@ -234,7 +236,7 @@ export default function RealisticRebarWeaveBackground({
         ctx.fill();
 
         // 1B. Luminous Gliding Ball Aura (Soft champagne/amber light, non-distracting)
-        const auraRad = BALL_RADIUS * 0.88;
+        const auraRad = BALL_RADIUS * 0.85;
         const ballLight = ctx.createRadialGradient(curX, curY, 8, curX, curY, auraRad);
         ballLight.addColorStop(0, p.ballHaloInner);
         ballLight.addColorStop(0.4, p.ballHaloMid);
@@ -247,64 +249,15 @@ export default function RealisticRebarWeaveBackground({
       }
 
       // =========================================================================
-      // STEP 2: CONTINUOUS 3D DROP SHADOWS ON CONCRETE FLOOR
-      // Cast beneath elevated continuous bars, connecting seamlessly
+      // STEP 2: BASE REBAR WEAVE (BACKGROUND LAYER - QUIET & SUBDUED)
       // =========================================================================
-      if (curIntensity > 0.03 && !shouldReduceMotion) {
-        ctx.fillStyle = p.domeDropShadow;
 
-        // Vertical bars cast shadow
-        for (let c = 0; c < cols; c++) {
-          const baseX = c * GRID_SPACING;
-          if (Math.abs(baseX - curX) >= BALL_RADIUS) continue;
-
-          const startY = curY - BALL_RADIUS;
-          const endY = curY + BALL_RADIUS;
-          const segStep = 14;
-
-          ctx.beginPath();
-          for (let y = startY; y <= endY; y += segStep) {
-            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight <= 0.02) continue;
-
-            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.16);
-            const sw = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.5);
-            const sx = baseX + flexX + shadowOffsetX;
-            const sy = y + shadowOffsetY;
-
-            ctx.rect(sx - sw / 2, sy - segStep / 2, sw, segStep + 1);
-          }
-          ctx.fill();
-        }
-
-        // Horizontal bars cast shadow
-        for (let r = 0; r < rows; r++) {
-          const baseY = r * GRID_SPACING + scrollShiftY;
-          if (Math.abs(baseY - curY) >= BALL_RADIUS) continue;
-
-          const startX = curX - BALL_RADIUS;
-          const endX = curX + BALL_RADIUS;
-          const segStep = 14;
-
-          ctx.beginPath();
-          for (let x = startX; x <= endX; x += segStep) {
-            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight <= 0.02) continue;
-
-            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.16);
-            const sh = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.5);
-            const sx = x + shadowOffsetX;
-            const sy = baseY + flexY + shadowOffsetY;
-
-            ctx.rect(sx - segStep / 2, sy - sh / 2, segStep + 1, sh);
-          }
-          ctx.fill();
-        }
-      }
-
-      // Base floor flat shadows for un-elevated bars
+      // 2A. Base floor cast shadows (Single batched GPU draw call)
       ctx.beginPath();
       ctx.strokeStyle = p.floorBaseShadow;
       ctx.lineWidth = BASE_DIAMETER * 1.1;
       ctx.lineCap = 'round';
+
       for (let c = 0; c < cols; c++) {
         const x = c * GRID_SPACING + 2.5;
         ctx.moveTo(x, -GRID_SPACING);
@@ -317,109 +270,196 @@ export default function RealisticRebarWeaveBackground({
       }
       ctx.stroke();
 
-      // =========================================================================
-      // STEP 3: CONTINUOUS VERTICAL REBAR RODS (LAYER 1)
-      // Unbroken steel rods from top to bottom with continuous 3D dome curvature
-      // =========================================================================
+      // 2B. Vertical Rebar Cylinders (Layer 1)
+      ctx.beginPath();
+      ctx.strokeStyle = p.barRim;
+      ctx.lineWidth = BASE_DIAMETER;
       for (let c = 0; c < cols; c++) {
-        const baseX = c * GRID_SPACING;
-        const isNearBall = curIntensity > 0.01 && !shouldReduceMotion && Math.abs(baseX - curX) < BALL_RADIUS;
+        const x = c * GRID_SPACING;
+        ctx.moveTo(x, -GRID_SPACING);
+        ctx.lineTo(x, height + GRID_SPACING);
+      }
+      ctx.stroke();
 
-        if (!isNearBall) {
-          // Flat undisturbed continuous steel bar
-          // 1. Outer cylinder rim
-          ctx.beginPath();
-          ctx.strokeStyle = p.barRim;
-          ctx.lineWidth = BASE_DIAMETER;
-          ctx.moveTo(baseX, -GRID_SPACING);
-          ctx.lineTo(baseX, height + GRID_SPACING);
-          ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = p.barMidtone;
+      ctx.lineWidth = BASE_DIAMETER - 3.5;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        ctx.moveTo(x, -GRID_SPACING);
+        ctx.lineTo(x, height + GRID_SPACING);
+      }
+      ctx.stroke();
 
-          // 2. Midtone metallic core
-          ctx.beginPath();
-          ctx.strokeStyle = p.barMidtone;
-          ctx.lineWidth = BASE_DIAMETER - 3.5;
-          ctx.moveTo(baseX, -GRID_SPACING);
-          ctx.lineTo(baseX, height + GRID_SPACING);
-          ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = p.barSpecular;
+      ctx.lineWidth = 1.2;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING - 1.8;
+        ctx.moveTo(x, -GRID_SPACING);
+        ctx.lineTo(x, height + GRID_SPACING);
+      }
+      ctx.stroke();
 
-          // 3. Specular satin ridge
-          ctx.beginPath();
-          ctx.strokeStyle = p.barSpecular;
-          ctx.lineWidth = 1.2;
-          ctx.moveTo(baseX - 1.8, -GRID_SPACING);
-          ctx.lineTo(baseX - 1.8, height + GRID_SPACING);
-          ctx.stroke();
+      // 2C. Inter-Layer Contact Occlusion (Horizontal bar casts micro-shadow on Vertical bar)
+      ctx.fillStyle = p.jointOcclusion;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        for (let r = 0; r < rows; r++) {
+          const y = r * GRID_SPACING + scrollShiftY;
+          ctx.fillRect(x - BASE_DIAMETER * 0.45, y - BASE_DIAMETER * 0.45, BASE_DIAMETER * 0.9, BASE_DIAMETER * 0.9);
+        }
+      }
 
-          // 4. Transverse crescent ribs (Intact along entire bar)
-          ctx.beginPath();
-          ctx.strokeStyle = p.ribGroove;
-          ctx.lineWidth = 1.8;
-          for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
-            ctx.moveTo(baseX - 5, y - 3);
-            ctx.quadraticCurveTo(baseX, y + 1, baseX + 5, y + 3);
+      // 2D. Horizontal Rebar Cylinders (Layer 2 - Crossing on top)
+      ctx.beginPath();
+      ctx.strokeStyle = p.barRim;
+      ctx.lineWidth = BASE_DIAMETER;
+      for (let r = 0; r < rows; r++) {
+        const y = r * GRID_SPACING + scrollShiftY;
+        ctx.moveTo(-GRID_SPACING, y);
+        ctx.lineTo(width + GRID_SPACING, y);
+      }
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = p.barMidtone;
+      ctx.lineWidth = BASE_DIAMETER - 3.5;
+      for (let r = 0; r < rows; r++) {
+        const y = r * GRID_SPACING + scrollShiftY;
+        ctx.moveTo(-GRID_SPACING, y);
+        ctx.lineTo(width + GRID_SPACING, y);
+      }
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = p.barSpecular;
+      ctx.lineWidth = 1.2;
+      for (let r = 0; r < rows; r++) {
+        const y = r * GRID_SPACING + scrollShiftY - 1.8;
+        ctx.moveTo(-GRID_SPACING, y);
+        ctx.lineTo(width + GRID_SPACING, y);
+      }
+      ctx.stroke();
+
+      // 2E. Base Transverse Ribs (Contoured deformed ridges, quiet & subtle)
+      ctx.beginPath();
+      ctx.strokeStyle = p.ribGroove;
+      ctx.lineWidth = 1.8;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
+          ctx.moveTo(x - 5, y - 3);
+          ctx.quadraticCurveTo(x, y + 1, x + 5, y + 3);
+        }
+      }
+      for (let r = 0; r < rows; r++) {
+        const y = r * GRID_SPACING + scrollShiftY;
+        for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
+          ctx.moveTo(x - 3, y - 5);
+          ctx.quadraticCurveTo(x + 1, y, x + 3, y + 5);
+        }
+      }
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = p.ribHighlight;
+      ctx.lineWidth = 1.1;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
+          ctx.moveTo(x - 4.5, y - 3.8);
+          ctx.quadraticCurveTo(x, y + 0.2, x + 4.5, y + 2.2);
+        }
+      }
+      for (let r = 0; r < rows; r++) {
+        const y = r * GRID_SPACING + scrollShiftY;
+        for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
+          ctx.moveTo(x - 3.8, y - 4.5);
+          ctx.quadraticCurveTo(x + 0.2, y, x + 2.2, y + 4.5);
+        }
+      }
+      ctx.stroke();
+
+      // 2F. Base weld intersection dots (Clean welded wire fabric nodes)
+      ctx.beginPath();
+      ctx.fillStyle = p.weldNode;
+      for (let c = 0; c < cols; c++) {
+        const x = c * GRID_SPACING;
+        for (let r = 0; r < rows; r++) {
+          const y = r * GRID_SPACING + scrollShiftY;
+          ctx.moveTo(x + 2.6, y);
+          ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+        }
+      }
+      ctx.fill();
+
+      // =========================================================================
+      // STEP 3: TASTEFUL 3D POP DOME (UNDER THE GLIDING BALL ONLY)
+      // Focused, authentic deformed steel look with traveling optical caustics
+      // =========================================================================
+      if (curIntensity > 0.03 && !shouldReduceMotion) {
+        // 3A. Dynamic 3D Drop Shadows on the ball dome
+        ctx.beginPath();
+        ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.55)' : 'rgba(15, 23, 42, 0.25)';
+
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const baseX = c * GRID_SPACING;
+          for (let y = curY - BALL_RADIUS; y <= curY + BALL_RADIUS; y += 18) {
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight <= 0.03) continue;
+
+            const dirX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.65);
+            const dirY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.65);
+            const sw = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.45);
+
+            ctx.rect(baseX + 3 + dirX - sw / 2, y + 4 + dirY, sw, 19);
           }
-          ctx.stroke();
+        }
 
-          ctx.beginPath();
-          ctx.strokeStyle = p.ribHighlight;
-          ctx.lineWidth = 1.1;
-          for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
-            ctx.moveTo(baseX - 4.5, y - 3.8);
-            ctx.quadraticCurveTo(baseX, y + 0.2, baseX + 4.5, y + 2.2);
+        for (let r = minActiveRow; r <= maxActiveRow; r++) {
+          const baseY = r * GRID_SPACING + scrollShiftY;
+          for (let x = curX - BALL_RADIUS; x <= curX + BALL_RADIUS; x += 18) {
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight <= 0.03) continue;
+
+            const dirX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.65);
+            const dirY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.65);
+            const sh = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.45);
+
+            ctx.rect(x + 3 + dirX, baseY + 4 + dirY - sh / 2, 19, sh);
           }
-          ctx.stroke();
-        } else {
-          // Continuous 3D elevated rod with smooth perspective swelling
-          const segStep = 12;
-          const domeStartY = curY - BALL_RADIUS;
-          const domeEndY = curY + BALL_RADIUS;
+        }
+        ctx.fill();
 
-          // 3A. Draw straight top section (outside dome)
-          if (domeStartY > -GRID_SPACING) {
-            ctx.beginPath();
-            ctx.strokeStyle = p.barRim;
-            ctx.lineWidth = BASE_DIAMETER;
-            ctx.moveTo(baseX, -GRID_SPACING);
-            ctx.lineTo(baseX, domeStartY);
-            ctx.stroke();
+        // 3B. Vertical Bars Popping over the Gliding Ball with Traveling Optical Caustics
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const baseX = c * GRID_SPACING;
+          const segStep = 16;
+          const startY = Math.max(-GRID_SPACING, curY - BALL_RADIUS - segStep);
+          const endY = Math.min(height + GRID_SPACING, curY + BALL_RADIUS + segStep);
 
-            ctx.beginPath();
-            ctx.strokeStyle = p.barMidtone;
-            ctx.lineWidth = BASE_DIAMETER - 3.5;
-            ctx.moveTo(baseX, -GRID_SPACING);
-            ctx.lineTo(baseX, domeStartY);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = p.barSpecular;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(baseX - 1.8, -GRID_SPACING);
-            ctx.lineTo(baseX - 1.8, domeStartY);
-            ctx.stroke();
-          }
-
-          // 3B. Draw 3D curved arch through the dome
-          for (let y = domeStartY; y < domeEndY; y += segStep) {
+          for (let y = startY; y < endY; y += segStep) {
             const y0 = y;
-            const y1 = Math.min(domeEndY, y + segStep);
-
-            calcDome(baseX, y0, curX, curY, curIntensity);
+            const y1 = y + segStep;
+            const hasDome0 = calcDome(baseX, y0, curX, curY, curIntensity);
             const z0 = domeZ;
-            const flexX0 = (domeDx / (domeDist + 0.1)) * (z0 * 0.16);
-            const r0 = BASE_RADIUS * (1 + (z0 / MAX_BALL_ELEVATION) * 0.48);
-            const x0 = baseX + flexX0;
+            const w0 = domeWeight;
+            const flexX0 = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            calcDome(baseX, y1, curX, curY, curIntensity);
+            const hasDome1 = calcDome(baseX, y1, curX, curY, curIntensity);
             const z1 = domeZ;
-            const flexX1 = (domeDx / (domeDist + 0.1)) * (z1 * 0.16);
-            const r1 = BASE_RADIUS * (1 + (z1 / MAX_BALL_ELEVATION) * 0.48);
+            const w1 = domeWeight;
+            const flexX1 = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
+
+            if (!hasDome0 && !hasDome1) continue;
+            if (w0 <= 0.02 && w1 <= 0.02) continue;
+
+            const r0 = (BASE_DIAMETER / 2) * (1 + (z0 / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (z1 / MAX_BALL_ELEVATION) * 0.42);
+
+            const x0 = baseX + flexX0;
             const x1 = baseX + flexX1;
 
-            const isPopped = z0 > 1 || z1 > 1;
-
-            // Outer rim polygon
-            ctx.fillStyle = isPopped ? p.popBarCore : p.barRim;
+            ctx.fillStyle = p.popBarCore;
             ctx.beginPath();
             ctx.moveTo(x0 - r0, y0);
             ctx.lineTo(x1 - r1, y1);
@@ -428,21 +468,21 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular ridge line with traveling caustic flare
+            // Traveling Caustic Specular Flare (Glint brightens and flares right at light apex)
             const midY = (y0 + y1) * 0.5;
             const distToLight = Math.hypot(baseX - curX, midY - curY);
             const lightProximity = Math.max(0, 1 - distToLight / (BALL_RADIUS * 0.8));
 
-            ctx.strokeStyle = isPopped ? p.popBarSpecular : p.barSpecular;
-            ctx.lineWidth = isPopped ? 1.4 + lightProximity * 1.4 : 1.2;
+            ctx.strokeStyle = p.popBarSpecular;
+            ctx.lineWidth = 1.4 + lightProximity * 1.2;
             ctx.beginPath();
             ctx.moveTo(x0 - r0 * 0.35, y0);
             ctx.lineTo(x1 - r1 * 0.35, y1);
             ctx.stroke();
 
             // Diamond-sharp platinum highlight core at closest light proximity
-            if (isPopped && lightProximity > 0.25) {
-              ctx.strokeStyle = '#ffffff';
+            if (lightProximity > 0.25) {
+              ctx.strokeStyle = isDark ? '#ffffff' : '#ffffff';
               ctx.lineWidth = 1.0;
               ctx.beginPath();
               ctx.moveTo(x0 - r0 * 0.32, y0);
@@ -450,190 +490,38 @@ export default function RealisticRebarWeaveBackground({
               ctx.stroke();
             }
           }
-
-          // 3C. Draw straight bottom section (outside dome)
-          if (domeEndY < height + GRID_SPACING) {
-            ctx.beginPath();
-            ctx.strokeStyle = p.barRim;
-            ctx.lineWidth = BASE_DIAMETER;
-            ctx.moveTo(baseX, domeEndY);
-            ctx.lineTo(baseX, height + GRID_SPACING);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = p.barMidtone;
-            ctx.lineWidth = BASE_DIAMETER - 3.5;
-            ctx.moveTo(baseX, domeEndY);
-            ctx.lineTo(baseX, height + GRID_SPACING);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = p.barSpecular;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(baseX - 1.8, domeEndY);
-            ctx.lineTo(baseX - 1.8, height + GRID_SPACING);
-            ctx.stroke();
-          }
-
-          // 3D. Continuous Transverse Deformed Crescent Ribs along the ENTIRE rod
-          for (let y = -GRID_SPACING; y < height + GRID_SPACING; y += RIB_SPACING) {
-            calcDome(baseX, y, curX, curY, curIntensity);
-            const z = domeZ;
-            const flexX = (domeDx / (domeDist + 0.1)) * (z * 0.16);
-            const r = BASE_RADIUS * (1 + (z / MAX_BALL_ELEVATION) * 0.48);
-            const rx = baseX + flexX;
-
-            const isPopped = z > 1.5;
-
-            // Rib groove (concave shadow under deformation)
-            ctx.beginPath();
-            ctx.strokeStyle = p.ribGroove;
-            ctx.lineWidth = isPopped ? 2.0 : 1.8;
-            ctx.moveTo(rx - r * 0.82, y - 3.2);
-            ctx.quadraticCurveTo(rx, y + 0.6, rx + r * 0.82, y + 2.8);
-            ctx.stroke();
-
-            // Rib highlight crest
-            ctx.beginPath();
-            ctx.strokeStyle = isPopped ? p.popRibCrest : p.ribHighlight;
-            ctx.lineWidth = isPopped ? 1.5 : 1.1;
-            ctx.moveTo(rx - r * 0.78, y - 3.8);
-            ctx.quadraticCurveTo(rx, y + 0.2, rx + r * 0.78, y + 2.2);
-            ctx.stroke();
-
-            // Subtle warm amber heat glow on ribs directly under the spotlight
-            if (isPopped && domeDist < BALL_RADIUS * 0.65) {
-              ctx.beginPath();
-              ctx.strokeStyle = p.popRibAmberGlint;
-              ctx.lineWidth = 1.3;
-              ctx.moveTo(rx - r * 0.55, y - 2.5);
-              ctx.lineTo(rx + r * 0.55, y + 1.5);
-              ctx.stroke();
-            }
-          }
         }
-      }
 
-      // =========================================================================
-      // STEP 4: INTER-LAYER CONTACT OCCLUSION
-      // Horizontal bars cross over vertical bars, casting contact micro-shadows
-      // =========================================================================
-      ctx.fillStyle = p.jointOcclusion;
-      for (let c = 0; c < cols; c++) {
-        const x = c * GRID_SPACING;
-        for (let r = 0; r < rows; r++) {
-          const y = r * GRID_SPACING + scrollShiftY;
-          calcDome(x, y, curX, curY, curIntensity);
-          const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.16);
-          const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.16);
-          const rx = x + flexX;
-          const ry = y + flexY;
-          const d = BASE_DIAMETER * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.48);
+        // 3C. Horizontal Bars Popping over the Gliding Ball with Traveling Optical Caustics
+        for (let r = minActiveRow; r <= maxActiveRow; r++) {
+          const baseY = r * GRID_SPACING + scrollShiftY;
+          const segStep = 16;
+          const startX = Math.max(-GRID_SPACING, curX - BALL_RADIUS - segStep);
+          const endX = Math.min(width + GRID_SPACING, curX + BALL_RADIUS + segStep);
 
-          ctx.fillRect(rx - d * 0.45, ry - d * 0.45, d * 0.9, d * 0.9);
-        }
-      }
-
-      // =========================================================================
-      // STEP 5: CONTINUOUS HORIZONTAL REBAR RODS (LAYER 2 - CROSSING ON TOP)
-      // Unbroken steel rods from left to right with continuous 3D dome curvature
-      // =========================================================================
-      for (let r = 0; r < rows; r++) {
-        const baseY = r * GRID_SPACING + scrollShiftY;
-        const isNearBall = curIntensity > 0.01 && !shouldReduceMotion && Math.abs(baseY - curY) < BALL_RADIUS;
-
-        if (!isNearBall) {
-          // Flat undisturbed continuous horizontal bar
-          ctx.beginPath();
-          ctx.strokeStyle = p.barRim;
-          ctx.lineWidth = BASE_DIAMETER;
-          ctx.moveTo(-GRID_SPACING, baseY);
-          ctx.lineTo(width + GRID_SPACING, baseY);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.strokeStyle = p.barMidtone;
-          ctx.lineWidth = BASE_DIAMETER - 3.5;
-          ctx.moveTo(-GRID_SPACING, baseY);
-          ctx.lineTo(width + GRID_SPACING, baseY);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.strokeStyle = p.barSpecular;
-          ctx.lineWidth = 1.2;
-          ctx.moveTo(-GRID_SPACING, baseY - 1.8);
-          ctx.lineTo(width + GRID_SPACING, baseY - 1.8);
-          ctx.stroke();
-
-          // Transverse crescent ribs
-          ctx.beginPath();
-          ctx.strokeStyle = p.ribGroove;
-          ctx.lineWidth = 1.8;
-          for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
-            ctx.moveTo(x - 3, baseY - 5);
-            ctx.quadraticCurveTo(x + 1, baseY, x + 3, baseY + 5);
-          }
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.strokeStyle = p.ribHighlight;
-          ctx.lineWidth = 1.1;
-          for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
-            ctx.moveTo(x - 3.8, baseY - 4.5);
-            ctx.quadraticCurveTo(x + 0.2, baseY, x + 2.2, baseY + 4.5);
-          }
-          ctx.stroke();
-        } else {
-          // Continuous 3D elevated rod with smooth perspective swelling
-          const segStep = 12;
-          const domeStartX = curX - BALL_RADIUS;
-          const domeEndX = curX + BALL_RADIUS;
-
-          // 5A. Draw straight left section (outside dome)
-          if (domeStartX > -GRID_SPACING) {
-            ctx.beginPath();
-            ctx.strokeStyle = p.barRim;
-            ctx.lineWidth = BASE_DIAMETER;
-            ctx.moveTo(-GRID_SPACING, baseY);
-            ctx.lineTo(domeStartX, baseY);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = p.barMidtone;
-            ctx.lineWidth = BASE_DIAMETER - 3.5;
-            ctx.moveTo(-GRID_SPACING, baseY);
-            ctx.lineTo(domeStartX, baseY);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = p.barSpecular;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(-GRID_SPACING, baseY - 1.8);
-            ctx.lineTo(domeStartX, baseY - 1.8);
-            ctx.stroke();
-          }
-
-          // 5B. Draw 3D curved arch through the dome
-          for (let x = domeStartX; x < domeEndX; x += segStep) {
+          for (let x = startX; x < endX; x += segStep) {
             const x0 = x;
-            const x1 = Math.min(domeEndX, x + segStep);
-
-            calcDome(x0, baseY, curX, curY, curIntensity);
+            const x1 = x + segStep;
+            const hasDome0 = calcDome(x0, baseY, curX, curY, curIntensity);
             const z0 = domeZ;
-            const flexY0 = (domeDy / (domeDist + 0.1)) * (z0 * 0.16);
-            const r0 = BASE_RADIUS * (1 + (z0 / MAX_BALL_ELEVATION) * 0.48);
-            const y0 = baseY + flexY0;
+            const w0 = domeWeight;
+            const flexY0 = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
 
-            calcDome(x1, baseY, curX, curY, curIntensity);
+            const hasDome1 = calcDome(x1, baseY, curX, curY, curIntensity);
             const z1 = domeZ;
-            const flexY1 = (domeDy / (domeDist + 0.1)) * (z1 * 0.16);
-            const r1 = BASE_RADIUS * (1 + (z1 / MAX_BALL_ELEVATION) * 0.48);
+            const w1 = domeWeight;
+            const flexY1 = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
+
+            if (!hasDome0 && !hasDome1) continue;
+            if (w0 <= 0.02 && w1 <= 0.02) continue;
+
+            const r0 = (BASE_DIAMETER / 2) * (1 + (z0 / MAX_BALL_ELEVATION) * 0.42);
+            const r1 = (BASE_DIAMETER / 2) * (1 + (z1 / MAX_BALL_ELEVATION) * 0.42);
+
+            const y0 = baseY + flexY0;
             const y1 = baseY + flexY1;
 
-            const isPopped = z0 > 1 || z1 > 1;
-
-            // Outer rim polygon
-            ctx.fillStyle = isPopped ? p.popBarCore : p.barRim;
+            ctx.fillStyle = p.popBarCore;
             ctx.beginPath();
             ctx.moveTo(x0, y0 - r0);
             ctx.lineTo(x1, y1 - r1);
@@ -642,20 +530,20 @@ export default function RealisticRebarWeaveBackground({
             ctx.closePath();
             ctx.fill();
 
-            // Specular ridge line with traveling caustic flare
+            // Traveling Caustic Specular Flare
             const midX = (x0 + x1) * 0.5;
             const distToLight = Math.hypot(midX - curX, baseY - curY);
             const lightProximity = Math.max(0, 1 - distToLight / (BALL_RADIUS * 0.8));
 
-            ctx.strokeStyle = isPopped ? p.popBarSpecular : p.barSpecular;
-            ctx.lineWidth = isPopped ? 1.4 + lightProximity * 1.4 : 1.2;
+            ctx.strokeStyle = p.popBarSpecular;
+            ctx.lineWidth = 1.4 + lightProximity * 1.2;
             ctx.beginPath();
             ctx.moveTo(x0, y0 - r0 * 0.35);
             ctx.lineTo(x1, y1 - r1 * 0.35);
             ctx.stroke();
 
-            if (isPopped && lightProximity > 0.25) {
-              ctx.strokeStyle = '#ffffff';
+            if (lightProximity > 0.25) {
+              ctx.strokeStyle = isDark ? '#ffffff' : '#ffffff';
               ctx.lineWidth = 1.0;
               ctx.beginPath();
               ctx.moveTo(x0, y0 - r0 * 0.32);
@@ -663,109 +551,102 @@ export default function RealisticRebarWeaveBackground({
               ctx.stroke();
             }
           }
+        }
 
-          // 5C. Draw straight right section (outside dome)
-          if (domeEndX < width + GRID_SPACING) {
-            ctx.beginPath();
-            ctx.strokeStyle = p.barRim;
-            ctx.lineWidth = BASE_DIAMETER;
-            ctx.moveTo(domeEndX, baseY);
-            ctx.lineTo(width + GRID_SPACING, baseY);
-            ctx.stroke();
+        // 3D. Contoured Transverse Ribs with Subtle Metallic Amber Glints
+        ctx.beginPath();
+        ctx.strokeStyle = p.popRibCrest;
+        ctx.lineWidth = 1.5;
 
-            ctx.beginPath();
-            ctx.strokeStyle = p.barMidtone;
-            ctx.lineWidth = BASE_DIAMETER - 3.5;
-            ctx.moveTo(domeEndX, baseY);
-            ctx.lineTo(width + GRID_SPACING, baseY);
-            ctx.stroke();
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const baseX = c * GRID_SPACING;
+          for (let y = curY - BALL_RADIUS; y <= curY + BALL_RADIUS; y += RIB_SPACING) {
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight < 0.1) continue;
 
-            ctx.beginPath();
-            ctx.strokeStyle = p.barSpecular;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(domeEndX, baseY - 1.8);
-            ctx.lineTo(width + GRID_SPACING, baseY - 1.8);
-            ctx.stroke();
-          }
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
+            const rx = baseX + flexX;
 
-          // 5D. Continuous Transverse Deformed Crescent Ribs along the ENTIRE rod
-          for (let x = -GRID_SPACING; x < width + GRID_SPACING; x += RIB_SPACING) {
-            calcDome(x, baseY, curX, curY, curIntensity);
-            const z = domeZ;
-            const flexY = (domeDy / (domeDist + 0.1)) * (z * 0.16);
-            const r = BASE_RADIUS * (1 + (z / MAX_BALL_ELEVATION) * 0.48);
-            const ry = baseY + flexY;
-
-            const isPopped = z > 1.5;
-
-            // Rib groove
-            ctx.beginPath();
-            ctx.strokeStyle = p.ribGroove;
-            ctx.lineWidth = isPopped ? 2.0 : 1.8;
-            ctx.moveTo(x - 3.2, ry - r * 0.82);
-            ctx.quadraticCurveTo(x + 0.6, ry, x + 2.8, ry + r * 0.82);
-            ctx.stroke();
-
-            // Rib highlight crest
-            ctx.beginPath();
-            ctx.strokeStyle = isPopped ? p.popRibCrest : p.ribHighlight;
-            ctx.lineWidth = isPopped ? 1.5 : 1.1;
-            ctx.moveTo(x - 3.8, ry - r * 0.78);
-            ctx.quadraticCurveTo(x + 0.2, ry, x + 2.2, ry + r * 0.78);
-            ctx.stroke();
-
-            // Subtle warm amber heat glow on ribs directly under the spotlight
-            if (isPopped && domeDist < BALL_RADIUS * 0.65) {
-              ctx.beginPath();
-              ctx.strokeStyle = p.popRibAmberGlint;
-              ctx.lineWidth = 1.3;
-              ctx.moveTo(x - 2.5, ry - r * 0.55);
-              ctx.lineTo(x + 1.5, ry + r * 0.55);
-              ctx.stroke();
-            }
+            ctx.moveTo(rx - r * 0.85, y - 3.8);
+            ctx.quadraticCurveTo(rx, y + 0.4, rx + r * 0.85, y + 2.4);
           }
         }
-      }
 
-      // =========================================================================
-      // STEP 6: RESISTANCE WELDED INTERSECTION JOINTS
-      // Anchored at grid nodes, popping in 3D with dynamic light-directed gleams
-      // =========================================================================
-      for (let c = 0; c < cols; c++) {
-        const ix = c * GRID_SPACING;
-        for (let r = 0; r < rows; r++) {
-          const iy = r * GRID_SPACING + scrollShiftY;
-          calcDome(ix, iy, curX, curY, curIntensity);
+        for (let r = minActiveRow; r <= maxActiveRow; r++) {
+          const baseY = r * GRID_SPACING + scrollShiftY;
+          for (let x = curX - BALL_RADIUS; x <= curX + BALL_RADIUS; x += RIB_SPACING) {
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight < 0.1) continue;
 
-          const isPopped = domeZ > 1.2;
-          const flexX = isPopped ? (domeDx / (domeDist + 0.1)) * (domeZ * 0.16) : 0;
-          const flexY = isPopped ? (domeDy / (domeDist + 0.1)) * (domeZ * 0.16) : 0;
-          const nx = ix + flexX;
-          const ny = iy + flexY;
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
+            const ry = baseY + flexY;
 
-          if (!isPopped) {
-            // Quiet base welded dot
-            ctx.beginPath();
-            ctx.fillStyle = p.weldNode;
-            ctx.arc(nx, ny, 2.6, 0, Math.PI * 2);
-            ctx.fill();
-          } else {
-            // Elevated 3D precision weld bead
-            const weldR = 3.4 + (domeZ / MAX_BALL_ELEVATION) * 1.6;
+            ctx.moveTo(x - 3.8, ry - r * 0.85);
+            ctx.quadraticCurveTo(x + 0.4, ry, x + 2.4, ry + r * 0.85);
+          }
+        }
+        ctx.stroke();
+
+        // Subtle amber warmth on ribs directly under the spotlight
+        ctx.beginPath();
+        ctx.strokeStyle = p.popRibAmberGlint;
+        ctx.lineWidth = 1.3;
+
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const baseX = c * GRID_SPACING;
+          for (let y = curY - BALL_RADIUS * 0.6; y <= curY + BALL_RADIUS * 0.6; y += RIB_SPACING) {
+            if (!calcDome(baseX, y, curX, curY, curIntensity) || domeWeight < 0.22) continue;
+
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
+            const rx = baseX + flexX;
+
+            ctx.moveTo(rx - r * 0.6, y - 2.5);
+            ctx.lineTo(rx + r * 0.6, y + 1.5);
+          }
+        }
+
+        for (let r = minActiveRow; r <= maxActiveRow; r++) {
+          const baseY = r * GRID_SPACING + scrollShiftY;
+          for (let x = curX - BALL_RADIUS * 0.6; x <= curX + BALL_RADIUS * 0.6; x += RIB_SPACING) {
+            if (!calcDome(x, baseY, curX, curY, curIntensity) || domeWeight < 0.22) continue;
+
+            const r = (BASE_DIAMETER / 2) * (1 + (domeZ / MAX_BALL_ELEVATION) * 0.42);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
+            const ry = baseY + flexY;
+
+            ctx.moveTo(x - 2.5, ry - r * 0.6);
+            ctx.lineTo(x + 1.5, ry + r * 0.6);
+          }
+        }
+        ctx.stroke();
+
+        // 3E. 3D Precision Welded Nodes on the Ball Dome with Light-Directed Specular Glint
+        for (let c = minActiveCol; c <= maxActiveCol; c++) {
+          const ix = c * GRID_SPACING;
+          for (let r = minActiveRow; r <= maxActiveRow; r++) {
+            const iy = r * GRID_SPACING + scrollShiftY;
+            if (!calcDome(ix, iy, curX, curY, curIntensity) || domeWeight < 0.1) continue;
+
+            const flexX = (domeDx / (domeDist + 0.1)) * (domeZ * 0.12);
+            const flexY = (domeDy / (domeDist + 0.1)) * (domeZ * 0.12);
+            const nx = ix + flexX;
+            const ny = iy + flexY;
+            const weldR = 3.2 + (domeZ / MAX_BALL_ELEVATION) * 1.2;
 
             // Heat-affected zone collar
             ctx.beginPath();
             ctx.fillStyle = p.weldHAZ;
-            ctx.arc(nx, ny, weldR + 1.4, 0, Math.PI * 2);
+            ctx.arc(nx, ny, weldR + 1.2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Electric molten bead core
+            // Weld bead core
             ctx.beginPath();
-            ctx.fillStyle = domeDist < 70 ? p.weldHot : p.weldNode;
+            ctx.fillStyle = domeDist < 65 ? p.weldHot : p.weldNode;
             ctx.arc(nx, ny, weldR, 0, Math.PI * 2);
             ctx.fill();
 
-            // Dynamic specular gleam angled towards the light source
+            // Specular gleam offset dynamically towards the light source
             const lightDirX = curX - nx;
             const lightDirY = curY - ny;
             const lightLen = Math.hypot(lightDirX, lightDirY) + 0.1;
@@ -774,7 +655,7 @@ export default function RealisticRebarWeaveBackground({
 
             ctx.beginPath();
             ctx.fillStyle = '#ffffff';
-            ctx.arc(nx + glintOffsetX, ny + glintOffsetY, Math.max(0.7, weldR * 0.32), 0, Math.PI * 2);
+            ctx.arc(nx + glintOffsetX, ny + glintOffsetY, Math.max(0.6, weldR * 0.30), 0, Math.PI * 2);
             ctx.fill();
           }
         }

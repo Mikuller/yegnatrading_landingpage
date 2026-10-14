@@ -474,10 +474,12 @@ export default function Hero() {
             </EmberButton>
             <a
               href={`tel:${CONTACT.phoneClean}`}
-              className="border-line bg-panel2/80 text-ink hover:border-ember hover:text-ember group inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-semibold transition-all duration-300"
+              className="border-line bg-panel2/90 text-ink hover:border-ember hover:text-ember group inline-flex items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-bold transition-all duration-300 shadow-2xs hover:shadow-[0_0_20px_rgba(245,124,0,0.25)] hover:-translate-y-0.5"
             >
-              <Phone className="text-ember h-4 w-4 transition-transform group-hover:scale-110" />
-              <span>{CONTACT.phone}</span>
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-ember/15 border border-ember/30 text-ember group-hover:bg-ember group-hover:text-white transition-colors">
+                <Phone className="h-3.5 w-3.5 transition-transform group-hover:scale-110" />
+              </span>
+              <span className="font-mono">{CONTACT.phone}</span>
             </a>
             <a
               href={CONTACT.companyProfileUrl}
