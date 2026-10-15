@@ -19,7 +19,9 @@ export default function CareersPage() {
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <Breadcrumbs items={[{ label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች' }]} />
 
-          <div className="max-w-3xl">
+          <div className="relative max-w-3xl">
+            {/* Soft text-protective scrim halo ensuring 100% crisp legibility */}
+            <div aria-hidden="true" className="text-protective-halo" />
             <div className="border-line bg-panel2/90 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold text-ember backdrop-blur-sm mb-4">
               <Briefcase className="h-4 w-4" />
               <span>{t('Grow With Ethiopia’s Supply Leader', 'ከግንባር ቀደሙ አቅራቢ ጋር ያድጉ')}</span>

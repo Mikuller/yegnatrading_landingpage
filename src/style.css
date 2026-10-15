@@ -165,6 +165,16 @@ body {
     0 12px 64px var(--color-bg);
 }
 
+.text-protective-halo {
+  position: absolute;
+  inset: -1.75rem;
+  z-index: -1;
+  border-radius: 2rem;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 85% at 35% 45%, var(--color-bg) 0%, var(--color-bg) 70%, transparent 100%);
+  filter: blur(28px);
+}
+
 @keyframes rebar-flow {
   from {
     stroke-dashoffset: 24;

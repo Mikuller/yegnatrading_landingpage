@@ -370,10 +370,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         {/* left column: copy & CTA */}
         <div className="relative">
           {/* Soft ambient text-protective scrim halo ensuring 100% crisp legibility over background weave */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-6 sm:-inset-10 -z-10 rounded-3xl bg-radial-[ellipse_85%_85%_at_35%_40%] from-bg/95 via-bg/75 to-transparent dark:from-bg/95 dark:via-bg/80 dark:to-transparent blur-2xl"
-          />
+          <div aria-hidden="true" className="text-protective-halo" />
 
           {/* Eyebrow badge */}
           <motion.div
