@@ -5,6 +5,7 @@ import { CONTACT, STATS } from '../data';
 import { Counter, EASE, EmberButton } from '../ui';
 import { useApp } from '../context/AppContext';
 import InteractiveRebarBundle from '../components/InteractiveRebarBundle';
+import type { QuotePrefill } from './RebarLab';
 
 function HeadlineWord({ word, delay }: { word: string; delay: number }) {
   return (
@@ -21,7 +22,7 @@ function HeadlineWord({ word, delay }: { word: string; delay: number }) {
   );
 }
 
-function RealRebarCard() {
+function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
   const { t } = useApp();
   const shouldReduceMotion = useReducedMotion();
   const [displayMode, setDisplayMode] = useState<'animated' | 'render'>('animated');
@@ -144,26 +145,28 @@ function RealRebarCard() {
               </div>
             </div>
 
-            {/* Certified Pill with Live Radar Pulse */}
-            <motion.div
-              whileHover={shouldReduceMotion ? {} : { scale: 1.06 }}
-              className="relative flex items-center gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2.5 py-1 text-ember shadow-sm backdrop-blur-sm cursor-default"
-            >
-              <span className="relative flex h-2 w-2">
-                {!shouldReduceMotion && (
-                  <motion.span
-                    className="absolute inline-flex h-full w-full rounded-full bg-ember opacity-75"
-                    animate={{ scale: [1, 2.2], opacity: [0.75, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                  />
-                )}
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
-              </span>
-              <ShieldCheck className="h-3.5 w-3.5" />
-              <span className="text-[0.68rem] font-bold tracking-wider uppercase">
-                {t('Certified', 'የተረጋገጠ')}
-              </span>
-            </motion.div>
+            {/* Certified Pill (Shown in header only when in Studio Render mode) */}
+            {displayMode === 'render' && (
+              <motion.div
+                whileHover={shouldReduceMotion ? {} : { scale: 1.06 }}
+                className="relative flex items-center gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2.5 py-1 text-ember shadow-sm backdrop-blur-sm cursor-default"
+              >
+                <span className="relative flex h-2 w-2">
+                  {!shouldReduceMotion && (
+                    <motion.span
+                      className="absolute inline-flex h-full w-full rounded-full bg-ember opacity-75"
+                      animate={{ scale: [1, 2.2], opacity: [0.75, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+                    />
+                  )}
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
+                </span>
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span className="text-[0.68rem] font-bold tracking-wider uppercase">
+                  {t('Certified', 'የተረጋገጠ')}
+                </span>
+              </motion.div>
+            )}
           </div>
 
           {/* REBAR SHOWCASE - Interactive 3D Kinetic Bundle or Studio Render (translateZ: 42px) */}
@@ -172,7 +175,7 @@ function RealRebarCard() {
             style={{ transform: shouldReduceMotion ? undefined : 'translateZ(42px)' }}
           >
             {displayMode === 'animated' ? (
-              <InteractiveRebarBundle />
+              <InteractiveRebarBundle onQuote={onQuote} />
             ) : (
               <div className="relative mx-auto flex items-center justify-center">
                 {/* Radial warm sheen highlight behind steel bundle */}
@@ -250,7 +253,7 @@ function RealRebarCard() {
             style={{ transform: shouldReduceMotion ? undefined : 'translateZ(22px)' }}
           >
             <div>
-              <p className="font-display text-ink text-lg font-bold sm:text-xl">06 – 32 mm</p>
+              <p className="font-display text-ink text-lg font-bold sm:text-xl">6 – 32 mm</p>
               <p className="text-mute text-xs">
                 {t('Metric bars, always in stock', 'በሙሉ መጠን በማንኛውም ጊዜ በስቶክ')}
               </p>
@@ -340,7 +343,7 @@ function RealRebarCard() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
   const { t } = useApp();
 
   return (
@@ -514,7 +517,7 @@ export default function Hero() {
 
         {/* right column: Real 3D Rebar Card Showcase */}
         <div className="relative">
-          <RealRebarCard />
+          <RealRebarCard onQuote={onQuote} />
         </div>
       </div>
 

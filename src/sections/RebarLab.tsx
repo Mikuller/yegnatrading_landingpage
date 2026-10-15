@@ -8,6 +8,7 @@ import {
   Check,
   CheckCircle2,
   ChevronRight,
+  Compass,
   Eye,
   FileSpreadsheet,
   Hammer,
@@ -15,7 +16,9 @@ import {
   Info,
   Layers,
   RotateCcw,
+  Scan,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Volume2,
   VolumeX,
@@ -38,6 +41,7 @@ export interface PartConfig {
   amDescription: string;
   engineeringTip: string;
   amEngineeringTip: string;
+  sectionDimensions: string;
   recommendedSizes: string[];
   acceptableSizes: string[];
   incompatibleSizes: string[];
@@ -49,18 +53,19 @@ export const LAB_PARTS: PartConfig[] = [
   {
     id: 'footing',
     stepNumber: 1,
-    label: 'Footing & Foundation',
-    amLabel: 'የመሠረት ማሰሪያ (Footing)',
+    label: 'Footing & Foundation Pads',
+    amLabel: 'የመሠረት ማሰሪያ (Footings)',
     tagline: 'The seismic anchor to bedrock',
     amTagline: 'ከመሬት ጋር የሚደረግ ጽኑ ትስስር',
     description:
-      'Everything the house carries ends up here. A dense two-way cage of stout deformed bars spreads high column loads evenly into the soil — preventing punch-through shear and uneven settlement.',
+      'Everything the house carries ends up here. A dense two-way cage of stout deformed bars spreads high column loads evenly into the soil — preventing punch-through shear and differential settlement.',
     amDescription:
       'የህንጻው አጠቃላይ ክብደት እዚህ ያርፋል። ጠንካራ ባለሁለት አቅጣጫ የሬባር መረብ ክብደቱን ወደ መሬቱ እኩል በማሰራጨት ስንጥቆችንና መደላደልን ይከላከላል።',
     engineeringTip:
       'EBCS standard recommends minimum 50mm concrete cover and 90° hooked anchorages to prevent moisture corrosion and punching shear.',
     amEngineeringTip:
       'በኢትዮጵያ የግንባታ መመሪያ መሠረት ዝገትን ለመከላከል ቢያንስ 50ሚሜ የኮንክሪት ሽፋን (cover) እና የ90 ዲግሪ መታጠፊያ እንዲኖረው ይመከራል።',
+    sectionDimensions: '1400 × 1400 × 350 mm',
     recommendedSizes: ['14mm', '16mm', '20mm'],
     acceptableSizes: ['12mm'],
     incompatibleSizes: ['06mm Coil', '08mm'],
@@ -70,7 +75,7 @@ export const LAB_PARTS: PartConfig[] = [
   {
     id: 'column',
     stepNumber: 2,
-    label: 'Columns & Staffa Stirrups',
+    label: 'Columns & Staffa Stirrup Cages',
     amLabel: 'የህንጻ አምዶችና ስታፋ (Columns)',
     tagline: 'The vertical spine carrying compression',
     amTagline: 'የህንጻው ዋና ደጋፊ ምሰሶ',
@@ -82,6 +87,7 @@ export const LAB_PARTS: PartConfig[] = [
       'Stirrup spacing must be tightened to 100mm near column-beam joints (critical seismic zones) with 135° hook bends.',
     amEngineeringTip:
       'የስታፋ ማሰሪያ ክፍተት በመገጣጠሚያዎች አካባቢ ወደ 100ሚሜ መጠጋጋት አለበት፤ የ135 ዲግሪ የደህንነት ማጠፊያም ግዴታ ነው።',
+    sectionDimensions: '300 × 300 × 3200 mm',
     recommendedSizes: ['16mm', '20mm', '24mm'],
     acceptableSizes: ['14mm'],
     incompatibleSizes: ['06mm Coil', '08mm', '10mm'],
@@ -91,7 +97,7 @@ export const LAB_PARTS: PartConfig[] = [
   {
     id: 'beam',
     stepNumber: 3,
-    label: 'Beams & Lintels',
+    label: 'Plinth & Inter-Floor Beams',
     amLabel: 'የወለልና የመሬት ጋሪ (Beams)',
     tagline: 'The horizontal flexural bridge',
     amTagline: 'በአምዶች መካከል ያለ ድልድይ',
@@ -103,6 +109,7 @@ export const LAB_PARTS: PartConfig[] = [
       'Ensure proper development lap length (Ld ≥ 40 bar diameters) where beams intersect column cores.',
     amEngineeringTip:
       'ቢሞች ከአምድ ጋር በሚገናኙበት ነጥብ ላይ በቂ የመደራረቢያ ርዝመት (Ld ≥ 40 እጥፍ የብረት ውፍረት) መኖሩን ያረጋግጡ።',
+    sectionDimensions: '250 × 400 × 4800 mm',
     recommendedSizes: ['14mm', '16mm', '20mm'],
     acceptableSizes: ['12mm'],
     incompatibleSizes: ['06mm Coil', '08mm'],
@@ -124,6 +131,7 @@ export const LAB_PARTS: PartConfig[] = [
       'Use rebar spacer chairs to keep the top mesh elevated during concrete pour for maximum lever arm depth.',
     amEngineeringTip:
       'ኮንክሪት በሚሞላበት ወቅት የላይኛው የብረት መረብ ዝቅ እንዳይል የብረት ቼር (spacer chairs) መጠቀም ወሳኝ ነው።',
+    sectionDimensions: '4800 × 6000 × 150 mm',
     recommendedSizes: ['08mm', '10mm', '12mm'],
     acceptableSizes: ['14mm'],
     incompatibleSizes: ['06mm Coil', '24mm', '32mm'],
@@ -133,7 +141,7 @@ export const LAB_PARTS: PartConfig[] = [
   {
     id: 'stair',
     stepNumber: 5,
-    label: 'Cantilever Dog-Legged Staircase',
+    label: 'Dog-Legged Reinforced Staircase',
     amLabel: 'የደረጃ መዋቅር (Stairs)',
     tagline: 'The dynamic circulation spine',
     amTagline: 'አስተማማኝ መወጣጫ',
@@ -145,6 +153,7 @@ export const LAB_PARTS: PartConfig[] = [
       'Anchor the top and bottom flight reinforcement deeply into beam cores with cranked hooks to resist dynamic foot-traffic vibration.',
     amEngineeringTip:
       'የደረጃው የላይና የታች ጫፎች ከመሬትና ከወለል ጋሪዎች ጋር በጥልቅ ታስረው መዋሃድ አለባቸው።',
+    sectionDimensions: '1000 mm Width · 150 mm Waist',
     recommendedSizes: ['12mm', '14mm', '16mm'],
     acceptableSizes: ['10mm'],
     incompatibleSizes: ['06mm Coil', '24mm', '32mm'],
@@ -187,22 +196,84 @@ export type QuotePrefill = {
   items?: StructuralQuoteItem[];
 };
 
-// Synthesize pleasant structural metallic feedback without external audio files
-function playTone(freq: number, duration: number, type: OscillatorType = 'triangle', gainLevel = 0.15) {
+// Acoustic synthesizer for tactile structural audio feedback
+function playSoundFX(type: 'rebar' | 'pour' | 'xray' | 'earthquake' | 'fanfare') {
   try {
     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AudioCtx) return;
     const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    gain.gain.setValueAtTime(gainLevel, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
+
+    if (type === 'rebar') {
+      // Crisp metallic clang + harmonic ring
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(1250, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.14);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } else if (type === 'pour') {
+      // Heavy liquid thud & slurry pour sound
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.35);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.36);
+    } else if (type === 'xray') {
+      // Sci-fi laser ultrasonic scan sweep
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(550, ctx.currentTime + 0.22);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.23);
+    } else if (type === 'earthquake') {
+      // Low rumble seismic oscillation
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(65, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(85, ctx.currentTime + 0.4);
+      osc.frequency.linearRampToValueAtTime(45, ctx.currentTime + 0.8);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.85);
+    } else if (type === 'fanfare') {
+      // 4-note celebration arpeggio
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((freq, idx) => {
+        window.setTimeout(() => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.26);
+        }, idx * 100);
+      });
+    }
   } catch {
     // Ignore audio restrictions
   }
@@ -215,12 +286,11 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
 
   // Color tokens
   const isDark = theme === 'dark';
-  const blueprintLine = isDark ? 'rgba(244, 241, 234, 0.28)' : 'rgba(31, 42, 68, 0.24)';
+  const blueprintLine = isDark ? 'rgba(244, 241, 234, 0.35)' : 'rgba(31, 42, 68, 0.3)';
   const blueprintGrid = isDark ? 'rgba(244, 241, 234, 0.05)' : 'rgba(31, 42, 68, 0.05)';
   const rebarEmber = '#f57c00';
   const rebarGold = '#ffb74d';
-  const concreteFill = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(31, 42, 68, 0.035)';
-  const concreteSolid = isDark ? 'rgba(30, 41, 59, 0.85)' : 'rgba(226, 232, 240, 0.85)';
+  const laserCyan = '#00e5ff';
 
   // Gamified house state: which parts are built and with what rebar diameter
   const [builtChoices, setBuiltChoices] = useState<Record<PartId, string | null>>({
@@ -232,21 +302,39 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
   });
 
   const [activePartId, setActivePartId] = useState<PartId>('footing');
-  const [viewMode, setViewMode] = useState<'xray' | 'concrete'>('xray');
+  const [viewMode, setViewMode] = useState<'xray' | 'concrete' | 'split'>('xray');
   const [isStressTesting, setIsStressTesting] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [justReinforced, setJustReinforced] = useState<PartId | null>(null);
   const [showBOMModal, setShowBOMModal] = useState(false);
 
-  // Spark burst effect particles
+  // Pouring animation trigger
+  const [isPouring, setIsPouring] = useState(false);
+
+  // Interactive X-Ray Scanner Wipe Position (0 to 100%)
+  const [scanSliderPos, setScanSliderPos] = useState<number>(50);
+  const [isAutoScanning, setIsAutoScanning] = useState<boolean>(false);
+
+  // Sparks when reinforcing
   const [sparks, setSparks] = useState<{ id: number; x: number; y: number }[]>([]);
+
+  const [hoveredPartId, setHoveredPartId] = useState<PartId | null>(null);
 
   const activePart = useMemo(
     () => LAB_PARTS.find((p) => p.id === activePartId) || LAB_PARTS[0],
     [activePartId]
   );
 
-  // Count how many parts are built
+  const hoveredPart = useMemo(
+    () => (hoveredPartId ? LAB_PARTS.find((p) => p.id === hoveredPartId) : null),
+    [hoveredPartId]
+  );
+
+  const nextUnbuiltPart = useMemo(
+    () => LAB_PARTS.find((p) => p.id !== activePartId && !builtChoices[p.id]),
+    [activePartId, builtChoices]
+  );
+
   const builtCount = useMemo(
     () => Object.values(builtChoices).filter(Boolean).length,
     [builtChoices]
@@ -271,11 +359,10 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     return Math.min(100, score);
   }, [builtChoices]);
 
-  // Handle rebar selection for current step
+  // Handle rebar selection
   const handleSelectRebar = (part: PartConfig, size: string) => {
     if (soundEnabled) {
-      playTone(880, 0.12, 'sine', 0.2);
-      window.setTimeout(() => playTone(1320, 0.15, 'triangle', 0.15), 60);
+      playSoundFX('rebar');
     }
 
     setBuiltChoices((prev) => ({
@@ -286,11 +373,9 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     setJustReinforced(part.id);
     window.setTimeout(() => setJustReinforced(null), 1200);
 
-    // Trigger visual spark burst
     const newSpark = { id: Date.now(), x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 };
     setSparks((prev) => [...prev.slice(-6), newSpark]);
 
-    // Automatically advance to the next unbuilt part if available
     const nextUnbuilt = LAB_PARTS.find(
       (p) => p.id !== part.id && !builtChoices[p.id]
     );
@@ -299,31 +384,57 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
         setActivePartId(nextUnbuilt.id);
       }, 450);
     } else if (builtCount + 1 >= LAB_PARTS.length && soundEnabled) {
-      // Fanfare when all 5 parts are built!
       window.setTimeout(() => {
-        playTone(523.25, 0.2, 'triangle', 0.2);
-        window.setTimeout(() => playTone(659.25, 0.2, 'triangle', 0.2), 120);
-        window.setTimeout(() => playTone(783.99, 0.25, 'triangle', 0.25), 240);
-        window.setTimeout(() => playTone(1046.5, 0.4, 'triangle', 0.3), 360);
+        playSoundFX('fanfare');
       }, 500);
     }
   };
 
-  // Run dynamic load / earthquake stress test simulation
+  // Switch to Solid Concrete with Fluid Pour Animation
+  const switchToConcreteMode = () => {
+    if (soundEnabled) playSoundFX('pour');
+    setViewMode('concrete');
+    setIsPouring(true);
+    window.setTimeout(() => setIsPouring(false), 1400);
+  };
+
+  // Switch to X-Ray Mode with Electric Laser Scan
+  const switchToXRayMode = () => {
+    if (soundEnabled) playSoundFX('xray');
+    setViewMode('xray');
+  };
+
+  // Trigger Split Scanner
+  const switchToSplitMode = () => {
+    if (soundEnabled) playSoundFX('xray');
+    setViewMode('split');
+  };
+
+  // Auto-scan sweep across the building
+  useEffect(() => {
+    if (!isAutoScanning) return;
+    const interval = window.setInterval(() => {
+      setScanSliderPos((prev) => {
+        if (prev >= 98) return 5;
+        return prev + 2;
+      });
+    }, 40);
+    return () => window.clearInterval(interval);
+  }, [isAutoScanning]);
+
+  // Run dynamic load & seismic earthquake stress test
   const triggerStressTest = () => {
     if (isStressTesting) return;
     setIsStressTesting(true);
     if (soundEnabled) {
-      playTone(220, 0.35, 'sawtooth', 0.1);
-      window.setTimeout(() => playTone(330, 0.35, 'sine', 0.12), 250);
-      window.setTimeout(() => playTone(440, 0.4, 'triangle', 0.15), 500);
+      playSoundFX('earthquake');
     }
     window.setTimeout(() => {
       setIsStressTesting(false);
     }, 4500);
   };
 
-  // Reset the house to build from scratch
+  // Reset construction
   const resetHouse = () => {
     setBuiltChoices({
       footing: null,
@@ -333,9 +444,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
       stair: null,
     });
     setActivePartId('footing');
-    if (soundEnabled) {
-      playTone(400, 0.1, 'sine', 0.15);
-    }
+    if (soundEnabled) playSoundFX('rebar');
   };
 
   // Prefill entire house bill of materials to Quote
@@ -364,11 +473,10 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
       };
     });
 
-    // Also include 6mm Staffa coil for stirrups
     const coilSpec = REBAR_CONVERSION_TABLE.find((s) => s.diameter === '6mm');
     items.push({
       partId: 'column',
-      partLabel: 'Column Stirrups (Staffa 6mm Coil)',
+      partLabel: 'Column Stirrup Ties (Staffa 6mm Coil)',
       amPartLabel: 'የአምድ ስታፋ ጥቅል (6ሚሜ)',
       size: '06mm Coil',
       defaultQty: 10,
@@ -424,14 +532,63 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     });
   };
 
-  // Hotspot coordinates for interactive pins
-  const hotspots: Record<PartId, { x: number; y: number }> = {
-    footing: { x: 155, y: 440 },
-    column: { x: 155, y: 260 },
-    beam: { x: 380, y: 245 },
-    slab: { x: 380, y: 105 },
-    stair: { x: 485, y: 345 },
+  interface HotspotLayoutItem {
+    id: PartId;
+    target: { x: number; y: number };
+    badge: { x: number; y: number };
+    leaderStart: { x: number; y: number };
+    leaderEnd: { x: number; y: number };
+  }
+
+  // Precision 3D Architectural Hotspot Coordinates & Leader Paths
+  const HOTSPOT_LAYOUT: Record<PartId, HotspotLayoutItem> = {
+    footing: {
+      id: 'footing',
+      target: { x: 155, y: 435 },
+      badge: { x: 155, y: 474 },
+      leaderStart: { x: 155, y: 442 },
+      leaderEnd: { x: 155, y: 461 },
+    },
+    column: {
+      id: 'column',
+      target: { x: 159, y: 270 },
+      badge: { x: 252, y: 270 },
+      leaderStart: { x: 178, y: 270 },
+      leaderEnd: { x: 185, y: 270 },
+    },
+    beam: {
+      id: 'beam',
+      target: { x: 370, y: 225 },
+      badge: { x: 370, y: 182 },
+      leaderStart: { x: 370, y: 225 },
+      leaderEnd: { x: 370, y: 195 },
+    },
+    slab: {
+      id: 'slab',
+      target: { x: 270, y: 65 },
+      badge: { x: 270, y: 34 },
+      leaderStart: { x: 270, y: 65 },
+      leaderEnd: { x: 270, y: 47 },
+    },
+    stair: {
+      id: 'stair',
+      target: { x: 470, y: 330 },
+      badge: { x: 550, y: 348 },
+      leaderStart: { x: 470, y: 330 },
+      leaderEnd: { x: 483, y: 345 },
+    },
   };
+
+  const hotspots: Record<PartId, { x: number; y: number }> = {
+    footing: HOTSPOT_LAYOUT.footing.target,
+    column: HOTSPOT_LAYOUT.column.target,
+    beam: HOTSPOT_LAYOUT.beam.target,
+    slab: HOTSPOT_LAYOUT.slab.target,
+    stair: HOTSPOT_LAYOUT.stair.target,
+  };
+
+  // SVG split cut x position in user units
+  const splitCutX = 760 * (scanSliderPos / 100);
 
   return (
     <section
@@ -441,7 +598,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     >
       {/* Background ambient glow */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_15%,rgba(245,124,0,0.07),transparent_65%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_15%,rgba(245,124,0,0.08),transparent_65%)]"
         aria-hidden
       />
 
@@ -454,8 +611,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               title={t('Build A Real House,', 'እውነተኛ ቤት ይገንቡ፤')}
               accent={t('Bar by Bar.', 'በእያንዳንዱ ብረት።')}
               sub={t(
-                'Experience how a Grade 75 reinforced concrete structure comes together. Choose the exact rebar diameter for each structural stage, test load integrity, and send the schedule straight to quotation.',
-                'የግሬድ 75 ኮንክሪት ህንጻ መዋቅር እንዴት እንደሚቆም ደረጃ በደረጃ ይለማመዱ። ለእያንዳንዱ ክፍል ተስማሚውን የብረት መጠን በመምረጥ የመሸከም አቅሙን ይፈትሹ፤ በቀጥታም ወደ ዋጋ መጠየቂያ ይላኩት።'
+                'Experience how a Grade 75 reinforced concrete structure comes together in real 3D perspective. Switch between X-Ray steel inspection, liquid concrete pour, and live earthquake simulation.',
+                'የግሬድ 75 ኮንክሪት ህንጻ መዋቅር በ3D እይታ ደረጃ በደረጃ እንዴት እንደሚቆም ይለማመዱ። የኤክስሬይ ብረት ምርመራን፣ የፈሳሽ ኮንክሪት ሙላትን እና የመሬት መንቀጥቀጥ ጫናን በተግባር ይፈትሹ።'
               )}
             />
           </div>
@@ -466,8 +623,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
             <button
               type="button"
               onClick={() => setSoundEnabled((v) => !v)}
-              className="border-line bg-panel hover:border-ember text-ink flex h-11 w-11 items-center justify-center rounded-2xl border shadow-sm transition-all"
-              title={soundEnabled ? 'Mute Steel Audio FX' : 'Enable Steel Audio FX'}
+              className="border-line bg-panel hover:border-ember text-ink flex h-11 w-11 items-center justify-center rounded-2xl border shadow-sm transition-all cursor-pointer"
+              title={soundEnabled ? 'Mute Audio FX' : 'Enable Audio FX'}
               aria-label="Toggle structural audio sound effects"
             >
               {soundEnabled ? (
@@ -477,40 +634,54 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               )}
             </button>
 
-            {/* View Mode Toggle (X-Ray Rebar vs Concrete Pour) */}
+            {/* View Mode Switcher: 3 Spectacular Modes */}
             <div className="border-line bg-panel flex items-center rounded-2xl border p-1 shadow-sm">
               <button
                 type="button"
-                onClick={() => setViewMode('xray')}
-                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                onClick={switchToXRayMode}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                   viewMode === 'xray'
-                    ? 'bg-ember text-white shadow-sm'
+                    ? 'bg-ember text-white shadow-sm ring-1 ring-ember/40'
                     : 'text-mute hover:text-ink'
                 }`}
               >
                 <Zap className="h-3.5 w-3.5" />
-                <span>{t('X-Ray Rebar', 'የብረት አደራደር')}</span>
+                <span>{t('X-Ray Rebar', 'የኤክስሬይ ብረት')}</span>
               </button>
+
               <button
                 type="button"
-                onClick={() => setViewMode('concrete')}
-                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                onClick={switchToConcreteMode}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                   viewMode === 'concrete'
-                    ? 'bg-ember text-white shadow-sm'
+                    ? 'bg-ember text-white shadow-sm ring-1 ring-ember/40'
                     : 'text-mute hover:text-ink'
                 }`}
               >
                 <Layers className="h-3.5 w-3.5" />
-                <span>{t('Solid Concrete', 'የተሞላ ኮንክሪት')}</span>
+                <span>{t('Pour Concrete', 'ኮንክሪት ሙላ')}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={switchToSplitMode}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                  viewMode === 'split'
+                    ? 'bg-cyan-500 text-white shadow-sm ring-1 ring-cyan-500/40'
+                    : 'text-mute hover:text-ink'
+                }`}
+              >
+                <Scan className="h-3.5 w-3.5 text-cyan-400" />
+                <span>{t('X-Ray Scanner', 'ሌዘር ስካነር')}</span>
               </button>
             </div>
 
-            {/* Stress Test Simulation Button */}
+            {/* Seismic & Stress Simulation Button */}
             <button
               type="button"
               onClick={triggerStressTest}
               disabled={isStressTesting}
-              className={`group font-display flex items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-sm ${
+              className={`group font-display flex items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer ${
                 isStressTesting
                   ? 'border-amber bg-amber/15 text-amber ring-2 ring-amber/30 animate-pulse'
                   : 'border-line bg-panel hover:border-ember text-ink hover:text-ember'
@@ -523,7 +694,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               />
               <span>
                 {isStressTesting
-                  ? t('Simulating Seismic Stress…', 'የክብደት ጫናን በመሞከር ላይ…')
+                  ? t('Simulating Earth Tremor (0.18g)…', 'የመሬት መንቀጥቀጥ ጫና በመሞከር ላይ…')
                   : t('Test Structural Load', 'የክብደት ጫናን ፈትሽ')}
               </span>
             </button>
@@ -533,7 +704,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               <button
                 type="button"
                 onClick={resetHouse}
-                className="border-line bg-panel hover:border-red-400 text-mute hover:text-red-500 flex h-11 w-11 items-center justify-center rounded-2xl border shadow-sm transition-all"
+                className="border-line bg-panel hover:border-red-400 text-mute hover:text-red-500 flex h-11 w-11 items-center justify-center rounded-2xl border shadow-sm transition-all cursor-pointer"
                 title={t('Reset Construction', 'ግንባታውን እንደገና ጀምር')}
                 aria-label="Reset house construction"
               >
@@ -662,7 +833,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
           </div>
         </div>
 
-        {/* 100% Construction Complete Callout */}
+        {/* 100% Construction Complete Callout Banner */}
         <AnimatePresence>
           {builtCount === LAB_PARTS.length && (
             <motion.div
@@ -712,691 +883,1094 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
           )}
         </AnimatePresence>
 
-        {/* Main Stage Grid: Interactive SVG House Canvas & Inspection/Selection Panel */}
+        {/* Main Stage Grid: 3D Architectural Isometric Canvas & Inspection Panel */}
         <div className="mt-8 grid gap-8 lg:grid-cols-[1.22fr_0.78fr]">
-          {/* Architectural House SVG Diagram */}
+          {/* 3D Architectural Blueprint Canvas with Motion Vibration and X-Ray Shader */}
           <div className="border-line bg-panel card-glow texture-grid relative flex flex-col justify-between overflow-hidden rounded-3xl border shadow-xl">
-            {/* Top Canvas Bar with Dimension Badges & Quick Controls */}
-            <div className="border-line bg-panel/75 flex items-center justify-between border-b px-5 py-3 text-xs backdrop-blur-sm">
+            {/* Canvas Header Bar with Inspection Tools */}
+            <div className="border-line bg-panel/75 flex flex-wrap items-center justify-between border-b px-5 py-3 text-xs backdrop-blur-sm gap-2">
               <div className="flex items-center gap-2">
-                <Building className="text-ember h-4 w-4" />
+                <Compass className="text-ember h-4 w-4 shrink-0" />
                 <span className="font-display text-ink font-semibold">
-                  {t('G+1 Structural RC Blueprint', 'የህንጻው ዋና ኮንክሪት መዋቅር (RC Frame)')}
+                  {viewMode === 'xray'
+                    ? t('3D CAD X-Ray Rebar Cage Core', 'የ3D ኤክስሬይ ሬባር መዋቅር')
+                    : viewMode === 'concrete'
+                    ? t('Poured Structural Concrete (Architectural Cast)', 'የተሞላ የኮንክሪት ህንጻ (Architectural Cast)')
+                    : t('Interactive X-Ray Laser Inspection Visor', 'ተንቀሳቃሽ የሌዘር ኤክስሬይ መመርመሪያ')}
                 </span>
-                <span className="text-mute hidden sm:inline">• EBCS / ASTM A615</span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-mute hidden text-[11px] md:inline">
-                  {t('Grid Span: 4.80m × 3.20m', 'የስፋት ልኬት: 4.80ሜ × 3.20ሜ')}
+              {/* Split Scanner Controls if in Split Mode */}
+              {viewMode === 'split' && (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsAutoScanning((v) => !v)}
+                    className={`rounded-lg border px-2.5 py-1 text-[11px] font-bold transition-all cursor-pointer ${
+                      isAutoScanning
+                        ? 'border-cyan-400 bg-cyan-400/20 text-cyan-500'
+                        : 'border-line text-mute hover:text-ink'
+                    }`}
+                  >
+                    {isAutoScanning ? t('Stop Auto Scan', 'ስካኑን አቁም') : t('Auto Sweep Scan', 'በራስ-ሰር ቃኝ')}
+                  </button>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={scanSliderPos}
+                    onChange={(e) => {
+                      setIsAutoScanning(false);
+                      setScanSliderPos(Number(e.target.value));
+                    }}
+                    className="w-24 accent-cyan-400 cursor-pointer"
+                    title="Slide to peel concrete and reveal rebar"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Interactive Mission Guidance Strip */}
+            <div className="border-line bg-ember/10 border-b px-4 sm:px-5 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2 text-ink">
+                <span className="relative flex h-2.5 w-2.5 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ember opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-ember"></span>
                 </span>
-                {builtCount === LAB_PARTS.length && (
-                  <span className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-                    <Sparkles className="h-3 w-3" />
-                    {t('Ready For Quote', 'ለውል የተዘጋጀ')}
-                  </span>
-                )}
+                <span className="font-medium text-xs">
+                  {hoveredPart
+                    ? t(
+                        `Inspecting Stage 0${hoveredPart.stepNumber} · ${hoveredPart.label}: ${hoveredPart.sectionDimensions} — Click to configure`,
+                        `እየተመለከቱ ነው፡ ደረጃ 0${hoveredPart.stepNumber} · ${hoveredPart.amLabel} — ብረት ለመምረጥ ይጫኑ`
+                      )
+                    : t(
+                        'Click any numbered beacon (1–5) on the building below to select that stage & choose your rebar',
+                        'በህንጻው ላይ ያሉትን ቁጥሮች (1-5) በመጫን ለእያንዳንዱ ክፍል የብረት ዓይነት ይምረጡ'
+                      )}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-ember font-mono">
+                <span className="text-mute">{t('Active Stage:', 'አሁን የተመረጠ፡')}</span>
+                <span className="bg-ember text-white rounded-md px-2 py-0.5 shadow-xs">
+                  0{activePart.stepNumber} · {t(activePart.label.split(' ')[0], activePart.amLabel.split(' ')[0])}
+                </span>
               </div>
             </div>
 
-            {/* SVG Visual Stage */}
-            <div className="relative p-2 sm:p-4">
-              <svg
-                viewBox="0 0 760 520"
-                className="relative w-full overflow-visible select-none"
-                role="img"
-                aria-label="Interactive reinforced concrete building structure blueprint"
+            {/* Interactive SVG Stage with Motion Earthquake Oscillations */}
+            <div className="relative p-2 sm:p-4 overflow-hidden">
+              <motion.div
+                animate={
+                  isStressTesting
+                    ? {
+                        x: [0, -7, 6, -5, 4, -2, 1, 0],
+                        y: [0, 2, -2, 1, 0],
+                      }
+                    : { x: 0, y: 0 }
+                }
+                transition={
+                  isStressTesting
+                    ? {
+                        duration: 0.85,
+                        repeat: 4,
+                        ease: 'easeInOut',
+                      }
+                    : { duration: 0.2 }
+                }
+                className="w-full relative"
               >
-                <defs>
-                  {/* Soil layer hatching */}
-                  <pattern
-                    id="soil-hatch"
-                    width="16"
-                    height="16"
-                    patternUnits="userSpaceOnUse"
-                    patternTransform="rotate(45)"
-                  >
-                    <line x1="0" y1="0" x2="0" y2="16" stroke={blueprintLine} strokeWidth="1" opacity="0.4" />
-                  </pattern>
-
-                  {/* Concrete stipple pattern */}
-                  <pattern id="concrete-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <circle cx="4" cy="4" r="1.2" fill={blueprintLine} opacity="0.3" />
-                    <circle cx="14" cy="12" r="1" fill={blueprintLine} opacity="0.25" />
-                    <circle cx="10" cy="18" r="1.5" fill={blueprintLine} opacity="0.3" />
-                  </pattern>
-
-                  {/* Linear Rebar Metallic Gradient */}
-                  <linearGradient id="rebar-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#b45309" />
-                    <stop offset="50%" stopColor="#f57c00" />
-                    <stop offset="100%" stopColor="#ffb74d" />
-                  </linearGradient>
-
-                  {/* Load Flow Glow Filter */}
-                  <filter id="glow-ember" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3.5" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                </defs>
-
-                {/* Grid Blueprint Reference Lines */}
-                <g opacity="0.35">
-                  <line x1="40" y1="80" x2="720" y2="80" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
-                  <line x1="40" y1="230" x2="720" y2="230" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
-                  <line x1="40" y1="380" x2="720" y2="380" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
-                  <line x1="160" y1="40" x2="160" y2="480" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
-                  <line x1="600" y1="40" x2="600" y2="480" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
-                </g>
-
-                {/* Sub-Soil Strata & Excavation Bedrock Layer */}
-                <rect x="30" y="450" width="700" height="50" fill="url(#soil-hatch)" />
-                <line x1="20" y1="450" x2="740" y2="450" stroke={blueprintLine} strokeWidth="2.2" />
-
-                {/* Depth & Excavation pit hatches */}
-                {[
-                  { x1: 70, x2: 250 },
-                  { x1: 510, x2: 690 },
-                ].map((pit, idx) => (
-                  <g key={`pit-${idx}`}>
-                    <path
-                      d={`M${pit.x1} 450 L${pit.x1 + 10} 488 L${pit.x2 - 10} 488 L${pit.x2} 450`}
-                      fill="none"
-                      stroke={blueprintLine}
-                      strokeWidth="1.2"
-                      strokeDasharray="3 3"
-                    />
-                  </g>
-                ))}
-
-                {/* ======================================================== */}
-                {/* 1. FOOTINGS (FOUNDATION PADS) */}
-                {/* ======================================================== */}
-                <g
-                  id="svg-part-footing"
-                  className="cursor-pointer transition-opacity duration-300"
-                  onClick={() => setActivePartId('footing')}
-                  style={{
-                    opacity: activePartId === 'footing' ? 1 : builtChoices.footing ? 0.9 : 0.45,
-                  }}
+                <svg
+                  viewBox="0 0 760 520"
+                  className="relative w-full overflow-visible select-none"
+                  role="img"
+                  aria-label="3D architectural reinforced concrete building structure"
                 >
-                  {[
-                    { x: 80, y: 420, cx: 160 },
-                    { x: 520, y: 420, cx: 600 },
-                  ].map((f, i) => {
-                    const isBuilt = Boolean(builtChoices.footing);
-                    const chosen = builtChoices.footing;
-                    const isOptimal = LAB_PARTS[0].recommendedSizes.includes(chosen || '');
+                  <defs>
+                    {/* Soil Bedrock Hatch */}
+                    <pattern id="soil-bedrock" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="16" stroke={blueprintLine} strokeWidth="1.2" opacity="0.45" />
+                    </pattern>
 
-                    return (
-                      <g key={`footing-${i}`}>
-                        {/* Concrete Pad Outline */}
+                    {/* Architectural Concrete Texture with Aggregates */}
+                    <pattern id="concrete-surface" width="30" height="30" patternUnits="userSpaceOnUse">
+                      <rect width="30" height="30" fill={isDark ? '#1e293b' : '#cbd5e1'} opacity="0.9" />
+                      <circle cx="8" cy="8" r="1.5" fill={isDark ? '#334155' : '#94a3b8'} opacity="0.5" />
+                      <circle cx="22" cy="18" r="1.8" fill={isDark ? '#0f172a' : '#e2e8f0'} opacity="0.4" />
+                      <circle cx="16" cy="26" r="1.2" fill={isDark ? '#334155' : '#64748b'} opacity="0.3" />
+                      {/* Formwork panel joint line */}
+                      <line x1="0" y1="29.5" x2="30" y2="29.5" stroke={isDark ? '#0f172a' : '#94a3b8'} strokeWidth="0.8" opacity="0.3" />
+                    </pattern>
+
+                    {/* Wet Liquid Concrete Pour Wave Gradient */}
+                    <linearGradient id="wet-concrete-wave" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#ff9800" stopOpacity="0.4" />
+                      <stop offset="40%" stopColor={isDark ? '#334155' : '#94a3b8'} stopOpacity="0.95" />
+                      <stop offset="100%" stopColor={isDark ? '#1e293b' : '#64748b'} stopOpacity="1" />
+                    </linearGradient>
+
+                    {/* Grade 75 Deformed Rebar Steel Gradient */}
+                    <linearGradient id="steel-rebar-rod" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#b45309" />
+                      <stop offset="35%" stopColor="#f57c00" />
+                      <stop offset="70%" stopColor="#ffb74d" />
+                      <stop offset="100%" stopColor="#b45309" />
+                    </linearGradient>
+
+                    {/* Rebar Rib Spiral Pattern */}
+                    <pattern id="rebar-rib-spiral" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+                      <line x1="0" y1="0" x2="0" y2="6" stroke="#b45309" strokeWidth="1.6" opacity="0.75" />
+                    </pattern>
+
+                    {/* Cyan Laser Scanner Line Gradient */}
+                    <linearGradient id="laser-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#00e5ff" stopOpacity="0" />
+                      <stop offset="50%" stopColor="#00e5ff" stopOpacity="0.9" />
+                      <stop offset="100%" stopColor="#00e5ff" stopOpacity="0" />
+                    </linearGradient>
+
+                    {/* Laser Clip Path for Split Scan Mode */}
+                    <clipPath id="split-concrete-clip">
+                      <rect x="0" y="0" width={viewMode === 'split' ? splitCutX : viewMode === 'concrete' ? 760 : 0} height="520" />
+                    </clipPath>
+
+                    <clipPath id="split-xray-clip">
+                      <rect
+                        x={viewMode === 'split' ? splitCutX : viewMode === 'xray' ? 0 : 760}
+                        y="0"
+                        width={viewMode === 'split' ? 760 - splitCutX : viewMode === 'xray' ? 760 : 0}
+                        height="520"
+                      />
+                    </clipPath>
+                  </defs>
+
+                  {/* 3D Blueprint CAD Grid */}
+                  <g opacity="0.3">
+                    <line x1="40" y1="80" x2="720" y2="80" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
+                    <line x1="40" y1="230" x2="720" y2="230" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
+                    <line x1="40" y1="380" x2="720" y2="380" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
+                    <line x1="160" y1="40" x2="160" y2="480" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
+                    <line x1="600" y1="40" x2="600" y2="480" stroke={blueprintGrid} strokeWidth="1" strokeDasharray="4 4" />
+                  </g>
+
+                  {/* 3D Foundation Excavation Pit & Subsoil Strata */}
+                  <rect x="30" y="450" width="700" height="55" fill="url(#soil-bedrock)" />
+                  <line x1="20" y1="450" x2="740" y2="450" stroke={blueprintLine} strokeWidth="2.5" />
+                  <text x="50" y="495" fill={blueprintLine} fontSize="10" fontFamily="monospace" fontWeight="600">
+                    {t('COMPACTED BEDROCK STRATA · 250 kN/m² SOIL BEARING CAPACITY', 'የተጨመቀ የመሠረት አፈር · 250 kN/m²')}
+                  </text>
+
+                  {/* ========================================================== */}
+                  {/* LAYER A: HIGH-DEFINITION SOLID POURED CONCRETE (3D ARCHITECTURAL) */}
+                  {/* ========================================================== */}
+                  <g clipPath="url(#split-concrete-clip)">
+                    {/* 3D Footing Pads (Solid Cast Concrete with Isometric Depth) */}
+                    {[
+                      { x: 70, y: 415, w: 170, h: 42, d: 20 },
+                      { x: 510, y: 415, w: 170, h: 42, d: 20 },
+                    ].map((f, i) => (
+                      <g
+                        key={`solid-footing-${i}`}
+                        className="cursor-pointer transition-all duration-200"
+                        onClick={() => {
+                          setActivePartId('footing');
+                          if (soundEnabled) playSoundFX('rebar');
+                        }}
+                        onMouseEnter={() => setHoveredPartId('footing')}
+                        onMouseLeave={() => setHoveredPartId(null)}
+                      >
+                        {/* 3D Isometric Top Face */}
+                        <polygon
+                          points={`${f.x},${f.y} ${f.x + f.d},${f.y - 12} ${f.x + f.w + f.d},${f.y - 12} ${f.x + f.w},${f.y}`}
+                          fill={isDark ? '#334155' : '#e2e8f0'}
+                          stroke={activePartId === 'footing' ? rebarEmber : isDark ? '#475569' : '#94a3b8'}
+                          strokeWidth={activePartId === 'footing' ? '1.8' : '1.2'}
+                        />
+                        {/* 3D Isometric Right Side Face */}
+                        <polygon
+                          points={`${f.x + f.w},${f.y} ${f.x + f.w + f.d},${f.y - 12} ${f.x + f.w + f.d},${f.y + f.h - 12} ${f.x + f.w},${f.y + f.h}`}
+                          fill={isDark ? '#0f172a' : '#94a3b8'}
+                          stroke={activePartId === 'footing' ? rebarEmber : isDark ? '#1e293b' : '#64748b'}
+                          strokeWidth={activePartId === 'footing' ? '1.8' : '1.2'}
+                        />
+                        {/* Front Face with Concrete Texture */}
                         <rect
                           x={f.x}
                           y={f.y}
-                          width="160"
-                          height="40"
-                          rx="4"
-                          fill={viewMode === 'concrete' && isBuilt ? concreteSolid : concreteFill}
-                          stroke={activePartId === 'footing' ? rebarEmber : blueprintLine}
-                          strokeWidth={activePartId === 'footing' ? '2.5' : '1.8'}
+                          width={f.w}
+                          height={f.h}
+                          fill="url(#concrete-surface)"
+                          stroke={activePartId === 'footing' ? rebarEmber : isDark ? '#475569' : '#64748b'}
+                          strokeWidth={activePartId === 'footing' ? '2.2' : '1.8'}
                         />
+                        {/* Formwork tie-rod holes */}
+                        <circle cx={f.x + 25} cy={f.y + 20} r="2.5" fill={isDark ? '#0f172a' : '#475569'} />
+                        <circle cx={f.x + f.w - 25} cy={f.y + 20} r="2.5" fill={isDark ? '#0f172a' : '#475569'} />
+                      </g>
+                    ))}
 
-                        {/* Stipple when poured */}
-                        {viewMode === 'concrete' && isBuilt && (
-                          <rect x={f.x} y={f.y} width="160" height="40" fill="url(#concrete-dots)" opacity="0.6" />
-                        )}
-
-                        {/* Rebar Cage (Bottom 2-way mat with 90° anchor hooks) */}
-                        <g>
-                          {/* Bottom Layer 1: Horizontal Ribbed Bars */}
-                          <path
-                            d={`M${f.x + 12} ${f.y + 16} L${f.x + 14} ${f.y + 30} L${f.x + 146} ${f.y + 30} L${f.x + 148} ${f.y + 16}`}
-                            fill="none"
-                            stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                            strokeWidth={isBuilt ? (chosen === '20mm' ? '3.5' : chosen === '16mm' ? '3' : '2.2') : '1.5'}
-                            strokeDasharray={isBuilt ? 'none' : '4 3'}
+                    {/* 3D Columns (Solid Cast Concrete with Front & Side Shading) */}
+                    {[
+                      { x: 140, y: 85, w: 38, h: 330, d: 16 },
+                      { x: 580, y: 85, w: 38, h: 330, d: 16 },
+                    ].map((c, i) => (
+                      <g
+                        key={`solid-col-${i}`}
+                        className="cursor-pointer transition-all duration-200"
+                        onClick={() => {
+                          setActivePartId('column');
+                          if (soundEnabled) playSoundFX('rebar');
+                        }}
+                        onMouseEnter={() => setHoveredPartId('column')}
+                        onMouseLeave={() => setHoveredPartId(null)}
+                      >
+                        {/* Side Shadow Face */}
+                        <polygon
+                          points={`${c.x + c.w},${c.y} ${c.x + c.w + c.d},${c.y - 10} ${c.x + c.w + c.d},${c.y + c.h - 10} ${c.x + c.w},${c.y + c.h}`}
+                          fill={isDark ? '#0f172a' : '#94a3b8'}
+                          stroke={activePartId === 'column' ? rebarEmber : isDark ? '#1e293b' : '#64748b'}
+                          strokeWidth={activePartId === 'column' ? '1.8' : '1.2'}
+                        />
+                        {/* Front Face */}
+                        <rect
+                          x={c.x}
+                          y={c.y}
+                          width={c.w}
+                          height={c.h}
+                          fill="url(#concrete-surface)"
+                          stroke={activePartId === 'column' ? rebarEmber : isDark ? '#475569' : '#64748b'}
+                          strokeWidth={activePartId === 'column' ? '2.2' : '1.8'}
+                        />
+                        {/* Formwork Panel Joint Seams */}
+                        {[165, 245, 325].map((jy) => (
+                          <line
+                            key={`col-joint-${i}-${jy}`}
+                            x1={c.x}
+                            y1={jy}
+                            x2={c.x + c.w}
+                            y2={jy}
+                            stroke={isDark ? '#0f172a' : '#475569'}
+                            strokeWidth="1.2"
+                            opacity="0.6"
                           />
-                          <path
-                            d={`M${f.x + 12} ${f.y + 20} L${f.x + 18} ${f.y + 24} L${f.x + 142} ${f.y + 24} L${f.x + 148} ${f.y + 20}`}
+                        ))}
+                      </g>
+                    ))}
+
+                    {/* 3D Beams (Solid Cast Concrete Spans) */}
+                    <g
+                      className="cursor-pointer transition-all duration-200"
+                      onClick={() => {
+                        setActivePartId('beam');
+                        if (soundEnabled) playSoundFX('rebar');
+                      }}
+                      onMouseEnter={() => setHoveredPartId('beam')}
+                      onMouseLeave={() => setHoveredPartId(null)}
+                    >
+                      {/* Top Isometric Face */}
+                      <polygon
+                        points="120,225 138,213 638,213 620,225"
+                        fill={isDark ? '#334155' : '#e2e8f0'}
+                        stroke={activePartId === 'beam' ? rebarEmber : isDark ? '#475569' : '#94a3b8'}
+                        strokeWidth={activePartId === 'beam' ? '1.8' : '1.2'}
+                      />
+                      {/* Front Face */}
+                      <rect
+                        x="120"
+                        y="225"
+                        width="500"
+                        height="32"
+                        fill="url(#concrete-surface)"
+                        stroke={activePartId === 'beam' ? rebarEmber : isDark ? '#475569' : '#64748b'}
+                        strokeWidth={activePartId === 'beam' ? '2.2' : '1.8'}
+                      />
+                    </g>
+
+                    {/* 3D Suspended Floor Slab (Solid Deck Plate) */}
+                    <g
+                      className="cursor-pointer transition-all duration-200"
+                      onClick={() => {
+                        setActivePartId('slab');
+                        if (soundEnabled) playSoundFX('rebar');
+                      }}
+                      onMouseEnter={() => setHoveredPartId('slab')}
+                      onMouseLeave={() => setHoveredPartId(null)}
+                    >
+                      {/* Top Deck Surface */}
+                      <polygon
+                        points="50,65 72,50 712,50 690,65"
+                        fill={isDark ? '#334155' : '#e2e8f0'}
+                        stroke={activePartId === 'slab' ? rebarEmber : isDark ? '#475569' : '#94a3b8'}
+                        strokeWidth={activePartId === 'slab' ? '2' : '1.5'}
+                      />
+                      {/* Front Edge Thickness */}
+                      <rect
+                        x="50"
+                        y="65"
+                        width="640"
+                        height="30"
+                        fill="url(#concrete-surface)"
+                        stroke={activePartId === 'slab' ? rebarEmber : isDark ? '#475569' : '#64748b'}
+                        strokeWidth={activePartId === 'slab' ? '2.2' : '1.8'}
+                      />
+                    </g>
+
+                    {/* 3D Staircase (Solid Architectural Stepped Concrete) */}
+                    <g
+                      className="cursor-pointer transition-all duration-200"
+                      onClick={() => {
+                        setActivePartId('stair');
+                        if (soundEnabled) playSoundFX('rebar');
+                      }}
+                      onMouseEnter={() => setHoveredPartId('stair')}
+                      onMouseLeave={() => setHoveredPartId(null)}
+                    >
+                      {/* Stepped Concrete Risers */}
+                      <path
+                        d="M380 415 L415 415 L415 380 L450 380 L450 345 L485 345 L485 310 L520 310 L520 275 L555 275 L555 240 L535 240 L360 415 Z"
+                        fill="url(#concrete-surface)"
+                        stroke={activePartId === 'stair' ? rebarEmber : isDark ? '#475569' : '#64748b'}
+                        strokeWidth={activePartId === 'stair' ? '2.2' : '1.8'}
+                      />
+                      {/* 3D Step Tread Depths */}
+                      {[
+                        [380, 415, 415],
+                        [415, 380, 450],
+                        [450, 345, 485],
+                        [485, 310, 520],
+                        [520, 275, 555],
+                      ].map(([rx, ry, rx2], sIdx) => (
+                        <polygon
+                          key={`step-tread-${sIdx}`}
+                          points={`${rx},${ry} ${rx + 12},${ry - 8} ${rx2 + 12},${ry - 8} ${rx2},${ry}`}
+                          fill={isDark ? '#334155' : '#e2e8f0'}
+                          stroke={activePartId === 'stair' ? rebarEmber : isDark ? '#475569' : '#94a3b8'}
+                          strokeWidth="1"
+                        />
+                      ))}
+                    </g>
+
+                    {/* Fluid Concrete Pour Wave Effect when pouring */}
+                    {isPouring && (
+                      <motion.rect
+                        x="0"
+                        y="0"
+                        width="760"
+                        height="520"
+                        fill="url(#wet-concrete-wave)"
+                        initial={{ opacity: 0.9, y: 300 }}
+                        animate={{ opacity: [0.9, 0.4, 0], y: [-50, -200] }}
+                        transition={{ duration: 1.3, ease: 'easeOut' }}
+                      />
+                    )}
+                  </g>
+
+                  {/* ========================================================== */}
+                  {/* LAYER B: ULTRA-DETAILED X-RAY REBAR CAGES (GRADE 75 DEFORMED STEEL) */}
+                  {/* ========================================================== */}
+                  <g clipPath="url(#split-xray-clip)">
+                    {/* 1. Footing Rebar 3D Double Mat with 90° Hooks */}
+                    {[
+                      { x: 80, y: 420, cx: 160 },
+                      { x: 520, y: 420, cx: 600 },
+                    ].map((f, i) => {
+                      const isBuilt = Boolean(builtChoices.footing);
+                      const chosen = builtChoices.footing || '16mm';
+                      const strokeW = chosen === '20mm' ? 4 : chosen === '16mm' ? 3.2 : 2.4;
+
+                      return (
+                        <g
+                          key={`xray-footing-${i}`}
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setActivePartId('footing');
+                            if (soundEnabled) playSoundFX('rebar');
+                          }}
+                          onMouseEnter={() => setHoveredPartId('footing')}
+                          onMouseLeave={() => setHoveredPartId(null)}
+                        >
+                          {/* Ghost outline of footing */}
+                          <rect
+                            x={f.x}
+                            y={f.y}
+                            width="150"
+                            height="38"
                             fill="none"
-                            stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                            strokeWidth={isBuilt ? (chosen === '20mm' ? '3.5' : chosen === '16mm' ? '3' : '2.2') : '1.5'}
-                            strokeDasharray={isBuilt ? 'none' : '4 3'}
+                            stroke={activePartId === 'footing' ? rebarEmber : blueprintLine}
+                            strokeWidth={activePartId === 'footing' ? '2' : '1.4'}
+                            strokeDasharray="4 4"
                           />
 
-                          {/* Transverse Cross Dots representing perpendicular rebar mat */}
-                          {[f.x + 28, f.x + 50, f.x + 72, f.x + 94, f.x + 116, f.x + 138].map((px) => (
-                            <circle
-                              key={`dot-${px}`}
-                              cx={px}
-                              cy={f.y + 27}
-                              r={isBuilt ? '2.5' : '1.8'}
-                              fill={isBuilt ? rebarEmber : blueprintLine}
+                          {/* Orthogonal Longitudinal Rebar Bars with Hooks */}
+                          {[f.y + 16, f.y + 26].map((by) => (
+                            <path
+                              key={`fbar-${f.x}-${by}`}
+                              d={`M${f.x + 8} ${by - 10} L${f.x + 10} ${by} L${f.x + 140} ${by} L${f.x + 142} ${by - 10}`}
+                              fill="none"
+                              stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                              strokeWidth={isBuilt ? strokeW : 1.5}
+                              strokeDasharray={isBuilt ? 'none' : '4 3'}
                             />
                           ))}
 
-                          {/* Starter column dowel bars (L-bends into footing) */}
+                          {/* Transverse Cross Dots (Mesh orthogonal grid) */}
+                          {[f.x + 22, f.x + 44, f.x + 66, f.x + 88, f.x + 110, f.x + 130].map((px) => (
+                            <circle
+                              key={`f-mesh-${px}`}
+                              cx={px}
+                              cy={f.y + 26}
+                              r={isBuilt ? '2.8' : '1.8'}
+                              fill={isBuilt ? rebarGold : blueprintLine}
+                            />
+                          ))}
+
+                          {/* Column Starter Dowels (L-bars welded into footing) */}
                           <path
-                            d={`M${f.cx - 12} ${f.y + 28} L${f.cx - 12} ${f.y - 10} M${f.cx + 12} ${f.y + 28} L${f.cx + 12} ${f.y - 10}`}
+                            d={`M${f.cx - 10} ${f.y + 26} L${f.cx - 10} ${f.y - 14} M${f.cx + 10} ${f.y + 26} L${f.cx + 10} ${f.y - 14}`}
                             fill="none"
                             stroke={isBuilt ? rebarEmber : blueprintLine}
-                            strokeWidth="2"
+                            strokeWidth="2.5"
                           />
                         </g>
+                      );
+                    })}
 
-                        {/* Footing Label */}
-                        <text
-                          x={f.x + 80}
-                          y={f.y + 54}
-                          textAnchor="middle"
-                          fill={activePartId === 'footing' ? rebarEmber : blueprintLine}
-                          fontSize="10"
-                          fontFamily="monospace"
-                          fontWeight="600"
+                    {/* 2. Column Vertical Deformed Main Bars & Staffa Stirrups */}
+                    {[
+                      { x: 144, cx: 160 },
+                      { x: 584, cx: 600 },
+                    ].map((col, idx) => {
+                      const isBuilt = Boolean(builtChoices.column);
+                      const chosen = builtChoices.column || '20mm';
+                      const strokeW = chosen === '24mm' ? 4.2 : chosen === '20mm' ? 3.4 : 2.5;
+
+                      return (
+                        <g
+                          key={`xray-col-${idx}`}
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setActivePartId('column');
+                            if (soundEnabled) playSoundFX('rebar');
+                          }}
+                          onMouseEnter={() => setHoveredPartId('column')}
+                          onMouseLeave={() => setHoveredPartId(null)}
                         >
-                          {isBuilt ? `F${i + 1}: ${chosen}` : `F${i + 1}: Footing Pad`}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </g>
-
-                {/* ======================================================== */}
-                {/* 2. COLUMNS & STAFFA STIRRUPS */}
-                {/* ======================================================== */}
-                <g
-                  id="svg-part-column"
-                  className="cursor-pointer transition-opacity duration-300"
-                  onClick={() => setActivePartId('column')}
-                  style={{
-                    opacity: activePartId === 'column' ? 1 : builtChoices.column ? 0.9 : 0.45,
-                  }}
-                >
-                  {[
-                    { x: 144, cx: 160, label: 'C1' },
-                    { x: 584, cx: 600, label: 'C2' },
-                  ].map((col, idx) => {
-                    const isBuilt = Boolean(builtChoices.column);
-                    const chosen = builtChoices.column;
-                    const isOptimal = LAB_PARTS[1].recommendedSizes.includes(chosen || '');
-                    const barWidth = isBuilt ? (chosen === '24mm' ? 3.5 : chosen === '20mm' ? 3 : 2.2) : 1.5;
-
-                    return (
-                      <g key={`col-${idx}`}>
-                        {/* Concrete Column Shaft */}
-                        <rect
-                          x={col.x}
-                          y="90"
-                          width="32"
-                          height="330"
-                          fill={viewMode === 'concrete' && isBuilt ? concreteSolid : concreteFill}
-                          stroke={activePartId === 'column' ? rebarEmber : blueprintLine}
-                          strokeWidth={activePartId === 'column' ? '2.5' : '1.8'}
-                        />
-
-                        {/* Stipple if poured */}
-                        {viewMode === 'concrete' && isBuilt && (
-                          <rect x={col.x} y="90" width="32" height="330" fill="url(#concrete-dots)" opacity="0.6" />
-                        )}
-
-                        {/* Longitudinal Main Vertical Rebars (4 heavy corner rods) */}
-                        {[col.x + 6, col.x + 13, col.x + 19, col.x + 26].map((lx, rIdx) => (
-                          <line
-                            key={`col-bar-${lx}`}
-                            x1={lx}
-                            y1="82"
-                            x2={lx}
-                            y2="425"
-                            stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                            strokeWidth={barWidth}
-                            strokeDasharray={isBuilt ? 'none' : '4 3'}
+                          {/* Ghost column shaft */}
+                          <rect
+                            x={col.x}
+                            y="85"
+                            width="32"
+                            height="335"
+                            fill="none"
+                            stroke={activePartId === 'column' ? rebarEmber : blueprintLine}
+                            strokeWidth={activePartId === 'column' ? '2' : '1.2'}
+                            strokeDasharray="4 4"
                           />
-                        ))}
 
-                        {/* Staffa Stirrups Rings (High-tensile 6mm ties spaced along column height) */}
-                        {[
-                          105, 125, 145, 175, 205, 235, 265, 295, 325, 355, 385, 405,
-                        ].map((sy) => (
-                          <g key={`stirrup-${col.x}-${sy}`}>
+                          {/* 4 Heavy Corner Ribbed Rebar Rods */}
+                          {[col.x + 5, col.x + 12, col.x + 19, col.x + 27].map((lx) => (
                             <line
-                              x1={col.x + 4}
-                              y1={sy}
-                              x2={col.x + 28}
-                              y2={sy}
+                              key={`cbar-${lx}`}
+                              x1={lx}
+                              y1="75"
+                              x2={lx}
+                              y2="422"
+                              stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                              strokeWidth={isBuilt ? strokeW : 1.5}
+                            />
+                          ))}
+
+                          {/* 6mm Staffa Stirrups Rings with 135° Seismic Hooks */}
+                          {[
+                            98, 118, 138, 168, 198, 228, 258, 288, 318, 348, 378, 398,
+                          ].map((sy) => (
+                            <g key={`cstirrup-${col.x}-${sy}`}>
+                              <line
+                                x1={col.x + 3}
+                                y1={sy}
+                                x2={col.x + 29}
+                                y2={sy}
+                                stroke={isBuilt ? rebarGold : blueprintLine}
+                                strokeWidth={isBuilt ? '2' : '1'}
+                              />
+                              {isBuilt && (
+                                <line
+                                  x1={col.x + 29}
+                                  y1={sy}
+                                  x2={col.x + 24}
+                                  y2={sy - 4}
+                                  stroke={rebarGold}
+                                  strokeWidth="1.6"
+                                />
+                              )}
+                            </g>
+                          ))}
+                        </g>
+                      );
+                    })}
+
+                    {/* 3. Beams Top Compression & Bottom Tension Rebars */}
+                    {(() => {
+                      const isBuilt = Boolean(builtChoices.beam);
+                      const chosen = builtChoices.beam || '16mm';
+                      const strokeW = chosen === '20mm' ? 4 : chosen === '16mm' ? 3.2 : 2.2;
+
+                      return (
+                        <g
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setActivePartId('beam');
+                            if (soundEnabled) playSoundFX('rebar');
+                          }}
+                          onMouseEnter={() => setHoveredPartId('beam')}
+                          onMouseLeave={() => setHoveredPartId(null)}
+                        >
+                          {/* Ghost beam profile */}
+                          <rect
+                            x="120"
+                            y="225"
+                            width="520"
+                            height="32"
+                            fill="none"
+                            stroke={activePartId === 'beam' ? rebarEmber : blueprintLine}
+                            strokeWidth={activePartId === 'beam' ? '2' : '1.2'}
+                            strokeDasharray="4 4"
+                          />
+
+                          {/* Top Bars */}
+                          <line
+                            x1="128"
+                            y1="231"
+                            x2="632"
+                            y2="231"
+                            stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                            strokeWidth={isBuilt ? strokeW : 1.5}
+                          />
+
+                          {/* Bottom Tension Bars */}
+                          <line
+                            x1="128"
+                            y1="249"
+                            x2="632"
+                            y2="249"
+                            stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                            strokeWidth={isBuilt ? strokeW : 1.5}
+                          />
+
+                          {/* Shear Stirrups Links */}
+                          {[
+                            140, 165, 195, 230, 270, 315, 360, 410, 460, 505, 545, 580, 610,
+                          ].map((bx) => (
+                            <line
+                              key={`blink-${bx}`}
+                              x1={bx}
+                              y1="227"
+                              x2={bx}
+                              y2="253"
                               stroke={isBuilt ? rebarGold : blueprintLine}
                               strokeWidth={isBuilt ? '1.8' : '1'}
-                              opacity={isBuilt ? '0.9' : '0.4'}
                             />
-                            {/* 135-degree seismic hook detail */}
-                            {isBuilt && (
-                              <line
-                                x1={col.x + 28}
-                                y1={sy}
-                                x2={col.x + 24}
-                                y2={sy - 4}
-                                stroke={rebarGold}
-                                strokeWidth="1.4"
-                              />
-                            )}
-                          </g>
-                        ))}
+                          ))}
+                        </g>
+                      );
+                    })()}
 
-                        <text
-                          x={col.cx}
-                          y="435"
-                          textAnchor="middle"
-                          fill={activePartId === 'column' ? rebarEmber : blueprintLine}
-                          fontSize="10"
-                          fontFamily="monospace"
-                          fontWeight="600"
+                    {/* 4. Suspended Floor Slab Two-Way Mesh */}
+                    {(() => {
+                      const isBuilt = Boolean(builtChoices.slab);
+                      const chosen = builtChoices.slab || '10mm';
+                      const strokeW = chosen === '12mm' ? 2.8 : chosen === '10mm' ? 2.2 : 1.8;
+
+                      return (
+                        <g
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setActivePartId('slab');
+                            if (soundEnabled) playSoundFX('rebar');
+                          }}
+                          onMouseEnter={() => setHoveredPartId('slab')}
+                          onMouseLeave={() => setHoveredPartId(null)}
                         >
-                          {isBuilt ? `${col.label}: ${chosen}` : `${col.label}: Column`}
+                          <rect
+                            x="50"
+                            y="65"
+                            width="640"
+                            height="30"
+                            fill="none"
+                            stroke={activePartId === 'slab' ? rebarEmber : blueprintLine}
+                            strokeWidth={activePartId === 'slab' ? '2' : '1.2'}
+                            strokeDasharray="4 4"
+                          />
+
+                          {/* Top & Bottom Continuous Mesh Bars */}
+                          <line
+                            x1="60"
+                            y1="72"
+                            x2="680"
+                            y2="72"
+                            stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                            strokeWidth={isBuilt ? strokeW : 1.4}
+                          />
+                          <line
+                            x1="60"
+                            y1="86"
+                            x2="680"
+                            y2="86"
+                            stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                            strokeWidth={isBuilt ? strokeW : 1.4}
+                          />
+
+                          {/* Cross Mesh Distribution Pins */}
+                          {[
+                            80, 110, 140, 170, 200, 230, 260, 290, 320, 350, 380, 410, 440, 470, 500, 530, 560, 590, 620, 650,
+                          ].map((sx) => (
+                            <circle
+                              key={`slab-pin-${sx}`}
+                              cx={sx}
+                              cy="79"
+                              r={isBuilt ? '2.2' : '1.4'}
+                              fill={isBuilt ? rebarGold : blueprintLine}
+                            />
+                          ))}
+                        </g>
+                      );
+                    })()}
+
+                    {/* 5. Staircase Inclined Waist Rebar */}
+                    {(() => {
+                      const isBuilt = Boolean(builtChoices.stair);
+                      const chosen = builtChoices.stair || '12mm';
+                      const strokeW = chosen === '16mm' ? 3.5 : chosen === '12mm' ? 2.8 : 2.2;
+
+                      return (
+                        <g
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setActivePartId('stair');
+                            if (soundEnabled) playSoundFX('rebar');
+                          }}
+                          onMouseEnter={() => setHoveredPartId('stair')}
+                          onMouseLeave={() => setHoveredPartId(null)}
+                        >
+                          <path
+                            d="M380 415 L545 240"
+                            fill="none"
+                            stroke={isBuilt ? 'url(#steel-rebar-rod)' : blueprintLine}
+                            strokeWidth={isBuilt ? strokeW : 1.5}
+                          />
+                          {[
+                            [405, 390],
+                            [435, 360],
+                            [465, 330],
+                            [495, 300],
+                            [525, 270],
+                          ].map(([sx, sy], idx) => (
+                            <circle
+                              key={`stair-pin-${idx}`}
+                              cx={sx}
+                              cy={sy}
+                              r={isBuilt ? '2.6' : '1.6'}
+                              fill={isBuilt ? rebarGold : blueprintLine}
+                            />
+                          ))}
+                        </g>
+                      );
+                    })()}
+                  </g>
+
+                  {/* ========================================================== */}
+                  {/* LAYER C: INTERACTIVE X-RAY LASER SCANNER BEAM (SPLIT MODE) */}
+                  {/* ========================================================== */}
+                  {viewMode === 'split' && (
+                    <g>
+                      {/* Laser scanning vertical blade */}
+                      <line
+                        x1={splitCutX}
+                        y1="30"
+                        x2={splitCutX}
+                        y2="490"
+                        stroke={laserCyan}
+                        strokeWidth="3"
+                        filter="drop-shadow(0 0 6px #00e5ff)"
+                      />
+                      {/* Laser Glow Ribbon */}
+                      <rect
+                        x={splitCutX - 16}
+                        y="30"
+                        width="32"
+                        height="460"
+                        fill="url(#laser-glow)"
+                        pointerEvents="none"
+                      />
+                      {/* Laser Reticle Target on Scan Line */}
+                      <circle cx={splitCutX} cy="245" r="7" fill={laserCyan} />
+                      <circle cx={splitCutX} cy="245" r="14" fill="none" stroke={laserCyan} strokeWidth="1.5" className="animate-ping" />
+                      <text
+                        x={splitCutX + (splitCutX > 500 ? -12 : 12)}
+                        y="48"
+                        textAnchor={splitCutX > 500 ? 'end' : 'start'}
+                        fill={laserCyan}
+                        fontSize="10"
+                        fontFamily="monospace"
+                        fontWeight="800"
+                      >
+                        {t('◄ CONCRETE | X-RAY REBAR ►', '◄ ኮንክሪት | ሬባር ►')}
+                      </text>
+                    </g>
+                  )}
+
+                  {/* ========================================================== */}
+                  {/* LAYER D: DYNAMIC SEISMIC & LOAD PATH STRESS FLOW */}
+                  {/* ========================================================== */}
+                  {isStressTesting && (
+                    <g>
+                      {/* Gravity Wave Flows Down */}
+                      <motion.path
+                        d="M70 79 L380 79 L690 79"
+                        fill="none"
+                        stroke="#ff5722"
+                        strokeWidth="6"
+                        strokeDasharray="16 12"
+                        initial={{ strokeDashoffset: 100 }}
+                        animate={{ strokeDashoffset: 0 }}
+                        transition={{ repeat: Infinity, duration: 0.9, ease: 'linear' }}
+                      />
+                      <motion.path
+                        d="M380 241 L160 241 M380 241 L600 241"
+                        fill="none"
+                        stroke="#ff9800"
+                        strokeWidth="6"
+                        strokeDasharray="16 12"
+                        initial={{ strokeDashoffset: 80 }}
+                        animate={{ strokeDashoffset: 0 }}
+                        transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                      />
+                      <motion.path
+                        d="M160 85 L160 440 M600 85 L600 440"
+                        fill="none"
+                        stroke="#ff5722"
+                        strokeWidth="7"
+                        strokeDasharray="24 14"
+                        initial={{ strokeDashoffset: 140 }}
+                        animate={{ strokeDashoffset: 0 }}
+                        transition={{ repeat: Infinity, duration: 0.7, ease: 'linear' }}
+                      />
+                      <motion.path
+                        d="M160 440 L80 475 M160 440 L240 475 M600 440 L520 475 M600 440 L680 475"
+                        fill="none"
+                        stroke="#ff9800"
+                        strokeWidth="5"
+                        strokeDasharray="14 10"
+                        initial={{ strokeDashoffset: 50 }}
+                        animate={{ strokeDashoffset: 0 }}
+                        transition={{ repeat: Infinity, duration: 0.5, ease: 'linear' }}
+                      />
+
+                      {/* Seismic Moment Joint Nodes */}
+                      {[
+                        { x: 160, y: 79 },
+                        { x: 600, y: 79 },
+                        { x: 160, y: 241 },
+                        { x: 600, y: 241 },
+                        { x: 160, y: 440 },
+                        { x: 600, y: 440 },
+                      ].map((pt, pIdx) => (
+                        <circle
+                          key={`stress-node-${pIdx}`}
+                          cx={pt.x}
+                          cy={pt.y}
+                          r="9"
+                          fill="rgba(255, 87, 34, 0.45)"
+                          stroke="#ff5722"
+                          strokeWidth="2.5"
+                          className="animate-pulse"
+                        />
+                      ))}
+                    </g>
+                  )}
+
+                  {/* ========================================================== */}
+                  {/* LAYER E: INTERACTIVE ARCHITECTURAL HOTSPOT CALLOUT TAGS */}
+                  {/* ========================================================== */}
+                  {LAB_PARTS.map((part) => {
+                    const item = HOTSPOT_LAYOUT[part.id];
+                    const target = item.target;
+                    const badge = item.badge;
+                    const isActive = activePartId === part.id;
+                    const isBuilt = Boolean(builtChoices[part.id]);
+                    const isHovered = hoveredPartId === part.id;
+
+                    return (
+                      <g
+                        key={`hotspot-tag-${part.id}`}
+                        className="cursor-pointer select-none outline-none group"
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Configure ${part.label}`}
+                        onClick={() => {
+                          setActivePartId(part.id);
+                          if (soundEnabled) playSoundFX('rebar');
+                        }}
+                        onMouseEnter={() => setHoveredPartId(part.id)}
+                        onMouseLeave={() => setHoveredPartId(null)}
+                      >
+                        {/* 1. Large Invisible Hitbox (covers both beacon and badge) */}
+                        <rect
+                          x={badge.x - 72}
+                          y={badge.y - 16}
+                          width="144"
+                          height="32"
+                          fill="transparent"
+                        />
+                        <circle
+                          cx={target.x}
+                          cy={target.y}
+                          r="20"
+                          fill="transparent"
+                        />
+
+                        {/* 2. Target Beacon on the Physical Building Structure */}
+                        {/* Concentric pulsing radar wave for unbuilt or active parts */}
+                        {(!isBuilt || isActive) && (
+                          <circle
+                            cx={target.x}
+                            cy={target.y}
+                            r="8"
+                            fill="none"
+                            stroke={isActive ? rebarEmber : '#f57c00'}
+                            strokeWidth="1.6"
+                          >
+                            <animate
+                              attributeName="r"
+                              values="6;20;26"
+                              dur="2.2s"
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="opacity"
+                              values="0.9;0.35;0"
+                              dur="2.2s"
+                              repeatCount="indefinite"
+                            />
+                          </circle>
+                        )}
+
+                        {/* Active Double Focus Ring */}
+                        {isActive && (
+                          <circle
+                            cx={target.x}
+                            cy={target.y}
+                            r="12"
+                            fill="none"
+                            stroke={rebarEmber}
+                            strokeWidth="1.5"
+                            strokeDasharray="3 2"
+                            opacity="0.8"
+                          />
+                        )}
+
+                        {/* Crosshair Ticks on Structure Target */}
+                        <line
+                          x1={target.x - 7}
+                          y1={target.y}
+                          x2={target.x + 7}
+                          y2={target.y}
+                          stroke={isBuilt ? '#10b981' : isActive ? rebarEmber : '#f57c00'}
+                          strokeWidth="1"
+                          opacity="0.75"
+                        />
+                        <line
+                          x1={target.x}
+                          y1={target.y - 7}
+                          x2={target.x}
+                          y2={target.y + 7}
+                          stroke={isBuilt ? '#10b981' : isActive ? rebarEmber : '#f57c00'}
+                          strokeWidth="1"
+                          opacity="0.75"
+                        />
+
+                        {/* Target Center Dot & Rim */}
+                        <circle
+                          cx={target.x}
+                          cy={target.y}
+                          r={isActive ? 5.5 : 4.5}
+                          fill={isBuilt ? '#10b981' : isActive ? rebarEmber : '#f57c00'}
+                          stroke={isDark ? '#0f172a' : '#ffffff'}
+                          strokeWidth="1.5"
+                        />
+
+                        {/* 3. Architectural Leader Line Connecting Target to Callout Tag */}
+                        <line
+                          x1={item.leaderStart.x}
+                          y1={item.leaderStart.y}
+                          x2={item.leaderEnd.x}
+                          y2={item.leaderEnd.y}
+                          stroke={isActive ? rebarEmber : isBuilt ? '#10b981' : isHovered ? rebarEmber : isDark ? '#64748b' : '#94a3b8'}
+                          strokeWidth={isActive || isHovered ? '1.8' : '1.2'}
+                          strokeDasharray={isBuilt ? 'none' : '3 2'}
+                          opacity={isActive || isHovered ? '1' : '0.75'}
+                        />
+
+                        {/* 4. Callout Badge Pill Container */}
+                        <rect
+                          x={badge.x - 67}
+                          y={badge.y - 13}
+                          width="134"
+                          height="26"
+                          rx="13"
+                          fill={
+                            isActive
+                              ? isDark ? '#1a140f' : '#fff7ed'
+                              : isBuilt
+                              ? isDark ? '#062016' : '#f0fdf4'
+                              : isDark ? '#0f172a' : '#ffffff'
+                          }
+                          stroke={
+                            isActive
+                              ? rebarEmber
+                              : isBuilt
+                              ? '#10b981'
+                              : isHovered
+                              ? rebarEmber
+                              : isDark ? '#334155' : '#cbd5e1'
+                          }
+                          strokeWidth={isActive ? 2 : isHovered ? 1.8 : 1.2}
+                          filter={
+                            isActive
+                              ? 'drop-shadow(0 2px 8px rgba(245, 124, 0, 0.45))'
+                              : isBuilt
+                              ? 'drop-shadow(0 2px 6px rgba(16, 185, 129, 0.3))'
+                              : isHovered
+                              ? 'drop-shadow(0 2px 8px rgba(245, 124, 0, 0.35))'
+                              : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
+                          }
+                          className="transition-colors duration-200"
+                        />
+
+                        {/* 5. Left Step Number Circle / Checkmark */}
+                        <circle
+                          cx={badge.x - 51}
+                          cy={badge.y}
+                          r="9"
+                          fill={
+                            isBuilt
+                              ? '#10b981'
+                              : isActive
+                              ? rebarEmber
+                              : isDark ? '#334155' : '#e2e8f0'
+                          }
+                        />
+                        <text
+                          x={badge.x - 51}
+                          y={badge.y + 3.5}
+                          textAnchor="middle"
+                          fontSize="10"
+                          fontWeight="800"
+                          fill={isBuilt || isActive ? '#ffffff' : isDark ? '#f8fafc' : '#0f172a'}
+                          fontFamily="sans-serif"
+                        >
+                          {isBuilt ? '✓' : part.stepNumber}
                         </text>
+
+                        {/* 6. Component Name Label */}
+                        <text
+                          x={badge.x - 36}
+                          y={badge.y + 3.5}
+                          textAnchor="start"
+                          fontSize="10"
+                          fontWeight="700"
+                          fill={
+                            isActive
+                              ? rebarEmber
+                              : isBuilt
+                              ? isDark ? '#34d399' : '#059669'
+                              : isDark ? '#f1f5f9' : '#0f172a'
+                          }
+                          fontFamily="sans-serif"
+                        >
+                          {t(part.label.split(' ')[0], part.amLabel.split(' ')[0])}
+                        </text>
+
+                        {/* 7. Right Tag Status Pill */}
+                        {isBuilt ? (
+                          <g>
+                            <rect
+                              x={badge.x + 22}
+                              y={badge.y - 8}
+                              width="38"
+                              height="16"
+                              rx="8"
+                              fill={isDark ? '#064e3b' : '#d1fae5'}
+                            />
+                            <text
+                              x={badge.x + 41}
+                              y={badge.y + 3}
+                              textAnchor="middle"
+                              fontSize="8.5"
+                              fontWeight="800"
+                              fill={isDark ? '#6ee7b7' : '#047857'}
+                              fontFamily="monospace"
+                            >
+                              {builtChoices[part.id]}
+                            </text>
+                          </g>
+                        ) : (
+                          <g>
+                            <rect
+                              x={badge.x + 20}
+                              y={badge.y - 8}
+                              width="40"
+                              height="16"
+                              rx="8"
+                              fill={isActive ? 'rgba(245,124,0,0.2)' : isDark ? '#1e293b' : '#f1f5f9'}
+                              stroke={isActive ? rebarEmber : 'none'}
+                              strokeWidth="0.8"
+                            />
+                            <text
+                              x={badge.x + 40}
+                              y={badge.y + 3}
+                              textAnchor="middle"
+                              fontSize="8"
+                              fontWeight="700"
+                              fill={isActive ? rebarEmber : isDark ? '#94a3b8' : '#64748b'}
+                              fontFamily="sans-serif"
+                            >
+                              {isActive ? t('ACTIVE', 'ንቁ') : t('BUILD', 'ይምረጡ')}
+                            </text>
+                          </g>
+                        )}
                       </g>
                     );
                   })}
-                </g>
+                </svg>
+              </motion.div>
 
-                {/* ======================================================== */}
-                {/* 3. BEAMS (PLINTH & INTERMEDIATE FLOORS) */}
-                {/* ======================================================== */}
-                <g
-                  id="svg-part-beam"
-                  className="cursor-pointer transition-opacity duration-300"
-                  onClick={() => setActivePartId('beam')}
-                  style={{
-                    opacity: activePartId === 'beam' ? 1 : builtChoices.beam ? 0.9 : 0.45,
-                  }}
+              {/* Dynamic Seismic Telemetry HUD Overlay when testing */}
+              {isStressTesting && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 15 }}
+                  className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-6 border border-amber/40 bg-black/85 backdrop-blur-md rounded-2xl p-3 text-xs text-amber font-mono shadow-xl grid grid-cols-2 sm:grid-cols-4 gap-2.5"
                 >
-                  {/* Mid-span Beam (Y: 230, Height: 26) */}
-                  {(() => {
-                    const isBuilt = Boolean(builtChoices.beam);
-                    const chosen = builtChoices.beam;
-                    const isOptimal = LAB_PARTS[2].recommendedSizes.includes(chosen || '');
-                    const barWidth = isBuilt ? (chosen === '20mm' ? 3.4 : chosen === '16mm' ? 2.8 : 2.2) : 1.5;
-
-                    return (
-                      <g>
-                        {/* Concrete Beam Profile */}
-                        <rect
-                          x="130"
-                          y="228"
-                          width="500"
-                          height="28"
-                          rx="3"
-                          fill={viewMode === 'concrete' && isBuilt ? concreteSolid : concreteFill}
-                          stroke={activePartId === 'beam' ? rebarEmber : blueprintLine}
-                          strokeWidth={activePartId === 'beam' ? '2.5' : '1.8'}
-                        />
-
-                        {viewMode === 'concrete' && isBuilt && (
-                          <rect x="130" y="228" width="500" height="28" fill="url(#concrete-dots)" opacity="0.6" />
-                        )}
-
-                        {/* Top Compression Rebars */}
-                        <line
-                          x1="136"
-                          y1="234"
-                          x2="624"
-                          y2="234"
-                          stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                          strokeWidth={barWidth}
-                          strokeDasharray={isBuilt ? 'none' : '4 3'}
-                        />
-
-                        {/* Bottom Tension Rebars (Heavy flexural steel) */}
-                        <line
-                          x1="136"
-                          y1="248"
-                          x2="624"
-                          y2="248"
-                          stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                          strokeWidth={barWidth}
-                          strokeDasharray={isBuilt ? 'none' : '4 3'}
-                        />
-
-                        {/* Vertical Shear Links / Beam Stirrups */}
-                        {[
-                          150, 175, 205, 240, 280, 330, 380, 430, 480, 520, 555, 585, 610,
-                        ].map((bx) => (
-                          <line
-                            key={`beam-link-${bx}`}
-                            x1={bx}
-                            y1="230"
-                            x2={bx}
-                            y2="254"
-                            stroke={isBuilt ? rebarGold : blueprintLine}
-                            strokeWidth={isBuilt ? '1.5' : '1'}
-                            opacity={isBuilt ? '0.85' : '0.4'}
-                          />
-                        ))}
-
-                        <text
-                          x="380"
-                          y="246"
-                          textAnchor="middle"
-                          fill={activePartId === 'beam' ? rebarEmber : blueprintLine}
-                          fontSize="10"
-                          fontFamily="monospace"
-                          fontWeight="700"
-                        >
-                          {isBuilt ? `B1: ${chosen} (Grade 75)` : 'B1: Floor Beam'}
-                        </text>
-                      </g>
-                    );
-                  })()}
-                </g>
-
-                {/* ======================================================== */}
-                {/* 4. SUSPENDED FLOOR & ROOF SLAB */}
-                {/* ======================================================== */}
-                <g
-                  id="svg-part-slab"
-                  className="cursor-pointer transition-opacity duration-300"
-                  onClick={() => setActivePartId('slab')}
-                  style={{
-                    opacity: activePartId === 'slab' ? 1 : builtChoices.slab ? 0.9 : 0.45,
-                  }}
-                >
-                  {(() => {
-                    const isBuilt = Boolean(builtChoices.slab);
-                    const chosen = builtChoices.slab;
-                    const isOptimal = LAB_PARTS[3].recommendedSizes.includes(chosen || '');
-                    const barWidth = isBuilt ? (chosen === '12mm' ? 2.6 : chosen === '10mm' ? 2.2 : 1.8) : 1.4;
-
-                    return (
-                      <g>
-                        {/* Slab Architectural Plate */}
-                        <rect
-                          x="70"
-                          y="65"
-                          width="620"
-                          height="28"
-                          rx="3"
-                          fill={viewMode === 'concrete' && isBuilt ? concreteSolid : concreteFill}
-                          stroke={activePartId === 'slab' ? rebarEmber : blueprintLine}
-                          strokeWidth={activePartId === 'slab' ? '2.5' : '1.8'}
-                        />
-
-                        {viewMode === 'concrete' && isBuilt && (
-                          <rect x="70" y="65" width="620" height="28" fill="url(#concrete-dots)" opacity="0.6" />
-                        )}
-
-                        {/* Top & Bottom Continuous Mesh Bars */}
-                        <line
-                          x1="78"
-                          y1="73"
-                          x2="682"
-                          y2="73"
-                          stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                          strokeWidth={barWidth}
-                          strokeDasharray={isBuilt ? 'none' : '4 3'}
-                        />
-                        <line
-                          x1="78"
-                          y1="85"
-                          x2="682"
-                          y2="85"
-                          stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                          strokeWidth={barWidth}
-                          strokeDasharray={isBuilt ? 'none' : '4 3'}
-                        />
-
-                        {/* Orthogonal Grid Distribution Rebars (Cross Pins) */}
-                        {[
-                          90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480, 510, 540, 570, 600, 630, 660,
-                        ].map((sx) => (
-                          <circle
-                            key={`slab-mesh-${sx}`}
-                            cx={sx}
-                            cy="79"
-                            r={isBuilt ? '2' : '1.4'}
-                            fill={isBuilt ? rebarGold : blueprintLine}
-                          />
-                        ))}
-
-                        <text
-                          x="380"
-                          y="56"
-                          textAnchor="middle"
-                          fill={activePartId === 'slab' ? rebarEmber : blueprintLine}
-                          fontSize="10"
-                          fontFamily="monospace"
-                          fontWeight="700"
-                        >
-                          {isBuilt ? `S1 Slab: ${chosen} Two-Way Mesh` : 'S1: Suspended Roof Slab'}
-                        </text>
-                      </g>
-                    );
-                  })()}
-                </g>
-
-                {/* ======================================================== */}
-                {/* 5. CANTILEVER & DOG-LEGGED STAIRS */}
-                {/* ======================================================== */}
-                <g
-                  id="svg-part-stair"
-                  className="cursor-pointer transition-opacity duration-300"
-                  onClick={() => setActivePartId('stair')}
-                  style={{
-                    opacity: activePartId === 'stair' ? 1 : builtChoices.stair ? 0.9 : 0.45,
-                  }}
-                >
-                  {(() => {
-                    const isBuilt = Boolean(builtChoices.stair);
-                    const chosen = builtChoices.stair;
-                    const isOptimal = LAB_PARTS[4].recommendedSizes.includes(chosen || '');
-                    const barWidth = isBuilt ? (chosen === '16mm' ? 3.2 : chosen === '12mm' ? 2.5 : 2) : 1.4;
-
-                    return (
-                      <g>
-                        {/* Stepped Architectural Profile */}
-                        <path
-                          d="M390 380 L420 380 L420 350 L450 350 L450 320 L480 320 L480 290 L510 290 L510 260 L540 260 L540 230"
-                          fill="none"
-                          stroke={activePartId === 'stair' ? rebarEmber : blueprintLine}
-                          strokeWidth={activePartId === 'stair' ? '2.5' : '1.8'}
-                        />
-
-                        {/* Concrete Waist Slab Ramp */}
-                        <path
-                          d="M375 395 L530 240 L540 250 L385 405 Z"
-                          fill={viewMode === 'concrete' && isBuilt ? concreteSolid : concreteFill}
-                          stroke={blueprintLine}
-                          strokeWidth="1.2"
-                        />
-
-                        {/* Main Waist Rebar Slope Anchor */}
-                        <line
-                          x1="380"
-                          y1="398"
-                          x2="535"
-                          y2="242"
-                          stroke={isBuilt ? (isOptimal ? rebarEmber : rebarGold) : blueprintLine}
-                          strokeWidth={barWidth}
-                          strokeDasharray={isBuilt ? 'none' : '4 3'}
-                        />
-
-                        {/* Step distribution tie bars */}
-                        {[
-                          [410, 365],
-                          [440, 335],
-                          [470, 305],
-                          [500, 275],
-                        ].map(([sx, sy], idx) => (
-                          <circle
-                            key={`stair-node-${idx}`}
-                            cx={sx}
-                            cy={sy}
-                            r={isBuilt ? '2.4' : '1.6'}
-                            fill={isBuilt ? rebarGold : blueprintLine}
-                          />
-                        ))}
-
-                        <text
-                          x="475"
-                          y="370"
-                          textAnchor="middle"
-                          fill={activePartId === 'stair' ? rebarEmber : blueprintLine}
-                          fontSize="10"
-                          fontFamily="monospace"
-                          fontWeight="700"
-                        >
-                          {isBuilt ? `ST1: ${chosen}` : 'ST1: Stairs'}
-                        </text>
-                      </g>
-                    );
-                  })()}
-                </g>
-
-                {/* ======================================================== */}
-                {/* DYNAMIC STRESS TEST / LOAD PATH SIMULATION WAVE */}
-                {/* ======================================================== */}
-                {isStressTesting && (
-                  <g filter="url(#glow-ember)">
-                    {/* Roof slab gravity flow down to beam */}
-                    <motion.path
-                      d="M70 79 L380 79 L690 79"
-                      fill="none"
-                      stroke="#ff9800"
-                      strokeWidth="5"
-                      strokeDasharray="16 12"
-                      initial={{ strokeDashoffset: 100 }}
-                      animate={{ strokeDashoffset: 0 }}
-                      transition={{ repeat: Infinity, duration: 1.2, ease: 'linear' }}
-                    />
-
-                    {/* Beam load transfer into left & right columns */}
-                    <motion.path
-                      d="M380 242 L160 242 M380 242 L600 242"
-                      fill="none"
-                      stroke="#ff9800"
-                      strokeWidth="5"
-                      strokeDasharray="16 12"
-                      initial={{ strokeDashoffset: 60 }}
-                      animate={{ strokeDashoffset: 0 }}
-                      transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-                    />
-
-                    {/* Column vertical compression thrust down into footings */}
-                    <motion.path
-                      d="M160 90 L160 440 M600 90 L600 440"
-                      fill="none"
-                      stroke="#ff5722"
-                      strokeWidth="6"
-                      strokeDasharray="20 12"
-                      initial={{ strokeDashoffset: 120 }}
-                      animate={{ strokeDashoffset: 0 }}
-                      transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-                    />
-
-                    {/* Footing punch dissipation into soil */}
-                    <motion.path
-                      d="M160 440 L90 470 M160 440 L230 470 M600 440 L530 470 M600 440 L670 470"
-                      fill="none"
-                      stroke="#ff9800"
-                      strokeWidth="4"
-                      strokeDasharray="12 8"
-                      initial={{ strokeDashoffset: 40 }}
-                      animate={{ strokeDashoffset: 0 }}
-                      transition={{ repeat: Infinity, duration: 0.6, ease: 'linear' }}
-                    />
-
-                    {/* Joint moment nodes */}
-                    {[
-                      { x: 160, y: 79 },
-                      { x: 600, y: 79 },
-                      { x: 160, y: 242 },
-                      { x: 600, y: 242 },
-                      { x: 160, y: 440 },
-                      { x: 600, y: 440 },
-                    ].map((pt, pIdx) => (
-                      <circle
-                        key={`stress-node-${pIdx}`}
-                        cx={pt.x}
-                        cy={pt.y}
-                        r="8"
-                        fill="rgba(255, 87, 34, 0.4)"
-                        stroke="#ff5722"
-                        strokeWidth="2"
-                        className="animate-pulse"
-                      />
-                    ))}
-                  </g>
-                )}
-
-                {/* ======================================================== */}
-                {/* INTERACTIVE HOTSPOT PINS */}
-                {/* ======================================================== */}
-                {LAB_PARTS.map((part) => {
-                  const pt = hotspots[part.id];
-                  const isActive = activePartId === part.id;
-                  const isBuilt = Boolean(builtChoices[part.id]);
-
-                  return (
-                    <motion.g
-                      key={`pin-${part.id}`}
-                      className="cursor-pointer outline-none"
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Inspect ${part.label}`}
-                      onClick={() => setActivePartId(part.id)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          setActivePartId(part.id);
-                        }
-                      }}
-                      whileHover={{ scale: 1.15 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    >
-                      {isActive && (
-                        <circle
-                          cx={pt.x}
-                          cy={pt.y}
-                          r="20"
-                          fill="none"
-                          stroke={rebarEmber}
-                          strokeWidth="1.5"
-                          className="animate-ping opacity-60"
-                        />
-                      )}
-
-                      <circle
-                        cx={pt.x}
-                        cy={pt.y}
-                        r={isActive ? 16 : 13}
-                        fill={
-                          isBuilt
-                            ? '#10b981'
-                            : isActive
-                            ? rebarEmber
-                            : isDark
-                            ? '#111827'
-                            : '#ffffff'
-                        }
-                        stroke={isActive ? rebarEmber : isBuilt ? '#10b981' : blueprintLine}
-                        strokeWidth={isActive ? '2.5' : '1.8'}
-                        className="transition-colors duration-300"
-                      />
-
-                      <text
-                        x={pt.x}
-                        y={pt.y + 4.5}
-                        textAnchor="middle"
-                        fontSize={isBuilt ? '11' : '12'}
-                        fontWeight="800"
-                        fill={isBuilt || isActive ? '#ffffff' : isDark ? '#f4f1ea' : '#111827'}
-                        style={{ pointerEvents: 'none' }}
-                      >
-                        {isBuilt ? '✓' : part.stepNumber}
-                      </text>
-                    </motion.g>
-                  );
-                })}
-              </svg>
+                  <div>
+                    <span className="text-white/60 block text-[10px]">SEISMIC ACCEL:</span>
+                    <span className="font-bold text-amber">0.18g (Addis Rift)</span>
+                  </div>
+                  <div>
+                    <span className="text-white/60 block text-[10px]">COLUMN CORE:</span>
+                    <span className="font-bold text-emerald-400">1,420 kN [STABLE]</span>
+                  </div>
+                  <div>
+                    <span className="text-white/60 block text-[10px]">STAFFA CONFINEMENT:</span>
+                    <span className="font-bold text-emerald-400">135° Hooks Active</span>
+                  </div>
+                  <div>
+                    <span className="text-white/60 block text-[10px]">DRIFT RATIO:</span>
+                    <span className="font-bold text-amber">0.14% &lt; 1.0% EBCS</span>
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Bottom Blueprint Footer Info */}
@@ -1405,8 +1979,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                 <Info className="text-ember h-3.5 w-3.5 shrink-0" />
                 <span>
                   {t(
-                    'Tap any number on the frame or select a stage to place and verify your rebar.',
-                    'በመዋቅሩ ላይ ያለውን ቁጥር ይጫኑ ወይም ተስማሚውን የሬባር መጠን ይምረጡ።'
+                    'Drag the X-Ray Scanner or toggle modes to inspect internal Grade 75 deformed steel rebars.',
+                    'የኤክስሬይ ስካነሩን በማንቀሳቀስ ወይም ሁነታዎችን በመቀያየር የብረቱን አደራደር ይፈትሹ።'
                   )}
                 </span>
               </p>
@@ -1471,14 +2045,19 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   {t(activePart.description, activePart.amDescription)}
                 </p>
 
-                {/* Civil Engineering Best Practice Tip Box */}
+                {/* Section Dimensions & Civil Engineering Tip */}
                 <div className="border-line bg-panel2/60 mt-4 rounded-2xl border p-3.5 text-xs">
                   <div className="flex items-start gap-2.5">
                     <ShieldCheck className="text-ember mt-0.5 h-4 w-4 shrink-0" />
                     <div>
-                      <p className="font-display text-ink font-semibold">
-                        {t('Engineering Site Standard', 'የኢንጂነሪንግ ጣቢያ መመሪያ')}
-                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="font-display text-ink font-semibold">
+                          {t('Engineering Site Standard', 'የኢንጂነሪንግ ጣቢያ መመሪያ')}
+                        </p>
+                        <span className="font-mono text-[10px] text-ember font-bold">
+                          {activePart.sectionDimensions}
+                        </span>
+                      </div>
                       <p className="text-mute/90 mt-1 text-[11px] leading-relaxed">
                         {t(activePart.engineeringTip, activePart.amEngineeringTip)}
                       </p>
@@ -1486,7 +2065,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   </div>
                 </div>
 
-                {/* Gamified Rebar Selection Rack (Items We Sell) */}
+                {/* Rebar Selection Rack (Items We Sell) */}
                 <div className="mt-6">
                   <div className="flex items-center justify-between">
                     <p className="font-display text-ink flex items-center gap-2 text-xs font-bold tracking-wide uppercase">
@@ -1505,7 +2084,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     )}
                   </div>
 
-                  {/* Rebar Chips Grid */}
+                  {/* Rebar Chips Grid with Radiant Sparks */}
                   <div className="relative mt-3 grid grid-cols-3 gap-2 sm:grid-cols-3">
                     {/* Radiant spark particle burst on reinforcement */}
                     {justReinforced === activePart.id && (
@@ -1527,6 +2106,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         })}
                       </div>
                     )}
+
                     {CATALOG_REBARS.map((rod) => {
                       const isSelected = builtChoices[activePart.id] === rod.size;
                       const isRecommended = activePart.recommendedSizes.includes(rod.size);
@@ -1538,8 +2118,9 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           key={rod.size}
                           type="button"
                           onClick={() => handleSelectRebar(activePart, rod.size)}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={{ scale: 0.96 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                           className={`relative flex flex-col items-center justify-between rounded-xl border p-2.5 text-center transition-all cursor-pointer ${
                             isSelected
                               ? 'border-ember bg-ember text-white shadow-md ring-2 ring-ember/40'
@@ -1622,11 +2203,37 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       )}
                     </motion.div>
                   )}
+
+                  {/* Guided Next Stage Button */}
+                  {nextUnbuiltPart && builtChoices[activePart.id] && (
+                    <motion.button
+                      type="button"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      onClick={() => {
+                        setActivePartId(nextUnbuiltPart.id);
+                        if (soundEnabled) playSoundFX('rebar');
+                      }}
+                      className="mt-4 flex w-full items-center justify-between rounded-2xl border border-ember/40 bg-ember/10 hover:bg-ember/20 text-ember px-4 py-3 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer group"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="grid h-6 w-6 place-items-center rounded-full bg-ember text-white text-xs font-bold">
+                          0{nextUnbuiltPart.stepNumber}
+                        </span>
+                        <span>
+                          {t(
+                            `Proceed to Next Stage: ${nextUnbuiltPart.label.split(' ')[0]}`,
+                            `ቀጣይ ደረጃ ይጀምሩ፡ ${nextUnbuiltPart.amLabel.split(' ')[0]}`
+                          )}
+                        </span>
+                      </span>
+                      <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </motion.button>
+                  )}
                 </div>
 
                 {/* Primary CTA Buttons */}
                 <div className="mt-6 pt-4 border-t border-line flex flex-col gap-2.5">
-                  {/* Single part quote button */}
                   <button
                     type="button"
                     onClick={() =>
@@ -1646,7 +2253,6 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     <ChevronRight className="h-4 w-4" />
                   </button>
 
-                  {/* Send Complete House Schedule Button */}
                   <button
                     type="button"
                     onClick={sendFullHouseToQuote}
@@ -1667,7 +2273,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
           </div>
         </div>
 
-        {/* Bill of Materials (BOM) Modal / Popout Drawer */}
+        {/* Bill of Materials (BOM) Modal */}
         <AnimatePresence>
           {showBOMModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -1692,7 +2298,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   <button
                     type="button"
                     onClick={() => setShowBOMModal(false)}
-                    className="text-mute hover:text-ink text-sm font-bold p-2"
+                    className="text-mute hover:text-ink text-sm font-bold p-2 cursor-pointer"
                   >
                     ✕
                   </button>

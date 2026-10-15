@@ -113,7 +113,7 @@ export default function About() {
                     href={CONTACT.companyProfileUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="bg-primary text-white hover:bg-primary/90 dark:bg-panel dark:hover:bg-panel2 border-line text-xs font-bold inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border transition-all shadow-sm"
+                    className="border-line bg-panel hover:bg-panel2 text-ink hover:text-ember text-xs font-bold inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border transition-all shadow-xs hover:border-ember/40 hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <Download className="h-3.5 w-3.5 text-ember" />
                     <span>{t('Download Company Profile (PDF)', 'የድርጅቱን መገለጫ ያውርዱ (PDF)')}</span>

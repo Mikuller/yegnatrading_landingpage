@@ -85,7 +85,7 @@ function MainApp() {
       <ScrollProgress />
       <Nav />
       <main className="relative z-10">
-        <Hero />
+        <Hero onQuote={handleQuote} />
         <Marquee />
         <About />
         <Products />
