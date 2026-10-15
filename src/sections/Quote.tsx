@@ -137,7 +137,7 @@ function getRebarSpec(size: string) {
   );
 }
 
-export default function Quote({ prefill }: { prefill: QuotePrefill | null }) {
+export default function Quote({ prefill = null }: { prefill?: QuotePrefill | null }) {
   const { t } = useApp();
   const [status, setStatus] = useState<Status>('idle');
   const [flash, setFlash] = useState(false);

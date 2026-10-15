@@ -34,46 +34,46 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: 'Home', amLabel: 'መነሻ', href: '#top' },
+  { label: 'Home', amLabel: 'መነሻ', href: '/' },
   {
     label: 'About Us',
     amLabel: 'ስለ እኛ',
-    href: '#about',
+    href: '/about/',
     sublinks: [
       {
         label: 'Who We Are',
         amLabel: 'ስለ እኛ',
-        href: '#about',
+        href: '/about/#about',
         description: 'Our story, mission & corporate values',
         amDescription: 'ታሪካችን፣ ተልዕኳችንና የድርጅት እሴቶች',
       },
       {
         label: 'Why Yegna',
         amLabel: 'ለምን የኛ?',
-        href: '#why',
+        href: '/about/#why',
         description: 'Grade 75 mill test certified quality guarantees',
         amDescription: 'የተረጋገጠ የጥራት ዋስትናና ደረጃዎች',
       },
       {
         label: 'Our Team',
         amLabel: 'አመራርና ቡድናችን',
-        href: '#team',
+        href: '/about/#team',
         description: 'Executive leadership & supply specialists',
         amDescription: 'የሥራ አመራር ቦርድና ባለሙያዎች',
       },
       {
         label: 'Head Office & Map',
         amLabel: 'ዋና መሥሪያ ቤትና ካርታ',
-        href: '#branches',
+        href: '/contact/#branches',
         description: 'Kazanchis Joburg Building 5th floor & map',
         amDescription: 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅና ካርታ',
       },
     ],
   },
-  { label: 'Products', amLabel: 'ምርቶች', href: '#products' },
-  { label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች', href: '#jobs' },
-  { label: 'Blog', amLabel: 'ብሎግ', href: '#insights' },
-  { label: 'Contact', amLabel: 'ያግኙን', href: '#contact' },
+  { label: 'Products', amLabel: 'ምርቶች', href: '/products/' },
+  { label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች', href: '/careers/' },
+  { label: 'Blog', amLabel: 'ብሎግ', href: '/insights/' },
+  { label: 'Contact', amLabel: 'ያግኙን', href: '/contact/' },
 ];
 
 export const SOCIALS = [

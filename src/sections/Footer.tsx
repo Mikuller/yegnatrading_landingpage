@@ -126,7 +126,7 @@ export default function Footer() {
 
             <div className="mt-2.5">
               <a
-                href="#branches"
+                href="/contact/#branches"
                 className="hover:text-ember inline-flex items-center gap-1.5 text-xs font-semibold text-ember transition-colors"
               >
                 <MapPin className="h-3.5 w-3.5" />
@@ -206,7 +206,7 @@ export default function Footer() {
               ))}
               <li>
                 <a
-                  href="#branches"
+                  href="/contact/#branches"
                   className="text-mute hover:text-ember transition-colors flex items-center justify-between"
                 >
                   <span>{t('Head Office & Map', 'ዋና መሥሪያ ቤትና ካርታ')}</span>

@@ -26,7 +26,7 @@ const BRAND_ICON_COLORS: Record<string, string> = {
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" className={`group flex items-center gap-3 ${className}`}>
+    <a href="/" className={`group flex items-center gap-3 ${className}`}>
       <span className="border-line relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl border bg-panel shadow-sm transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(245,124,0,0.35)]">
         <img
           src="/images/logo-icon.png"
@@ -56,13 +56,24 @@ export default function Nav() {
   const { theme, toggleTheme, lang, toggleLanguage, t } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState('/');
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const isLinkActive = (href: string) => {
+    if (href === '/') {
+      return currentPath === '/' || currentPath === '' || currentPath === '/index.html';
+    }
+    return currentPath.startsWith(href);
+  };
 
   return (
     <motion.header
@@ -150,16 +161,23 @@ export default function Nav() {
           {/* Desktop links */}
           <nav className="hidden items-center gap-5 xl:gap-7 lg:flex">
             {NAV_LINKS.map((l) => {
+              const active = isLinkActive(l.href);
               if (l.sublinks && l.sublinks.length > 0) {
                 return (
                   <div key={l.label} className="group/dropdown relative py-2">
                     <a
                       href={l.href}
-                      className="text-mute hover:text-ink group relative flex items-center gap-1.5 text-[0.84rem] font-semibold tracking-wide transition-colors"
+                      className={`${
+                        active ? 'text-ember font-bold' : 'text-mute hover:text-ink'
+                      } group relative flex items-center gap-1.5 text-[0.84rem] font-semibold tracking-wide transition-colors`}
                     >
                       <span>{t(l.label, l.amLabel)}</span>
                       <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform duration-200 group-hover/dropdown:rotate-180" />
-                      <span className="bg-ember absolute -bottom-0.5 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full" />
+                      <span
+                        className={`bg-ember absolute -bottom-0.5 left-0 h-[2px] transition-all duration-300 ${
+                          active ? 'w-full' : 'w-0 group-hover:w-full'
+                        }`}
+                      />
                     </a>
 
                     {/* Floating Dropdown Card */}
@@ -201,10 +219,16 @@ export default function Nav() {
                 <a
                   key={l.href}
                   href={l.href}
-                  className="text-mute hover:text-ink group relative text-[0.84rem] font-semibold tracking-wide transition-colors"
+                  className={`${
+                    active ? 'text-ember font-bold' : 'text-mute hover:text-ink'
+                  } group relative text-[0.84rem] font-semibold tracking-wide transition-colors`}
                 >
                   {t(l.label, l.amLabel)}
-                  <span className="bg-ember absolute -bottom-1.5 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full" />
+                  <span
+                    className={`bg-ember absolute -bottom-1.5 left-0 h-[2px] transition-all duration-300 ${
+                      active ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
                 </a>
               );
             })}
@@ -240,7 +264,7 @@ export default function Nav() {
 
             {/* Quotation CTA */}
             <a
-              href="#quote"
+              href="/contact/#quote"
               className="bg-ember text-white hover:bg-ember/90 font-display hidden items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold tracking-wide shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_24px_rgba(245,124,0,0.4)] sm:inline-flex"
             >
               {t('Get a Quote', 'ዋጋ ይጠይቁ')}
@@ -314,43 +338,48 @@ export default function Nav() {
               </div>
 
               {/* Links */}
-              {NAV_LINKS.map((l) => (
-                <div key={l.label}>
-                  <a
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="text-ink hover:text-ember hover:bg-panel2 flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors"
-                  >
-                    <span>{t(l.label, l.amLabel)}</span>
-                    {l.sublinks && (
-                      <span className="text-[0.68rem] text-ember font-mono uppercase bg-ember/10 px-2 py-0.5 rounded-full">
-                        {t('4 Sections', '4 ክፍሎች')}
-                      </span>
-                    )}
-                  </a>
+              {NAV_LINKS.map((l) => {
+                const active = isLinkActive(l.href);
+                return (
+                  <div key={l.label}>
+                    <a
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className={`${
+                        active ? 'bg-ember/10 text-ember font-bold' : 'text-ink hover:text-ember hover:bg-panel2 font-semibold'
+                      } flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-colors`}
+                    >
+                      <span>{t(l.label, l.amLabel)}</span>
+                      {l.sublinks && (
+                        <span className="text-[0.68rem] text-ember font-mono uppercase bg-ember/15 px-2 py-0.5 rounded-full font-bold">
+                          {t('4 Sections', '4 ክፍሎች')}
+                        </span>
+                      )}
+                    </a>
 
-                  {/* Sublinks nested inside mobile drawer */}
-                  {l.sublinks && (
-                    <div className="ml-3 my-1 border-l-2 border-ember/30 pl-2.5 space-y-1">
-                      {l.sublinks.map((sub) => (
-                        <a
-                          key={sub.href}
-                          href={sub.href}
-                          onClick={() => setOpen(false)}
-                          className="text-mute hover:text-ember hover:bg-panel2 flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs transition-colors"
-                        >
-                          <span>{t(sub.label, sub.amLabel)}</span>
-                          <ArrowUpRight className="h-3 w-3 opacity-50" />
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                    {/* Sublinks nested inside mobile drawer */}
+                    {l.sublinks && (
+                      <div className="ml-3 my-1 border-l-2 border-ember/30 pl-2.5 space-y-1">
+                        {l.sublinks.map((sub) => (
+                          <a
+                            key={sub.href}
+                            href={sub.href}
+                            onClick={() => setOpen(false)}
+                            className="text-mute hover:text-ember hover:bg-panel2 flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs transition-colors"
+                          >
+                            <span>{t(sub.label, sub.amLabel)}</span>
+                            <ArrowUpRight className="h-3 w-3 opacity-50" />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
 
               <div className="mt-4 pt-3 border-t border-line flex flex-col gap-2.5">
                 <a
-                  href="#quote"
+                  href="/contact/#quote"
                   onClick={() => setOpen(false)}
                   className="bg-ember text-white hover:bg-ember/90 rounded-xl py-3 text-center text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
                 >
