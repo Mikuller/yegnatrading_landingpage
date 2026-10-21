@@ -42,7 +42,7 @@ Job sites operate under tight structural pour schedules, fluctuating currency/ma
 - Verified Company Profile document hosted on Google Drive (`CONTACT.companyProfileUrl`).
 - Real management profiles and photos in `public/images/` (`team-zelalem.jpg`, `team-tilahun.jpg`, `team-abreham.jpg`, `team-hiwot.jpg`, `team-mulugeta.jpg`, `ceo.jpg`).
 - Community engagement documentation (`blood-1.jpg`, `blood-2.jpg`, `blood-3.jpg`).
-- Exact physical address, phone numbers, and coordinates for the active Head Office: Kazanchis Joburg Bldg, 5th Floor, Addis Ababa (Plus Code: 2Q7F+J6X).
+- Exact physical address, phone numbers, and coordinates for the active Head Office: Kazanchis Joburg Plaza, 5th Floor, Addis Ababa (Plus Code: 2Q7F+H7, 9°00'50.4"N 38°46'23.6"E).
 - Product technical catalog and rebar conversion tables in `src/data.ts`.
 
 ## Product Principles

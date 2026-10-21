@@ -717,7 +717,7 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
               {/* Footer Quote Link */}
               <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-line/80 pt-4">
                 <span className="font-mono text-[0.7rem] text-mute">
-                  Kazanchis Joburg Bldg · 5th Floor · Addis Ababa
+                  Kazanchis Joburg Plaza · 5th Floor · Addis Ababa
                 </span>
                 <a
                   href="#quote"

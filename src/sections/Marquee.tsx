@@ -11,7 +11,7 @@ export default function Marquee() {
     t('Any Quantity', 'በማንኛውም መጠን'),
     t('Any Size', 'በማንኛውም ልኬት'),
     t('Delivered Anywhere', 'የትም ቦታ እናደርሳለን'),
-    t('Kazanchis Joburg Bldg (2Q7F+J6X)', 'ካዛንቺስ ጆበርግ ሕንፃ (2Q7F+J6X)'),
+    t('Kazanchis Joburg Plaza (2Q7F+H7)', 'ካዛንቺስ ጆበርግ ፕላዛ (2Q7F+H7)'),
   ];
 
   const row = [...items, ...items];

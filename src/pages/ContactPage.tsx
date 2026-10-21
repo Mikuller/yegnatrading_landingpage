@@ -35,8 +35,8 @@ export default function ContactPage() {
 
             <p className="text-mute text-base sm:text-lg mt-5 leading-relaxed">
               {t(
-                'Visit our central headquarters at Kazanchis Joburg Building or connect directly with our sales, logistics, and customer service teams for fast quotes and on-site delivery coordination.',
-                'በካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅ የሚገኘውን ዋና መሥሪያ ቤታችንን ይጎብኙ ወይም ከሽያጭና ሎጂስቲክስ ቡድናችን ጋር በመደወል ፈጣን የዋጋ ዝርዝርና የቀጥታ አቅርቦት ያግኙ።'
+                'Visit our central headquarters at Kazanchis Joburg Plaza or connect directly with our sales, logistics, and customer service teams for fast quotes and on-site delivery coordination.',
+                'በካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅ የሚገኘውን ዋና መሥሪያ ቤታችንን ይጎብኙ ወይም ከሽያጭና ሎጂስቲክስ ቡድናችን ጋር በመደወል ፈጣን የዋጋ ዝርዝርና የቀጥታ አቅርቦት ያግኙ።'
               )}
             </p>
           </div>

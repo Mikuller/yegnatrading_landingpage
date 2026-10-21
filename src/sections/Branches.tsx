@@ -16,7 +16,7 @@ export default function Branches() {
         <SectionHead
           eyebrow={t('Central Headquarters & Location', 'ዋና መሥሪያ ቤትና መገኛ')}
           title={t('Kazanchis Head Office', 'የካዛንቺስ ዋና መሥሪያ ቤት')}
-          accent={t('Joburg Building, 5th Floor.', 'ጆበርግ ሕንፃ 5ኛ ፎቅ።')}
+          accent={t('Joburg Plaza, 5th Floor.', 'ጆበርግ ፕላዛ 5ኛ ፎቅ።')}
           sub={t(
             'Our sole active headquarters coordinates all procurement, client agreements, mill test verifications, and direct heavy logistics dispatch across Ethiopia.',
             'ዋናውና ንቁ የሥራ መሥሪያ ቤታችን፤ ማንኛውንም የግንባታ ውል፣ የጥራት ማረጋገጫ ሰነዶችና የቀጥታ የትራንስፖርት አቅርቦት የሚያስተባብርበት ማዕከል ነው።'
@@ -36,12 +36,12 @@ export default function Branches() {
                   </span>
                   <div className="flex items-center gap-1.5 text-xs font-mono text-ember font-bold">
                     <Navigation className="h-4 w-4" />
-                    <span>2Q7F+J6X</span>
+                    <span>2Q7F+H7</span>
                   </div>
                 </div>
 
                 <h3 className="font-display text-ink mt-4 text-2xl font-bold sm:text-3xl">
-                  {t('Kazanchis Joburg Building', 'ካዛንቺስ ጆበርግ ሕንፃ')}
+                  {t('Kazanchis Joburg Plaza', 'ካዛንቺስ ጆበርግ ፕላዛ')}
                 </h3>
                 <p className="text-ember text-sm font-semibold mt-1">
                   {t('5th Floor, Addis Ababa, Ethiopia', '5ኛ ፎቅ፣ አዲስ አበባ፣ ኢትዮጵያ')}
@@ -68,7 +68,7 @@ export default function Branches() {
                     <MapPin className="h-4 w-4 text-ember shrink-0 mt-0.5" />
                     <div className="text-xs">
                       <span className="text-ink font-bold block">{t('Plus Code & Landmark', 'ፕላስ ኮድና መለያ')}</span>
-                      <span className="font-mono text-ember font-semibold block mt-0.5">2Q7F+J6X, Addis Ababa</span>
+                      <span className="font-mono text-ember font-semibold block mt-0.5">2Q7F+H7, Addis Ababa</span>
                       <span className="text-mute block">Kazanchis Business Corridor</span>
                     </div>
                   </div>
@@ -110,8 +110,8 @@ export default function Branches() {
                     </h4>
                     <p className="text-mute mt-1 text-[0.72rem] leading-relaxed">
                       {t(
-                        'Although client administration operates centrally from Kazanchis Joburg Building, certified rebar, cement, and materials are dispatched directly from regional depots to your job site across Ethiopia.',
-                        'ምንም እንኳን የቢሮ አስተዳደራችን በካዛንቺስ ጆበርግ ሕንፃ ብቻ የሚገኝ ቢሆንም፣ ምርቶች በቀጥታ ወደ ማንኛውም የግንባታ ቦታዎ በከባድ መኪኖች ይደርሳሉ።'
+                        'Although client administration operates centrally from Kazanchis Joburg Plaza, certified rebar, cement, and materials are dispatched directly from regional depots to your job site across Ethiopia.',
+                        'ምንም እንኳን የቢሮ አስተዳደራችን በካዛንቺስ ጆበርግ ፕላዛ ብቻ የሚገኝ ቢሆንም፣ ምርቶች በቀጥታ ወደ ማንኛውም የግንባታ ቦታዎ በከባድ መኪኖች ይደርሳሉ።'
                       )}
                     </p>
                   </div>
@@ -131,14 +131,14 @@ export default function Branches() {
                   </span>
                 </div>
                 <span className="font-mono text-xs text-mute font-semibold">
-                  9.0175° N, 38.7685° E
+                  9°00'50.4"N, 38°46'23.6"E
                 </span>
               </div>
 
               <div className="border-line mt-4 flex-1 overflow-hidden rounded-2xl border bg-panel2/80 min-h-[340px]">
                 <iframe
-                  title="Google Map for Kazanchis Joburg Building 5th Floor"
-                  src="https://maps.google.com/maps?q=9.0175,38.7685&hl=en&z=15&output=embed"
+                  title="Google Map for Kazanchis Joburg Plaza 5th Floor"
+                  src="https://maps.google.com/maps?q=9.013985,38.773222&hl=en&z=16&output=embed"
                   className="h-full w-full min-h-[340px] border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -147,7 +147,7 @@ export default function Branches() {
 
               <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-mute">
                 <span>
-                  {t('Kazanchis Joburg Bldg, 5th Floor, Addis Ababa', 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅ')}
+                  {t('Kazanchis Joburg Plaza, 5th Floor, Addis Ababa', 'ካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅ')}
                 </span>
                 <a
                   href={HEAD_OFFICE.mapUrl}

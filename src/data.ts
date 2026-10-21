@@ -6,8 +6,8 @@ export const CONTACT = {
     { label: 'Customer Support', number: '+251 941 15 15 15', tel: '+251941151515' },
   ],
   email: 'info@Yegnatradingethiopia.com',
-  hq: 'Kazanchis Joburg Building 5th floor, Addis Ababa, Ethiopia',
-  hqPlusCode: '2Q7F+J6X, Addis Ababa',
+  hq: 'Kazanchis Joburg Plaza 5th floor, Addis Ababa, Ethiopia',
+  hqPlusCode: '2Q7F+H7, Addis Ababa',
   hours: [
     { day: 'Monday – Friday', time: '08:30 AM – 5:30 PM' },
     { day: 'Saturday', time: '08:30 AM – 12:30 PM' },
@@ -65,8 +65,8 @@ export const NAV_LINKS: NavLink[] = [
         label: 'Head Office & Map',
         amLabel: 'ዋና መሥሪያ ቤትና ካርታ',
         href: '/contact/#branches',
-        description: 'Kazanchis Joburg Building 5th floor & map',
-        amDescription: 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅና ካርታ',
+        description: 'Kazanchis Joburg Plaza 5th floor & map',
+        amDescription: 'ካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅና ካርታ',
       },
     ],
   },
@@ -323,11 +323,11 @@ export const HEAD_OFFICE: Branch = {
   amName: 'የካዛንቺስ ዋና መሥሪያ ቤት',
   phone: '+251 943 00 00 05',
   tel: '+251943000005',
-  address: 'Kazanchis Joburg Bldg, 5th Floor, Addis Ababa',
-  plusCode: '2Q7F+J6X',
-  lat: 9.0175,
-  lng: 38.7685,
-  mapUrl: 'https://maps.google.com/maps?q=9.0175,38.7685',
+  address: 'Kazanchis Joburg Plaza, 5th Floor, Addis Ababa',
+  plusCode: '2Q7F+H7',
+  lat: 9.014,
+  lng: 38.773222,
+  mapUrl: 'https://maps.app.goo.gl/FQVCfhaxFvV8goy7A?g_st=atm',
 };
 
 export const BRANCHES: Branch[] = [HEAD_OFFICE];

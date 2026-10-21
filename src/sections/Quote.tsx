@@ -483,7 +483,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
                         {t('Head Office', 'ዋናው መሥሪያ ቤት')}
                       </p>
                       <p className="text-mute text-xs mt-1 leading-relaxed">
-                        Kazanchis Joburg Building 5th floor, Addis Ababa
+                        Kazanchis Joburg Plaza 5th floor, Addis Ababa
                       </p>
                       <a
                         href="#branches"

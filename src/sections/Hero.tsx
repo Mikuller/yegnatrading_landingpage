@@ -291,7 +291,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
               <p className="font-display text-ember text-lg font-bold sm:text-xl">
                 {t('Kazanchis HQ', 'ዋናው ቢሮ')}
               </p>
-              <p className="text-mute text-xs">Joburg Bldg, 5th Fl (2Q7F+J6X)</p>
+              <p className="text-mute text-xs">Joburg Plaza, 5th Fl (2Q7F+H7)</p>
             </div>
           </div>
         </div>
@@ -480,9 +480,9 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
                   {t('Head Office', 'ዋናው መሥሪያ ቤት')}
                 </p>
                 <p className="text-mute text-[0.7rem] leading-tight">
-                  Kazanchis Joburg Bldg, 5th Floor
+                  Kazanchis Joburg Plaza, 5th Floor
                   <br />
-                  Addis Ababa (2Q7F+J6X)
+                  Addis Ababa (2Q7F+H7)
                 </p>
               </div>
             </div>
