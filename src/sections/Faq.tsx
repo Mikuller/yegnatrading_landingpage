@@ -19,14 +19,14 @@ const FAQS = [
   {
     q: 'Where is Yegna Trading’s head office in Addis Ababa?',
     amQ: 'የኛ ትሬዲንግ ዋና መሥሪያ ቤት በአዲስ አበባ የት ነው?',
-    a: 'Our head office is at Kazanchis Joburg Building, 5th Floor, Addis Ababa (Plus Code 2Q7F+J6X). Sales, order, and logistics desks are open Monday–Friday 08:30–17:30 and Saturday 08:30–12:30.',
-    amA: 'ዋና መሥሪያ ቤታችን ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅ፣ አዲስ አበባ (Plus Code 2Q7F+J6X) ነው። ከሰኞ–አርብ 08:30–17:30 እና ቅዳሜ 08:30–12:30 ክፍት ነን።',
+    a: 'Our head office is at Kazanchis Joburg Plaza, 5th Floor, Addis Ababa (Plus Code 2Q7F+H7). Sales, order, and logistics desks are open Monday–Friday 08:30–17:30 and Saturday 08:30–12:30.',
+    amA: 'ዋና መሥሪያ ቤታችን ካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅ፣ አዲስ አበባ (Plus Code 2Q7F+H7) ነው። ከሰኞ–አርብ 08:30–17:30 እና ቅዳሜ 08:30–12:30 ክፍት ነን።',
   },
   {
     q: 'How can I request a quote for rebar or cement?',
     amQ: 'ለሬባር ወይም ሲሚንቶ ዋጋ እንዴት እጠይቃለሁ?',
-    a: 'Use the online quotation builder on our Contact page, call +251 943 00 00 07, or message Telegram @yegnatrading for fast pricing and delivery scheduling.',
-    amA: 'በእውቂያ ገጻችን ላይ ያለውን የዋጋ ጥያቄ ቅጽ ይሙሉ፣ ወደ +251 943 00 00 07 ይደውሉ፣ ወይም በቴሌግራም @yegnatrading ያግኙን።',
+    a: 'Use the online quotation builder on our Contact page, call +251 943 00 00 05, or message Telegram @Yegna_Tradingplc for fast pricing and delivery scheduling.',
+    amA: 'በእውቂያ ገጻችን ላይ ያለውን የዋጋ ጥያቄ ቅጽ ይሙሉ፣ ወደ +251 943 00 00 05 ይደውሉ፣ ወይም በቴሌግራም @Yegna_Tradingplc ያግኙን።',
   },
 ];
 

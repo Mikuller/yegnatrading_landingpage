@@ -32,7 +32,7 @@ Job sites operate under tight structural pour schedules, fluctuating currency/ma
 ## Brand Commitments
 
 - Name: Yegna Trading PLC (የኛ ትሬዲንግ)
-- Established: 2017 (7+ years of operations)
+- Established: 2017 (10+ years of operations)
 - Slogan / Motto: "ንግድ በእምነትና በታማኝነት!" ("Trade with trust and integrity!") / "FOR A STRONGER TOMORROW" ("ለተሻለ ነገ")
 - Core Values: Business Integrity, Professionalism, Social Responsibility, Team Work, Learning Organization, Customer Orientation.
 - Visual & Asset commitments: Authentic company photography (CEO Ato Zelalem Alene, management team, CSR blood donation drive), genuine Grade 75 rebar imagery, official logo assets in `public/`.
@@ -42,7 +42,7 @@ Job sites operate under tight structural pour schedules, fluctuating currency/ma
 - Verified Company Profile document hosted on Google Drive (`CONTACT.companyProfileUrl`).
 - Real management profiles and photos in `public/images/` (`team-zelalem.jpg`, `team-tilahun.jpg`, `team-abreham.jpg`, `team-hiwot.jpg`, `team-mulugeta.jpg`, `ceo.jpg`).
 - Community engagement documentation (`blood-1.jpg`, `blood-2.jpg`, `blood-3.jpg`).
-- Exact physical address, phone numbers, and coordinates for the active Head Office: Kazanchis Joburg Bldg, 5th Floor, Addis Ababa (Plus Code: 2Q7F+J6X).
+- Exact physical address, phone numbers, and coordinates for the active Head Office: Kazanchis Joburg Plaza, 5th Floor, Addis Ababa (Plus Code: 2Q7F+H7, 9°00'50.4"N 38°46'23.6"E).
 - Product technical catalog and rebar conversion tables in `src/data.ts`.
 
 ## Product Principles

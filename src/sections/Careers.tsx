@@ -183,7 +183,7 @@ export default function Careers() {
                             placeholder="Abebe Kebede"
                             value={form.name}
                             onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-xs sm:text-sm outline-none transition-all"
+                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-base sm:text-sm outline-none transition-all"
                           />
                         </div>
                       </div>
@@ -201,7 +201,7 @@ export default function Careers() {
                             placeholder="+251 9..."
                             value={form.phone}
                             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-xs sm:text-sm outline-none transition-all"
+                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-base sm:text-sm outline-none transition-all"
                           />
                         </div>
                       </div>
@@ -220,7 +220,7 @@ export default function Careers() {
                             placeholder="applicant@example.com"
                             value={form.email}
                             onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-xs sm:text-sm outline-none transition-all"
+                            className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border px-4 py-3 pl-10 text-base sm:text-sm outline-none transition-all"
                           />
                         </div>
                       </div>
@@ -233,7 +233,7 @@ export default function Careers() {
                           id="career-position"
                           value={form.position}
                           onChange={(e) => setForm({ ...form, position: e.target.value })}
-                          className="border-line bg-panel2 text-ink focus:border-ember w-full rounded-xl border px-4 py-3 text-xs sm:text-sm outline-none transition-all"
+                          className="border-line bg-panel2 text-ink focus:border-ember w-full rounded-xl border px-4 py-3 text-base sm:text-sm outline-none transition-all"
                         >
                           <option value="General / Spontaneous Application">
                             {t('General / Spontaneous Application', 'አጠቃላይ / ክፍት ማመልከቻ')}
@@ -298,7 +298,7 @@ export default function Careers() {
                         )}
                         value={form.note}
                         onChange={(e) => setForm({ ...form, note: e.target.value })}
-                        className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border p-3 text-xs sm:text-sm outline-none transition-all resize-none"
+                        className="border-line bg-panel2 text-ink placeholder:text-mute/60 focus:border-ember w-full rounded-xl border p-3 text-base sm:text-sm outline-none transition-all resize-none"
                       />
                     </div>
 

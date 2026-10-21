@@ -1,21 +1,21 @@
 export const CONTACT = {
-  phone: '+251 943 00 00 07',
-  phoneClean: '+251943000007',
+  phone: '+251 943 00 00 05',
+  phoneClean: '+251943000005',
   phones: [
-    { label: 'Support & Sales 1', number: '+251 943 00 00 07', tel: '+251943000007' },
-    { label: 'Customer Service 2', number: '+251 943 00 00 04', tel: '+251943000004' },
-    { label: 'Order Desk 3', number: '+251 943 00 00 05', tel: '+251943000005' },
-    { label: 'Logistics Desk 4', number: '+251 943 00 00 06', tel: '+251943000006' },
+    { label: 'Sales & Orders', number: '+251 943 00 00 05', tel: '+251943000005' },
+    { label: 'Customer Support', number: '+251 941 15 15 15', tel: '+251941151515' },
   ],
   email: 'info@Yegnatradingethiopia.com',
-  hq: 'Kazanchis Joburg Building 5th floor, Addis Ababa, Ethiopia',
-  hqPlusCode: '2Q7F+J6X, Addis Ababa',
+  hq: 'Kazanchis Joburg Plaza 5th floor, Addis Ababa, Ethiopia',
+  hqPlusCode: '2Q7F+H7, Addis Ababa',
   hours: [
     { day: 'Monday – Friday', time: '08:30 AM – 5:30 PM' },
     { day: 'Saturday', time: '08:30 AM – 12:30 PM' },
   ],
   helpDeskUrl: 'https://yegnatrading.crisp.help/en/',
   companyProfileUrl: 'https://drive.google.com/file/d/1TWE42u94PPmXz6wMW0-0htNIPRT1E4YV/view',
+  telegram: 'https://t.me/Yegna_Tradingplc',
+  linktree: 'https://linktr.ee/yegnaTrading',
 };
 
 export type NavSublink = {
@@ -65,8 +65,8 @@ export const NAV_LINKS: NavLink[] = [
         label: 'Head Office & Map',
         amLabel: 'ዋና መሥሪያ ቤትና ካርታ',
         href: '/contact/#branches',
-        description: 'Kazanchis Joburg Building 5th floor & map',
-        amDescription: 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅና ካርታ',
+        description: 'Kazanchis Joburg Plaza 5th floor & map',
+        amDescription: 'ካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅና ካርታ',
       },
     ],
   },
@@ -77,15 +77,17 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const SOCIALS = [
+  { label: 'Telegram', href: 'https://t.me/Yegna_Tradingplc' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@yegna_trading' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@yegnatrading' },
   { label: 'Facebook', href: 'https://web.facebook.com/profile.php?id=61566925694036' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/yegna-trading-plc' },
   { label: 'Instagram', href: 'https://www.instagram.com/yegnatradinget' },
-  { label: 'Telegram', href: 'https://t.me/yegnatrading' },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@getyegna' },
+  { label: 'X', href: 'https://x.com/yegnatrading' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/yegna-trading-plc' },
 ];
 
 export const STATS = [
-  { value: 7, suffix: '+', label: 'Years delivering quality', amLabel: 'ዓመታት በስኬት' },
+  { value: 10, suffix: '+', label: 'Years delivering quality', amLabel: 'ዓመታት በስኬት' },
   { value: 100, suffix: '%', label: 'Mill test certified', amLabel: 'የተረጋገጠ ጥራት' },
   { value: 9, suffix: '', label: 'Certified bar sizes', amLabel: 'የብረት ዓይነቶች' },
   { value: 98, suffix: '%', label: 'Satisfied contractors', amLabel: 'ረክተው የወጡ ደንበኞች' },
@@ -319,13 +321,13 @@ export type Branch = {
 export const HEAD_OFFICE: Branch = {
   name: 'Kazanchis Head Office',
   amName: 'የካዛንቺስ ዋና መሥሪያ ቤት',
-  phone: '+251 943 00 00 07',
-  tel: '+251943000007',
-  address: 'Kazanchis Joburg Bldg, 5th Floor, Addis Ababa',
-  plusCode: '2Q7F+J6X',
-  lat: 9.0175,
-  lng: 38.7685,
-  mapUrl: 'https://maps.google.com/maps?q=9.0175,38.7685',
+  phone: '+251 943 00 00 05',
+  tel: '+251943000005',
+  address: 'Kazanchis Joburg Plaza, 5th Floor, Addis Ababa',
+  plusCode: '2Q7F+H7',
+  lat: 9.014,
+  lng: 38.773222,
+  mapUrl: 'https://maps.app.goo.gl/FQVCfhaxFvV8goy7A?g_st=atm',
 };
 
 export const BRANCHES: Branch[] = [HEAD_OFFICE];

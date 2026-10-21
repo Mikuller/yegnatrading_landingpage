@@ -129,7 +129,7 @@ export default function Insights() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto pt-16 pb-24 sm:pb-8"
               onClick={() => setActivePost(null)}
             >
               <motion.div
@@ -140,7 +140,7 @@ export default function Insights() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
-                className="border-line bg-panel relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl border p-6 shadow-2xl sm:p-8"
+                className="border-line bg-panel relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl border p-5 sm:p-8 shadow-2xl my-auto"
               >
                 <div className="flex items-start justify-between">
                   <span className="bg-ember/15 text-ember rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">

@@ -17,23 +17,25 @@ import { BrandIcon, EASE } from '../ui';
 import { useApp } from '../context/AppContext';
 
 const BRAND_ICON_COLORS: Record<string, string> = {
-  Facebook: 'text-[#1877F2]',
-  LinkedIn: 'text-[#0A66C2]',
-  Instagram: 'text-[#E1306C]',
   Telegram: 'text-[#229ED9]',
   TikTok: '',
+  YouTube: 'text-[#FF0000]',
+  Facebook: 'text-[#1877F2]',
+  Instagram: 'text-[#E1306C]',
+  X: 'text-[#0f1419] dark:text-[#f7f9f9]',
+  LinkedIn: 'text-[#0A66C2]',
 };
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <a href="/" className={`group flex items-center gap-3 ${className}`}>
-      <span className="border-line relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl border bg-panel shadow-sm transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(245,124,0,0.35)]">
+    <a href="/" className={`group flex items-center gap-2.5 sm:gap-3 shrink-0 ${className}`}>
+      <span className="border-line relative grid h-9 w-9 sm:h-10 sm:w-10 shrink-0 place-items-center overflow-hidden rounded-xl border bg-panel shadow-sm transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(245,124,0,0.35)]">
         <img
           src="/images/logo-icon.png"
           alt="Yegna Trading PLC icon"
           width={40}
           height={40}
-          className="h-full w-full object-contain p-1"
+          className="h-full w-full object-contain p-0.5 sm:p-1"
           onError={(e) => {
             // fallback if needed
             (e.currentTarget as HTMLImageElement).src = '/logo-mark.png';
@@ -41,10 +43,10 @@ export function Logo({ className = '' }: { className?: string }) {
         />
       </span>
       <span className="leading-none">
-        <span className="font-display text-ink block text-[1.05rem] font-extrabold tracking-[0.16em]">
+        <span className="font-display text-ink block text-[0.95rem] sm:text-[1.05rem] font-extrabold tracking-[0.14em] sm:tracking-[0.16em]">
           YEGNA
         </span>
-        <span className="text-mute block text-[0.62rem] font-semibold tracking-[0.28em] uppercase">
+        <span className="text-mute block text-[0.58rem] sm:text-[0.62rem] font-semibold tracking-[0.24em] sm:tracking-[0.28em] uppercase">
           Trading PLC
         </span>
       </span>
@@ -84,9 +86,9 @@ export default function Nav() {
     >
       {/* Top utility contact bar (Customer Support, Email, Head Office, Hours, Socials with logos) */}
       <div className="border-line bg-panel2/95 text-mute hidden border-b px-5 py-2 text-xs backdrop-blur-md md:block sm:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 sm:gap-4 flex-nowrap">
           {/* Popping Contact & Location Information */}
-          <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-nowrap">
             {/* Phone hotline: High-contrast popping pill button */}
             <a
               href={`tel:${CONTACT.phoneClean}`}
@@ -119,8 +121,8 @@ export default function Nav() {
             </div>
           </div>
 
-          {/* Social Channels with Authentic Brand Logos (Unified neutral pills) */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Social Channels with Authentic Brand Logos (Sleek single-line icon discs) */}
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 flex-nowrap">
             <span className="text-[0.68rem] uppercase font-bold tracking-wider text-mute/80 pr-1 hidden lg:inline">
               {t('Follow Us', 'ይከተሉን')}:
             </span>
@@ -132,15 +134,12 @@ export default function Nav() {
                 rel="noreferrer"
                 aria-label={s.label}
                 title={s.label}
-                className="border-line bg-panel/85 hover:bg-panel hover:border-ember/50 text-ink group inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium shadow-2xs transition-all duration-200 hover:-translate-y-0.5"
+                className="border-line bg-panel/85 hover:bg-panel hover:border-ember/60 text-ink group grid h-7 w-7 place-items-center rounded-full border shadow-2xs transition-all duration-200 hover:-translate-y-0.5"
               >
                 <BrandIcon
                   label={s.label}
-                  className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:scale-110 ${BRAND_ICON_COLORS[s.label] ?? 'text-ember'}`}
+                  className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:scale-115 ${BRAND_ICON_COLORS[s.label] ?? 'text-ember'}`}
                 />
-                <span className="text-[0.72rem] text-mute group-hover:text-ink transition-colors hidden lg:inline">
-                  {s.label}
-                </span>
               </a>
             ))}
           </div>
@@ -155,7 +154,7 @@ export default function Nav() {
             : 'border-b border-line/40 bg-panel/85 backdrop-blur-xl'
         }`}
       >
-        <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-5 sm:px-8">
+        <div className="mx-auto flex h-[64px] sm:h-[68px] max-w-7xl items-center justify-between px-4 sm:px-8">
           <Logo />
 
           {/* Desktop links */}
@@ -292,16 +291,16 @@ export default function Nav() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 1 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="border-line bg-panel/98 border-b shadow-2xl backdrop-blur-2xl overflow-hidden lg:hidden"
+            className="border-line bg-panel/98 border-b shadow-2xl backdrop-blur-2xl max-h-[calc(100dvh-64px)] sm:max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-5 sm:px-8">
+            <div className="flex flex-col gap-1 px-4 py-4 sm:px-8 sm:py-5 pb-8">
               {/* Mobile controls bar */}
               <div className="border-line mb-3 flex items-center justify-between border-b pb-3">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={toggleLanguage}
-                    className="border-line text-ink flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+                    className="border-line text-ink flex min-h-[38px] items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold cursor-pointer active:scale-95 transition-transform"
                   >
                     <Globe className="h-3.5 w-3.5 text-ember" />
                     <span>{lang === 'en' ? 'አማርኛ' : 'English'}</span>
@@ -310,7 +309,7 @@ export default function Nav() {
                   <button
                     type="button"
                     onClick={toggleTheme}
-                    className="border-line text-ink flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
+                    className="border-line text-ink flex min-h-[38px] items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold cursor-pointer active:scale-95 transition-transform"
                   >
                     {theme === 'dark' ? (
                       <>

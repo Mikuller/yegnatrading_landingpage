@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <PageShell>
       {/* Page Header Banner */}
-      <section className="texture-noise relative overflow-hidden pt-36 pb-16 border-b border-line">
+      <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
           className="absolute inset-0 bg-[radial-gradient(900px_450px_at_50%_0%,rgba(245,124,0,0.12),transparent_70%)]"
           aria-hidden
@@ -35,14 +35,14 @@ export default function ContactPage() {
 
             <p className="text-mute text-base sm:text-lg mt-5 leading-relaxed">
               {t(
-                'Visit our central headquarters at Kazanchis Joburg Building or connect directly with our sales, logistics, and customer service teams for fast quotes and on-site delivery coordination.',
-                'በካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅ የሚገኘውን ዋና መሥሪያ ቤታችንን ይጎብኙ ወይም ከሽያጭና ሎጂስቲክስ ቡድናችን ጋር በመደወል ፈጣን የዋጋ ዝርዝርና የቀጥታ አቅርቦት ያግኙ።'
+                'Visit our central headquarters at Kazanchis Joburg Plaza or connect directly with our sales, logistics, and customer service teams for fast quotes and on-site delivery coordination.',
+                'በካዛንቺስ ጆበርግ ፕላዛ 5ኛ ፎቅ የሚገኘውን ዋና መሥሪያ ቤታችንን ይጎብኙ ወይም ከሽያጭና ሎጂስቲክስ ቡድናችን ጋር በመደወል ፈጣን የዋጋ ዝርዝርና የቀጥታ አቅርቦት ያግኙ።'
               )}
             </p>
           </div>
 
-          {/* Department Hotlines Grid */}
-          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
+          {/* Department Hotlines Grid (2 Official Lines) */}
+          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-2xl mx-auto sm:gap-4">
             {CONTACT.phones.map((p) => (
               <a
                 key={p.number}

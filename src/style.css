@@ -78,6 +78,8 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -89,7 +91,13 @@ body {
   font-variant-numeric: normal;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  max-width: 100%;
   transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
 }
 
 .font-mono {
