@@ -33,10 +33,10 @@ export default function Why() {
                 <span className="font-display text-outline text-5xl font-extrabold transition-all duration-400 group-hover:[-webkit-text-stroke-color:var(--color-ember)] sm:text-6xl">
                   {p.n}
                 </span>
-                <h3 className="font-display text-ink group-hover:text-ember text-xl font-bold tracking-tight transition-colors duration-300 sm:text-2xl">
+                <h3 className="font-display text-ink text-elevated group-hover:text-ember text-xl font-bold tracking-tight transition-colors duration-300 sm:text-2xl">
                   {t(p.title, p.amTitle)}
                 </h3>
-                <p className="text-mute max-w-xl text-xs sm:text-sm leading-relaxed">
+                <p className="text-mute text-elevated max-w-xl text-xs sm:text-sm leading-relaxed">
                   {t(p.copy, p.amCopy)}
                 </p>
               </div>

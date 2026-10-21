@@ -18,16 +18,62 @@ export const CONTACT = {
   companyProfileUrl: 'https://drive.google.com/file/d/1TWE42u94PPmXz6wMW0-0htNIPRT1E4YV/view',
 };
 
-export const NAV_LINKS = [
-  { label: 'Home', amLabel: 'መነሻ', href: '#top' },
-  { label: 'Who We Are', amLabel: 'ስለ እኛ', href: '#about' },
-  { label: 'Products', amLabel: 'ምርቶች', href: '#products' },
-  { label: 'Why Yegna', amLabel: 'ለምን የኛ?', href: '#why' },
-  { label: 'Team', amLabel: 'ቡድናችን', href: '#team' },
-  { label: 'Head Office', amLabel: 'ዋና መሥሪያ ቤት', href: '#branches' },
-  { label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች', href: '#jobs' },
-  { label: 'Blog', amLabel: 'ብሎግ', href: '#insights' },
-  { label: 'Contact', amLabel: 'ያግኙን', href: '#contact' },
+export type NavSublink = {
+  label: string;
+  amLabel: string;
+  href: string;
+  description?: string;
+  amDescription?: string;
+};
+
+export type NavLink = {
+  label: string;
+  amLabel: string;
+  href: string;
+  sublinks?: NavSublink[];
+};
+
+export const NAV_LINKS: NavLink[] = [
+  { label: 'Home', amLabel: 'መነሻ', href: '/' },
+  {
+    label: 'About Us',
+    amLabel: 'ስለ እኛ',
+    href: '/about/',
+    sublinks: [
+      {
+        label: 'Who We Are',
+        amLabel: 'ስለ እኛ',
+        href: '/about/#about',
+        description: 'Our story, mission & corporate values',
+        amDescription: 'ታሪካችን፣ ተልዕኳችንና የድርጅት እሴቶች',
+      },
+      {
+        label: 'Why Yegna',
+        amLabel: 'ለምን የኛ?',
+        href: '/about/#why',
+        description: 'Grade 75 mill test certified quality guarantees',
+        amDescription: 'የተረጋገጠ የጥራት ዋስትናና ደረጃዎች',
+      },
+      {
+        label: 'Our Team',
+        amLabel: 'አመራርና ቡድናችን',
+        href: '/about/#team',
+        description: 'Executive leadership & supply specialists',
+        amDescription: 'የሥራ አመራር ቦርድና ባለሙያዎች',
+      },
+      {
+        label: 'Head Office & Map',
+        amLabel: 'ዋና መሥሪያ ቤትና ካርታ',
+        href: '/contact/#branches',
+        description: 'Kazanchis Joburg Building 5th floor & map',
+        amDescription: 'ካዛንቺስ ጆበርግ ሕንፃ 5ኛ ፎቅና ካርታ',
+      },
+    ],
+  },
+  { label: 'Products', amLabel: 'ምርቶች', href: '/products/' },
+  { label: 'Careers', amLabel: 'ክፍት የሥራ ቦታዎች', href: '/careers/' },
+  { label: 'Blog', amLabel: 'ብሎግ', href: '/insights/' },
+  { label: 'Contact', amLabel: 'ያግኙን', href: '/contact/' },
 ];
 
 export const SOCIALS = [
