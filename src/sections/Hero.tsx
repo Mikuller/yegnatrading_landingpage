@@ -413,7 +413,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
               </span>
             </div>
             <span className="text-mute text-xs">
-              {t('Est. 2017 · 7+ Years of Excellence', 'የተመሠረተበት 2017 · 7+ ዓመታት በታማኝነት')}
+              {t('Est. 2017 · 10+ Years of Excellence', 'የተመሠረተበት 2017 · 10+ ዓመታት በታማኝነት')}
             </span>
           </motion.div>
 

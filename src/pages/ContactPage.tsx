@@ -41,8 +41,8 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Department Hotlines Grid */}
-          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
+          {/* Department Hotlines Grid (2 Official Lines) */}
+          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-2xl mx-auto sm:gap-4">
             {CONTACT.phones.map((p) => (
               <a
                 key={p.number}

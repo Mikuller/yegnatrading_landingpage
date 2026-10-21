@@ -434,7 +434,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
 
             <Reveal delay={0.2} className="w-full min-w-0">
               <div className="mt-8 flex flex-col gap-4 w-full min-w-0">
-                {/* 4 Dedicated Phone Lines */}
+                {/* Dedicated Phone Lines */}
                 <div className="border-line bg-panel rounded-2xl border p-5 shadow-sm w-full min-w-0">
                   <p className="font-display text-ember text-xs font-bold tracking-wider uppercase mb-3">
                     {t('Dedicated Phone Lines (Call Us Anytime)', 'የስልክ መስመሮች (በማንኛውም ጊዜ ይደውሉ)')}

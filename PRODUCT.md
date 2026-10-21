@@ -32,7 +32,7 @@ Job sites operate under tight structural pour schedules, fluctuating currency/ma
 ## Brand Commitments
 
 - Name: Yegna Trading PLC (የኛ ትሬዲንግ)
-- Established: 2017 (7+ years of operations)
+- Established: 2017 (10+ years of operations)
 - Slogan / Motto: "ንግድ በእምነትና በታማኝነት!" ("Trade with trust and integrity!") / "FOR A STRONGER TOMORROW" ("ለተሻለ ነገ")
 - Core Values: Business Integrity, Professionalism, Social Responsibility, Team Work, Learning Organization, Customer Orientation.
 - Visual & Asset commitments: Authentic company photography (CEO Ato Zelalem Alene, management team, CSR blood donation drive), genuine Grade 75 rebar imagery, official logo assets in `public/`.

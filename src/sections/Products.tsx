@@ -84,7 +84,7 @@ export default function Products() {
               className="bg-primary hover:bg-primary/90 text-white font-display inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all shadow-md"
             >
               <Phone className="h-3.5 w-3.5 text-ember" />
-              <span>{t('Call Now: +251 943 00 00 07', 'አሁን ይደውሉ፡ +251 943 00 00 07')}</span>
+              <span>{t(`Call Now: ${CONTACT.phone}`, `አሁን ይደውሉ፡ ${CONTACT.phone}`)}</span>
             </a>
           </div>
         </div>

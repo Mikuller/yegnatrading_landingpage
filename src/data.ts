@@ -1,11 +1,9 @@
 export const CONTACT = {
-  phone: '+251 943 00 00 07',
-  phoneClean: '+251943000007',
+  phone: '+251 943 00 00 05',
+  phoneClean: '+251943000005',
   phones: [
-    { label: 'Support & Sales 1', number: '+251 943 00 00 07', tel: '+251943000007' },
-    { label: 'Customer Service 2', number: '+251 943 00 00 04', tel: '+251943000004' },
-    { label: 'Order Desk 3', number: '+251 943 00 00 05', tel: '+251943000005' },
-    { label: 'Logistics Desk 4', number: '+251 943 00 00 06', tel: '+251943000006' },
+    { label: 'Sales & Orders', number: '+251 943 00 00 05', tel: '+251943000005' },
+    { label: 'Customer Support', number: '+251 941 15 15 15', tel: '+251941151515' },
   ],
   email: 'info@Yegnatradingethiopia.com',
   hq: 'Kazanchis Joburg Building 5th floor, Addis Ababa, Ethiopia',
@@ -85,7 +83,7 @@ export const SOCIALS = [
 ];
 
 export const STATS = [
-  { value: 7, suffix: '+', label: 'Years delivering quality', amLabel: 'ዓመታት በስኬት' },
+  { value: 10, suffix: '+', label: 'Years delivering quality', amLabel: 'ዓመታት በስኬት' },
   { value: 100, suffix: '%', label: 'Mill test certified', amLabel: 'የተረጋገጠ ጥራት' },
   { value: 9, suffix: '', label: 'Certified bar sizes', amLabel: 'የብረት ዓይነቶች' },
   { value: 98, suffix: '%', label: 'Satisfied contractors', amLabel: 'ረክተው የወጡ ደንበኞች' },
@@ -319,8 +317,8 @@ export type Branch = {
 export const HEAD_OFFICE: Branch = {
   name: 'Kazanchis Head Office',
   amName: 'የካዛንቺስ ዋና መሥሪያ ቤት',
-  phone: '+251 943 00 00 07',
-  tel: '+251943000007',
+  phone: '+251 943 00 00 05',
+  tel: '+251943000005',
   address: 'Kazanchis Joburg Bldg, 5th Floor, Addis Ababa',
   plusCode: '2Q7F+J6X',
   lat: 9.0175,

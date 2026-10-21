@@ -115,7 +115,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
         am: 'ጥራታቸው የተረጋገጠ የብረት ምርቶችን ከፋብሪካ እስከ ግንባታ ቦታ ማጓጓዝ',
       },
     ],
-    deskPhone: CONTACT.phones[3]?.tel || CONTACT.phoneClean,
+    deskPhone: CONTACT.phones[0]?.tel || CONTACT.phoneClean,
   },
   {
     id: 'abreham',
@@ -181,7 +181,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
         am: 'ለታመኑ ደንበኞች የተመቻቸና የተደራጀ የክፍያ ስምምነት ማመቻቸት',
       },
     ],
-    deskPhone: CONTACT.phones[2]?.tel || CONTACT.phoneClean,
+    deskPhone: CONTACT.phones[0]?.tel || CONTACT.phoneClean,
   },
   {
     id: 'mulugeta',
@@ -587,7 +587,12 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t(leader.name, leader.amName)}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto pt-20 sm:pt-16"
+      >
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -603,7 +608,7 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 20 }}
           transition={{ duration: 0.35, ease: EASE }}
-          className="border-line bg-panel card-glow relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl"
+          className="border-line bg-panel card-glow relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl my-auto"
         >
           {/* Top Status Banner */}
           <div className="flex items-center justify-between border-b border-line bg-panel2/80 px-6 py-4">
@@ -754,44 +759,51 @@ function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t(photo.caption, photo.amCaption)}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto pt-20 sm:pt-16"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 bg-black/85 backdrop-blur-md"
         />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="border-line bg-panel relative z-10 max-w-2xl overflow-hidden rounded-3xl border shadow-2xl"
+          initial={{ opacity: 0, scale: 0.95, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 16 }}
+          transition={{ duration: 0.3, ease: EASE }}
+          className="border-line bg-panel relative z-10 w-full max-w-2xl overflow-hidden rounded-3xl border shadow-2xl flex flex-col my-auto"
         >
-          <div className="relative">
+          {/* Uncropped Image Display: NEVER crop, preserves complete authentic photograph */}
+          <div className="relative flex items-center justify-center bg-black/75 dark:bg-black/90 p-2 sm:p-4 overflow-hidden">
             <img
               src={photo.url}
-              alt={photo.caption}
-              className="max-h-[70vh] w-full object-cover"
+              alt={t(photo.caption, photo.amCaption)}
+              className="max-h-[54vh] sm:max-h-[60vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
             />
             <button
               type="button"
               onClick={onClose}
               aria-label="Close lightbox"
-              className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-black cursor-pointer"
+              className="absolute right-3 top-3 sm:right-4 sm:top-4 grid h-10 w-10 place-items-center rounded-full bg-black/70 text-white backdrop-blur-md border border-white/20 transition-all hover:bg-ember hover:scale-105 active:scale-95 cursor-pointer z-20 focus-visible:ring-2 focus-visible:ring-ember focus-visible:outline-none"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
-          <div className="p-6">
+          <div className="p-5 sm:p-6 bg-panel">
             <span className="font-mono text-xs font-bold text-ember uppercase tracking-wider">
               {t('Community Social Responsibility', 'ማኅበራዊ ኃላፊነትና ተሳትፎ')}
             </span>
-            <h4 className="font-display text-ink mt-1 text-lg font-bold">
+            <h4 className="font-display text-ink mt-1 text-base sm:text-lg font-bold">
               {t(photo.caption, photo.amCaption)}
             </h4>
-            <p className="text-mute mt-2 text-xs leading-relaxed">
+            <p className="text-mute mt-2 text-xs sm:text-sm leading-relaxed">
               {t(
                 'Yegna Trading PLC team members actively donate blood annually in Addis Ababa to support emergency medical supplies and trauma care.',
                 'የየኛ ትሬዲንግ ቤተሰብ የአደጋ ጊዜ የጤና አገልግሎቶችን ለመደገፍና ሕይወት ለማዳን በየዓመቱ በፈቃደኝነት ደም ይለግሳል።'

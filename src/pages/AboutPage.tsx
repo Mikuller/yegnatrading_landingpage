@@ -4,8 +4,8 @@ import About from '../sections/About';
 import Ceo from '../sections/Ceo';
 import Team from '../sections/Team';
 import Why from '../sections/Why';
-import { ArrowUpRight, Award, Building2, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
-import { STATS, CSR_PHOTOS } from '../data';
+import { ArrowUpRight, Award, Building2, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { STATS } from '../data';
 import { useApp } from '../context/AppContext';
 import { Counter, Reveal } from '../ui';
 
@@ -39,8 +39,8 @@ export default function AboutPage() {
 
             <p className="text-mute text-base sm:text-lg mt-5 leading-relaxed">
               {t(
-                'For over 7 years, Yegna Trading PLC has stood as a premier supplier of legally certified Grade 75 steel rebar, Portland cement, staffa coil, and formwork plywood to commercial contractors, public enterprises, and residential developers nationwide.',
-                'የኛ ትሬዲንግ ኃ/የተ/የግ/ማህበር ላለፉት 7+ ዓመታት ደረጃውን የጠበቀ የኮንክሪት ብረት (ሬባር G75)፣ ሲሚንቶ፣ ስታፋ እና ፕላይዉድ ለመንግሥትና የግል ኮንስትራክሽን ፕሮጀክቶች በታማኝነት በማቅረብ ግንባር ቀደም አጋር ሆኖ ዘልቋል።'
+                'For over 10 years, Yegna Trading PLC has stood as a premier supplier of legally certified Grade 75 steel rebar, Portland cement, staffa coil, and formwork plywood to commercial contractors, public enterprises, and residential developers nationwide.',
+                'የኛ ትሬዲንግ ኃ/የተ/የግ/ማህበር ላለፉት 10+ ዓመታት ደረጃውን የጠበቀ የኮንክሪት ብረት (ሬባር G75)፣ ሲሚንቶ፣ ስታፋ እና ፕላይዉድ ለመንግሥትና የግል ኮንስትራክሽን ፕሮጀክቶች በታማኝነት በማቅረብ ግንባር ቀደም አጋር ሆኖ ዘልቋል።'
               )}
             </p>
           </div>
@@ -75,50 +75,6 @@ export default function AboutPage() {
 
       {/* Why Choose Yegna & Quality Commitments */}
       <Why />
-
-      {/* Corporate Social Responsibility (CSR) Showcase */}
-      <section className="texture-noise relative overflow-hidden py-20 border-t border-line">
-        <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="border-line bg-panel2/80 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold text-ember">
-              <Users className="h-4 w-4" />
-              <span>{t('Corporate Social Responsibility', 'ማኅበራዊ ኃላፊነት')}</span>
-            </span>
-            <h2 className="font-display text-ink text-2xl sm:text-4xl font-bold mt-3">
-              {t('Committed to Our Community', 'ለማኅበረሰባችን ያለን ቁርጠኝነት')}
-            </h2>
-            <p className="text-mute text-sm mt-2">
-              {t(
-                'Giving back and supporting vital civic initiatives across Addis Ababa.',
-                'ከንግድ ባሻገር ሕይወት ለማዳንና ማኅበረሰባችንን ለመደገፍ የምናደርገው ተሳትፎ።'
-              )}
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-3">
-            {CSR_PHOTOS.map((csr, idx) => (
-              <div
-                key={idx}
-                className="group border-line bg-panel overflow-hidden rounded-2xl border shadow-sm hover:border-ember/50 transition-all duration-300"
-              >
-                <div className="aspect-[4/3] overflow-hidden bg-panel2">
-                  <img
-                    src={csr.url}
-                    alt={t(csr.caption, csr.amCaption)}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4">
-                  <p className="text-ink text-xs sm:text-sm font-semibold">
-                    {t(csr.caption, csr.amCaption)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action Banner */}
       <section className="relative py-16 bg-panel2/60 border-t border-line">

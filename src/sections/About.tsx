@@ -43,8 +43,8 @@ export default function About() {
             <Reveal delay={0.15}>
               <p className="text-mute text-elevated mt-6 text-base leading-relaxed sm:text-lg">
                 {t(
-                  'Yegna Trading PLC is a locally owned Ethiopian business established in 2017 in the center city of Addis Ababa. For more than 7 years, we have been delivering certified steel rebar (Grade 75), portland cement, staffa steel coil, and construction plywood.',
-                  'የኛ ትሬዲንግ በ2017 ዓ.ም የተመሠረተ በአዲስ አበባ እምብርት የሚገኝ የሀገር ውስጥ የግንባታ ግብአቶች አቅራቢ ድርጅት ነው። ላለፉት 7+ ዓመታት ደረጃቸውን የጠበቁ ሬባር፣ ሲሚንቶ፣ ስታፋ እና ፕላይዉድ ለኮንስትራክሽን ዘርፍ አስተማማኝ በሆነ መንገድ እያቀረበ ይገኛል።'
+                  'Yegna Trading PLC is a locally owned Ethiopian business established in 2017 in the center city of Addis Ababa. For more than 10 years, we have been delivering certified steel rebar (Grade 75), portland cement, staffa steel coil, and construction plywood.',
+                  'የኛ ትሬዲንግ በ2017 ዓ.ም የተመሠረተ በአዲስ አበባ እምብርት የሚገኝ የሀገር ውስጥ የግንባታ ግብአቶች አቅራቢ ድርጅት ነው። ላለፉት 10+ ዓመታት ደረጃቸውን የጠበቁ ሬባር፣ ሲሚንቶ፣ ስታፋ እና ፕላይዉድ ለኮንስትራክሽን ዘርፍ አስተማማኝ በሆነ መንገድ እያቀረበ ይገኛል።'
                 )}
               </p>
             </Reveal>
