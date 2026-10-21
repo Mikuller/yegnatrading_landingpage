@@ -27,19 +27,38 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
   const shouldReduceMotion = useReducedMotion();
   const [displayMode, setDisplayMode] = useState<'animated' | 'render'>('animated');
 
-  // 3D card tilt motion values with silky spring physics
+  // 3D card tilt motion values with silky, agile spring physics
   const cardX = useMotionValue(0);
   const cardY = useMotionValue(0);
-  const springX = useSpring(cardX, { stiffness: 140, damping: 18, mass: 0.8 });
-  const springY = useSpring(cardY, { stiffness: 140, damping: 18, mass: 0.8 });
+  // High-performance critically-damped spring: snappy response, zero wobble, zero lag
+  const springX = useSpring(cardX, { stiffness: 280, damping: 28, mass: 0.5 });
+  const springY = useSpring(cardY, { stiffness: 280, damping: 28, mass: 0.5 });
 
-  const rotateX = useTransform(springY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-12, 12]);
-  const sheenX = useTransform(springX, [-0.5, 0.5], ['10%', '90%']);
-  const sheenY = useTransform(springY, [-0.5, 0.5], ['10%', '90%']);
+  // Calibrated, tasteful tilt angle (max ±3.8° X, ±4.8° Y)
+  // Preserves 3D depth and specular sheen while eliminating button displacement
+  const rotateX = useTransform(springY, [-0.5, 0.5], [3.8, -3.8]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-4.8, 4.8]);
+  const sheenX = useTransform(springX, [-0.5, 0.5], ['15%', '85%']);
+  const sheenY = useTransform(springY, [-0.5, 0.5], ['15%', '85%']);
 
   const handlePointerMove = (e: MouseEvent<HTMLDivElement>) => {
     if (shouldReduceMotion) return;
+
+    // Intelligent interaction detection: if hovering or aiming at any interactive control
+    // (buttons, tabs, links, controls), settle tilt to 0 immediately so targets stay rock-solid
+    const target = e.target as HTMLElement | null;
+    const isInteractive = Boolean(
+      target?.closest(
+        'button, a, input, select, [role="button"], [data-interactive="true"]'
+      )
+    );
+
+    if (isInteractive) {
+      cardX.set(0);
+      cardY.set(0);
+      return;
+    }
+
     const rect = e.currentTarget.getBoundingClientRect();
     cardX.set((e.clientX - rect.left) / rect.width - 0.5);
     cardY.set((e.clientY - rect.top) / rect.height - 0.5);
@@ -90,7 +109,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
         initial={{ opacity: 0, scale: 0.92, y: 32 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-        whileHover={shouldReduceMotion ? {} : { scale: 1.015 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.002 }}
         className="border-line bg-panel/96 dark:bg-panel/92 card-glow relative overflow-hidden rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl sm:p-9 transition-colors duration-500"
       >
         {/* Subtle grid texture surface */}
@@ -107,41 +126,57 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
           />
         )}
 
-        <div className="relative" style={{ transformStyle: 'preserve-3d' }}>
-          {/* Header pill & Certified badge (translateZ: 24px) */}
-          <div
-            className="flex items-center justify-between flex-wrap gap-2"
-            style={{ transform: shouldReduceMotion ? undefined : 'translateZ(24px)' }}
-          >
+        <div className="relative">
+          {/* Header pill & Certified badge */}
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <span className="font-display text-primary dark:text-amber text-[0.68rem] font-bold tracking-[0.28em] uppercase">
                 YEGNA · GRADE 75
               </span>
 
               {/* View Mode Toggle Pill */}
-              <div className="flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold">
-                <button
+              <div
+                data-interactive="true"
+                className="flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold relative"
+              >
+                <motion.button
                   type="button"
                   onClick={() => setDisplayMode('animated')}
-                  className={`cursor-pointer rounded-full px-2.5 py-0.5 transition-all ${
+                  whileTap={{ scale: 0.94 }}
+                  className={`relative cursor-pointer rounded-full px-2.5 py-0.5 transition-colors z-10 ${
                     displayMode === 'animated'
-                      ? 'bg-ember text-white shadow-xs'
+                      ? 'text-white'
                       : 'text-mute hover:text-ink'
                   }`}
                 >
-                  {t('3D Kinetic Rods', 'ተንቀሳቃሽ')}
-                </button>
-                <button
+                  {displayMode === 'animated' && (
+                    <motion.span
+                      layoutId="heroDisplayModePill"
+                      className="absolute inset-0 rounded-full bg-ember shadow-xs -z-10"
+                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    />
+                  )}
+                  <span>{t('3D Kinetic Rods', 'ተንቀሳቃሽ')}</span>
+                </motion.button>
+                <motion.button
                   type="button"
                   onClick={() => setDisplayMode('render')}
-                  className={`cursor-pointer rounded-full px-2.5 py-0.5 transition-all ${
+                  whileTap={{ scale: 0.94 }}
+                  className={`relative cursor-pointer rounded-full px-2.5 py-0.5 transition-colors z-10 ${
                     displayMode === 'render'
-                      ? 'bg-ember text-white shadow-xs'
+                      ? 'text-white'
                       : 'text-mute hover:text-ink'
                   }`}
                 >
-                  {t('Studio Render', 'ስቱዲዮ')}
-                </button>
+                  {displayMode === 'render' && (
+                    <motion.span
+                      layoutId="heroDisplayModePill"
+                      className="absolute inset-0 rounded-full bg-ember shadow-xs -z-10"
+                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    />
+                  )}
+                  <span>{t('Studio Render', 'ስቱዲዮ')}</span>
+                </motion.button>
               </div>
             </div>
 
@@ -169,11 +204,8 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
             )}
           </div>
 
-          {/* REBAR SHOWCASE - Interactive 3D Kinetic Bundle or Studio Render (translateZ: 42px) */}
-          <div
-            className="relative my-3 flex items-center justify-center py-1 sm:my-4 sm:py-2"
-            style={{ transform: shouldReduceMotion ? undefined : 'translateZ(42px)' }}
-          >
+          {/* REBAR SHOWCASE - Interactive 3D Kinetic Bundle or Studio Render */}
+          <div className="relative my-3 flex items-center justify-center py-1 sm:my-4 sm:py-2">
             {displayMode === 'animated' ? (
               <InteractiveRebarBundle onQuote={onQuote} />
             ) : (
@@ -219,7 +251,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
                     alt="Yegna Grade 75 certified steel reinforcement bars bundle"
                     width={340}
                     height={360}
-                    className="relative z-10 mx-auto max-h-[300px] w-auto max-w-[280px] object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.38)] transition-transform duration-700 sm:max-h-[360px] sm:max-w-[340px] group-hover/card:scale-[1.03]"
+                    className="relative z-10 mx-auto max-h-[300px] w-auto max-w-[280px] object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.38)] transition-transform duration-700 sm:max-h-[360px] sm:max-w-[340px] group-hover/card:scale-[1.02]"
                     initial={{ opacity: 0, scale: 0.88, y: 30 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.5, ease: EASE }}
@@ -247,11 +279,8 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
             )}
           </div>
 
-          {/* Spec Indicators Footer (translateZ: 22px) */}
-          <div
-            className="border-line mt-4 flex items-center justify-between border-t pt-5"
-            style={{ transform: shouldReduceMotion ? undefined : 'translateZ(22px)' }}
-          >
+          {/* Spec Indicators Footer */}
+          <div className="border-line mt-4 flex items-center justify-between border-t pt-5">
             <div>
               <p className="font-display text-ink text-lg font-bold sm:text-xl">6 – 32 mm</p>
               <p className="text-mute text-xs">
@@ -271,7 +300,6 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
       {/* 3. Floating Trust Badge 1: Top-Left (Delivered anywhere) */}
       <motion.div
         className="border-line bg-panel2/95 text-ink shadow-xl absolute -top-5 -left-3 flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-md sm:-top-6 sm:-left-6 cursor-default z-30"
-        style={{ transform: shouldReduceMotion ? undefined : 'translateZ(55px)' }}
         initial={{ opacity: 0, scale: 0.6, y: 16 }}
         animate={
           shouldReduceMotion
@@ -293,7 +321,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
                 rotate: { duration: 4.2, repeat: Infinity, ease: 'easeInOut' },
               }
         }
-        whileHover={shouldReduceMotion ? {} : { scale: 1.08, y: -4, rotate: -2 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -3 }}
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { scale: [1, 1.25, 1] }}
@@ -307,7 +335,6 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
       {/* 4. Floating Trust Badge 2: Bottom-Right (Any quantity, any size) */}
       <motion.div
         className="border-line bg-panel2/95 text-ink shadow-xl absolute -right-3 -bottom-5 flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-md sm:-right-6 sm:-bottom-6 cursor-default z-30"
-        style={{ transform: shouldReduceMotion ? undefined : 'translateZ(55px)' }}
         initial={{ opacity: 0, scale: 0.6, y: 16 }}
         animate={
           shouldReduceMotion
@@ -329,10 +356,10 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
                 rotate: { duration: 5.0, repeat: Infinity, ease: 'easeInOut' },
               }
         }
-        whileHover={shouldReduceMotion ? {} : { scale: 1.08, y: -4, rotate: 2 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -3 }}
       >
         <motion.div
-          whileHover={shouldReduceMotion ? {} : { rotate: 25 }}
+          whileHover={shouldReduceMotion ? {} : { rotate: 20 }}
           transition={{ type: 'spring', stiffness: 300, damping: 15 }}
         >
           <Ruler className="text-ember h-4 w-4 shrink-0" />

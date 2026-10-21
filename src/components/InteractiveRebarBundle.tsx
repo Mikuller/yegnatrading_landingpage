@@ -478,56 +478,53 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
           </div>
 
           {/* Mode Selector Pill (Strictly positioned beside to the right of Certified icon on the SAME ROW) */}
-          <div className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.58rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md flex-nowrap shrink-0">
-            <button
-              type="button"
-              onClick={() => {
-                setViewMode('bundle');
-                playAcousticFeedback('clink', soundEnabled);
-              }}
-              className={`cursor-pointer rounded-full px-1.5 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-all ${
-                viewMode === 'bundle'
-                  ? 'bg-ember text-white shadow-xs'
-                  : 'text-mute hover:text-ink'
-              }`}
-            >
-              {t('Bundle Stack', 'የተጣመረ ስቶክ')}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setViewMode('scale');
-                playAcousticFeedback('clink', soundEnabled);
-              }}
-              className={`cursor-pointer rounded-full px-1.5 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-all ${
-                viewMode === 'scale'
-                  ? 'bg-ember text-white shadow-xs'
-                  : 'text-mute hover:text-ink'
-              }`}
-            >
-              {t('Scale Lineup', 'የመጠኖች ንጽጽር')}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setViewMode('flex');
-                playAcousticFeedback('clink', soundEnabled);
-              }}
-              className={`cursor-pointer rounded-full px-1.5 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-all ${
-                viewMode === 'flex'
-                  ? 'bg-ember text-white shadow-xs'
-                  : 'text-mute hover:text-ink'
-              }`}
-            >
-              {t('Tensile Flex Test', 'የጥንካሬ ፈተና')}
-            </button>
+          <div
+            data-interactive="true"
+            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.58rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md flex-nowrap shrink-0 relative"
+          >
+            {(
+              [
+                { id: 'bundle', label: t('Bundle Stack', 'የተጣመረ ስቶክ') },
+                { id: 'scale', label: t('Scale Lineup', 'የመጠኖች ንጽጽር') },
+                { id: 'flex', label: t('Tensile Flex Test', 'የጥንካሬ ፈተና') },
+              ] as const
+            ).map((tab) => {
+              const isActive = viewMode === tab.id;
+              return (
+                <motion.button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => {
+                    setViewMode(tab.id);
+                    playAcousticFeedback('clink', soundEnabled);
+                  }}
+                  whileTap={{ scale: 0.94 }}
+                  className={`relative cursor-pointer rounded-full px-2 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-colors z-10 ${
+                    isActive ? 'text-white' : 'text-mute hover:text-ink'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeRebarViewMode"
+                      className="absolute inset-0 rounded-full bg-ember shadow-xs -z-10"
+                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    />
+                  )}
+                  <span>{tab.label}</span>
+                </motion.button>
+              );
+            })}
           </div>
         </div>
 
         {/* Audio Toggle */}
-        <button
+        <motion.button
           type="button"
+          data-interactive="true"
           onClick={() => setSoundEnabled((prev) => !prev)}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.88 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           className="shrink-0 cursor-pointer inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border border-line/60 bg-panel2/80 text-mute hover:text-ink hover:border-ember/40 transition-colors"
           title={soundEnabled ? t('Mute audio', 'ድምጽ አጥፋ') : t('Enable audio', 'ድምጽ ክፈት')}
           aria-label="Toggle acoustic feedback"
@@ -537,29 +534,42 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
           ) : (
             <VolumeX className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           )}
-        </button>
+        </motion.button>
       </div>
 
       {/* Diameter Selector Grid: Strictly fits width without any horizontal scrolling */}
-      <div className="mb-2.5 grid grid-cols-8 gap-1 w-full px-0.5 z-20">
+      <div
+        data-interactive="true"
+        className="mb-2.5 grid grid-cols-8 gap-1 w-full px-0.5 z-20"
+      >
         {COMMERCIAL_SPECS.map((spec) => {
           const isSelected = activeDiameter === spec.diameter;
           return (
-            <button
+            <motion.button
               key={spec.diameter}
               type="button"
               onClick={() => {
                 setActiveDiameter(spec.diameter);
                 playAcousticFeedback('clink', soundEnabled);
               }}
-              className={`cursor-pointer w-full text-center py-1 text-[0.66rem] font-mono font-bold rounded-lg transition-all ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+              className={`relative cursor-pointer w-full text-center py-1 sm:py-1.5 text-[0.66rem] font-mono font-bold rounded-lg transition-colors overflow-hidden ${
                 isSelected
-                  ? 'bg-ember text-white shadow-xs scale-[1.03] ring-1 ring-ember'
+                  ? 'text-white shadow-xs'
                   : 'bg-panel2/80 text-mute hover:text-ink hover:bg-panel2 border border-line/40'
               }`}
             >
-              {spec.diameter}mm
-            </button>
+              {isSelected && (
+                <motion.span
+                  layoutId="activeDiameterPill"
+                  className="absolute inset-0 bg-ember rounded-lg ring-1 ring-ember -z-10"
+                  transition={{ type: 'spring', stiffness: 500, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{spec.diameter}mm</span>
+            </motion.button>
           );
         })}
       </div>
@@ -679,7 +689,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                 const isHovered = hoveredRodId === rod.id;
                 const isHighlighted = isSelected || isHovered;
 
-                const liftY = isHighlighted ? -34 : 0;
+                const liftY = isHighlighted ? -12 : 0;
                 const ribSpacing = Math.max(8, Math.round(spec.rx * 0.85));
                 const numRibs = Math.floor(rod.height / ribSpacing);
                 const tilt = spec.rx * 0.42;
@@ -703,14 +713,13 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                         ? { y: 0 }
                         : {
                             y: liftY,
-                            scale: isHighlighted ? 1.04 : 1,
                           }
                     }
                     transition={{
                       type: 'spring',
-                      stiffness: 520,
-                      damping: 28,
-                      mass: 0.55,
+                      stiffness: 420,
+                      damping: 30,
+                      mass: 0.5,
                     }}
                   >
                     {/* Shadow onto neighbor rods */}
@@ -931,7 +940,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                 const topY = 70 + (32 - spec.diameter) * 2.2;
                 const height = 278 - topY;
                 const isSelected = activeDiameter === spec.diameter;
-                const liftY = isSelected ? -24 : 0;
+                const liftY = isSelected ? -10 : 0;
 
                 const ribSpacing = Math.max(8, Math.round(spec.rx * 0.8));
                 const numRibs = Math.floor(height / ribSpacing);
@@ -952,7 +961,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                             y: liftY,
                           }
                     }
-                    transition={{ type: 'spring', stiffness: 500, damping: 26, mass: 0.6 }}
+                    transition={{ type: 'spring', stiffness: 450, damping: 28, mass: 0.5 }}
                   >
                     {/* Cylindrical Rebar Body Shaft */}
                     <path
@@ -1560,31 +1569,37 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
 
       {/* Mode 3: Universal Testing Machine Mechanical Controls */}
       {viewMode === 'flex' && (
-        <div className="mt-2.5 flex w-full items-center justify-between gap-2 flex-wrap px-1">
+        <div data-interactive="true" className="mt-2.5 flex w-full items-center justify-between gap-2 flex-wrap px-1">
           <div className="flex items-center gap-1.5">
-            <button
+            <motion.button
               type="button"
               onClick={runStandardBendTest}
               disabled={isAutoTesting}
-              className={`cursor-pointer inline-flex items-center gap-1.5 rounded-xl border border-ember/40 bg-ember/15 px-3 py-1.5 text-xs font-bold text-ember hover:bg-ember hover:text-white transition-all shadow-xs ${
-                isAutoTesting ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-[0.98]'
+              whileHover={isAutoTesting ? {} : { scale: 1.03 }}
+              whileTap={isAutoTesting ? {} : { scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+              className={`cursor-pointer inline-flex items-center gap-1.5 rounded-xl border border-ember/40 bg-ember/15 px-3 py-1.5 text-xs font-bold text-ember hover:bg-ember hover:text-white transition-colors shadow-xs ${
+                isAutoTesting ? 'opacity-60 cursor-not-allowed' : ''
               }`}
             >
               <Activity className="h-3.5 w-3.5" />
               <span>{t('45° Elastic Bend Test', 'የ45° መተጣጠፍ ፈተና')}</span>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               type="button"
               onClick={runHighYieldProofTest}
               disabled={isAutoTesting}
-              className={`cursor-pointer inline-flex items-center gap-1.5 rounded-xl border border-line/60 bg-panel2/90 px-3 py-1.5 text-xs font-bold text-ink hover:border-ember hover:text-ember transition-all shadow-xs ${
-                isAutoTesting ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-[0.98]'
+              whileHover={isAutoTesting ? {} : { scale: 1.03 }}
+              whileTap={isAutoTesting ? {} : { scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+              className={`cursor-pointer inline-flex items-center gap-1.5 rounded-xl border border-line/60 bg-panel2/90 px-3 py-1.5 text-xs font-bold text-ink hover:border-ember hover:text-ember transition-colors shadow-xs ${
+                isAutoTesting ? 'opacity-60 cursor-not-allowed' : ''
               }`}
             >
               <Zap className="h-3.5 w-3.5 text-amber" />
               <span>{t('550 MPa Yield Proof', 'የ550 MPa ጫና ፈተና')}</span>
-            </button>
+            </motion.button>
           </div>
 
           <div className="text-[0.68rem] font-semibold text-mute flex items-center gap-1">
@@ -1595,7 +1610,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
       )}
 
       {/* Engineering HUD & Instant Quotation Card */}
-      <div className="mt-2.5 w-full rounded-2xl border border-line/60 bg-panel2/80 p-3 shadow-md backdrop-blur-md">
+      <div data-interactive="true" className="mt-2.5 w-full rounded-2xl border border-line/60 bg-panel2/80 p-3 shadow-md backdrop-blur-md">
         <div className="flex items-center justify-between border-b border-line/40 pb-2">
           <div className="flex items-center gap-2">
             <span className="font-display text-base font-extrabold text-ember">
@@ -1637,10 +1652,13 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
             <span>{t('ASTM A615 & ES ISO 6935-2 Certified', 'በአለምአቀፍና በሀገር ውስጥ ደረጃ የተረጋገጠ')}</span>
           </div>
 
-          <button
+          <motion.button
             type="button"
             onClick={() => handleRequestQuote(activeSpec)}
-            className="cursor-pointer inline-flex items-center gap-1.5 rounded-xl bg-ember px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-ember/90 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+            className="cursor-pointer inline-flex items-center gap-1.5 rounded-xl bg-ember px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-ember/90 transition-colors"
           >
             <span>
               {t(
@@ -1649,7 +1667,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
               )}
             </span>
             <ArrowUpRight className="h-3.5 w-3.5" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </div>
