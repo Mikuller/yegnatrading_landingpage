@@ -338,10 +338,10 @@ export const TEAM = [
     photo: '/images/team-zelalem.jpg',
   },
   {
-    name: 'Tilahun Tamirat',
+    name: 'Getahun Assefa',
     role: 'Supply Chain Director',
     amRole: 'የአቅርቦት ሰንሰለት ዳይሬክተር',
-    photo: '/images/team-tilahun.jpg',
+    photo: '/images/team-getahun.jpg',
   },
   {
     name: 'Abreham Andarge',

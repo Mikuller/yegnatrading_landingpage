@@ -21,7 +21,7 @@ export default function Ceo() {
                   <div className="bg-ember/20 absolute -inset-2 rounded-2xl blur-lg transition-opacity group-hover:opacity-100" />
                   <img
                     src="/images/ceo.jpg"
-                    alt="Ato Zelalem Alene — General Manager of Yegna Trading PLC"
+                    alt="Tilahun Tamrat — Chief Executive Officer (CEO) of Yegna Trading PLC"
                     loading="lazy"
                     width={176}
                     height={192}
@@ -30,10 +30,10 @@ export default function Ceo() {
                 </div>
                 <div className="mt-4 text-center">
                   <h3 className="font-display text-ink text-base font-bold">
-                    {t('Ato Zelalem Alene', 'አቶ ዘላለም አለነ')}
+                    {t('Tilahun Tamrat', 'ጥላሁን ታምራት')}
                   </h3>
                   <p className="text-ember text-xs font-semibold tracking-wider uppercase">
-                    {t('General Manager & Founder', 'ዋና ሥራ አስኪያጅና መሥራች')}
+                    {t('Chief Executive Officer (CEO)', 'ዋና ሥራ አስፈፃሚ (CEO)')}
                   </p>
                   <p className="text-mute text-[0.7rem]">Yegna Trading PLC</p>
                 </div>
