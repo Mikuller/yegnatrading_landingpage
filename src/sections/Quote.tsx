@@ -386,7 +386,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
     );
   }, [itemRows, product.name, totals, location, name, phone, note]);
 
-  const tgHref = `https://t.me/yegnatrading?text=${encodeURIComponent(tgMessage)}`;
+  const tgHref = `${CONTACT.telegram}?text=${encodeURIComponent(tgMessage)}`;
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

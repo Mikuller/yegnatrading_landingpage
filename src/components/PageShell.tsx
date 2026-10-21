@@ -41,7 +41,7 @@ function MobileStickyBar() {
         </a>
 
         <a
-          href="https://t.me/yegnatrading"
+          href={CONTACT.telegram}
           target="_blank"
           rel="noreferrer"
           aria-label="Chat on Telegram"

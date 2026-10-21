@@ -102,7 +102,10 @@ export default function Footer() {
               </div>
 
               <p className="font-serif-i text-slate-100 mt-2 text-sm sm:text-base">
-                For a stronger tomorrow — ባለበት ላይ አብረን።
+                {t(
+                    'For a stronger tomorrow.',
+                    'ለተሻለ ነገ።'
+                  )}
               </p>
               <p className="text-slate-400 text-xs mt-0.5">
                 {t('Trade with Trust & Integrity!', 'ንግድ በእምነትና በታማኝነት!')}

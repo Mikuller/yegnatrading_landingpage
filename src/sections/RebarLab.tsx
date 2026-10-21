@@ -30,6 +30,16 @@ import { REBAR_CONVERSION_TABLE } from '../data';
 
 export type PartId = 'footing' | 'column' | 'beam' | 'slab' | 'stair';
 
+export interface FailureDetail {
+  title: string;
+  amTitle: string;
+  reason: string;
+  amReason: string;
+  consequence: string;
+  amConsequence: string;
+  crackType: 'punch' | 'buckle' | 'sag' | 'shear' | 'overload';
+}
+
 export interface PartConfig {
   id: PartId;
   stepNumber: number;
@@ -45,6 +55,7 @@ export interface PartConfig {
   recommendedSizes: string[];
   acceptableSizes: string[];
   incompatibleSizes: string[];
+  failureModes?: Record<string, FailureDetail>;
   bestSize: string;
   defaultSize: string;
 }
@@ -68,7 +79,36 @@ export const LAB_PARTS: PartConfig[] = [
     sectionDimensions: '1400 × 1400 × 350 mm',
     recommendedSizes: ['14mm', '16mm', '20mm'],
     acceptableSizes: ['12mm'],
-    incompatibleSizes: ['06mm Coil', '08mm'],
+    incompatibleSizes: ['06mm Coil', '08mm', '10mm'],
+    failureModes: {
+      '06mm Coil': {
+        title: 'Catastrophic Punching Shear Rupture',
+        amTitle: 'የመሠረት መሰንጠቅና መደርመስ አደጋ',
+        reason: '6mm coil wire has zero structural capacity for 1,420 kN column axial loads.',
+        amReason: '6ሚሜ ስታፋ የአምዱን 1,420 ኪሎኒውተን አጠቃላይ ጫና ለመሸከም የሚያስችል አቅም ፈጽሞ የለውም።',
+        consequence: 'Foundation pad sheared in half; column punched through subsoil causing severe subsidence.',
+        amConsequence: 'የመሠረት ኮንክሪቱ ተሰንጥቆ ህንጻው ወደ መሬት እንዲሰምጥና በአደገኛ ሁኔታ እንዲያዘነብል አድርጓል።',
+        crackType: 'punch',
+      },
+      '08mm': {
+        title: 'Punching Shear Rupture Under Load',
+        amTitle: 'በክብደት ምክንያት የመሠረት መሰንጠቅ',
+        reason: '8mm bar tensile area is 72% below minimum EBCS flexural foundation code.',
+        amReason: 'የ8ሚሜ ብረት ጥንካሬ በኢትዮጵያ የግንባታ መመሪያ ከመሠረት ከሚጠየቀው ዝቅተኛ መጠን 72% ያነሰ ነው።',
+        consequence: 'Foundation mat snapped across diagonal shear cone under building self-weight.',
+        amConsequence: 'የመሠረት ብረቱ ተበጥሶ በህንጻው ክብደት ምክንያት ኮንክሪቱ ተሰነጣጥቋል።',
+        crackType: 'punch',
+      },
+      '10mm': {
+        title: 'Excessive Flexural Cracking & Soil Subsidence',
+        amTitle: 'ከባድ ስንጥቅ እና የመሬት መስመጥ',
+        reason: '10mm rebar provides insufficient bending resistance for two-way foundation action.',
+        amReason: '10ሚሜ ብረት ባለሁለት አቅጣጫ የመሠረት መረብ የሚጠይቀውን የጉልበት ጫና መቋቋም አይችልም።',
+        consequence: 'Bedrock settlement cracks propagated vertically into columns.',
+        amConsequence: 'የመሠረት መሰነጣጠቅ ተከስቶ ስንጥቁ ወደ ላይ ወደ አምዶች ተላልፏል።',
+        crackType: 'punch',
+      },
+    },
     bestSize: '16mm',
     defaultSize: '16mm',
   },
@@ -90,7 +130,45 @@ export const LAB_PARTS: PartConfig[] = [
     sectionDimensions: '300 × 300 × 3200 mm',
     recommendedSizes: ['16mm', '20mm', '24mm'],
     acceptableSizes: ['14mm'],
-    incompatibleSizes: ['06mm Coil', '08mm', '10mm'],
+    incompatibleSizes: ['06mm Coil', '08mm', '10mm', '12mm'],
+    failureModes: {
+      '06mm Coil': {
+        title: 'Axial Euler Buckling & Core Burst',
+        amTitle: 'የአምዶች መጣመም እና መፈንዳት አደጋ',
+        reason: '6mm coil wire cannot function as vertical column compression steel (P_cr exceeded by 900%).',
+        amReason: '6ሚሜ ስታፋ እንደ ቁም ተሸካሚ ብረት ፈጽሞ ሊያገለግል አይችልም፤ ክብደቱን በፍጹም መቋቋም አይችልም።',
+        consequence: 'Columns buckled laterally like plastic; second floor slab collapsed onto lower frame.',
+        amConsequence: 'አምዶቹ ወደ ውጭ ተጣመው ፈንድተዋል፤ የላይኛው ፎቅ በሙሉ ወደ ታች ተደርምሷል።',
+        crackType: 'buckle',
+      },
+      '08mm': {
+        title: 'Column Buckling Under Gravity Load',
+        amTitle: 'በክብደት ጫና አምድ መጣመም',
+        reason: '8mm bar slender ratio lambda > 120, triggering explosive lateral buckling.',
+        amReason: 'የ8ሚሜ ብረት ቅጥነት ከመጠኑ በላይ በመሆኑ ጫናውን መቋቋም አቅቶት ወደ ውጭ ተጣሟል።',
+        consequence: 'Concrete cover exploded off core; columns bowed outwards under live load.',
+        amConsequence: 'የአምድ ኮንክሪቱ ፈንድቶ ወድቋል፤ የህንጻው ምሰሶዎች ወደ ጎን ተጣመዋል።',
+        crackType: 'buckle',
+      },
+      '10mm': {
+        title: 'Compressive Core Yield & Joint Shearing',
+        amTitle: 'የአምድ መገጣጠሚያ መላላትና መሰበር',
+        reason: '10mm bars yield prematurely under axial dead load + seismic lateral shear.',
+        amReason: '10ሚሜ ብረት የፎቆቹን አጠቃላይ ክብደትና የጎንዮሽ ንዝረት መቋቋም አቅቶት ቶሎ ይሰበራል።',
+        consequence: 'Significant drift tilt observed; upper frame dropped by 22cm.',
+        amConsequence: 'ህንጻው ወደ ጎን አዘንብሏል፤ የላይኛው ክፍል በ22 ሳ.ሜ ዝቅ ብሏል።',
+        crackType: 'buckle',
+      },
+      '12mm': {
+        title: 'Non-Conforming Column Reinforcement',
+        amTitle: 'ደረጃውን ያልጠበቀ የአምድ ብረት',
+        reason: '12mm main bars violate Ethiopian Building Code minimum steel ratio for multi-story buildings.',
+        amReason: '12ሚሜ ብረት ለፎቅ ህንጻ በኢትዮጵያ የግንባታ መመሪያ ከተቀመጠው ዝቅተኛ መስፈርት በታች ነው።',
+        consequence: 'Micro-buckling and premature joint fracture under moderate seismic ground motion.',
+        amConsequence: 'በመጠነኛ የመሬት መንቀጥቀጥ ንዝረት ወቅት አምዶቹ ላይ አደገኛ ስንጥቆች ተፈጥረዋል።',
+        crackType: 'buckle',
+      },
+    },
     bestSize: '20mm',
     defaultSize: '20mm',
   },
@@ -112,7 +190,36 @@ export const LAB_PARTS: PartConfig[] = [
     sectionDimensions: '250 × 400 × 4800 mm',
     recommendedSizes: ['14mm', '16mm', '20mm'],
     acceptableSizes: ['12mm'],
-    incompatibleSizes: ['06mm Coil', '08mm'],
+    incompatibleSizes: ['06mm Coil', '08mm', '10mm'],
+    failureModes: {
+      '06mm Coil': {
+        title: 'Mid-Span Flexural Rupture & Beam Snap',
+        amTitle: 'የጋሪ (Beam) በመሃል መቀደድና መሰበር',
+        reason: '6mm coil has zero tensile moment resistance across a 4.8-meter clear span.',
+        amReason: '6ሚሜ ስታፋ በ4.8 ሜትር ርዝመት ባለው ጋሪ ላይ የሚፈጠረውን የመተጣጠፍ ጫና መቋቋም አይችልም።',
+        consequence: 'Beam snapped cleanly at mid-span; floor slab above sagged 38cm downwards.',
+        amConsequence: 'ጋሪው በመሃል ተቆርጦ ወደ ታች በ38 ሳ.ሜ ሰምጧል፤ የወለል ኮንክሪቱ ተሰነጣጥቋል።',
+        crackType: 'sag',
+      },
+      '08mm': {
+        title: 'Excessive Flexural Sag & Diagonal Shear Tears',
+        amTitle: 'የቢም መስመጥና የጎንዮሽ መሰንጠቅ',
+        reason: '8mm bar yield strength is insufficient to resist positive midspan bending moments.',
+        amReason: 'የ8ሚሜ ብረት ጥንካሬ በቢሙ መሃል ላይ የሚፈጠረውን የመስመጥ ጉልበት መቋቋም አይችልም።',
+        consequence: '45-degree diagonal shear cracks developed near column joints, threatening total failure.',
+        amConsequence: 'በአምዶች መገጣጠሚያ አካባቢ የ45 ዲግሪ አደገኛ ስንጥቆች ተከስተዋል።',
+        crackType: 'sag',
+      },
+      '10mm': {
+        title: 'Serviceability Limit State Failure (Excessive Deflection)',
+        amTitle: 'ከፍተኛ የቢም መተጣጠፍና መስመጥ',
+        reason: '10mm rebars exceed allowable deflection limit (L/250) under standard design loads.',
+        amReason: '10ሚሜ ብረት ለዚህ ርዝመት ከሚፈቀደው ከፍተኛ የመተጣጠፍ ወሰን በላይ ይሰምጣል።',
+        consequence: 'Severe ceiling deflection and cracking of non-structural masonry walls.',
+        amConsequence: 'ጣሪያው ወደ ታች በመስመጡ የግድግዳ ግንቦች ተሰነጣጥቀዋል።',
+        crackType: 'sag',
+      },
+    },
     bestSize: '16mm',
     defaultSize: '16mm',
   },
@@ -134,7 +241,45 @@ export const LAB_PARTS: PartConfig[] = [
     sectionDimensions: '4800 × 6000 × 150 mm',
     recommendedSizes: ['08mm', '10mm', '12mm'],
     acceptableSizes: ['14mm'],
-    incompatibleSizes: ['06mm Coil', '24mm', '32mm'],
+    incompatibleSizes: ['06mm Coil', '20mm', '24mm', '32mm'],
+    failureModes: {
+      '06mm Coil': {
+        title: 'Slab Mesh Rupture & Punch-Through Tear',
+        amTitle: 'የወለል መረብ መበጠስና ወደ ታች መውደቅ',
+        reason: '6mm coil lacks sufficient tensile area to bridge two-way slab load distributions.',
+        amReason: '6ሚሜ ስታፋ ባለሁለት አቅጣጫ የወለል መረብን ጫና ለመሸከም የሚያስችል የብረት ስፋት የለውም።',
+        consequence: 'Floor deck cracked in cross-pattern and suffered localized punch-through failure.',
+        amConsequence: 'ወለሉ በመስቀለኛ አቅጣጫ ተሰንጥቆ ተከፍቷል፤ የወለል ኮንክሪቱ ተደርምሷል።',
+        crackType: 'shear',
+      },
+      '20mm': {
+        title: 'Over-Reinforced Brittle Failure Hazard',
+        amTitle: 'ከመጠን በላይ በሆነ ብረት የሚፈጠር ድንገተኛ መሰበር',
+        reason: '20mm bar in 150mm slab creates an over-reinforced section violating EBCS ductility limits.',
+        amReason: 'በ150ሚሜ ወለል ላይ 20ሚሜ ብረት መጠቀም ከመጠን በላይ (Over-reinforced) በማድረግ ድንገተኛ ስብራት ያመጣል።',
+        consequence: 'Concrete crushes explosively in compression without ductile rebar deflection warning.',
+        amConsequence: 'ብረቱ ሳይታጠፍ ኮንክሪቱ በድንገት በመፈንዳት አደገኛ የመደርመስ አደጋ ያመጣል።',
+        crackType: 'overload',
+      },
+      '24mm': {
+        title: 'Explosive Concrete Crushing (Zero Ductility)',
+        amTitle: 'ያለ ማስጠንቀቂያ የሚፈጠር ፈንጂ መሰል መደርመስ',
+        reason: 'Heavy 24mm rebar prevents plastic hinge formation; neutral axis shifts to bottom surface.',
+        amReason: '24ሚሜ ብረት ከመጠን በላይ ወፍራም በመሆኑ ኮንክሪቱን ያለ ማስጠንቀቂያ ይፈረካክሰዋል።',
+        consequence: 'Top compression concrete spalled explosively under standard occupant loading.',
+        amConsequence: 'የወለሉ የላይኛው ኮንክሪት በሰዎች ክብደት ምክንያት በድንገት ተሰባብሯል።',
+        crackType: 'overload',
+      },
+      '32mm': {
+        title: 'Total Geometrical & Ductility Failure',
+        amTitle: 'የመጠንና የደህንነት መመሪያ ጥሰት',
+        reason: '32mm bar cannot physically fit minimum concrete cover clearances in a 150mm slab.',
+        amReason: '32ሚሜ ብረት በ150ሚሜ ጠፍጣፋ ወለል ውስጥ አስፈላጊውን የኮንክሪት ሽፋን (Cover) ሊያገኝ አይችልም።',
+        consequence: 'Full debonding along bar lengths; complete structural failure of roof deck.',
+        amConsequence: 'ብረቶቹ ከኮንክሪቱ ጋር ሳይዋሃዱ ተላቀዋል፤ የጣሪያው ወለል ፈርሷል።',
+        crackType: 'overload',
+      },
+    },
     bestSize: '10mm',
     defaultSize: '10mm',
   },
@@ -156,7 +301,45 @@ export const LAB_PARTS: PartConfig[] = [
     sectionDimensions: '1000 mm Width · 150 mm Waist',
     recommendedSizes: ['12mm', '14mm', '16mm'],
     acceptableSizes: ['10mm'],
-    incompatibleSizes: ['06mm Coil', '24mm', '32mm'],
+    incompatibleSizes: ['06mm Coil', '20mm', '24mm', '32mm'],
+    failureModes: {
+      '06mm Coil': {
+        title: 'Stair Flight Waist Shear Severance',
+        amTitle: 'የደረጃ መወጣጫ ተገንጥሎ መውደቅ',
+        reason: '6mm coil wire snaps under dynamic footfall pedestrian impact vibration.',
+        amReason: 'ቀጭኑ 6ሚሜ ስታፋ ሰዎች ደረጃውን በሚወጡበት ጊዜ የሚፈጠረውን ተለዋዋጭ ንዝረት መቋቋም አቅቶት ተበጥሷል።',
+        consequence: 'Inclined waist slab severed completely from the floor landing beam.',
+        amConsequence: 'የደረጃው መወጣጫ ከወለል ጋሪው መገጣጠሚያ ተገንጥሎ ወደ መሬት ተከስክሷል።',
+        crackType: 'shear',
+      },
+      '20mm': {
+        title: 'Anchor Hook Splitting & Concrete Spall',
+        amTitle: 'የደረጃ መታጠፊያ ኮንክሪት መሰንጠቅ',
+        reason: '20mm rebar bend radius exceeds 150mm waist thickness, causing radial bursting tension.',
+        amReason: 'የ20ሚሜ ብረት መታጠፊያ አንግል በደረጃው ውፍረት ውስጥ ባለመመጠኑ ኮንክሪቱን ሰንጥቆታል።',
+        consequence: 'Concrete fractured along the cranked waist junction.',
+        amConsequence: 'በደረጃው መታጠፊያ መስመር ላይ ኮንክሪቱ ተሰንጥቆ ተላቋል።',
+        crackType: 'overload',
+      },
+      '24mm': {
+        title: 'Stair Landing Joint Cleavage',
+        amTitle: 'የደረጃ መገጣጠሚያ መገንጠል',
+        reason: 'Overly rigid 24mm steel transfers excessive localized stress into supporting beam.',
+        amReason: '24ሚሜ ብረት ከመጠን በላይ ደረቅ በመሆኑ ጫናውን በድንገት ወደ ጋሪው በማስተላለፍ ይሰብረዋል።',
+        consequence: 'Landing beam core spalled off, leaving flight unsupported.',
+        amConsequence: 'ደጋፊው ጋሪ ተሰባብሮ ደረጃው ያለ ድጋፍ እንዲንጠለጠል ሆኗል።',
+        crackType: 'overload',
+      },
+      '32mm': {
+        title: 'Total Geometric Over-Stiffness Rupture',
+        amTitle: 'የመዋቅር መመሪያ ጥሰትና መደርመስ',
+        reason: '32mm rebar cannot be placed with code-mandated concrete cover in thin waist stairs.',
+        amReason: '32ሚሜ ብረት በደረጃ መዋቅር ውስጥ ተገቢውን የኮንክሪት ሽፋን ይዞ ሊቀመጥ ፈጽሞ አይችልም።',
+        consequence: 'Severe cleavage cracks along reinforcement line; flight condemned.',
+        amConsequence: 'በብረቱ መስመር ላይ ኮንክሪቱ በሙሉ ተሰንጥቆ ደረጃው ጥቅም ላይ እንዳይውል ተደርጓል።',
+        crackType: 'overload',
+      },
+    },
     bestSize: '12mm',
     defaultSize: '12mm',
   },
@@ -196,8 +379,20 @@ export type QuotePrefill = {
   items?: StructuralQuoteItem[];
 };
 
+export interface CollapseState {
+  partId: PartId;
+  size: string;
+  title: string;
+  amTitle: string;
+  reason: string;
+  amReason: string;
+  consequence: string;
+  amConsequence: string;
+  crackType: 'punch' | 'buckle' | 'sag' | 'shear' | 'overload';
+}
+
 // Acoustic synthesizer for tactile structural audio feedback
-function playSoundFX(type: 'rebar' | 'pour' | 'xray' | 'earthquake' | 'fanfare') {
+function playSoundFX(type: 'rebar' | 'pour' | 'xray' | 'earthquake' | 'fanfare' | 'collapse' | 'rebuild') {
   try {
     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AudioCtx) return;
@@ -273,6 +468,49 @@ function playSoundFX(type: 'rebar' | 'pour' | 'xray' | 'earthquake' | 'fanfare')
           osc.stop(ctx.currentTime + 0.26);
         }, idx * 100);
       });
+    } else if (type === 'collapse') {
+      // 1. High-frequency structural shear snap
+      const snapOsc = ctx.createOscillator();
+      const snapGain = ctx.createGain();
+      snapOsc.type = 'sawtooth';
+      snapOsc.frequency.setValueAtTime(840, ctx.currentTime);
+      snapOsc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.16);
+      snapGain.gain.setValueAtTime(0.34, ctx.currentTime);
+      snapGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.17);
+      snapOsc.connect(snapGain);
+      snapGain.connect(ctx.destination);
+      snapOsc.start();
+      snapOsc.stop(ctx.currentTime + 0.18);
+
+      // 2. Heavy concrete fracture crunch & low seismic rumble
+      const rumbleOsc = ctx.createOscillator();
+      const rumbleGain = ctx.createGain();
+      rumbleOsc.type = 'triangle';
+      rumbleOsc.frequency.setValueAtTime(95, ctx.currentTime);
+      rumbleOsc.frequency.linearRampToValueAtTime(36, ctx.currentTime + 0.65);
+      rumbleGain.gain.setValueAtTime(0.38, ctx.currentTime);
+      rumbleGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
+      rumbleOsc.connect(rumbleGain);
+      rumbleGain.connect(ctx.destination);
+      rumbleOsc.start();
+      rumbleOsc.stop(ctx.currentTime + 0.72);
+    } else if (type === 'rebuild') {
+      // 4-note ascending metallic resonance chord (E4 -> G#4 -> B4 -> E5)
+      const chord = [329.63, 415.3, 493.88, 659.25];
+      chord.forEach((freq, idx) => {
+        window.setTimeout(() => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(0.18, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.36);
+        }, idx * 70);
+      });
     }
   } catch {
     // Ignore audio restrictions
@@ -307,6 +545,36 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [justReinforced, setJustReinforced] = useState<PartId | null>(null);
   const [showBOMModal, setShowBOMModal] = useState(false);
+
+  // Failure & Collapse state for wrong rebar selections
+  const [collapsedState, setCollapsedState] = useState<CollapseState | null>(null);
+
+  // Mobile guidance & rack pulse highlight
+  const [highlightRack, setHighlightRack] = useState<boolean>(false);
+  const rebarRackRef = useRef<HTMLDivElement>(null);
+  const buildingCanvasRef = useRef<HTMLDivElement>(null);
+
+  // Dynamic structural load simulation (in kN)
+  const [stressLoadValue, setStressLoadValue] = useState<number>(350);
+
+  // Load test pass certified result
+  const [loadTestResult, setLoadTestResult] = useState<{
+    passed: boolean;
+    appliedLoadKn: number;
+    pga: string;
+    deflectionMm: string;
+    safetyFactor: string;
+  } | null>(null);
+
+  // Mobile guidance feedback toast after choosing rebar
+  const [mobileToast, setMobileToast] = useState<{
+    partLabel: string;
+    stepNumber: number;
+    size: string;
+    nextPartLabel?: string;
+    nextStepNumber?: number;
+    isWarning?: boolean;
+  } | null>(null);
 
   // Pouring animation trigger
   const [isPouring, setIsPouring] = useState(false);
@@ -344,6 +612,9 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
 
   // Calculate structural integrity score based on engineering quality of selected rebars
   const integrityScore = useMemo(() => {
+    // Structural collapse overrides integrity meter to critical danger zone
+    if (collapsedState) return 18;
+
     let score = 0;
     LAB_PARTS.forEach((part) => {
       const chosen = builtChoices[part.id];
@@ -353,18 +624,30 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
       } else if (part.acceptableSizes.includes(chosen)) {
         score += 14; // Acceptable match
       } else {
-        score += 6; // Poor match
+        score += 4; // Poor match
       }
     });
     return Math.min(100, score);
-  }, [builtChoices]);
+  }, [builtChoices, collapsedState]);
 
-  // Handle rebar selection
+  // Handle rebar selection without premature collapse (collapse evaluated during Load Testing)
   const handleSelectRebar = (part: PartConfig, size: string) => {
-    if (soundEnabled) {
+    // 1. If part was previously collapsed and user now selects an acceptable or recommended size, clear collapse!
+    if (collapsedState && collapsedState.partId === part.id) {
+      if (!part.incompatibleSizes.includes(size)) {
+        setCollapsedState(null);
+        if (soundEnabled) {
+          playSoundFX('rebuild');
+        }
+      }
+    } else if (soundEnabled) {
       playSoundFX('rebar');
     }
 
+    // 2. Clear any prior load test passed status
+    setLoadTestResult(null);
+
+    // 3. Save chosen rebar
     setBuiltChoices((prev) => ({
       ...prev,
       [part.id]: size,
@@ -376,17 +659,65 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     const newSpark = { id: Date.now(), x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 };
     setSparks((prev) => [...prev.slice(-6), newSpark]);
 
+    // 4. Find next unbuilt part
     const nextUnbuilt = LAB_PARTS.find(
       (p) => p.id !== part.id && !builtChoices[p.id]
     );
+
     if (nextUnbuilt) {
       window.setTimeout(() => {
         setActivePartId(nextUnbuilt.id);
-      }, 450);
+      }, 350);
     } else if (builtCount + 1 >= LAB_PARTS.length && soundEnabled) {
       window.setTimeout(() => {
         playSoundFX('fanfare');
       }, 500);
+    }
+
+    // 5. Mobile UX: take users back to selecting numbers on the building
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setMobileToast({
+        partLabel: part.label.split(' ')[0],
+        stepNumber: part.stepNumber,
+        size,
+        nextPartLabel: nextUnbuilt?.label.split(' ')[0],
+        nextStepNumber: nextUnbuilt?.stepNumber,
+        isWarning: part.incompatibleSizes.includes(size),
+      });
+      window.setTimeout(() => setMobileToast(null), 5000);
+
+      window.setTimeout(() => {
+        buildingCanvasRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 250);
+    }
+  };
+
+  // Repair / Auto-fix building with the best recommended rebar
+  const repairBuilding = (part: PartConfig) => {
+    setCollapsedState(null);
+    setLoadTestResult(null);
+    setBuiltChoices((prev) => ({
+      ...prev,
+      [part.id]: part.bestSize,
+    }));
+    setActivePartId(part.id);
+    if (soundEnabled) {
+      playSoundFX('rebuild');
+    }
+  };
+
+  // Click handler for architectural beacons with mobile guided scroll
+  const handleHotspotClick = (partId: PartId) => {
+    setActivePartId(partId);
+    if (soundEnabled) playSoundFX('rebar');
+
+    // Trigger visual pulse highlight on the rebar rack
+    setHighlightRack(true);
+    window.setTimeout(() => setHighlightRack(false), 2400);
+
+    // If on mobile screen, smoothly scroll down to the rebar selection rack
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      rebarRackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -422,16 +753,99 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
     return () => window.clearInterval(interval);
   }, [isAutoScanning]);
 
-  // Run dynamic load & seismic earthquake stress test
+  // Run dynamic load & seismic earthquake stress test with accurate civil engineering failure evaluation
   const triggerStressTest = () => {
     if (isStressTesting) return;
+
+    // Check if any parts are reinforced
+    const reinforcedCount = Object.values(builtChoices).filter(Boolean).length;
+    if (reinforcedCount === 0) {
+      setHighlightRack(true);
+      window.setTimeout(() => setHighlightRack(false), 2400);
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        rebarRackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    // Scroll to canvas so user clearly witnesses the simulation
+    buildingCanvasRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Reset previous states
+    setCollapsedState(null);
+    setLoadTestResult(null);
     setIsStressTesting(true);
+    setStressLoadValue(350);
+
     if (soundEnabled) {
       playSoundFX('earthquake');
     }
-    window.setTimeout(() => {
-      setIsStressTesting(false);
-    }, 4500);
+
+    // Check if ANY reinforced part has an incompatible (structurally dangerous) rebar size
+    const failingPart = LAB_PARTS.find(
+      (part) => builtChoices[part.id] && part.incompatibleSizes.includes(builtChoices[part.id]!)
+    );
+
+    // Ramping load simulation
+    let currentLoad = 350;
+    const interval = window.setInterval(() => {
+      currentLoad += 160;
+      setStressLoadValue(Math.min(2130, currentLoad));
+    }, 120);
+
+    if (failingPart) {
+      const chosenSize = builtChoices[failingPart.id]!;
+      const defaultFailure: FailureDetail = {
+        title: 'Catastrophic Structural Failure Under Factored Load',
+        amTitle: 'በክብደት ጫና ምክንያት የተከሰተ የመዋቅር መደርመስ',
+        reason: `${chosenSize} rebar violated EBCS 2 engineering load capacity for ${failingPart.label}.`,
+        amReason: `${chosenSize} ብረት ለዚህ ክፍል የተሰላውን የክብደት ጫና መሸከም አልቻለም።`,
+        consequence:
+          'Severe structural cracking, Euler buckling, and localized collapse occurred under 1,420 kN factored load.',
+        amConsequence: 'ህንጻው ላይ ከባድ ስንጥቅ እና የመደርመስ አደጋ ተከስቷል።',
+        crackType: 'punch',
+      };
+      const failure = failingPart.failureModes?.[chosenSize] || defaultFailure;
+
+      // Fail under factored design load at ~2.1 seconds
+      window.setTimeout(() => {
+        window.clearInterval(interval);
+        setIsStressTesting(false);
+        setActivePartId(failingPart.id);
+        setCollapsedState({
+          partId: failingPart.id,
+          size: chosenSize,
+          title: failure.title,
+          amTitle: failure.amTitle,
+          reason: failure.reason,
+          amReason: failure.amReason,
+          consequence: failure.consequence,
+          amConsequence: failure.amConsequence,
+          crackType: failure.crackType,
+        });
+
+        if (soundEnabled) {
+          playSoundFX('collapse');
+        }
+      }, 2100);
+    } else {
+      // Structure is sound! Ramps to 2,130 kN (150% overload) and passes
+      window.setTimeout(() => {
+        window.clearInterval(interval);
+        setIsStressTesting(false);
+        setLoadTestResult({
+          passed: true,
+          appliedLoadKn: 2130,
+          pga: '0.18g',
+          deflectionMm: '1.8mm (EBCS Limit: 19.2mm)',
+          safetyFactor: '2.15x (Fully Compliant)',
+        });
+
+        if (soundEnabled) {
+          playSoundFX('fanfare');
+        }
+      }, 3200);
+    }
   };
 
   // Reset construction
@@ -443,6 +857,9 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
       slab: null,
       stair: null,
     });
+    setCollapsedState(null);
+    setLoadTestResult(null);
+    setMobileToast(null);
     setActivePartId('footing');
     if (soundEnabled) playSoundFX('rebar');
   };
@@ -731,7 +1148,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   <button
                     key={part.id}
                     type="button"
-                    onClick={() => setActivePartId(part.id)}
+                    onClick={() => handleHotspotClick(part.id)}
                     className={`group relative flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                       isCurrent
                         ? 'border-ember bg-ember/10 text-ember font-bold ring-2 ring-ember/30'
@@ -886,7 +1303,10 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
         {/* Main Stage Grid: 3D Architectural Isometric Canvas & Inspection Panel */}
         <div className="mt-8 grid gap-8 lg:grid-cols-[1.22fr_0.78fr]">
           {/* 3D Architectural Blueprint Canvas with Motion Vibration and X-Ray Shader */}
-          <div className="border-line bg-panel card-glow texture-grid relative flex flex-col justify-between overflow-hidden rounded-3xl border shadow-xl">
+          <div
+            ref={buildingCanvasRef}
+            className="border-line bg-panel card-glow texture-grid relative flex flex-col justify-between overflow-hidden rounded-3xl border shadow-xl"
+          >
             {/* Canvas Header Bar with Inspection Tools */}
             <div className="border-line bg-panel/75 flex flex-wrap items-center justify-between border-b px-5 py-3 text-xs backdrop-blur-sm gap-2">
               <div className="flex items-center gap-2">
@@ -930,55 +1350,166 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               )}
             </div>
 
+            {/* Mobile Selection Feedback & Next Step Guidance Banner */}
+            <AnimatePresence>
+              {mobileToast && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className={`overflow-hidden border-b px-4 py-2.5 text-xs font-bold transition-all lg:hidden ${
+                    mobileToast.isWarning
+                      ? 'border-red-400 bg-red-600 text-white'
+                      : 'border-emerald-400 bg-emerald-600 text-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      {mobileToast.isWarning ? (
+                        <AlertTriangle className="h-4 w-4 shrink-0 text-red-400" />
+                      ) : (
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                      )}
+                      <span>
+                        {mobileToast.nextStepNumber
+                          ? t(
+                              `Stage 0${mobileToast.stepNumber} (${mobileToast.partLabel}) set to ${mobileToast.size}. 👉 Tap number ${mobileToast.nextStepNumber} on the building for ${mobileToast.nextPartLabel}!`,
+                              `ደረጃ 0${mobileToast.stepNumber} (${mobileToast.partLabel}) በ${mobileToast.size} ተመርጧል። 👉 ቀጣዩን ቁጥር ${mobileToast.nextStepNumber} በህንጻው ላይ ይጫኑ!`
+                            )
+                          : t(
+                              `Stage 0${mobileToast.stepNumber} configured with ${mobileToast.size}. All 5 stages complete! Tap "Test Structural Load" to verify.`,
+                              `ደረጃ 0${mobileToast.stepNumber} በ${mobileToast.size} ተጠናቋል። አሁን "የክብደት ጫናን ፈትሽ" በመጫን ህንጻውን ይሞክሩ።`
+                            )}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setMobileToast(null)}
+                      className="text-white/70 hover:text-white px-1.5 py-0.5 rounded cursor-pointer text-xs"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Interactive Mission Guidance Strip */}
-            <div className="border-line bg-ember/10 border-b px-4 sm:px-5 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2.5">
+            <div
+              className={`border-b px-4 sm:px-5 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2.5 transition-colors ${
+                collapsedState
+                  ? 'border-red-300 dark:border-red-500/40 bg-red-50 dark:bg-red-950/40 text-red-950 dark:text-red-200'
+                  : isStressTesting
+                  ? 'border-amber/40 bg-amber/10'
+                  : loadTestResult?.passed
+                  ? 'border-emerald-300 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-950 dark:text-emerald-200'
+                  : 'border-line bg-ember/10'
+              }`}
+            >
               <div className="flex items-center gap-2 text-ink">
                 <span className="relative flex h-2.5 w-2.5 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ember opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-ember"></span>
+                  <span
+                    className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
+                      collapsedState
+                        ? 'bg-red-500'
+                        : isStressTesting
+                        ? 'bg-amber'
+                        : loadTestResult?.passed
+                        ? 'bg-emerald-500'
+                        : 'bg-ember'
+                    } opacity-75`}
+                  ></span>
+                  <span
+                    className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
+                      collapsedState
+                        ? 'bg-red-500'
+                        : isStressTesting
+                        ? 'bg-amber'
+                        : loadTestResult?.passed
+                        ? 'bg-emerald-500'
+                        : 'bg-ember'
+                    }`}
+                  ></span>
                 </span>
                 <span className="font-medium text-xs">
-                  {hoveredPart
+                  {collapsedState
+                    ? t(
+                        `🚨 STRUCTURAL COLLAPSE: Stage 0${activePart.stepNumber} failed with ${collapsedState.size}! Click Auto-Fix below or choose recommended Grade 75 ${activePart.bestSize}.`,
+                        `🚨 የመዋቅር መደርመስ፡ ደረጃ 0${activePart.stepNumber} በ${collapsedState.size} ምክንያት ፈርሷል! በአስተካክል ቁልፍ ወይም በ${activePart.bestSize} ያስተካክሉ።`
+                      )
+                    : isStressTesting
+                    ? t(
+                        `⚡ Ramping Structural Load to ${stressLoadValue} kN + 0.18g Seismic Acceleration… Testing frame resistance!`,
+                        `⚡ የክብደት ጫና ወደ ${stressLoadValue} ኪ.ኒ እና የመሬት መንቀጥቀጥ ንዝረት በመጨመር ላይ…`
+                      )
+                    : loadTestResult?.passed
+                    ? t(
+                        `🎉 CERTIFIED: Structural frame passed 150% overload (2,130 kN) & 0.18g seismic testing with zero fissures!`,
+                        `🎉 ጸድቋል፡ ህንጻው 150% የክብደት ጫና እና የመሬት መንቀጥቀጥ ንዝረትን በሙሉ ብቃት አልፏል!`
+                      )
+                    : hoveredPart
                     ? t(
                         `Inspecting Stage 0${hoveredPart.stepNumber} · ${hoveredPart.label}: ${hoveredPart.sectionDimensions} — Click to configure`,
                         `እየተመለከቱ ነው፡ ደረጃ 0${hoveredPart.stepNumber} · ${hoveredPart.amLabel} — ብረት ለመምረጥ ይጫኑ`
                       )
                     : t(
-                        'Click any numbered beacon (1–5) on the building below to select that stage & choose your rebar',
-                        'በህንጻው ላይ ያሉትን ቁጥሮች (1-5) በመጫን ለእያንዳንዱ ክፍል የብረት ዓይነት ይምረጡ'
+                        '📱 Interactive Guide: Tap numbers (1–5) on the building to inspect, then choose rebar from the stock rack below!',
+                        '📱 መመሪያ፡ በህንጻው ላይ ያሉትን ቁጥሮች (1-5) በመጫን ክፍል ይምረጡ፤ ከዚያም ከታች የብረት ዓይነት ይምረጡ!'
                       )}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-ember font-mono">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold font-mono">
                 <span className="text-mute">{t('Active Stage:', 'አሁን የተመረጠ፡')}</span>
-                <span className="bg-ember text-white rounded-md px-2 py-0.5 shadow-xs">
+                <span
+                  className={`${
+                    collapsedState
+                      ? 'bg-red-600 animate-pulse'
+                      : isStressTesting
+                      ? 'bg-amber text-black'
+                      : loadTestResult?.passed
+                      ? 'bg-emerald-600'
+                      : 'bg-ember'
+                  } text-white rounded-md px-2 py-0.5 shadow-xs transition-colors`}
+                >
                   0{activePart.stepNumber} · {t(activePart.label.split(' ')[0], activePart.amLabel.split(' ')[0])}
+                  {collapsedState ? ' [COLLAPSED]' : ''}
                 </span>
               </div>
             </div>
 
-            {/* Interactive SVG Stage with Motion Earthquake Oscillations */}
+            {/* Interactive SVG Stage with Motion Collapse & Earthquake Dynamics */}
             <div className="relative p-2 sm:p-4 overflow-hidden">
               <motion.div
                 animate={
-                  isStressTesting
+                  collapsedState
                     ? {
-                        x: [0, -7, 6, -5, 4, -2, 1, 0],
+                        x: [0, -12, 10, -7, 4, -2, 0],
+                        y: [0, 5, 20, 18],
+                        rotate: [0, -2.5, 3, collapsedState.crackType === 'punch' ? -3.5 : 2.5],
+                      }
+                    : isStressTesting
+                    ? {
+                        x: [0, -8, 7, -6, 5, -3, 2, 0],
                         y: [0, 2, -2, 1, 0],
                       }
-                    : { x: 0, y: 0 }
+                    : { x: 0, y: 0, rotate: 0 }
                 }
                 transition={
-                  isStressTesting
+                  collapsedState
+                    ? {
+                        duration: 0.95,
+                        ease: 'easeOut',
+                      }
+                    : isStressTesting
                     ? {
                         duration: 0.85,
                         repeat: 4,
                         ease: 'easeInOut',
                       }
-                    : { duration: 0.2 }
+                    : { type: 'spring', stiffness: 350, damping: 25 }
                 }
-                className="w-full relative"
+                className="w-full relative origin-bottom"
               >
                 <svg
                   viewBox="0 0 760 520"
@@ -1072,10 +1603,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       <g
                         key={`solid-footing-${i}`}
                         className="cursor-pointer transition-all duration-200"
-                        onClick={() => {
-                          setActivePartId('footing');
-                          if (soundEnabled) playSoundFX('rebar');
-                        }}
+                        onClick={() => handleHotspotClick('footing')}
                         onMouseEnter={() => setHoveredPartId('footing')}
                         onMouseLeave={() => setHoveredPartId(null)}
                       >
@@ -1117,10 +1645,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       <g
                         key={`solid-col-${i}`}
                         className="cursor-pointer transition-all duration-200"
-                        onClick={() => {
-                          setActivePartId('column');
-                          if (soundEnabled) playSoundFX('rebar');
-                        }}
+                        onClick={() => handleHotspotClick('column')}
                         onMouseEnter={() => setHoveredPartId('column')}
                         onMouseLeave={() => setHoveredPartId(null)}
                       >
@@ -1160,10 +1685,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     {/* 3D Beams (Solid Cast Concrete Spans) */}
                     <g
                       className="cursor-pointer transition-all duration-200"
-                      onClick={() => {
-                        setActivePartId('beam');
-                        if (soundEnabled) playSoundFX('rebar');
-                      }}
+                      onClick={() => handleHotspotClick('beam')}
                       onMouseEnter={() => setHoveredPartId('beam')}
                       onMouseLeave={() => setHoveredPartId(null)}
                     >
@@ -1189,10 +1711,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     {/* 3D Suspended Floor Slab (Solid Deck Plate) */}
                     <g
                       className="cursor-pointer transition-all duration-200"
-                      onClick={() => {
-                        setActivePartId('slab');
-                        if (soundEnabled) playSoundFX('rebar');
-                      }}
+                      onClick={() => handleHotspotClick('slab')}
                       onMouseEnter={() => setHoveredPartId('slab')}
                       onMouseLeave={() => setHoveredPartId(null)}
                     >
@@ -1218,10 +1737,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     {/* 3D Staircase (Solid Architectural Stepped Concrete) */}
                     <g
                       className="cursor-pointer transition-all duration-200"
-                      onClick={() => {
-                        setActivePartId('stair');
-                        if (soundEnabled) playSoundFX('rebar');
-                      }}
+                      onClick={() => handleHotspotClick('stair')}
                       onMouseEnter={() => setHoveredPartId('stair')}
                       onMouseLeave={() => setHoveredPartId(null)}
                     >
@@ -1282,10 +1798,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         <g
                           key={`xray-footing-${i}`}
                           className="cursor-pointer"
-                          onClick={() => {
-                            setActivePartId('footing');
-                            if (soundEnabled) playSoundFX('rebar');
-                          }}
+                          onClick={() => handleHotspotClick('footing')}
                           onMouseEnter={() => setHoveredPartId('footing')}
                           onMouseLeave={() => setHoveredPartId(null)}
                         >
@@ -1348,10 +1861,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         <g
                           key={`xray-col-${idx}`}
                           className="cursor-pointer"
-                          onClick={() => {
-                            setActivePartId('column');
-                            if (soundEnabled) playSoundFX('rebar');
-                          }}
+                          onClick={() => handleHotspotClick('column')}
                           onMouseEnter={() => setHoveredPartId('column')}
                           onMouseLeave={() => setHoveredPartId(null)}
                         >
@@ -1418,10 +1928,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       return (
                         <g
                           className="cursor-pointer"
-                          onClick={() => {
-                            setActivePartId('beam');
-                            if (soundEnabled) playSoundFX('rebar');
-                          }}
+                          onClick={() => handleHotspotClick('beam')}
                           onMouseEnter={() => setHoveredPartId('beam')}
                           onMouseLeave={() => setHoveredPartId(null)}
                         >
@@ -1484,10 +1991,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       return (
                         <g
                           className="cursor-pointer"
-                          onClick={() => {
-                            setActivePartId('slab');
-                            if (soundEnabled) playSoundFX('rebar');
-                          }}
+                          onClick={() => handleHotspotClick('slab')}
                           onMouseEnter={() => setHoveredPartId('slab')}
                           onMouseLeave={() => setHoveredPartId(null)}
                         >
@@ -1545,10 +2049,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       return (
                         <g
                           className="cursor-pointer"
-                          onClick={() => {
-                            setActivePartId('stair');
-                            if (soundEnabled) playSoundFX('rebar');
-                          }}
+                          onClick={() => handleHotspotClick('stair')}
                           onMouseEnter={() => setHoveredPartId('stair')}
                           onMouseLeave={() => setHoveredPartId(null)}
                         >
@@ -1707,9 +2208,12 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         role="button"
                         tabIndex={0}
                         aria-label={`Configure ${part.label}`}
-                        onClick={() => {
-                          setActivePartId(part.id);
-                          if (soundEnabled) playSoundFX('rebar');
+                        onClick={() => handleHotspotClick(part.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleHotspotClick(part.id);
+                          }
                         }}
                         onMouseEnter={() => setHoveredPartId(part.id)}
                         onMouseLeave={() => setHoveredPartId(null)}
@@ -1900,7 +2404,25 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                               width="38"
                               height="16"
                               rx="8"
-                              fill={isDark ? '#064e3b' : '#d1fae5'}
+                              fill={
+                                collapsedState?.partId === part.id
+                                  ? '#7f1d1d'
+                                  : part.incompatibleSizes.includes(builtChoices[part.id]!)
+                                  ? isDark
+                                    ? '#450a0a'
+                                    : '#fee2e2'
+                                  : isDark
+                                  ? '#064e3b'
+                                  : '#d1fae5'
+                              }
+                              stroke={
+                                collapsedState?.partId === part.id
+                                  ? '#ef4444'
+                                  : part.incompatibleSizes.includes(builtChoices[part.id]!)
+                                  ? '#f87171'
+                                  : 'none'
+                              }
+                              strokeWidth="0.8"
                             />
                             <text
                               x={badge.x + 41}
@@ -1908,10 +2430,18 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                               textAnchor="middle"
                               fontSize="8.5"
                               fontWeight="800"
-                              fill={isDark ? '#6ee7b7' : '#047857'}
+                              fill={
+                                collapsedState?.partId === part.id
+                                  ? '#fca5a5'
+                                  : part.incompatibleSizes.includes(builtChoices[part.id]!)
+                                  ? '#ef4444'
+                                  : isDark
+                                  ? '#6ee7b7'
+                                  : '#047857'
+                              }
                               fontFamily="monospace"
                             >
-                              {builtChoices[part.id]}
+                              {collapsedState?.partId === part.id ? 'FAIL' : builtChoices[part.id]}
                             </text>
                           </g>
                         ) : (
@@ -1942,36 +2472,321 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       </g>
                     );
                   })}
+
+                  {/* ========================================================== */}
+                  {/* LAYER F: STRUCTURAL FAILURE FRACTURES, SPALLING DEBRIS & CRACKS */}
+                  {/* ========================================================== */}
+                  {collapsedState && (
+                    <g className="pointer-events-none">
+                      <defs>
+                        <filter id="hazard-glow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.85" />
+                        </filter>
+                      </defs>
+
+                      {/* 1. Footing Punching Shear Rupture */}
+                      {collapsedState.partId === 'footing' && (
+                        <g filter="url(#hazard-glow)">
+                          {/* Jagged through-thickness diagonal concrete fracture crack */}
+                          <path
+                            d="M135 415 L142 428 L138 438 L148 448 L144 457"
+                            fill="none"
+                            stroke="#ef4444"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                          />
+                          <path
+                            d="M595 415 L602 428 L598 438 L608 448 L604 457"
+                            fill="none"
+                            stroke="#ef4444"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                          />
+                          {/* Foundation drop indicator */}
+                          <polygon points="130,457 145,475 160,457" fill="rgba(239, 68, 68, 0.7)" />
+                          {/* Snapped thin wire fragments */}
+                          <line x1="128" y1="432" x2="136" y2="424" stroke="#fca5a5" strokeWidth="2.5" />
+                          <line x1="144" y1="434" x2="154" y2="442" stroke="#fca5a5" strokeWidth="2.5" />
+                          {/* Warning label */}
+                          <g transform="translate(80, 392)">
+                            <rect width="150" height="20" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+                            <text x="75" y="14" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="800" fontFamily="monospace">
+                              ⚠ PUNCHING SHEAR FAILURE
+                            </text>
+                          </g>
+                        </g>
+                      )}
+
+                      {/* 2. Column Euler Buckling & Stirrup Burst */}
+                      {collapsedState.partId === 'column' && (
+                        <g filter="url(#hazard-glow)">
+                          {/* Severe outward bowed buckling lines */}
+                          <path
+                            d="M144 85 Q98 250 144 420"
+                            fill="none"
+                            stroke="#ef4444"
+                            strokeWidth="4"
+                            strokeDasharray="8 4"
+                          />
+                          <path
+                            d="M172 85 Q218 250 172 420"
+                            fill="none"
+                            stroke="#ef4444"
+                            strokeWidth="4"
+                            strokeDasharray="8 4"
+                          />
+                          {/* Crushed concrete spalling chunks */}
+                          <polygon points="115,220 128,212 122,230" fill="#94a3b8" stroke="#ef4444" strokeWidth="1" />
+                          <polygon points="190,260 205,255 198,272" fill="#94a3b8" stroke="#ef4444" strokeWidth="1" />
+                          <polygon points="105,280 118,275 112,295" fill="#64748b" stroke="#ef4444" strokeWidth="1" />
+                          {/* Diagonal shear cracks through column core */}
+                          <path d="M140 230 L176 270 M140 270 L176 230" stroke="#ef4444" strokeWidth="3.2" />
+                          {/* Warning label */}
+                          <g transform="translate(85, 155)">
+                            <rect width="148" height="20" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+                            <text x="74" y="14" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="800" fontFamily="monospace">
+                              ⚠ COLUMN BUCKLING BURST
+                            </text>
+                          </g>
+                        </g>
+                      )}
+
+                      {/* 3. Beam Mid-Span Sag & Shear Fracture */}
+                      {collapsedState.partId === 'beam' && (
+                        <g filter="url(#hazard-glow)">
+                          {/* Severe mid-span V-crack down into beam */}
+                          <path
+                            d="M370 225 L376 242 L372 250 L380 262"
+                            fill="none"
+                            stroke="#ef4444"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                          {/* Diagonal 45° shear cracks near supports */}
+                          <line x1="175" y1="225" x2="225" y2="257" stroke="#ef4444" strokeWidth="3" />
+                          <line x1="585" y1="225" x2="535" y2="257" stroke="#ef4444" strokeWidth="3" />
+                          {/* Sag deflection indicator */}
+                          <path d="M120 225 Q380 268 640 225" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeDasharray="6 4" />
+                          {/* Warning label */}
+                          <g transform="translate(295, 190)">
+                            <rect width="170" height="20" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+                            <text x="85" y="14" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="800" fontFamily="monospace">
+                              ⚠ BEAM FLEXURAL RUPTURE
+                            </text>
+                          </g>
+                        </g>
+                      )}
+
+                      {/* 4. Slab Radial Spiderweb Cracking & Deflection */}
+                      {collapsedState.partId === 'slab' && (
+                        <g filter="url(#hazard-glow)">
+                          {/* Center sagging fracture lines */}
+                          <path
+                            d="M370 65 L370 95 M340 70 L400 90 M340 90 L400 70"
+                            stroke="#ef4444"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                          />
+                          {/* Radial cracks spreading across slab deck */}
+                          <path d="M220 75 L370 80 L520 75" fill="none" stroke="#ef4444" strokeWidth="3" />
+                          {/* Deflection arrows */}
+                          <polygon points="365,100 375,100 370,115" fill="#ef4444" />
+                          {/* Warning label */}
+                          <g transform="translate(285, 20)">
+                            <rect width="190" height="20" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+                            <text x="95" y="14" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="800" fontFamily="monospace">
+                              ⚠ SLAB STRUCTURAL COLLAPSE
+                            </text>
+                          </g>
+                        </g>
+                      )}
+
+                      {/* 5. Staircase Waist Rupture */}
+                      {collapsedState.partId === 'stair' && (
+                        <g filter="url(#hazard-glow)">
+                          {/* Upper landing joint tear crack */}
+                          <path d="M530 235 L560 250" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+                          <path d="M440 335 L475 360" stroke="#ef4444" strokeWidth="3.5" strokeLinecap="round" />
+                          {/* Debris fragments */}
+                          <polygon points="545,260 558,255 552,270" fill="#94a3b8" stroke="#ef4444" strokeWidth="1" />
+                          {/* Warning label */}
+                          <g transform="translate(425, 210)">
+                            <rect width="175" height="20" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+                            <text x="87.5" y="14" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="800" fontFamily="monospace">
+                              ⚠ STAIR WAIST RUPTURE
+                            </text>
+                          </g>
+                        </g>
+                      )}
+                    </g>
+                  )}
                 </svg>
               </motion.div>
+            </div>
 
-              {/* Dynamic Seismic Telemetry HUD Overlay when testing */}
-              {isStressTesting && (
+            {/* Dynamic Failure & Collapse Forensic Alert Panel (Placed cleanly below SVG - never covers building!) */}
+            <AnimatePresence>
+              {collapsedState && (
                 <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 15 }}
-                  className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-6 border border-amber/40 bg-black/85 backdrop-blur-md rounded-2xl p-3 text-xs text-amber font-mono shadow-xl grid grid-cols-2 sm:grid-cols-4 gap-2.5"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+                  className="overflow-hidden border-t-2 border-red-500/80 bg-gradient-to-b from-red-950/95 via-red-950/80 to-slate-950 p-4 sm:p-5 text-white shadow-xl"
                 >
-                  <div>
-                    <span className="text-white/60 block text-[10px]">SEISMIC ACCEL:</span>
-                    <span className="font-bold text-amber">0.18g (Addis Rift)</span>
-                  </div>
-                  <div>
-                    <span className="text-white/60 block text-[10px]">COLUMN CORE:</span>
-                    <span className="font-bold text-emerald-400">1,420 kN [STABLE]</span>
-                  </div>
-                  <div>
-                    <span className="text-white/60 block text-[10px]">STAFFA CONFINEMENT:</span>
-                    <span className="font-bold text-emerald-400">135° Hooks Active</span>
-                  </div>
-                  <div>
-                    <span className="text-white/60 block text-[10px]">DRIFT RATIO:</span>
-                    <span className="font-bold text-amber">0.14% &lt; 1.0% EBCS</span>
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-red-600 text-white shadow-lg animate-pulse">
+                        <AlertTriangle className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="rounded-full bg-red-500/30 border border-red-400 px-2 py-0.5 text-[10px] font-mono font-extrabold uppercase tracking-wider text-red-200">
+                            {t('Critical Structural Failure', 'አስደንጋጭ የመዋቅር መደርመስ')}
+                          </span>
+                          <span className="font-mono text-xs text-red-300 font-bold">
+                            0{activePart.stepNumber} · {activePart.label.split(' ')[0]}
+                          </span>
+                          <span className="font-mono text-[10px] text-red-300 font-bold bg-red-900/70 px-2 py-0.5 rounded border border-red-600/50">
+                            COLLAPSED AT 1,420 kN LOAD
+                          </span>
+                        </div>
+                        <h4 className="font-display text-white text-base sm:text-lg font-extrabold mt-1">
+                          {t(collapsedState.title, collapsedState.amTitle)}
+                        </h4>
+                        <p className="text-red-200/90 text-xs mt-1 leading-relaxed max-w-2xl">
+                          {t(collapsedState.reason, collapsedState.amReason)} —{' '}
+                          <strong className="text-white font-semibold">
+                            {t(collapsedState.consequence, collapsedState.amConsequence)}
+                          </strong>
+                        </p>
+                        <div className="mt-2 flex flex-wrap items-center gap-3 text-[10.5px] font-mono text-red-300/90">
+                          <span>Code Standard: EBCS 2 / ASTM A615</span>
+                          <span>•</span>
+                          <span>Safety Factor: 0.38x (Min 1.50x Req)</span>
+                          <span>•</span>
+                          <span>Installed: {collapsedState.size}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 w-full md:w-auto shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => repairBuilding(activePart)}
+                        className="w-full md:w-auto flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-ember hover:from-amber-400 hover:to-amber-500 text-white px-5 py-2.5 text-xs font-bold shadow-lg transition-all cursor-pointer hover:scale-105 active:scale-95"
+                      >
+                        <Sparkles className="h-4 w-4" />
+                        <span>
+                          {t(
+                            `Auto-Fix with Grade 75 ${activePart.bestSize}`,
+                            `በትክክለኛው ${activePart.bestSize} ብረት አስተካክል`
+                          )}
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               )}
-            </div>
+            </AnimatePresence>
+
+            {/* Dynamic Seismic Telemetry HUD Strip when testing (Placed below SVG) */}
+            <AnimatePresence>
+              {isStressTesting && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden border-t-2 border-amber/70 bg-black/92 p-4 text-xs font-mono shadow-xl"
+                >
+                  <div className="flex items-center justify-between border-b border-amber/30 pb-2 mb-2.5">
+                    <div className="flex items-center gap-2 text-amber font-bold">
+                      <Activity className="h-4 w-4 animate-spin text-amber" />
+                      <span>
+                        {t(
+                          'SIMULATING FACTORED LOAD & SEISMIC MOTION…',
+                          'የክብደት ጫና እና የመሬት መንቀጥቀጥ ሙከራ በመካሄድ ላይ…'
+                        )}
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-bold text-amber px-2 py-0.5 rounded bg-amber/20 border border-amber/40">
+                      {stressLoadValue} kN / 2,130 kN
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-amber">
+                    <div>
+                      <span className="text-white/60 block text-[10px]">APPLIED FACTORED LOAD:</span>
+                      <span className="font-bold text-amber text-sm">{stressLoadValue} kN</span>
+                    </div>
+                    <div>
+                      <span className="text-white/60 block text-[10px]">SEISMIC ACCEL:</span>
+                      <span className="font-bold text-amber text-sm">0.18g (Addis Rift)</span>
+                    </div>
+                    <div>
+                      <span className="text-white/60 block text-[10px]">ACTIVE MEMBER:</span>
+                      <span className="font-bold text-cyan-400 text-sm">
+                        0{activePart.stepNumber} · {activePart.label.split(' ')[0]}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-white/60 block text-[10px]">EBCS FACTOR REQ:</span>
+                      <span className="font-bold text-emerald-400 text-sm">≥ 1.50x Grade 75</span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Load Test Passed Certification HUD Strip (Placed below SVG) */}
+            <AnimatePresence>
+              {loadTestResult?.passed && !isStressTesting && !collapsedState && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+                  className="overflow-hidden border-t-2 border-emerald-500/80 bg-gradient-to-b from-slate-950 to-emerald-950/80 p-4 sm:p-5 text-white shadow-xl"
+                >
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-600 text-white shadow-lg">
+                        <CheckCircle2 className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="rounded-full bg-emerald-500/30 border border-emerald-400 px-2 py-0.5 text-[10px] font-mono font-extrabold uppercase tracking-wider text-emerald-200">
+                            {t('Structural Integrity Certified', 'የመዋቅር ጥንካሬ 100% ጸድቋል')}
+                          </span>
+                          <span className="font-mono text-xs text-emerald-300 font-bold">
+                            {loadTestResult.safetyFactor}
+                          </span>
+                        </div>
+                        <h4 className="font-display text-white text-base sm:text-lg font-extrabold mt-1">
+                          {t(
+                            'Structural Load & Seismic Simulation Passed!',
+                            'የክብደት ጫና እና የመሬት መንቀጥቀጥ ፈተናውን በስኬት አልፏል!'
+                          )}
+                        </h4>
+                        <p className="text-emerald-100/90 text-xs mt-1 leading-relaxed max-w-2xl">
+                          {t(
+                            `Frame successfully sustained 150% factored design load (${loadTestResult.appliedLoadKn} kN) and ${loadTestResult.pga} seismic base shear. Deflection: ${loadTestResult.deflectionMm} with zero cracking. Certified to EBCS 2 & ASTM A615 Grade 75.`,
+                            `ህንጻው 150% የክብደት ጫና (${loadTestResult.appliedLoadKn} kN) እና ${loadTestResult.pga} የመሬት መንቀጥቀጥ ንዝረትን ያለ ምንም ስንጥቅ ተቋቁሟል። በኢትዮጵያ የግንባታ መመሪያ (EBCS 2) እና ASTM A615 ግሬድ 75 ደረጃውን የጠበቀ ነው።`
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setLoadTestResult(null)}
+                      className="self-end md:self-center shrink-0 rounded-xl bg-emerald-600/40 hover:bg-emerald-600 border border-emerald-400/60 text-white px-4 py-2 text-xs font-bold transition-all cursor-pointer"
+                    >
+                      {t('Dismiss', 'እሺ')}
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Bottom Blueprint Footer Info */}
             <div className="border-line bg-panel2/60 flex flex-wrap items-center justify-between gap-3 border-t px-6 py-3.5 text-xs">
@@ -1999,10 +2814,84 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                 </button>
               </div>
             </div>
+
+            {/* Mobile Quick Guide & Rebar Selector Bar (Guiding mobile users directly) */}
+            <div className="block lg:hidden border-t border-line bg-panel2/95 p-3.5 sm:p-4">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-ember text-white text-xs font-bold shrink-0">
+                    0{activePart.stepNumber}
+                  </span>
+                  <div>
+                    <p className="text-xs font-bold text-ink flex items-center gap-1.5">
+                      <span>{t(activePart.label, activePart.amLabel)}</span>
+                      {builtChoices[activePart.id] && (
+                        <span className="font-mono text-[10px] text-emerald-500 font-bold">
+                          ({builtChoices[activePart.id]})
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-[10px] text-mute">
+                      {t('Step 2: Tap diameter below to install into frame', 'ደረጃ 2፡ የብረቱን መጠን በመጫን ህንጻው ላይ ይትከሉ')}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => rebarRackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  className="text-xs font-bold text-ember inline-flex items-center gap-1 shrink-0 bg-ember/10 hover:bg-ember/20 px-2.5 py-1 rounded-lg"
+                >
+                  <span>{t('All Specs', 'ሙሉ ዝርዝር')}</span>
+                  <ArrowDown className="h-3 w-3 animate-bounce" />
+                </button>
+              </div>
+
+              {/* 1-Tap Quick Rebar Chips for Mobile Users */}
+              <div className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                {CATALOG_REBARS.map((rod) => {
+                  const isSelected = builtChoices[activePart.id] === rod.size;
+                  const isRecommended = activePart.recommendedSizes.includes(rod.size);
+                  const isIncompatible = activePart.incompatibleSizes.includes(rod.size);
+                  const isThisFailed =
+                    collapsedState?.partId === activePart.id && collapsedState?.size === rod.size;
+
+                  return (
+                    <button
+                      key={`mob-rod-${rod.size}`}
+                      type="button"
+                      onClick={() => handleSelectRebar(activePart, rod.size)}
+                      className={`shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer ${
+                        isThisFailed
+                          ? 'bg-red-600 text-white animate-pulse'
+                          : isSelected && isIncompatible
+                          ? 'bg-red-500/20 text-red-500 border-2 border-red-500'
+                          : isSelected
+                          ? 'bg-ember text-white shadow-xs'
+                          : isIncompatible
+                          ? 'bg-red-500/10 text-red-500 border border-red-500/30'
+                          : isRecommended
+                          ? 'bg-amber/15 text-ember border border-amber/40 font-extrabold'
+                          : 'bg-panel border border-line text-ink'
+                      }`}
+                    >
+                      {rod.size}
+                      {isRecommended && !isSelected && ' ★'}
+                      {isIncompatible && !isSelected && ' ⚠'}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Right Panel: Rebar Selection Rack & Engineering Guidance */}
-          <div className="border-line bg-panel card-glow relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 sm:p-8 shadow-xl">
+          <div
+            ref={rebarRackRef}
+            className={`border-line bg-panel card-glow relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 sm:p-8 shadow-xl transition-all duration-300 ${
+              highlightRack ? 'ring-4 ring-ember/60 shadow-[0_0_35px_rgba(245,124,0,0.35)]' : ''
+            } ${collapsedState ? 'border-red-500/80 ring-2 ring-red-500/30' : ''}`}
+          >
             {/* Ambient Ember Glow */}
             <div
               className="bg-ember/10 pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full blur-3xl"
@@ -2018,6 +2907,78 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                 transition={{ duration: 0.35, ease: EASE }}
                 className="flex h-full flex-col"
               >
+                {/* Visual Step Guide Pill when Beacon is Clicked */}
+                {highlightRack && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="mb-4 flex items-center justify-between rounded-xl bg-gradient-to-r from-ember to-amber-500 text-white px-3.5 py-2.5 text-xs font-bold shadow-md"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="grid h-5 w-5 place-items-center rounded-full bg-white/20 text-white font-mono text-[10px]">
+                        0{activePart.stepNumber}
+                      </span>
+                      <span>
+                        {t(
+                          `👇 Step 2: Choose rebar diameter for ${activePart.label.split(' ')[0]} below`,
+                          `👇 ደረጃ 2፡ ለእዚህ ክፍል (${activePart.amLabel.split(' ')[0]}) የብረት ዓይነት ይምረጡ`
+                        )}
+                      </span>
+                    </div>
+                    <ChevronRight className="h-4 w-4 animate-bounce" />
+                  </motion.div>
+                )}
+
+                {/* Persistent Collapse Failure Box if this component failed */}
+                {collapsedState && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mb-4 rounded-2xl border-2 border-red-300 dark:border-red-500/80 bg-red-50/95 dark:bg-red-950/80 p-4 text-xs text-red-900 dark:text-red-100 shadow-md"
+                  >
+                    <div className="flex items-center gap-2 text-red-700 dark:text-red-400 font-bold mb-1">
+                      <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-500 animate-pulse" />
+                      <span className="font-display font-extrabold text-red-950 dark:text-white text-sm">
+                        {t(collapsedState.title, collapsedState.amTitle)}
+                      </span>
+                    </div>
+                    <p className="text-[11.5px] text-red-800 dark:text-red-200/90 leading-relaxed mt-1 font-medium">
+                      {t(collapsedState.reason, collapsedState.amReason)}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => repairBuilding(activePart)}
+                      className="mt-3 w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white py-2 text-xs font-bold shadow-md transition-all cursor-pointer"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      <span>{t(`Restore with Grade 75 ${activePart.bestSize}`, `በትክክለኛው ${activePart.bestSize} ብረት አስተካክል`)}</span>
+                    </button>
+                  </motion.div>
+                )}
+
+                {/* Notice for substandard rebar choice awaiting simulation */}
+                {!collapsedState && builtChoices[activePart.id] && activePart.incompatibleSizes.includes(builtChoices[activePart.id]!) && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mb-4 rounded-2xl border border-red-300 dark:border-red-500/50 bg-red-50/95 dark:bg-red-950/60 p-3.5 text-xs text-red-950 dark:text-red-200 shadow-xs"
+                  >
+                    <div className="flex items-center gap-2 text-red-700 dark:text-red-400 font-bold mb-1">
+                      <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
+                      <span className="font-display font-bold text-red-900 dark:text-red-300">
+                        {t('Substandard Specification — Simulation Required', 'ደረጃውን ያልጠበቀ ብረት ተመርጧል')}
+                      </span>
+                    </div>
+                    <p className="text-[11.5px] text-red-800 dark:text-red-200/90 leading-relaxed font-medium">
+                      {t(
+                        `${builtChoices[activePart.id]} is rated [FAIL] for this structural section. Click "Test Structural Load" to simulate real-life collapse!`,
+                        `${builtChoices[activePart.id]} ለዚህ ክፍል ተስማሚ አይደለም። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
+                      )}
+                    </p>
+                  </motion.div>
+                )}
+
                 {/* Active Step Badge */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -2112,6 +3073,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       const isRecommended = activePart.recommendedSizes.includes(rod.size);
                       const isAcceptable = activePart.acceptableSizes.includes(rod.size);
                       const isIncompatible = activePart.incompatibleSizes.includes(rod.size);
+                      const isThisFailed =
+                        collapsedState?.partId === activePart.id && collapsedState?.size === rod.size;
 
                       return (
                         <motion.button
@@ -2122,22 +3085,30 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           whileTap={{ scale: 0.96 }}
                           transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                           className={`relative flex flex-col items-center justify-between rounded-xl border p-2.5 text-center transition-all cursor-pointer ${
-                            isSelected
+                            isThisFailed
+                              ? 'border-red-500 bg-red-600 text-white shadow-lg ring-2 ring-red-400 animate-pulse'
+                              : isSelected && isIncompatible
+                              ? 'border-red-500 bg-red-500/20 text-red-500 shadow-md ring-2 ring-red-500/40'
+                              : isSelected
                               ? 'border-ember bg-ember text-white shadow-md ring-2 ring-ember/40'
                               : isRecommended
                               ? 'border-ember/40 bg-ember/5 text-ink hover:border-ember'
                               : isIncompatible
-                              ? 'border-line/60 bg-panel2/40 text-mute/60 opacity-70 hover:opacity-100'
+                              ? 'border-red-500/30 bg-red-500/5 text-red-500/80 hover:border-red-500 hover:text-red-500 hover:bg-red-500/10'
                               : 'border-line bg-panel2 text-ink hover:border-line/80'
                           }`}
                         >
                           {/* Visual rebar gauge representation */}
                           <div
                             className={`mb-1.5 h-1.5 rounded-full transition-all ${
-                              isSelected
+                              isThisFailed
+                                ? 'bg-white'
+                                : isSelected
                                 ? 'bg-white'
                                 : isRecommended
                                 ? 'bg-ember'
+                                : isIncompatible
+                                ? 'bg-red-400'
                                 : 'bg-mute/40'
                             }`}
                             style={{ width: `${Math.min(100, rod.mm * 3.4)}%` }}
@@ -2146,16 +3117,30 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           <span className="font-display text-xs font-bold">{rod.size}</span>
                           <span
                             className={`text-[10px] ${
-                              isSelected ? 'text-white/80' : 'text-mute'
+                              isThisFailed || isSelected ? 'text-white/80' : 'text-mute'
                             }`}
                           >
                             {rod.weight12m}
                           </span>
 
                           {/* Recommended pill badge */}
-                          {isRecommended && !isSelected && (
+                          {isRecommended && !isSelected && !isThisFailed && (
                             <span className="absolute -top-1.5 -right-1.5 rounded-full bg-ember px-1.5 py-0.2 text-[8px] font-extrabold text-white uppercase shadow-sm">
                               {t('Ideal', 'ምርጥ')}
+                            </span>
+                          )}
+
+                          {/* Incompatible warning pill */}
+                          {isIncompatible && !isThisFailed && (
+                            <span className="absolute -top-1.5 -right-1.5 rounded-full bg-red-500/90 px-1.5 py-0.2 text-[7.5px] font-bold text-white uppercase shadow-2xs">
+                              {isSelected ? t('Fail: Picked', 'ተመርጧል') : t('Fail', 'አይሆንም')}
+                            </span>
+                          )}
+
+                          {/* Failed active badge */}
+                          {isThisFailed && (
+                            <span className="absolute -top-1.5 -right-1.5 rounded-full bg-white text-red-600 px-1.5 py-0.2 text-[8px] font-extrabold uppercase shadow-sm">
+                              {t('Failed', 'ፈርሷል')}
                             </span>
                           )}
                         </motion.button>
@@ -2195,8 +3180,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           <AlertTriangle className="h-4 w-4 shrink-0 text-red-500" />
                           <span className="text-red-700 dark:text-red-400 font-medium">
                             {t(
-                              `Warning: ${builtChoices[activePart.id]} is non-standard for this structural element. Consult consultant.`,
-                              `ማስጠንቀቂያ፡ ${builtChoices[activePart.id]} ለዚህ ክፍል ተስማሚ አይደለም።`
+                              `Warning: ${builtChoices[activePart.id]} is substandard for ${activePart.label}. Click "Test Structural Load" above to simulate real-life collapse!`,
+                              `ማስጠንቀቂያ፡ ${builtChoices[activePart.id]} ለዚህ ክፍል ደረጃውን የጠበቀ አይደለም። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
                             )}
                           </span>
                         </>

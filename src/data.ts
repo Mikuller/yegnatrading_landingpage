@@ -14,6 +14,8 @@ export const CONTACT = {
   ],
   helpDeskUrl: 'https://yegnatrading.crisp.help/en/',
   companyProfileUrl: 'https://drive.google.com/file/d/1TWE42u94PPmXz6wMW0-0htNIPRT1E4YV/view',
+  telegram: 'https://t.me/Yegna_Tradingplc',
+  linktree: 'https://linktr.ee/yegnaTrading',
 };
 
 export type NavSublink = {
@@ -75,11 +77,13 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const SOCIALS = [
+  { label: 'Telegram', href: 'https://t.me/Yegna_Tradingplc' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@yegna_trading' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@yegnatrading' },
   { label: 'Facebook', href: 'https://web.facebook.com/profile.php?id=61566925694036' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/yegna-trading-plc' },
   { label: 'Instagram', href: 'https://www.instagram.com/yegnatradinget' },
-  { label: 'Telegram', href: 'https://t.me/yegnatrading' },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@getyegna' },
+  { label: 'X', href: 'https://x.com/yegnatrading' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/yegna-trading-plc' },
 ];
 
 export const STATS = [
