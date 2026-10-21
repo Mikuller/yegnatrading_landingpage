@@ -1,0 +1,204 @@
+import { useEffect, useRef, type ReactNode } from 'react';
+import { animate, motion, useInView } from 'motion/react';
+
+export const EASE = [0.22, 1, 0.36, 1] as const;
+
+export function Reveal({
+  children,
+  delay = 0,
+  y = 32,
+  className,
+}: {
+  children: ReactNode;
+  delay?: number;
+  y?: number;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.8, delay, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function SectionHead({
+  eyebrow,
+  title,
+  accent,
+  after,
+  sub,
+  align = 'left',
+}: {
+  eyebrow: string;
+  title: string;
+  accent?: string;
+  after?: string;
+  sub?: string;
+  align?: 'left' | 'center';
+}) {
+  return (
+    <div className={align === 'center' ? 'text-center' : ''}>
+      <Reveal>
+        <p className={`font-display flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-ember uppercase ${align === 'center' ? 'justify-center' : ''}`}>
+          <span className={`inline-block h-px w-10 bg-ember ${align === 'center' ? 'hidden' : ''}`} />
+          {eyebrow}
+        </p>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <h2 className="font-display headline-elevated text-ink mt-5 text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          {title}{' '}
+          {accent ? <span className="font-serif-i text-gradient-ember pr-2">{accent}</span> : null}
+          {after ? <span>{after}</span> : null}
+        </h2>
+      </Reveal>
+      {sub ? (
+        <Reveal delay={0.16}>
+          <p className={`text-mute text-elevated mt-6 max-w-2xl text-base leading-relaxed sm:text-lg ${align === 'center' ? 'mx-auto' : ''}`}>
+            {sub}
+          </p>
+        </Reveal>
+      ) : null}
+    </div>
+  );
+}
+
+export function Counter({
+  value,
+  suffix = '',
+  className,
+}: {
+  value: number;
+  suffix?: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+
+  useEffect(() => {
+    if (!inView || !ref.current) return;
+    const node = ref.current;
+    const controls = animate(0, value, {
+      duration: 1.6,
+      ease: EASE,
+      onUpdate(v) {
+        node.textContent = `${Math.round(v)}${suffix}`;
+      },
+    });
+    return () => controls.stop();
+  }, [inView, value, suffix]);
+
+  return (
+    <span ref={ref} className={className}>
+      0{suffix}
+    </span>
+  );
+}
+
+export function EmberButton({
+  children,
+  href,
+  onClick,
+  variant = 'solid',
+  className = '',
+}: {
+  children: ReactNode;
+  href?: string;
+  onClick?: () => void;
+  variant?: 'solid' | 'ghost';
+  className?: string;
+}) {
+  const base =
+    'group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 font-display text-sm font-semibold tracking-wide transition-all duration-300 cursor-pointer';
+  const styles =
+    variant === 'solid'
+      ? 'bg-ember text-white shadow-sm hover:shadow-[0_0_30px_rgba(245,124,0,0.45)] hover:-translate-y-0.5'
+      : 'border border-line bg-panel2/60 text-ink hover:border-ember/60 hover:text-ember hover:-translate-y-0.5';
+  const inner = (
+    <>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
+      {variant === 'solid' && (
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+      )}
+    </>
+  );
+  return href ? (
+    <a href={href} className={`${base} ${styles} ${className}`}>
+      {inner}
+    </a>
+  ) : (
+    <button type="button" onClick={onClick} className={`${base} ${styles} ${className}`}>
+      {inner}
+    </button>
+  );
+}
+
+export const SOCIAL_PATHS: Record<string, string> = {
+  Facebook:
+    'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z',
+  LinkedIn:
+    'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z',
+  Instagram:
+    'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z',
+  Telegram:
+    'M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z',
+  TikTok:
+    'M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.34 6.34 0 0 0 9.34 22a6.38 6.38 0 0 0 6.34-6.34V8.58a8.18 8.18 0 0 0 4.77 1.55v-3.44h-.86z',
+};
+
+export function BrandIcon({
+  label,
+  className = 'h-4 w-4',
+}: {
+  label: string;
+  className?: string;
+}) {
+  if (label === 'TikTok') {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden>
+        {/* Authentic dark badge disc with subtle dark-mode definition rim */}
+        <circle cx="12" cy="12" r="11" fill="#000000" stroke="rgba(255,255,255,0.16)" strokeWidth="0.75" />
+        {/* TikTok Cyan chromatic accent */}
+        <g transform="translate(5.15, 5.0) scale(0.55)">
+          <path
+            fill="#25F4EE"
+            d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.34 6.34 0 0 0 9.34 22a6.38 6.38 0 0 0 6.34-6.34V8.58a8.18 8.18 0 0 0 4.77 1.55v-3.44h-.86z"
+          />
+        </g>
+        {/* TikTok Pink / Red chromatic accent */}
+        <g transform="translate(5.95, 5.8) scale(0.55)">
+          <path
+            fill="#FE2C55"
+            d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.34 6.34 0 0 0 9.34 22a6.38 6.38 0 0 0 6.34-6.34V8.58a8.18 8.18 0 0 0 4.77 1.55v-3.44h-.86z"
+          />
+        </g>
+        {/* TikTok White core musical note */}
+        <g transform="translate(5.55, 5.4) scale(0.55)">
+          <path
+            fill="#FFFFFF"
+            d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.34 6.34 0 0 0 9.34 22a6.38 6.38 0 0 0 6.34-6.34V8.58a8.18 8.18 0 0 0 4.77 1.55v-3.44h-.86z"
+          />
+        </g>
+      </svg>
+    );
+  }
+
+  const path = SOCIAL_PATHS[label];
+  if (!path) {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden>
+        <path d="M7 17L17 7M17 7H7M17 7V17" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d={path} />
+    </svg>
+  );
+}
