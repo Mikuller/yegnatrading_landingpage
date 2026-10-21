@@ -197,8 +197,10 @@ export default function Footer() {
             <p className="font-display text-[0.68rem] font-bold tracking-[0.2em] text-amber-500 uppercase">
               {t('Head Office', 'ዋናው መሥሪያ ቤት')}
             </p>
-            <p className="text-slate-300 mt-2 text-xs leading-relaxed">{CONTACT.hq}</p>
-            <p className="text-slate-400 text-[0.72rem] mt-0.5">Plus Code: {CONTACT.hqPlusCode}</p>
+            <address className="not-italic">
+              <p className="text-slate-300 mt-2 text-xs leading-relaxed">{CONTACT.hq}</p>
+              <p className="text-slate-400 text-[0.72rem] mt-0.5">Plus Code: {CONTACT.hqPlusCode}</p>
+            </address>
 
             <a
               href={`tel:${CONTACT.phoneClean}`}

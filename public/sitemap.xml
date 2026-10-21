@@ -1,39 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
   <url>
     <loc>https://yegnatradinget.com/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/" />
+    <image:image>
+      <image:loc>https://yegnatradinget.com/rebar-hero.png</image:loc>
+      <image:title>Grade 75 certified steel reinforcement bars</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yegnatradinget.com/logo-full.png</image:loc>
+      <image:title>Yegna Trading PLC logo</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://yegnatradinget.com/products/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/products/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/products/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/products/" />
   </url>
   <url>
     <loc>https://yegnatradinget.com/about/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/about/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/about/" />
+    <image:image>
+      <image:loc>https://yegnatradinget.com/images/ceo.jpg</image:loc>
+      <image:title>Yegna Trading PLC leadership</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://yegnatradinget.com/contact/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/contact/" />
   </url>
   <url>
     <loc>https://yegnatradinget.com/insights/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/insights/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/insights/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/insights/" />
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/careers/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yegnatradinget.com/careers/" />
+    <xhtml:link rel="alternate" hreflang="am" href="https://yegnatradinget.com/careers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yegnatradinget.com/careers/" />
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/blog/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yegnatradinget.com/careers/</loc>
-    <lastmod>2026-10-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yegnatradinget.com/how-to-cut-plywood-with-a-circular-saw-a-step-by-step-guide/</loc>
+    <lastmod>2025-07-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/opc-vs-ppc-cement-deciding-the-ideal-choice-for-house-construction/</loc>
+    <lastmod>2025-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/why-timely-rebar-delivery-is-essential-for-construction-project-success/</loc>
+    <lastmod>2025-07-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/what-is-ppc-in-cement/</loc>
+    <lastmod>2025-07-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yegnatradinget.com/benefits-of-using-green-plywood-in-construction-and-furniture-making/</loc>
+    <lastmod>2025-06-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
