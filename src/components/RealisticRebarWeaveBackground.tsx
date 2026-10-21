@@ -645,11 +645,27 @@ export default function RealisticRebarWeaveBackground({
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Pointer tracking: Bold & entertaining when moving, serene when reading
+    // Helper to check if cursor is over interactive or focused content
+    const isOverFocusElement = (target: EventTarget | null, clientX: number, clientY: number): boolean => {
+      let el = target instanceof Element ? target : null;
+      if (!el && typeof document !== 'undefined') {
+        el = document.elementFromPoint(clientX, clientY);
+      }
+      if (!el) return false;
+
+      // Check if hovering over any interactive control, form, accordion, or focus card
+      return !!el.closest(
+        'button, a, input, textarea, select, [role="button"], [role="region"], [role="dialog"], [role="tab"], [role="menuitem"], form, .faq-accordion, [data-rebar-suppress="true"], .rebar-focus-solid'
+      );
+    };
+
+    // Pointer tracking: Bold & entertaining when moving across canvas, gracefully receding on interactive UI
     const handlePointerMove = (e: PointerEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      mouseIntensity.set(0.95);
+
+      const isFocus = isOverFocusElement(e.target, e.clientX, e.clientY);
+      mouseIntensity.set(isFocus ? 0.0 : 0.95);
       wakeUp();
 
       if (idleTimer) clearTimeout(idleTimer);
@@ -672,9 +688,10 @@ export default function RealisticRebarWeaveBackground({
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
+        const isFocus = isOverFocusElement(e.target, touch.clientX, touch.clientY);
         mouseX.set(touch.clientX);
         mouseY.set(touch.clientY);
-        mouseIntensity.set(0.95);
+        mouseIntensity.set(isFocus ? 0.0 : 0.95);
         wakeUp();
 
         if (idleTimer) clearTimeout(idleTimer);

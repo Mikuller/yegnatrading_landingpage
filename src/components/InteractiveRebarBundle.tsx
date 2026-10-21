@@ -455,10 +455,10 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
   const bendAngle = Math.round((deflectionAbs / 65) * 45);
 
   return (
-    <div className="relative mx-auto flex w-full flex-col items-center select-none">
+    <div className="relative mx-auto flex w-full flex-col items-center select-none min-w-0 max-w-full">
       {/* Top Controls Bar: Certified Badge + View Modes + Audio Toggle */}
-      <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30">
-        <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 max-w-[calc(100%-32px)] overflow-x-auto scrollbar-none">
+      <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30 min-w-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 flex-1 overflow-x-auto scrollbar-none">
           {/* Certified Pill with Live Radar Pulse */}
           <div className="shrink-0 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2 sm:px-2.5 py-0.5 sm:py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
             <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
@@ -472,7 +472,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
               <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-ember" />
             </span>
             <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-ember shrink-0" />
-            <span className="text-[0.6rem] sm:text-[0.66rem] font-bold tracking-wider uppercase whitespace-nowrap">
+            <span className="text-[0.58rem] sm:text-[0.66rem] font-bold tracking-wider uppercase whitespace-nowrap">
               {t('Certified', 'የተረጋገጠ')}
             </span>
           </div>
@@ -480,13 +480,13 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
           {/* Mode Selector Pill */}
           <div
             data-interactive="true"
-            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.56rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md shrink-0 relative"
+            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.56rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md shrink-0 relative min-w-0"
           >
             {(
               [
-                { id: 'bundle', label: t('Bundle Stack', 'የተጣመረ ስቶክ') },
-                { id: 'scale', label: t('Scale Lineup', 'የመጠኖች ንጽጽር') },
-                { id: 'flex', label: t('Tensile Flex Test', 'የጥንካሬ ፈተና') },
+                { id: 'bundle', shortLabel: t('Bundle', 'ስቶክ'), fullLabel: t('Bundle Stack', 'የተጣመረ ስቶክ') },
+                { id: 'scale', shortLabel: t('Lineup', 'ንጽጽር'), fullLabel: t('Scale Lineup', 'የመጠኖች ንጽጽር') },
+                { id: 'flex', shortLabel: t('Flex', 'ፈተና'), fullLabel: t('Tensile Flex Test', 'የጥንካሬ ፈተና') },
               ] as const
             ).map((tab) => {
               const isActive = viewMode === tab.id;
@@ -510,7 +510,8 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                       transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                     />
                   )}
-                  <span>{tab.label}</span>
+                  <span className="inline sm:hidden">{tab.shortLabel}</span>
+                  <span className="hidden sm:inline">{tab.fullLabel}</span>
                 </motion.button>
               );
             })}
@@ -540,7 +541,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
       {/* Diameter Selector Grid: Strictly fits width without any horizontal scrolling */}
       <div
         data-interactive="true"
-        className="mb-2.5 grid grid-cols-8 gap-0.5 sm:gap-1 w-full px-0.5 z-20"
+        className="mb-2.5 grid grid-cols-8 gap-0.5 sm:gap-1 w-full px-0.5 z-20 min-w-0"
       >
         {COMMERCIAL_SPECS.map((spec) => {
           const isSelected = activeDiameter === spec.diameter;
@@ -555,7 +556,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.92 }}
               transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-              className={`relative cursor-pointer w-full text-center py-1 sm:py-1.5 text-[0.62rem] sm:text-[0.66rem] font-mono font-bold rounded-lg transition-colors overflow-hidden ${
+              className={`relative cursor-pointer w-full min-w-0 text-center py-1 sm:py-1.5 text-[0.56rem] xs:text-[0.62rem] sm:text-[0.66rem] font-mono font-bold rounded-lg transition-colors overflow-hidden ${
                 isSelected
                   ? 'text-white shadow-xs'
                   : 'bg-panel2/80 text-mute hover:text-ink hover:bg-panel2 border border-line/40'
@@ -568,7 +569,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                   transition={{ type: 'spring', stiffness: 500, damping: 32 }}
                 />
               )}
-              <span className="relative z-10">{spec.diameter}mm</span>
+              <span className="relative z-10 block truncate px-0.5">{spec.diameter}mm</span>
             </motion.button>
           );
         })}
@@ -1610,46 +1611,46 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
       )}
 
       {/* Engineering HUD & Instant Quotation Card */}
-      <div data-interactive="true" className="mt-2.5 w-full rounded-2xl border border-line/60 bg-panel2/80 p-3 shadow-md backdrop-blur-md">
-        <div className="flex items-center justify-between border-b border-line/40 pb-2">
-          <div className="flex items-center gap-2">
-            <span className="font-display text-base font-extrabold text-ember">
+      <div data-interactive="true" className="mt-2.5 w-full min-w-0 rounded-2xl border border-line/60 bg-panel2/80 p-2.5 sm:p-3 shadow-md backdrop-blur-md">
+        <div className="flex items-center justify-between border-b border-line/40 pb-2 gap-2 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1 truncate">
+            <span className="font-display text-sm sm:text-base font-extrabold text-ember truncate">
               {t(activeSpec.label, activeSpec.amLabel)}
             </span>
-            <span className="rounded-md bg-ember/15 px-2 py-0.5 text-[0.65rem] font-extrabold text-ember uppercase">
-              Grade 75 (EBCS)
+            <span className="rounded-md bg-ember/15 px-1.5 py-0.5 text-[0.6rem] sm:text-[0.65rem] font-extrabold text-ember uppercase shrink-0">
+              Grade 75
             </span>
           </div>
 
-          <div className="text-right">
-            <span className="text-[0.68rem] text-mute">{t('Pieces / Quintal', 'ብዛት በኩንታል')}</span>
+          <div className="text-right shrink-0">
+            <span className="text-[0.62rem] sm:text-[0.68rem] text-mute block leading-tight">{t('Pieces / Quintal', 'ብዛት በኩንታል')}</span>
             <p className="font-mono text-xs font-black text-ink">{activeSpec.pcsPerQuintal}</p>
           </div>
         </div>
 
         {/* Technical Key Metrics Grid */}
-        <div className="mt-2 grid grid-cols-2 gap-2 text-left text-xs sm:grid-cols-3">
-          <div className="rounded-lg bg-panel/70 p-2 border border-line/30">
-            <span className="text-[0.65rem] text-mute">{t('Weight / 12m', 'ክብደት / 12ሜ')}</span>
-            <p className="font-mono font-bold text-ink">{activeSpec.weightPer12mKg} kg</p>
+        <div className="mt-2 grid grid-cols-2 gap-1.5 sm:gap-2 text-left text-xs sm:grid-cols-3 min-w-0">
+          <div className="rounded-lg bg-panel/70 p-1.5 sm:p-2 border border-line/30 min-w-0">
+            <span className="text-[0.6rem] sm:text-[0.65rem] text-mute block">{t('Weight / 12m', 'ክብደት / 12ሜ')}</span>
+            <p className="font-mono font-bold text-ink text-xs truncate">{activeSpec.weightPer12mKg} kg</p>
           </div>
-          <div className="rounded-lg bg-panel/70 p-2 border border-line/30">
-            <span className="text-[0.65rem] text-mute">{t('Unit Weight', 'የሜትር ክብደት')}</span>
-            <p className="font-mono font-bold text-ink">{activeSpec.unitWeightKgM}</p>
+          <div className="rounded-lg bg-panel/70 p-1.5 sm:p-2 border border-line/30 min-w-0">
+            <span className="text-[0.6rem] sm:text-[0.65rem] text-mute block">{t('Unit Weight', 'የሜትር ክብደት')}</span>
+            <p className="font-mono font-bold text-ink text-xs truncate">{activeSpec.unitWeightKgM}</p>
           </div>
-          <div className="col-span-2 sm:col-span-1 rounded-lg bg-panel/70 p-2 border border-line/30">
-            <span className="text-[0.65rem] text-mute">{t('Structural Use', 'አገልግሎት')}</span>
-            <p className="text-[0.72rem] font-semibold text-ink truncate" title={t(activeSpec.application, activeSpec.amApplication)}>
+          <div className="col-span-2 sm:col-span-1 rounded-lg bg-panel/70 p-1.5 sm:p-2 border border-line/30 min-w-0">
+            <span className="text-[0.6rem] sm:text-[0.65rem] text-mute block">{t('Structural Use', 'አገልግሎት')}</span>
+            <p className="text-[0.68rem] sm:text-[0.72rem] font-semibold text-ink truncate" title={t(activeSpec.application, activeSpec.amApplication)}>
               {t(activeSpec.application, activeSpec.amApplication)}
             </p>
           </div>
         </div>
 
         {/* 1-Click Quotation CTA Button directly from Hero Rebar Viewer */}
-        <div className="mt-2.5 pt-2 border-t border-line/40 flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-1.5 text-[0.7rem] text-mute">
+        <div className="mt-2.5 pt-2 border-t border-line/40 flex items-center justify-between gap-2 flex-wrap min-w-0">
+          <div className="flex items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] text-mute min-w-0 flex-1 truncate">
             <ShieldCheck className="h-3.5 w-3.5 text-ember shrink-0" />
-            <span>{t('ASTM A615 & ES ISO 6935-2 Certified', 'በአለምአቀፍና በሀገር ውስጥ ደረጃ የተረጋገጠ')}</span>
+            <span className="truncate">{t('ASTM A615 & ES ISO 6935-2 Certified', 'በአለምአቀፍና በሀገር ውስጥ ደረጃ የተረጋገጠ')}</span>
           </div>
 
           <motion.button
@@ -1658,7 +1659,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 450, damping: 25 }}
-            className="cursor-pointer inline-flex items-center gap-1.5 rounded-xl bg-ember px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-ember/90 transition-colors"
+            className="cursor-pointer inline-flex items-center gap-1.5 rounded-xl bg-ember px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-ember/90 transition-colors shrink-0"
           >
             <span>
               {t(
@@ -1666,7 +1667,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                 `የ${activeSpec.diameter}ሚሜ ዋጋ ጠይቅ`
               )}
             </span>
-            <ArrowUpRight className="h-3.5 w-3.5" />
+            <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
           </motion.button>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function HomePage() {
       <section className="relative">
         <Products />
         <div className="mx-auto max-w-7xl px-5 sm:px-8 pb-16">
-          <div className="border-line bg-panel2/80 rounded-2xl border p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg backdrop-blur-md">
+          <div className="border-line bg-panel2 rounded-2xl border p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg backdrop-blur-md">
             <div className="flex items-start gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-ember/15 text-ember border border-ember/30">
                 <ShieldCheck className="h-6 w-6" />

@@ -1132,7 +1132,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
         </div>
 
         {/* Gamified Construction Status Bar */}
-        <div className="border-line bg-panel/80 card-glow mt-8 rounded-3xl border p-4 sm:p-5 backdrop-blur-md">
+        <div className="border-line bg-panel card-glow mt-8 rounded-3xl border p-4 sm:p-5 backdrop-blur-md">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Step Indicators */}
             <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -1301,14 +1301,14 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
         </AnimatePresence>
 
         {/* Main Stage Grid: 3D Architectural Isometric Canvas & Inspection Panel */}
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1.22fr_0.78fr]">
+        <div className="mt-8 grid gap-8 lg:grid-cols-[1.22fr_0.78fr] w-full min-w-0 max-w-full">
           {/* 3D Architectural Blueprint Canvas with Motion Vibration and X-Ray Shader */}
           <div
             ref={buildingCanvasRef}
-            className="border-line bg-panel card-glow texture-grid relative flex flex-col justify-between overflow-hidden rounded-3xl border shadow-xl"
+            className="border-line bg-panel card-glow texture-grid relative flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border shadow-xl w-full min-w-0 max-w-full"
           >
             {/* Canvas Header Bar with Inspection Tools */}
-            <div className="border-line bg-panel/75 flex flex-wrap items-center justify-between border-b px-5 py-3 text-xs backdrop-blur-sm gap-2">
+            <div className="border-line bg-panel flex flex-wrap items-center justify-between border-b px-5 py-3 text-xs backdrop-blur-md gap-2">
               <div className="flex items-center gap-2">
                 <Compass className="text-ember h-4 w-4 shrink-0" />
                 <span className="font-display text-ink font-semibold">
@@ -2441,7 +2441,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                               }
                               fontFamily="monospace"
                             >
-                              {collapsedState?.partId === part.id ? 'FAIL' : builtChoices[part.id]}
+                              {collapsedState?.partId === part.id ? 'ALERT' : builtChoices[part.id]}
                             </text>
                           </g>
                         ) : (
@@ -2907,7 +2907,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
           {/* Right Panel: Rebar Selection Rack & Engineering Guidance */}
           <div
             ref={rebarRackRef}
-            className={`border-line bg-panel card-glow relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 sm:p-8 shadow-xl transition-all duration-300 ${
+            className={`border-line bg-panel card-glow relative flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border p-4 sm:p-6 lg:p-8 shadow-xl transition-all duration-300 w-full min-w-0 max-w-full ${
               highlightRack ? 'ring-4 ring-ember/60 shadow-[0_0_35px_rgba(245,124,0,0.35)]' : ''
             } ${collapsedState ? 'border-red-500/80 ring-2 ring-red-500/30' : ''}`}
           >
@@ -2991,8 +2991,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     </div>
                     <p className="text-[11.5px] text-red-800 dark:text-red-200/90 leading-relaxed font-medium">
                       {t(
-                        `${builtChoices[activePart.id]} is rated [FAIL] for this structural section. Click "Test Structural Load" to simulate real-life collapse!`,
-                        `${builtChoices[activePart.id]} ለዚህ ክፍል ተስማሚ አይደለም። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
+                        `${builtChoices[activePart.id]} is rated [Not-Ideal] for this structural section. Click "Test Structural Load" to simulate real-life collapse!`,
+                        `${builtChoices[activePart.id]} ለዚህ ክፍል ተስማሚ አይደለም (Not-Ideal)። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
                       )}
                     </p>
                   </motion.div>
@@ -3065,7 +3065,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   </div>
 
                   {/* Rebar Chips Grid with Radiant Sparks */}
-                  <div className="relative mt-3 grid grid-cols-3 gap-2 sm:grid-cols-3">
+                  <div className="relative mt-3 grid grid-cols-3 gap-2 sm:gap-2.5 w-full min-w-0 pt-2.5 pb-1">
                     {/* Radiant spark particle burst on reinforcement */}
                     {justReinforced === activePart.id && (
                       <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center overflow-hidden">
@@ -3103,7 +3103,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           whileHover={{ scale: 1.04 }}
                           whileTap={{ scale: 0.96 }}
                           transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                          className={`relative flex flex-col items-center justify-between rounded-xl border p-2.5 text-center transition-all cursor-pointer ${
+                          className={`relative flex flex-col items-center justify-between rounded-xl border pt-3 pb-2.5 px-2 text-center transition-all cursor-pointer min-w-0 overflow-visible ${
                             isThisFailed
                               ? 'border-red-500 bg-red-600 text-white shadow-lg ring-2 ring-red-400 animate-pulse'
                               : isSelected && isIncompatible
@@ -3117,9 +3117,11 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                               : 'border-line bg-panel2 text-ink hover:border-line/80'
                           }`}
                         >
+                          <span className="font-display text-xs font-bold leading-tight truncate max-w-full">{rod.size}</span>
+
                           {/* Visual rebar gauge representation */}
                           <div
-                            className={`mb-1.5 h-1.5 rounded-full transition-all ${
+                            className={`my-1.5 h-1.5 rounded-full transition-all ${
                               isThisFailed
                                 ? 'bg-white'
                                 : isSelected
@@ -3130,13 +3132,12 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                                 ? 'bg-red-400'
                                 : 'bg-mute/40'
                             }`}
-                            style={{ width: `${Math.min(100, rod.mm * 3.4)}%` }}
+                            style={{ width: `${Math.max(18, Math.min(100, rod.mm * 3.4))}%` }}
                           />
 
-                          <span className="font-display text-xs font-bold">{rod.size}</span>
                           <span
-                            className={`text-[10px] ${
-                              isThisFailed || isSelected ? 'text-white/80' : 'text-mute'
+                            className={`text-[10px] font-mono leading-none ${
+                              isThisFailed || isSelected ? 'text-white/85' : 'text-mute'
                             }`}
                           >
                             {rod.weight12m}
@@ -3144,22 +3145,22 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
 
                           {/* Recommended pill badge */}
                           {isRecommended && !isSelected && !isThisFailed && (
-                            <span className="absolute -top-1.5 -right-1.5 rounded-full bg-ember px-1.5 py-0.2 text-[8px] font-extrabold text-white uppercase shadow-sm">
+                            <span className="absolute -top-2 right-1 sm:-right-1 z-10 rounded-full bg-ember px-2 py-0.5 text-[7.5px] sm:text-[8px] font-extrabold text-white uppercase shadow-sm tracking-wide">
                               {t('Ideal', 'ምርጥ')}
                             </span>
                           )}
 
                           {/* Incompatible warning pill */}
                           {isIncompatible && !isThisFailed && (
-                            <span className="absolute -top-1.5 -right-1.5 rounded-full bg-red-500/90 px-1.5 py-0.2 text-[7.5px] font-bold text-white uppercase shadow-2xs">
-                              {isSelected ? t('Fail: Picked', 'ተመርጧል') : t('Fail', 'አይሆንም')}
+                            <span className="absolute -top-2 right-1 sm:-right-1 z-10 rounded-full bg-red-500 text-white px-2 py-0.5 text-[7px] sm:text-[7.5px] font-extrabold uppercase shadow-sm tracking-wide">
+                              {isSelected ? t('Not-Ideal: Picked', 'ተመርጧል') : t('Not-Ideal', 'ተስማሚ አይደለም')}
                             </span>
                           )}
 
                           {/* Failed active badge */}
                           {isThisFailed && (
-                            <span className="absolute -top-1.5 -right-1.5 rounded-full bg-white text-red-600 px-1.5 py-0.2 text-[8px] font-extrabold uppercase shadow-sm">
-                              {t('Failed', 'ፈርሷል')}
+                            <span className="absolute -top-2 right-1 sm:-right-1 z-10 rounded-full bg-red-700 text-white px-2 py-0.5 text-[7px] sm:text-[7.5px] font-extrabold uppercase shadow-sm tracking-wide">
+                              {t('Ruptured', 'ተጎድቷል')}
                             </span>
                           )}
                         </motion.button>
@@ -3199,8 +3200,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                           <AlertTriangle className="h-4 w-4 shrink-0 text-red-500" />
                           <span className="text-red-700 dark:text-red-400 font-medium">
                             {t(
-                              `Warning: ${builtChoices[activePart.id]} is substandard for ${activePart.label}. Click "Test Structural Load" above to simulate real-life collapse!`,
-                              `ማስጠንቀቂያ፡ ${builtChoices[activePart.id]} ለዚህ ክፍል ደረጃውን የጠበቀ አይደለም። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
+                              `Warning: ${builtChoices[activePart.id]} is not ideal for ${activePart.label}. Click "Test Structural Load" above to simulate real-life collapse!`,
+                              `ማስጠንቀቂያ፡ ${builtChoices[activePart.id]} ለዚህ ክፍል ተስማሚ አይደለም። "የክብደት ጫናን ፈትሽ" የሚለውን በመጫን የመደርመስ አደጋውን ይመልከቱ!`
                             )}
                           </span>
                         </>
@@ -3291,7 +3292,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                 </div>
 
                 {/* Primary CTA Buttons */}
-                <div className="mt-6 pt-4 border-t border-line flex flex-col gap-2.5">
+                <div className="mt-6 pt-4 border-t border-line flex flex-col gap-2.5 w-full min-w-0">
                   <button
                     type="button"
                     onClick={() =>
@@ -3300,30 +3301,30 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         builtChoices[activePart.id] || activePart.bestSize
                       )
                     }
-                    className="border-line bg-panel hover:border-ember hover:text-ember text-ink flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer"
+                    className="border-line bg-panel hover:border-ember hover:text-ember text-ink flex w-full items-center justify-between gap-2 rounded-xl sm:rounded-2xl border px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer min-w-0"
                   >
-                    <span>
+                    <span className="text-left flex-1 leading-snug truncate">
                       {t(
                         `Quote ${builtChoices[activePart.id] || activePart.bestSize} for ${activePart.label.split(' ')[0]} Only`,
                         `ለዚህ ክፍል (${builtChoices[activePart.id] || activePart.bestSize}) ብቻ ዋጋ ጠይቅ`
                       )}
                     </span>
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-4 w-4 shrink-0" />
                   </button>
 
                   <button
                     type="button"
                     onClick={sendFullHouseToQuote}
-                    className="group bg-ember hover:bg-ember/90 text-white flex w-full items-center justify-center gap-2.5 rounded-2xl py-3.5 text-xs sm:text-sm font-bold shadow-md transition-all cursor-pointer"
+                    className="group bg-ember hover:bg-ember/90 text-white flex w-full items-center justify-center gap-2 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 text-xs sm:text-sm font-bold shadow-md transition-all cursor-pointer min-w-0"
                   >
-                    <Building className="h-4 w-4 transition-transform group-hover:scale-110" />
-                    <span>
+                    <Building className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110" />
+                    <span className="text-center flex-1 leading-snug">
                       {t(
                         'Take Complete House Schedule to Quote Form',
                         'የተገነባውን ሙሉ የህንጻ ብረት ዝርዝር ወደ ቅጹ ውሰድ'
                       )}
                     </span>
-                    <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+                    <ArrowDown className="h-4 w-4 shrink-0 transition-transform group-hover:translate-y-0.5" />
                   </button>
                 </div>
               </motion.div>

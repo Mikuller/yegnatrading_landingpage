@@ -73,12 +73,12 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
     <div
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}
-      className="group/card relative mx-auto w-full max-w-lg lg:max-w-none select-none"
+      className="group/card relative mx-auto w-full max-w-lg lg:max-w-none select-none min-w-0"
       style={{ perspective: 1200 }}
     >
       {/* 1. Ambient pulsing warm ember halo glow */}
       <motion.div
-        className="bg-ember/25 dark:bg-ember/35 pointer-events-none absolute -inset-8 rounded-full blur-[90px] transition-opacity duration-700 group-hover/card:opacity-90"
+        className="bg-ember/25 dark:bg-ember/35 pointer-events-none absolute -inset-4 sm:-inset-8 rounded-full blur-[60px] sm:blur-[90px] transition-opacity duration-700 group-hover/card:opacity-90"
         animate={
           shouldReduceMotion
             ? { opacity: 0.25 }
@@ -110,7 +110,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
         whileHover={shouldReduceMotion ? {} : { scale: 1.002 }}
-        className="border-line bg-panel/96 dark:bg-panel/92 card-glow relative overflow-hidden rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl sm:p-9 transition-colors duration-500"
+        className="border-line bg-panel/96 dark:bg-panel/92 card-glow relative overflow-hidden rounded-2xl sm:rounded-3xl border p-3.5 sm:p-7 lg:p-9 shadow-2xl backdrop-blur-2xl transition-colors duration-500 w-full min-w-0"
       >
         {/* Subtle grid texture surface */}
         <div className="texture-grid absolute inset-0 opacity-40 dark:opacity-60" aria-hidden />
@@ -128,16 +128,16 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
 
         <div className="relative">
           {/* Header pill & Certified badge */}
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <span className="font-display text-primary dark:text-amber text-[0.68rem] font-bold tracking-[0.28em] uppercase">
+          <div className="flex items-center justify-between flex-wrap gap-2 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
+              <span className="font-display text-primary dark:text-amber text-[0.68rem] font-bold tracking-[0.24em] sm:tracking-[0.28em] uppercase shrink-0">
                 YEGNA · GRADE 75
               </span>
 
               {/* View Mode Toggle Pill */}
               <div
                 data-interactive="true"
-                className="flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold relative"
+                className="flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold relative shrink-0"
               >
                 <motion.button
                   type="button"
@@ -395,9 +395,9 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         aria-hidden
       />
 
-      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-4 py-6 sm:px-8 sm:gap-12 sm:py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12">
+      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-4 py-6 sm:px-8 sm:gap-12 sm:py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12 min-w-0 max-w-full">
         {/* left column: copy & CTA */}
-        <div className="relative">
+        <div className="relative w-full min-w-0 max-w-full">
           {/* Soft ambient text-protective scrim halo ensuring 100% crisp legibility over background weave */}
           <div aria-hidden="true" className="text-protective-halo" />
 
@@ -460,28 +460,28 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.95, ease: EASE }}
-            className="border-line bg-panel2/90 card-glow backdrop-blur-xl mt-6 grid gap-3 rounded-2xl border p-4 sm:grid-cols-2"
+            className="border-line bg-panel2/90 card-glow backdrop-blur-xl mt-6 grid gap-3 rounded-2xl border p-3.5 sm:p-4 sm:grid-cols-2 w-full min-w-0 max-w-full"
           >
-            <div className="flex items-start gap-2.5">
+            <div className="flex items-start gap-2.5 min-w-0">
               <Clock className="text-ember mt-0.5 h-4 w-4 shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-ink text-xs font-semibold">
                   {t('Opening Hours', 'የሥራ ሰዓት')}
                 </p>
-                <p className="text-mute text-[0.7rem] leading-tight">
+                <p className="text-mute text-[0.7rem] sm:text-xs leading-snug">
                   Mon – Fri 08:30 AM – 5:30 PM
                   <br />
                   Sat 08:30 AM – 12:30 PM
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-2.5">
+            <div className="flex items-start gap-2.5 min-w-0">
               <MapPin className="text-ember mt-0.5 h-4 w-4 shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-ink text-xs font-semibold">
                   {t('Head Office', 'ዋናው መሥሪያ ቤት')}
                 </p>
-                <p className="text-mute text-[0.7rem] leading-tight">
+                <p className="text-mute text-[0.7rem] sm:text-xs leading-snug break-words">
                   Kazanchis Joburg Plaza, 5th Floor
                   <br />
                   Addis Ababa (2Q7F+H7)
@@ -495,29 +495,29 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center gap-3.5"
+            className="mt-8 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-3.5 w-full min-w-0"
           >
-            <EmberButton href="#quote">
+            <EmberButton href="#quote" className="w-full xs:w-auto justify-center">
               {t('Get Quotations Quickly', 'ፈጣን የዋጋ መጠየቂያ')}
-              <ArrowUpRight className="h-4 w-4" />
+              <ArrowUpRight className="h-4 w-4 shrink-0" />
             </EmberButton>
             <a
               href={`tel:${CONTACT.phoneClean}`}
-              className="border-line bg-panel2/90 text-ink hover:border-ember hover:text-ember group inline-flex items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-bold transition-all duration-300 shadow-2xs hover:shadow-[0_0_20px_rgba(245,124,0,0.25)] hover:-translate-y-0.5"
+              className="border-line bg-panel2/90 text-ink hover:border-ember hover:text-ember group inline-flex w-full xs:w-auto justify-center items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-bold transition-all duration-300 shadow-2xs hover:shadow-[0_0_20px_rgba(245,124,0,0.25)] hover:-translate-y-0.5 min-w-0"
             >
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-ember/15 border border-ember/30 text-ember group-hover:bg-ember group-hover:text-white transition-colors">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ember/15 border border-ember/30 text-ember group-hover:bg-ember group-hover:text-white transition-colors">
                 <Phone className="h-3.5 w-3.5 transition-transform group-hover:scale-110" />
               </span>
-              <span className="font-mono">{CONTACT.phone}</span>
+              <span className="font-mono whitespace-nowrap">{CONTACT.phone}</span>
             </a>
             <a
               href={CONTACT.companyProfileUrl}
               target="_blank"
               rel="noreferrer"
-              className="text-mute hover:text-ink inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors"
+              className="text-mute hover:text-ink inline-flex w-full xs:w-auto justify-center xs:justify-start items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors min-w-0"
             >
-              <FileDown className="h-3.5 w-3.5" />
-              {t('Company Profile (PDF)', 'የድርጅት መገለጫ (PDF)')}
+              <FileDown className="h-3.5 w-3.5 shrink-0" />
+              <span className="whitespace-nowrap">{t('Company Profile (PDF)', 'የድርጅት መገለጫ (PDF)')}</span>
             </a>
           </motion.div>
 
@@ -526,14 +526,14 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.25, ease: EASE }}
-            className="border-line mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-7 sm:grid-cols-4"
+            className="border-line mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-7 sm:grid-cols-4 w-full min-w-0 max-w-full"
           >
             {STATS.map((s) => (
-              <div key={s.label}>
+              <div key={s.label} className="min-w-0">
                 <dd className="font-display text-ink text-2xl font-bold sm:text-3xl">
                   <Counter value={s.value} suffix={s.suffix} />
                 </dd>
-                <dt className="text-mute mt-0.5 text-[0.68rem] font-medium tracking-wider uppercase">
+                <dt className="text-mute mt-0.5 text-[0.68rem] font-medium tracking-wider uppercase truncate">
                   {t(s.label, s.amLabel)}
                 </dt>
               </div>
@@ -542,7 +542,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         </div>
 
         {/* right column: Real 3D Rebar Card Showcase */}
-        <div className="relative">
+        <div className="relative w-full min-w-0 max-w-full">
           <RealRebarCard onQuote={onQuote} />
         </div>
       </div>
