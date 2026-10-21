@@ -31,7 +31,7 @@ export default function InsightsPage() {
   return (
     <PageShell>
       {/* Page Header Banner */}
-      <section className="texture-noise relative overflow-hidden pt-36 pb-16 border-b border-line">
+      <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
           className="absolute inset-0 bg-[radial-gradient(900px_450px_at_50%_0%,rgba(245,124,0,0.12),transparent_70%)]"
           aria-hidden

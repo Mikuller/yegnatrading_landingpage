@@ -48,7 +48,7 @@ export default function HomePage() {
             </div>
             <a
               href="/products/"
-              className="bg-ember text-white hover:bg-ember/90 font-display shrink-0 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-xs sm:text-sm font-bold shadow-md transition-all duration-300 hover:-translate-y-0.5"
+              className="bg-ember text-white hover:bg-ember/90 font-display w-full sm:w-auto text-center justify-center shrink-0 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-xs sm:text-sm font-bold shadow-md transition-all duration-300 hover:-translate-y-0.5"
             >
               <span>{t('View All Products & Specs', 'ሁሉንም ምርቶችና ዝርዝሮች እይ')}</span>
               <ArrowUpRight className="h-4 w-4" />

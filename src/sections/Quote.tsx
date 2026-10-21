@@ -77,7 +77,7 @@ const PRODUCTS = [
 ];
 
 const inputCls =
-  'w-full min-w-0 rounded-xl border border-line bg-panel2 text-ink placeholder:text-mute/60 px-4 py-3 text-xs sm:text-sm outline-none transition-all duration-300 focus:border-ember focus:shadow-[0_0_0_3px_rgba(245,124,0,0.12)]';
+  'w-full min-w-0 rounded-xl border border-line bg-panel2 text-ink placeholder:text-mute/60 px-4 py-3 text-base sm:text-sm outline-none transition-all duration-300 focus:border-ember focus:shadow-[0_0_0_3px_rgba(245,124,0,0.12)]';
 
 const stepNumCls =
   'font-display grid h-6 w-6 sm:h-7 sm:w-7 shrink-0 place-items-center rounded-full border border-ember/50 bg-ember/15 text-[0.7rem] sm:text-[0.72rem] font-bold text-ember';
@@ -743,13 +743,13 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
                                     </div>
 
                                     {/* Right: Stepper Input + Unit Selector + Delete */}
-                                    <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                                    <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-line/40">
                                       {/* Stepper with clear boundary */}
                                       <div className="border-line bg-panel flex items-center rounded-lg border h-8 shrink-0">
                                         <button
                                           type="button"
                                           onClick={() => updateRowQty(row.id, row.qty - 5)}
-                                          className="text-mute hover:text-ink hover:bg-panel2 grid h-8 w-7 place-items-center cursor-pointer transition-colors"
+                                          className="text-mute hover:text-ink hover:bg-panel2 grid h-8 w-7 place-items-center cursor-pointer transition-colors active:scale-90"
                                           aria-label="Decrease quantity"
                                         >
                                           <Minus className="h-3 w-3" />
@@ -759,12 +759,12 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
                                           min="1"
                                           value={row.qty}
                                           onChange={(e) => updateRowQty(row.id, Number(e.target.value))}
-                                          className="font-mono text-ink w-12 text-center text-xs font-bold outline-none bg-transparent"
+                                          className="font-mono text-ink w-12 text-center text-sm sm:text-xs font-bold outline-none bg-transparent"
                                         />
                                         <button
                                           type="button"
                                           onClick={() => updateRowQty(row.id, row.qty + 5)}
-                                          className="text-mute hover:text-ink hover:bg-panel2 grid h-8 w-7 place-items-center cursor-pointer transition-colors"
+                                          className="text-mute hover:text-ink hover:bg-panel2 grid h-8 w-7 place-items-center cursor-pointer transition-colors active:scale-90"
                                           aria-label="Increase quantity"
                                         >
                                           <Plus className="h-3 w-3" />

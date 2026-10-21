@@ -65,7 +65,7 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
+      <div className="relative mx-auto max-w-7xl px-4 py-8 pb-12 sm:px-8 sm:py-10 sm:pb-10">
         <Reveal>
           {/* Top Row: Brand & Live Warehouse Telemetry Beacon */}
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center border-b border-slate-800/80 pb-6 sm:pb-7">
@@ -152,7 +152,7 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('Enter your email address…', 'ኢሜይል አድራሻዎን ያስገቡ…')}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800/90 text-white placeholder:text-slate-400 px-3 py-1.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:border-transparent outline-none"
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800/90 text-white placeholder:text-slate-400 px-3 py-2 sm:py-1.5 text-base sm:text-xs transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:border-transparent outline-none"
                   />
                   <motion.button
                     type="submit"

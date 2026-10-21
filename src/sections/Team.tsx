@@ -370,7 +370,7 @@ function CrewAppreciationWidget() {
             animate={{ scale: 1 }}
             className="flex items-center gap-0.5 rounded-full bg-red-500/15 px-1.5 py-0.2 text-[0.65rem] font-extrabold text-red-600 dark:text-red-400"
           >
-            <Flame className="h-3 w-3 fill-current text-red-500 animate-bounce" />
+            <Flame className="h-3 w-3 fill-current text-red-500 animate-pulse" />
             <span>{streak}x</span>
           </motion.span>
         )}
@@ -591,7 +591,7 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
         role="dialog"
         aria-modal="true"
         aria-label={t(leader.name, leader.amName)}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto pt-20 sm:pt-16"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto pt-16 sm:pt-16 pb-24 sm:pb-16"
       >
         {/* Backdrop */}
         <motion.div
@@ -763,7 +763,7 @@ function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
         role="dialog"
         aria-modal="true"
         aria-label={t(photo.caption, photo.amCaption)}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto pt-20 sm:pt-16"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto pt-16 sm:pt-16 pb-24 sm:pb-16"
       >
         <motion.div
           initial={{ opacity: 0 }}

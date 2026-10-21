@@ -456,9 +456,9 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
 
   return (
     <div className="relative mx-auto flex w-full flex-col items-center select-none">
-      {/* Top Controls Bar: Certified Badge + View Modes + Audio Toggle strictly on the SAME ROW */}
-      <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30 flex-nowrap">
-        <div className="flex items-center gap-1 sm:gap-1.5 flex-nowrap min-w-0">
+      {/* Top Controls Bar: Certified Badge + View Modes + Audio Toggle */}
+      <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30">
+        <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 max-w-[calc(100%-32px)] overflow-x-auto scrollbar-none">
           {/* Certified Pill with Live Radar Pulse */}
           <div className="shrink-0 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2 sm:px-2.5 py-0.5 sm:py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
             <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
@@ -477,10 +477,10 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
             </span>
           </div>
 
-          {/* Mode Selector Pill (Strictly positioned beside to the right of Certified icon on the SAME ROW) */}
+          {/* Mode Selector Pill */}
           <div
             data-interactive="true"
-            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.58rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md flex-nowrap shrink-0 relative"
+            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.56rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md shrink-0 relative"
           >
             {(
               [
@@ -499,7 +499,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                     playAcousticFeedback('clink', soundEnabled);
                   }}
                   whileTap={{ scale: 0.94 }}
-                  className={`relative cursor-pointer rounded-full px-2 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-colors z-10 ${
+                  className={`relative cursor-pointer rounded-full px-1.5 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-colors z-10 ${
                     isActive ? 'text-white' : 'text-mute hover:text-ink'
                   }`}
                 >
@@ -540,7 +540,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
       {/* Diameter Selector Grid: Strictly fits width without any horizontal scrolling */}
       <div
         data-interactive="true"
-        className="mb-2.5 grid grid-cols-8 gap-1 w-full px-0.5 z-20"
+        className="mb-2.5 grid grid-cols-8 gap-0.5 sm:gap-1 w-full px-0.5 z-20"
       >
         {COMMERCIAL_SPECS.map((spec) => {
           const isSelected = activeDiameter === spec.diameter;
@@ -555,7 +555,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.92 }}
               transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-              className={`relative cursor-pointer w-full text-center py-1 sm:py-1.5 text-[0.66rem] font-mono font-bold rounded-lg transition-colors overflow-hidden ${
+              className={`relative cursor-pointer w-full text-center py-1 sm:py-1.5 text-[0.62rem] sm:text-[0.66rem] font-mono font-bold rounded-lg transition-colors overflow-hidden ${
                 isSelected
                   ? 'text-white shadow-xs'
                   : 'bg-panel2/80 text-mute hover:text-ink hover:bg-panel2 border border-line/40'

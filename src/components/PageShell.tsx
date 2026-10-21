@@ -22,11 +22,11 @@ function MobileStickyBar() {
   const { t } = useApp();
 
   return (
-    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xl md:hidden">
+    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pl-[max(0.625rem,env(safe-area-inset-left))] pr-[max(0.625rem,env(safe-area-inset-right))] pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xl md:hidden">
       <div className="mx-auto flex max-w-md items-center justify-between gap-2.5">
         <a
           href={`tel:${CONTACT.phoneClean}`}
-          className="border-line bg-panel2 text-ink hover:text-ember flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all shadow-sm"
+          className="border-line bg-panel2 text-ink hover:text-ember active:scale-95 flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all shadow-sm"
         >
           <Phone className="text-ember h-4 w-4 shrink-0" />
           <span>{t('Call Now', 'ደውል')}</span>
@@ -34,7 +34,7 @@ function MobileStickyBar() {
 
         <a
           href="/contact/#quote"
-          className="bg-ember text-white hover:bg-ember/90 flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold shadow-md transition-all"
+          className="bg-ember text-white hover:bg-ember/90 active:scale-95 flex flex-1 min-h-[44px] items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold shadow-md transition-all"
         >
           <span>{t('Get Quote', 'ዋጋ ጠይቅ')}</span>
           <ArrowUpRight className="h-4 w-4 shrink-0" />
@@ -45,7 +45,7 @@ function MobileStickyBar() {
           target="_blank"
           rel="noreferrer"
           aria-label="Chat on Telegram"
-          className="border-line bg-panel2 text-ink hover:text-ember grid h-11 w-11 shrink-0 place-items-center rounded-xl border text-xs font-bold"
+          className="border-line bg-panel2 text-ink hover:text-ember active:scale-95 grid h-11 w-11 shrink-0 place-items-center rounded-xl border text-xs font-bold"
         >
           <Send className="text-ember h-4 w-4" />
         </a>
@@ -69,11 +69,11 @@ export default function PageShell({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div className="bg-bg text-ink font-body min-h-screen pb-24 md:pb-0">
+    <div className="bg-bg text-ink font-body min-h-screen pb-28 md:pb-0 overflow-x-hidden">
       <RealisticRebarWeaveBackground />
       <ScrollProgress />
       <Nav />
-      <main className="relative z-10">{children}</main>
+      <main className="relative z-10 overflow-x-clip">{children}</main>
       <Footer />
       <MobileStickyBar />
     </div>

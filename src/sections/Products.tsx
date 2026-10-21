@@ -235,34 +235,34 @@ export default function Products() {
               </div>
 
               {/* Quick calculator preview */}
-              <div className="border-line bg-panel2/40 border-t p-6 sm:p-8">
-                <div className="flex flex-wrap items-center justify-between gap-6">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-ember text-white grid h-12 w-12 place-items-center rounded-2xl shadow-md">
-                      <Calculator className="h-6 w-6" />
+              <div className="border-line bg-panel2/40 border-t p-4 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 sm:gap-6">
+                  <div className="flex items-start sm:items-center gap-3.5 sm:gap-4">
+                    <div className="bg-ember text-white grid h-11 w-11 sm:h-12 sm:w-12 place-items-center rounded-2xl shadow-md shrink-0 mt-0.5 sm:mt-0">
+                      <Calculator className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
                     <div>
                       <p className="text-mute text-xs uppercase font-semibold">
                         {t('Selected Metric Specification', 'የተመረጠው የብረት መለኪያ')}
                       </p>
-                      <p className="font-display text-ink text-lg font-bold sm:text-xl">
+                      <p className="font-display text-ink text-base sm:text-xl font-bold break-words">
                         {selectedSize.description} —{' '}
                         <span className="text-ember font-mono">
                           {typeof selectedSize.weightPer12mKg === 'number'
                             ? `${selectedSize.weightPer12mKg} kg / pc`
                             : selectedSize.weightPer12mKg}
                         </span>{' '}
-                        <span className="text-mute font-mono text-sm font-normal">
+                        <span className="text-mute font-mono text-xs sm:text-sm font-normal block sm:inline mt-0.5 sm:mt-0">
                           ({selectedSize.unitWeightKgM} · {selectedSize.pcsPerQuintal})
                         </span>
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 w-full sm:w-auto">
                     <a
                       href="#quote"
-                      className="bg-ember hover:bg-ember/90 text-white font-display inline-flex items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold shadow-md transition-all"
+                      className="bg-ember hover:bg-ember/90 text-white font-display inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-xs font-bold shadow-md transition-all w-full sm:w-auto min-h-[44px]"
                     >
                       <span>{t('Order This Size Now', 'ይህን መጠን ይዘዙ')}</span>
                       <ArrowRight className="h-3.5 w-3.5" />

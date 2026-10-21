@@ -1052,7 +1052,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
             </button>
 
             {/* View Mode Switcher: 3 Spectacular Modes */}
-            <div className="border-line bg-panel flex items-center rounded-2xl border p-1 shadow-sm">
+            <div className="border-line bg-panel flex items-center rounded-2xl border p-1 shadow-sm max-w-full overflow-x-auto scrollbar-none">
               <button
                 type="button"
                 onClick={switchToXRayMode}
@@ -2837,14 +2837,33 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => rebarRackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                  className="text-xs font-bold text-ember inline-flex items-center gap-1 shrink-0 bg-ember/10 hover:bg-ember/20 px-2.5 py-1 rounded-lg"
-                >
-                  <span>{t('All Specs', 'ሙሉ ዝርዝር')}</span>
-                  <ArrowDown className="h-3 w-3 animate-bounce" />
-                </button>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {builtCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={triggerStressTest}
+                      disabled={isStressTesting}
+                      className={`text-[11px] font-bold inline-flex items-center gap-1 rounded-lg px-2.5 py-1 transition-all cursor-pointer ${
+                        isStressTesting
+                          ? 'bg-amber/20 text-amber border border-amber/40 animate-pulse'
+                          : 'bg-slate-900 dark:bg-black text-white hover:border-amber border border-slate-700/80 shadow-xs'
+                      }`}
+                      title={t('Simulate Structural Load', 'ጫናውን ፈትሽ')}
+                    >
+                      <Activity className={`h-3 w-3 ${isStressTesting ? 'animate-spin text-amber' : 'text-amber'}`} />
+                      <span>{t('Simulate', 'ፈትሽ')}</span>
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => rebarRackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                    className="text-[11px] font-bold text-ember inline-flex items-center gap-1 shrink-0 bg-ember/10 hover:bg-ember/20 px-2 py-1 rounded-lg"
+                  >
+                    <span>{t('All Specs', 'ሙሉ')}</span>
+                    <ArrowDown className="h-3 w-3 animate-pulse" />
+                  </button>
+                </div>
               </div>
 
               {/* 1-Tap Quick Rebar Chips for Mobile Users */}
@@ -2926,7 +2945,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                         )}
                       </span>
                     </div>
-                    <ChevronRight className="h-4 w-4 animate-bounce" />
+                    <ChevronRight className="h-4 w-4 text-white" />
                   </motion.div>
                 )}
 
@@ -3189,31 +3208,85 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     </motion.div>
                   )}
 
-                  {/* Guided Next Stage Button */}
+                  {/* Guided Next Stage Button + Inline Simulate Button (when stages remain) */}
                   {nextUnbuiltPart && builtChoices[activePart.id] && (
-                    <motion.button
-                      type="button"
+                    <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <motion.button
+                        type="button"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        onClick={() => {
+                          setActivePartId(nextUnbuiltPart.id);
+                          if (soundEnabled) playSoundFX('rebar');
+                        }}
+                        className="flex-[1.3] flex items-center justify-between rounded-xl border border-ember/40 bg-ember/10 hover:bg-ember/20 text-ember px-3.5 py-2.5 text-xs font-bold transition-all shadow-xs cursor-pointer group"
+                      >
+                        <span className="flex items-center gap-2 truncate">
+                          <span className="grid h-5 w-5 place-items-center rounded-full bg-ember text-white text-[10px] font-bold shrink-0">
+                            0{nextUnbuiltPart.stepNumber}
+                          </span>
+                          <span className="truncate">
+                            {t(
+                              `Next: ${nextUnbuiltPart.label.split(' ')[0]}`,
+                              `ቀጣይ፡ ${nextUnbuiltPart.amLabel.split(' ')[0]}`
+                            )}
+                          </span>
+                        </span>
+                        <ChevronRight className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-1" />
+                      </motion.button>
+
+                      <button
+                        type="button"
+                        onClick={triggerStressTest}
+                        disabled={isStressTesting}
+                        className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all shadow-xs cursor-pointer ${
+                          isStressTesting
+                            ? 'border-amber bg-amber/20 text-amber ring-1 ring-amber/40 animate-pulse'
+                            : 'border-slate-700 bg-slate-900 dark:bg-black hover:bg-slate-800 text-white hover:border-amber ring-1 ring-amber/30'
+                        }`}
+                        title={t('Test Structural Load on currently built stages', 'አሁን ባሉት ክፍሎች ላይ ጫና ፈትሽ')}
+                      >
+                        <Activity className={`h-3.5 w-3.5 shrink-0 ${isStressTesting ? 'animate-spin text-amber' : 'text-amber'}`} />
+                        <span className="truncate">{t('Simulate Load', 'ጫናውን ፈትሽ')}</span>
+                      </button>
+                    </div>
+                  )}
+
+                  {/* When ALL 5 Stages are Complete: Dedicated Prominent Test Action */}
+                  {builtCount === 5 && (
+                    <motion.div
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      onClick={() => {
-                        setActivePartId(nextUnbuiltPart.id);
-                        if (soundEnabled) playSoundFX('rebar');
-                      }}
-                      className="mt-4 flex w-full items-center justify-between rounded-2xl border border-ember/40 bg-ember/10 hover:bg-ember/20 text-ember px-4 py-3 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer group"
+                      className="mt-4 rounded-2xl border border-amber/40 bg-gradient-to-r from-amber/10 via-panel2 to-panel p-3.5 shadow-xs"
                     >
-                      <span className="flex items-center gap-2">
-                        <span className="grid h-6 w-6 place-items-center rounded-full bg-ember text-white text-xs font-bold">
-                          0{nextUnbuiltPart.stepNumber}
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2 text-xs font-bold text-ink">
+                          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                          <span>{t('All 5 Stages Built! Test your frame:', 'ሁሉም 5ቱ ደረጃዎች ተጠናቀዋል! መዋቅሩን ይፈትሹ፡')}</span>
+                        </div>
+                        <span className="font-mono text-[10px] text-amber font-extrabold uppercase">
+                          {t('1,420 kN · 0.18g PGA', '1,420 ኪ.ኒ · 0.18g')}
                         </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={triggerStressTest}
+                        disabled={isStressTesting}
+                        className={`w-full flex items-center justify-center gap-2.5 rounded-xl border py-3 px-4 text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer ${
+                          isStressTesting
+                            ? 'border-amber bg-amber/20 text-amber ring-2 ring-amber/40 animate-pulse'
+                            : 'border-slate-700 bg-slate-900 dark:bg-black hover:bg-slate-800 text-white hover:border-amber ring-1 ring-amber/30'
+                        }`}
+                      >
+                        <Activity className={`h-4 w-4 shrink-0 ${isStressTesting ? 'animate-spin text-amber' : 'text-amber'}`} />
                         <span>
-                          {t(
-                            `Proceed to Next Stage: ${nextUnbuiltPart.label.split(' ')[0]}`,
-                            `ቀጣይ ደረጃ ይጀምሩ፡ ${nextUnbuiltPart.amLabel.split(' ')[0]}`
-                          )}
+                          {isStressTesting
+                            ? t('Simulating Earth Tremor (0.18g)…', 'የመሬት መንቀጥቀጥ ጫና በመሞከር ላይ…')
+                            : t('Simulate Load', 'ጫናውን ፈትሽ (Simulate Load)')}
                         </span>
-                      </span>
-                      <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </motion.button>
+                      </button>
+                    </motion.div>
                   )}
                 </div>
 

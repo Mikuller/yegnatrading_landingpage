@@ -299,7 +299,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
 
       {/* 3. Floating Trust Badge 1: Top-Left (Delivered anywhere) */}
       <motion.div
-        className="border-line bg-panel2/95 text-ink shadow-xl absolute -top-5 -left-3 flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-md sm:-top-6 sm:-left-6 cursor-default z-30"
+        className="border-line bg-panel2/95 text-ink shadow-xl absolute -top-3.5 left-2 flex items-center gap-2 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-md sm:-top-6 sm:-left-6 cursor-default z-30"
         initial={{ opacity: 0, scale: 0.6, y: 16 }}
         animate={
           shouldReduceMotion
@@ -334,7 +334,7 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
 
       {/* 4. Floating Trust Badge 2: Bottom-Right (Any quantity, any size) */}
       <motion.div
-        className="border-line bg-panel2/95 text-ink shadow-xl absolute -right-3 -bottom-5 flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-md sm:-right-6 sm:-bottom-6 cursor-default z-30"
+        className="border-line bg-panel2/95 text-ink shadow-xl absolute right-2 -bottom-3.5 flex items-center gap-2 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-md sm:-right-6 sm:-bottom-6 cursor-default z-30"
         initial={{ opacity: 0, scale: 0.6, y: 16 }}
         animate={
           shouldReduceMotion
@@ -376,7 +376,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
   return (
     <section
       id="top"
-      className="texture-noise relative flex min-h-screen flex-col overflow-hidden pt-[110px] pb-16 lg:pt-[125px]"
+      className="texture-noise relative flex min-h-screen flex-col overflow-x-clip pt-[95px] pb-14 sm:pt-[110px] sm:pb-16 lg:pt-[125px]"
     >
       {/* backdrop textures & ambient gradients */}
       <div className="texture-grid absolute inset-0" aria-hidden />
@@ -393,7 +393,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         aria-hidden
       />
 
-      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-12 px-5 py-8 sm:px-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12">
+      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-4 py-6 sm:px-8 sm:gap-12 sm:py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12">
         {/* left column: copy & CTA */}
         <div className="relative">
           {/* Soft ambient text-protective scrim halo ensuring 100% crisp legibility over background weave */}
@@ -404,10 +404,10 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
-            className="flex flex-wrap items-center gap-3"
+            className="flex flex-wrap items-center gap-2.5 sm:gap-3"
           >
-            <div className="border-line bg-panel2/90 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[0.72rem] font-semibold tracking-[0.2em] uppercase backdrop-blur-sm">
-              <ShieldCheck className="text-ember h-4 w-4" />
+            <div className="border-line bg-panel2/90 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 sm:px-4 sm:py-1.5 text-[0.7rem] sm:text-[0.72rem] font-semibold tracking-[0.16em] sm:tracking-[0.2em] uppercase backdrop-blur-sm">
+              <ShieldCheck className="text-ember h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="text-ink">
                 {t('Trade with Trust & Integrity!', 'ንግድ በእምነትና በታማኝነት!')}
               </span>
@@ -418,7 +418,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
           </motion.div>
 
           {/* Main Headline */}
-          <h1 className="font-display headline-elevated text-ink mt-6 text-[clamp(2.7rem,7.5vw,5.6rem)] leading-[1.02] font-extrabold tracking-[-0.02em]">
+          <h1 className="font-display headline-elevated text-ink mt-5 sm:mt-6 text-[clamp(2.15rem,7.5vw,5.6rem)] leading-[1.04] font-extrabold tracking-[-0.02em]">
             <HeadlineWord word={t('FOR A', 'ለተሻለ')} delay={0.35} />{' '}
             <span className="text-gradient-ember inline-block pr-2">
               <HeadlineWord word={t('STRONGER', 'ጠንካራ')} delay={0.45} />
