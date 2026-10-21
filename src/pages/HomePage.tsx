@@ -7,8 +7,9 @@ import RebarLab, { type QuotePrefill } from '../sections/RebarLab';
 import Why from '../sections/Why';
 import Ceo from '../sections/Ceo';
 import Insights from '../sections/Insights';
+import Faq from '../sections/Faq';
 import Quote from '../sections/Quote';
-import { ArrowUpRight, Award, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export default function HomePage() {
@@ -66,6 +67,8 @@ export default function HomePage() {
 
       {/* Insights Preview */}
       <Insights />
+
+      <Faq />
 
       {/* Request For Quote Form */}
       <Quote prefill={quotePrefill} />

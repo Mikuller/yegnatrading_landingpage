@@ -1,4 +1,23 @@
+# Yegna Trading PLC — https://yegnatradinget.com/
 User-agent: *
+Allow: /
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /cgi-bin/
+Disallow: /xmlrpc.php
+
+# AI / research crawlers — public marketing pages welcome
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://yegnatradinget.com/sitemap.xml
