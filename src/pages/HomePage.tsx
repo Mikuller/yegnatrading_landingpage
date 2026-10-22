@@ -58,20 +58,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive Rebar Lab & Weight Calculator */}
-      <RebarLab onQuote={handleQuote} />
+      {/* Interactive Rebar Lab & Weight Calculator (Offscreen hardware containment) */}
+      <div className="content-auto">
+        <RebarLab onQuote={handleQuote} />
+      </div>
 
       {/* Why Choose Yegna & CEO Message */}
-      <Why />
-      <Ceo />
+      <div className="content-auto">
+        <Why />
+      </div>
+      <div className="content-auto">
+        <Ceo />
+      </div>
 
       {/* Insights Preview */}
-      <Insights />
+      <div className="content-auto">
+        <Insights />
+      </div>
 
-      <Faq />
+      <div className="content-auto">
+        <Faq />
+      </div>
 
       {/* Request For Quote Form */}
-      <Quote prefill={quotePrefill} />
+      <div className="content-auto">
+        <Quote prefill={quotePrefill} />
+      </div>
     </PageShell>
   );
 }

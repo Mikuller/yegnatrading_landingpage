@@ -72,12 +72,21 @@ function MobileStickyBar() {
 
 export default function PageShell({ children }: { children: ReactNode }) {
   const [isNavigating, setIsNavigating] = useState(false);
-  const [targetPath, setTargetPath] = useState('');
   const [isSlowNetwork, setIsSlowNetwork] = useState(false);
 
   useEffect(() => {
     let slowTimer: ReturnType<typeof setTimeout> | null = null;
+    let cancelTimer: ReturnType<typeof setTimeout> | null = null;
+
     if (isNavigating) {
+      // Automatic safety fallback: unmount columns if navigation is aborted or delayed
+      cancelTimer = setTimeout(() => {
+        setIsNavigating(false);
+        try {
+          sessionStorage.removeItem('yegna_page_transition');
+        } catch {}
+      }, 500);
+
       // If page navigation takes longer than 600ms (due to severe network lag), fall back to telemetry recovery
       slowTimer = setTimeout(() => {
         setIsSlowNetwork(true);
@@ -87,6 +96,7 @@ export default function PageShell({ children }: { children: ReactNode }) {
     }
     return () => {
       if (slowTimer) clearTimeout(slowTimer);
+      if (cancelTimer) clearTimeout(cancelTimer);
     };
   }, [isNavigating]);
 
@@ -113,7 +123,6 @@ export default function PageShell({ children }: { children: ReactNode }) {
         // If clicking a link to another page (not same-page hash jump)
         if (navTarget && navTarget !== currentPath && navTarget !== `${currentPath}/` && `${navTarget}/` !== currentPath) {
           e.preventDefault();
-          setTargetPath(navTarget);
           try {
             sessionStorage.setItem('yegna_page_transition', '1');
           } catch {}

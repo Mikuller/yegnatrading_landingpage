@@ -157,7 +157,7 @@ export default function BrandPreloader({ isSlowNetwork = false, onComplete }: Br
           role="status"
         >
           {/* 1. Translucent Frosted Scrim Backdrop: The underlying website is visibly dynamic behind a soft blur */}
-          <div className="absolute inset-0 bg-slate-950/45 dark:bg-black/60 backdrop-blur-xl transition-all" />
+          <div className="absolute inset-0 bg-slate-950/75 dark:bg-black/80 md:backdrop-blur-xl transition-all" />
 
           {/* 2. Ambient Warm Radial Ember Bloom */}
           <div className="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-r from-ember/25 via-amber/15 to-transparent blur-[110px] pointer-events-none animate-pulse" />
@@ -165,7 +165,7 @@ export default function BrandPreloader({ isSlowNetwork = false, onComplete }: Br
           {/* 3. Floating 3D Magnetic Core Monolith (Frosted Glass Acrylic Capsule) */}
           <motion.div
             style={{ rotateX, rotateY, perspective: 900 }}
-            className="relative z-20 flex flex-col items-center justify-center rounded-3xl border border-white/20 dark:border-white/10 bg-slate-900/70 dark:bg-slate-950/80 px-8 py-8 sm:px-10 sm:py-9 shadow-[0_25px_65px_rgba(0,0,0,0.5),0_0_40px_rgba(245,124,0,0.25)] backdrop-blur-2xl"
+            className="relative z-20 flex flex-col items-center justify-center rounded-3xl border border-white/20 dark:border-white/10 bg-slate-900/90 dark:bg-slate-950/95 md:backdrop-blur-2xl px-8 py-8 sm:px-10 sm:py-9 shadow-[0_25px_65px_rgba(0,0,0,0.5),0_0_40px_rgba(245,124,0,0.25)]"
           >
             {/* Concentric Rebar Caliber Gauge Rings Stage */}
             <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
