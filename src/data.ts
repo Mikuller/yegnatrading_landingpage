@@ -346,10 +346,10 @@ export const TEAM = [
     photo: '/images/team-getahun.jpg',
   },
   {
-    name: 'Abreham Andarge',
-    role: 'Customer Relation Manager',
-    amRole: 'የደንበኞች ግንኙነት ሥራ አስኪያጅ',
-    photo: '/images/team-abreham.jpg',
+    name: 'Hanna Girma',
+    role: 'HR Manager',
+    amRole: 'የሰው ኃይል ሥራ አስኪያጅ',
+    photo: '/images/team-hanna.jpg',
   },
   {
     name: 'Hiwot Tilahun',

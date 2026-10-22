@@ -10,6 +10,7 @@ import {
 import {
   Crown,
   Truck,
+  Users,
   HeartHandshake,
   ShieldCheck,
   Cpu,
@@ -39,7 +40,7 @@ export interface TeamLeader {
   amRole: string;
   dept: string;
   amDept: string;
-  category: 'executive' | 'logistics' | 'customer' | 'tech-finance';
+  category: 'executive' | 'logistics' | 'customer' | 'tech-finance' | 'hr';
   photo: string;
   icon: typeof Crown;
   color: string;
@@ -115,33 +116,33 @@ const EXTENDED_TEAM: TeamLeader[] = [
     deskPhone: CONTACT.phones[0]?.tel || CONTACT.phoneClean,
   },
   {
-    id: 'abreham',
-    name: 'Abreham Andarge',
-    amName: 'አብርሃም አንዳርጌ',
-    role: 'Customer Relation Manager',
-    amRole: 'የደንበኞች ግንኙነት ሥራ አስኪያጅ',
-    dept: 'Client Partnerships & Support',
-    amDept: 'የደንበኞች ግንኙነትና ድጋፍ',
-    category: 'customer',
-    photo: '/images/team-abreham.jpg',
-    icon: HeartHandshake,
+    id: 'hanna',
+    name: 'Hanna Girma',
+    amName: 'ሃና ግርማ',
+    role: 'HR Manager',
+    amRole: 'የሰው ኃይል ሥራ አስኪያጅ',
+    dept: 'Human Resources & Talent Management',
+    amDept: 'የሰው ኃይልና ተሰጥኦ አስተዳደር',
+    category: 'hr',
+    photo: '/images/team-hanna.jpg',
+    icon: Users,
     color: '#ea580c',
     quote:
-      'Every contractor is a partner for life. We don’t just supply steel; we ensure peace of mind on the job site.',
+      'Our people are our foundation. Empowering an exceptional, disciplined team translates directly into trusted service on your job site.',
     amQuote:
-      'እያንዳንዱ ተቋራጭ የረጅም ጊዜ አጋራችን ነው። ቁሳቁስ ከማቅረብ ባለፈ በሥራ ቦታ ላይ ሙሉ የአእምሮ ሰላምን እንፈጥራለን።',
+      'የሰው ኃይላችን የኩባንያችን መሠረት ነው። ብቁና ዲሲፕሊን ያለው የሥራ ቡድን መገንባት በሥራ ቦታዎ ላይ አስተማማኝ አገልግሎት እንዲያገኙ ያስችላል።',
     pillars: [
       {
-        en: 'Dedicated project account managers for developers & site engineers',
-        am: 'ለሪል እስቴትና ለኮንስትራክሽን ድርጅቶች ልዩ የደንበኛ እንክብካቤ መስጠት',
+        en: 'Talent development and rigorous safety-first operational culture across all depots',
+        am: 'በሁሉም መጋዘኖቻችን ብቁ የሰው ኃይልን ማፍራት እና ለደህንነት ቅድሚያ የሚሰጥ የአሠራር ባህል መገንባት',
       },
       {
-        en: 'Rapid quotation turnaround with transparent metric conversions',
-        am: 'ትክክለኛ የሜትሪክ እና የኩንታል ስሌትን መሠረት ያደረገ ፈጣን የዋጋ ዝርዝር ማቅረብ',
+        en: 'Ethical human capital governance & employee welfare driving high operational excellence',
+        am: 'ሥነ-ምግባራዊ የሰው ኃይል አስተዳደር እና የሰራተኞች ደህንነትን በማረጋገጥ የላቀ አፈጻጸም ማስመዝገብ',
       },
       {
-        en: 'Direct telephone & Telegram dispatch assistance on active job sites',
-        am: 'በግንባታ ሂደት የሚያጋጥሙ ጥያቄዎችንና ፍላጎቶችን በቅጽበት መፍታት',
+        en: 'Inter-departmental alignment connecting logistics, finance, and site dispatch teams',
+        am: 'የሎጂስቲክስ፣ ፋይናንስና የሥራ ቦታ አቅርቦት ቡድኖች ተቀናጅተው እንዲሠሩ ስትራቴጂካዊ አመራር መስጠት',
       },
     ],
     deskPhone: CONTACT.phones[1]?.tel || CONTACT.phoneClean,
