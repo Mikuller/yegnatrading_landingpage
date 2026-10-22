@@ -65,7 +65,7 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-8 pb-12 sm:px-8 sm:py-10 sm:pb-10">
+      <div className="relative mx-auto max-w-7xl px-4 py-8 pb-24 sm:pb-10 sm:px-8 sm:py-10">
         <Reveal>
           {/* Top Row: Brand & Live Warehouse Telemetry Beacon */}
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center border-b border-slate-800/80 pb-6 sm:pb-7">

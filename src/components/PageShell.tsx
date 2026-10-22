@@ -69,11 +69,11 @@ export default function PageShell({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div className="bg-bg text-ink font-body min-h-screen pb-28 md:pb-0 overflow-x-hidden w-full max-w-full">
+    <div className="bg-bg text-ink font-body min-h-screen overflow-x-hidden w-full max-w-full flex flex-col justify-between">
       <RealisticRebarWeaveBackground />
       <ScrollProgress />
       <Nav />
-      <main className="relative z-10 overflow-x-hidden w-full max-w-full min-w-0">{children}</main>
+      <main className="relative z-10 overflow-x-hidden w-full max-w-full min-w-0 flex-1">{children}</main>
       <Footer />
       <MobileStickyBar />
     </div>
