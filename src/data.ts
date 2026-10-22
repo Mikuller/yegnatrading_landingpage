@@ -337,7 +337,7 @@ export const TEAM = [
     name: 'Ato Zelalem Alene',
     role: 'General Manager',
     amRole: 'ዋና ሥራ አስኪያጅ',
-    photo: '/images/team-zelalem.jpg',
+    photo: '/images/team-zelalem.jpg?v=2',
   },
   {
     name: 'Getahun Assefa',

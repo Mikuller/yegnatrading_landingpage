@@ -21,6 +21,8 @@ import {
   Heart,
   CheckCircle2,
   Eye,
+  Sparkles,
+  Flame,
 } from 'lucide-react';
 import { CSR_PHOTOS, CONTACT } from '../data';
 import { EASE, Reveal, Counter } from '../ui';
@@ -57,7 +59,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'Executive Direction',
     amDept: 'የሥራ አመራርና ስትራቴጂ',
     category: 'executive',
-    photo: '/images/team-zelalem.jpg',
+    photo: '/images/team-zelalem.jpg?v=2',
     icon: Crown,
     color: '#d97706',
     quote:
@@ -149,7 +151,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     name: 'Hiwot Tilahun',
     amName: 'ህይወት ጥላሁን',
     role: 'Finance Director',
-    amRole: 'የፋይናንስ ሥራ አስኪያጅ',
+    amRole: 'የፋይናንስ ዳይሬክትር',
     dept: 'Financial Governance & Audits',
     amDept: 'የፋይናንስ አስተዳደርና ቁጥጥር',
     category: 'tech-finance',
@@ -180,8 +182,8 @@ const EXTENDED_TEAM: TeamLeader[] = [
     id: 'mulugeta',
     name: 'Mulugeta Awoke',
     amName: 'ሙሉጌታ አወቀ',
-    role: 'MIS Manager',
-    amRole: 'የመረጃ ስርዓት (MIS) ሥራ አስኪያጅ',
+    role: 'IT ,ERP Business Transformation Director',
+    amRole: 'የመረጃ እና ኢአርፒ ስርዓት ሥራ አስኪያጅ',
     dept: 'MIS & Digital Inventory Systems',
     amDept: 'የመረጃ ቴክኖሎጂና ሥርዓት',
     category: 'tech-finance',
@@ -209,6 +211,214 @@ const EXTENDED_TEAM: TeamLeader[] = [
     deskPhone: CONTACT.phoneClean,
   },
 ];
+
+// ==========================================
+// Particle Burst & Combo Streaks for Appreciation Micro-Interaction
+// ==========================================
+interface SparkParticle {
+  id: number;
+  x: number;
+  y: number;
+  scale: number;
+  color: string;
+  rotation: number;
+  char?: string;
+}
+
+interface FloatingText {
+  id: number;
+  text: string;
+  x: number;
+}
+
+function CrewAppreciationWidget() {
+  const { t } = useApp();
+  const [claps, setClaps] = useState(385);
+  const [particles, setParticles] = useState<SparkParticle[]>([]);
+  const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([]);
+  const [streak, setStreak] = useState(0);
+  const [isPressed, setIsPressed] = useState(false);
+  const streakTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reduce = useReducedMotion();
+
+  // Hydrate stored claps safely on client to avoid SSR hydration mismatch
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('yegna_team_claps');
+      if (stored) {
+        setClaps(parseInt(stored, 10));
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleClap = () => {
+    setClaps((c) => {
+      const next = c + 1;
+      try {
+        localStorage.setItem('yegna_team_claps', String(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+    setIsPressed(true);
+    setTimeout(() => setIsPressed(false), 240);
+
+    // Track combo streak
+    const nextStreak = streak + 1;
+    setStreak(nextStreak);
+    if (streakTimer.current) clearTimeout(streakTimer.current);
+    streakTimer.current = setTimeout(() => setStreak(0), 1400);
+
+    if (reduce) return;
+
+    // Spawn floating praise badge
+    const textId = Date.now();
+    let cheerText = '+1 👏';
+    if (nextStreak >= 10) cheerText = '⚡ ULTRA CHEER! 🔥';
+    else if (nextStreak >= 6) cheerText = '🚀 SUPER COMBO!';
+    else if (nextStreak >= 3) cheerText = `${nextStreak}x Streak! 🔥`;
+
+    setFloatingTexts((prev) => [
+      ...prev.slice(-3),
+      { id: textId, text: cheerText, x: (Math.random() - 0.5) * 40 },
+    ]);
+    setTimeout(() => {
+      setFloatingTexts((prev) => prev.filter((item) => item.id !== textId));
+    }, 900);
+
+    // Dynamic celebration particle fountain
+    const chars = ['👏', '✨', '⭐', '🔥', '✦', '🎉'];
+    const colors = ['#f59e0b', '#d97706', '#ef4444', '#10b981', '#6366f1', '#ec4899'];
+    const count = nextStreak >= 5 ? 16 : 10;
+    const newSparks: SparkParticle[] = Array.from({ length: count }, (_, i) => ({
+      id: Date.now() + i + Math.random(),
+      x: (Math.random() - 0.5) * 140,
+      y: -35 - Math.random() * 75,
+      scale: 0.7 + Math.random() * 0.7,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: (Math.random() - 0.5) * 140,
+      char: Math.random() > 0.45 ? chars[Math.floor(Math.random() * chars.length)] : undefined,
+    }));
+
+    setParticles((prev) => [...prev.slice(-24), ...newSparks]);
+    setTimeout(() => {
+      setParticles((prev) => prev.filter((p) => !newSparks.some((ns) => ns.id === p.id)));
+    }, 950);
+  };
+
+  return (
+    <div className="relative inline-flex items-center">
+      {/* Floating Combo / Cheer Badges */}
+      <AnimatePresence>
+        {floatingTexts.map((ft) => (
+          <motion.div
+            key={ft.id}
+            initial={{ opacity: 0, y: 0, scale: 0.6 }}
+            animate={{ opacity: 1, y: -45, scale: 1.15 }}
+            exit={{ opacity: 0, y: -65, scale: 0.9 }}
+            transition={{ duration: 0.85, ease: 'easeOut' }}
+            style={{ left: `calc(50% + ${ft.x}px)` }}
+            className="pointer-events-none absolute -top-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-ember to-amber px-2.5 py-0.5 text-[0.7rem] font-black text-white shadow-lg z-30"
+          >
+            {ft.text}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* Ambient Breathing Glow */}
+      <div
+        className="pointer-events-none absolute -inset-1 rounded-full bg-gradient-to-r from-ember/30 via-amber/40 to-ember/30 blur-sm opacity-50 transition-opacity group-hover:opacity-100 animate-pulse"
+        aria-hidden
+      />
+
+      <motion.button
+        type="button"
+        onClick={handleClap}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.9 }}
+        animate={
+          isPressed
+            ? {
+                scale: [1, 0.88, 1.22, 0.95, 1],
+                rotate: [0, -5, 5, -2, 0],
+              }
+            : {}
+        }
+        transition={{ duration: 0.28 }}
+        className="group relative flex items-center gap-2.5 rounded-full border border-ember/50 bg-panel px-4 py-2.5 text-xs font-bold text-ink shadow-md backdrop-blur-md transition-all hover:border-ember hover:shadow-ember/30 cursor-pointer overflow-hidden z-10 select-none"
+        aria-label="Applaud the team"
+      >
+        {/* Subtle Shimmer Sheen */}
+        <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+
+        {/* Clapping Icon with spring rotation */}
+        <motion.span
+          className="text-base select-none inline-block"
+          animate={{ rotate: isPressed ? [0, -22, 22, 0] : [0, -6, 6, 0] }}
+          transition={{ duration: isPressed ? 0.25 : 2.5, repeat: isPressed ? 0 : Infinity }}
+        >
+          👏
+        </motion.span>
+
+        <span className="font-bold text-ink transition-colors group-hover:text-ember">
+          {t('Applaud Our Crew', 'ለቡድናችን አድናቆት ይስጡ')}
+        </span>
+
+        {/* Animated Claps Counter Pill */}
+        <motion.span
+          key={claps}
+          initial={{ scale: 1.35, color: '#f59e0b' }}
+          animate={{ scale: 1, color: '#b45309' }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+          className="rounded-full bg-ember/15 px-2.5 py-0.5 font-mono text-xs font-black text-ember shadow-inner"
+        >
+          {claps}
+        </motion.span>
+
+        {streak > 1 && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="flex items-center gap-0.5 rounded-full bg-red-500/15 px-1.5 py-0.2 text-[0.65rem] font-extrabold text-red-600 dark:text-red-400"
+          >
+            <Flame className="h-3 w-3 fill-current text-red-500 animate-pulse" />
+            <span>{streak}x</span>
+          </motion.span>
+        )}
+      </motion.button>
+
+      {/* Particle Fountain (Stars, Emojis, Sparks) */}
+      <AnimatePresence>
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            initial={{ opacity: 1, x: 0, y: 0, scale: p.scale }}
+            animate={{
+              opacity: 0,
+              x: p.x,
+              y: p.y,
+              rotate: p.rotation,
+              scale: p.scale * 1.3,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            style={{ color: p.color }}
+            className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 select-none z-40"
+          >
+            {p.char ? (
+              <span className="text-sm font-bold">{p.char}</span>
+            ) : (
+              <Sparkles className="h-4 w-4 fill-current" />
+            )}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 // ==========================================
 // 3D Perspective Tilt Card - Clean, Elegant & Digestible
@@ -688,15 +898,9 @@ export default function Team() {
             </Reveal>
           </div>
 
-          {/* Direct Sales Leadership Inquiry */}
-          <div className="flex shrink-0 items-center">
-            <a
-              href="#quote"
-              className="border-line bg-panel2 hover:bg-panel hover:border-ember text-ink inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-bold shadow-2xs transition-all hover:-translate-y-0.5"
-            >
-              <span>{t('Inquire with Sales Leadership', 'ከሽያጭ አመራሩ ጋር ይወያዩ')}</span>
-              <ArrowUpRight className="h-3.5 w-3.5 text-ember" />
-            </a>
+          {/* Micro-Interaction Appreciation Widget */}
+          <div className="flex shrink-0 flex-wrap items-center gap-3">
+            <CrewAppreciationWidget />
           </div>
         </div>
 

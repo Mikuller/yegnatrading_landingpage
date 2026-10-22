@@ -5,7 +5,6 @@ import { CONTACT, STATS } from '../data';
 import { Counter, EASE, EmberButton } from '../ui';
 import { useApp } from '../context/AppContext';
 import InteractiveRebarBundle from '../components/InteractiveRebarBundle';
-import MobileRebarShowcase from '../components/MobileRebarShowcase';
 import type { QuotePrefill } from './RebarLab';
 
 function HeadlineWord({ word, delay }: { word: string; delay: number }) {
@@ -135,10 +134,10 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
                 YEGNA · GRADE 75
               </span>
 
-              {/* View Mode Toggle Pill (Desktop Only) */}
+              {/* View Mode Toggle Pill */}
               <div
                 data-interactive="true"
-                className="hidden md:flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold relative shrink-0"
+                className="flex items-center rounded-full border border-line/60 bg-panel2/80 p-0.5 text-[0.6rem] font-bold relative shrink-0"
               >
                 <motion.button
                   type="button"
@@ -205,89 +204,81 @@ function RealRebarCard({ onQuote }: { onQuote?: (p: QuotePrefill) => void }) {
             )}
           </div>
 
-          {/* REBAR SHOWCASE - Interactive 3D Kinetic Bundle on Desktop / Touch-Optimized Showcase on Mobile */}
+          {/* REBAR SHOWCASE - Interactive 3D Kinetic Bundle or Studio Render */}
           <div className="relative my-3 flex items-center justify-center py-1 sm:my-4 sm:py-2">
-            {/* Mobile Viewport (< 768px): Lightweight touch selector, zero audio context, instant render */}
-            <div className="w-full md:hidden">
-              <MobileRebarShowcase onQuote={onQuote} />
-            </div>
+            {displayMode === 'animated' ? (
+              <InteractiveRebarBundle onQuote={onQuote} />
+            ) : (
+              <div className="relative mx-auto flex items-center justify-center">
+                {/* Radial warm sheen highlight behind steel bundle */}
+                <motion.div
+                  className="absolute inset-0 scale-95 rounded-full bg-radial from-amber/30 via-ember/20 to-transparent blur-2xl"
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: [0.95, 1.15, 0.95],
+                          opacity: [0.35, 0.65, 0.35],
+                        }
+                  }
+                  transition={{
+                    duration: 4.5,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  aria-hidden
+                />
 
-            {/* Desktop Viewport (>= 768px): Full 3D Interactive Bundle / Studio Render */}
-            <div className="w-full hidden md:block">
-              {displayMode === 'animated' ? (
-                <InteractiveRebarBundle onQuote={onQuote} />
-              ) : (
-                <div className="relative mx-auto flex items-center justify-center">
-                  {/* Radial warm sheen highlight behind steel bundle */}
-                  <motion.div
-                    className="absolute inset-0 scale-95 rounded-full bg-radial from-amber/30 via-ember/20 to-transparent blur-2xl"
-                    animate={
-                      shouldReduceMotion
-                        ? {}
-                        : {
-                            scale: [0.95, 1.15, 0.95],
-                            opacity: [0.35, 0.65, 0.35],
-                          }
-                    }
-                    transition={{
-                      duration: 4.5,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                    aria-hidden
+                {/* Floating Rebar Wrapper */}
+                <motion.div
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          y: [-5, 5, -5],
+                          rotateZ: [-0.6, 0.6, -0.6],
+                        }
+                  }
+                  transition={{
+                    duration: 5.5,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="relative z-10 overflow-hidden rounded-2xl"
+                >
+                  <motion.img
+                    src="/rebar-hero.png"
+                    alt="Yegna Grade 75 certified steel reinforcement bars bundle"
+                    width={340}
+                    height={360}
+                    fetchPriority="high"
+                    decoding="async"
+                    className="relative z-10 mx-auto max-h-[300px] w-auto max-w-[280px] object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.38)] transition-transform duration-700 sm:max-h-[360px] sm:max-w-[340px] group-hover/card:scale-[1.02]"
+                    initial={{ opacity: 0, scale: 0.88, y: 30 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5, ease: EASE }}
                   />
 
-                  {/* Floating Rebar Wrapper */}
-                  <motion.div
-                    animate={
-                      shouldReduceMotion
-                        ? {}
-                        : {
-                            y: [-5, 5, -5],
-                            rotateZ: [-0.6, 0.6, -0.6],
-                          }
-                    }
-                    transition={{
-                      duration: 5.5,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                    className="relative z-10 overflow-hidden rounded-2xl"
-                  >
-                    <motion.img
-                      src="/rebar-hero.png"
-                      alt="Yegna Grade 75 certified steel reinforcement bars bundle"
-                      width={340}
-                      height={360}
-                      fetchPriority="high"
-                      decoding="async"
-                      className="relative z-10 mx-auto max-h-[300px] w-auto max-w-[280px] object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.38)] transition-transform duration-700 sm:max-h-[360px] sm:max-w-[340px] group-hover/card:scale-[1.02]"
-                      initial={{ opacity: 0, scale: 0.88, y: 30 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ duration: 1, delay: 0.5, ease: EASE }}
+                  {/* Diagonal Metallic Specular Glint Sweep across steel ribs */}
+                  {!shouldReduceMotion && (
+                    <motion.div
+                      className="pointer-events-none absolute -inset-y-12 -inset-x-20 w-24 -rotate-30 bg-gradient-to-r from-transparent via-white/40 dark:via-white/50 to-transparent blur-[3px] z-20"
+                      animate={{
+                        x: ['-120%', '350%'],
+                        opacity: [0, 1, 0],
+                      }}
+                      transition={{
+                        duration: 2.2,
+                        repeat: Infinity,
+                        repeatDelay: 3.8,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
+                      aria-hidden
                     />
-
-                    {/* Diagonal Metallic Specular Glint Sweep across steel ribs */}
-                    {!shouldReduceMotion && (
-                      <motion.div
-                        className="pointer-events-none absolute -inset-y-12 -inset-x-20 w-24 -rotate-30 bg-gradient-to-r from-transparent via-white/40 dark:via-white/50 to-transparent blur-[3px] z-20"
-                        animate={{
-                          x: ['-120%', '350%'],
-                          opacity: [0, 1, 0],
-                        }}
-                        transition={{
-                          duration: 2.2,
-                          repeat: Infinity,
-                          repeatDelay: 3.8,
-                          ease: [0.4, 0, 0.2, 1],
-                        }}
-                        aria-hidden
-                      />
-                    )}
-                  </motion.div>
-                </div>
-              )}
-            </div>
+                  )}
+                </motion.div>
+              </div>
+            )}
           </div>
 
           {/* Spec Indicators Footer */}
