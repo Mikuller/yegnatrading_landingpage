@@ -24,8 +24,12 @@ import {
   Eye,
   Sparkles,
   Flame,
+  MapPin,
+  Calendar,
+  Award,
+  Maximize2,
 } from 'lucide-react';
-import { CSR_PHOTOS, CONTACT } from '../data';
+import { CSR_PHOTOS, CONTACT, WORKFORCE_EVENT } from '../data';
 import { EASE, Reveal, Counter } from '../ui';
 import { useApp } from '../context/AppContext';
 
@@ -752,10 +756,22 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
 }
 
 // ==========================================
-// CSR Blood Donation Lightbox Modal
+// Photo Lightbox Modal
 // ==========================================
+export interface LightboxPhoto {
+  url: string;
+  caption: string;
+  amCaption: string;
+  category?: string;
+  amCategory?: string;
+  meta?: string;
+  amMeta?: string;
+  description?: string;
+  amDescription?: string;
+}
+
 interface LightboxProps {
-  photo: (typeof CSR_PHOTOS)[0] | null;
+  photo: LightboxPhoto | null;
   onClose: () => void;
 }
 
@@ -793,14 +809,14 @@ function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="border-line bg-panel relative z-10 w-full max-w-2xl overflow-hidden rounded-3xl border shadow-2xl flex flex-col my-auto"
+          className="border-line bg-panel relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl flex flex-col my-auto"
         >
           {/* Uncropped Image Display: NEVER crop, preserves complete authentic photograph */}
           <div className="relative flex items-center justify-center bg-black/75 dark:bg-black/90 p-2 sm:p-4 overflow-hidden">
             <img
               src={photo.url}
               alt={t(photo.caption, photo.amCaption)}
-              className="max-h-[54vh] sm:max-h-[60vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
+              className="max-h-[58vh] sm:max-h-[64vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
             />
             <button
               type="button"
@@ -812,16 +828,25 @@ function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
             </button>
           </div>
           <div className="p-5 sm:p-6 bg-panel">
-            <span className="font-mono text-xs font-bold text-ember uppercase tracking-wider">
-              {t('Community Social Responsibility', 'ማኅበራዊ ኃላፊነትና ተሳትፎ')}
-            </span>
-            <h4 className="font-display text-ink mt-1 text-base sm:text-lg font-bold">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-xs font-bold text-ember uppercase tracking-wider">
+                {t(photo.category || 'Company Culture & Milestone', photo.amCategory || 'የኩባንያችን ባህልና መርሐ-ግብር')}
+              </span>
+              {photo.meta && (
+                <span className="font-mono text-[0.72rem] text-mute font-semibold">
+                  {t(photo.meta, photo.amMeta || photo.meta)}
+                </span>
+              )}
+            </div>
+            <h4 className="font-display text-ink mt-1.5 text-base sm:text-xl font-bold">
               {t(photo.caption, photo.amCaption)}
             </h4>
             <p className="text-mute mt-2 text-xs sm:text-sm leading-relaxed">
               {t(
-                'Yegna Trading PLC team members actively donate blood annually in Addis Ababa to support emergency medical supplies and trauma care.',
-                'የየኛ ትሬዲንግ ቤተሰብ የአደጋ ጊዜ የጤና አገልግሎቶችን ለመደገፍና ሕይወት ለማዳን በየዓመቱ በፈቃደኝነት ደም ይለግሳል።'
+                photo.description ||
+                  'Yegna Trading PLC team members actively engage in collaborative corporate and community events.',
+                photo.amDescription ||
+                  'የየኛ ትሬዲንግ ቤተሰብ በጋራ የቡድንና የማኅበረሰብ አቀፍ መርሐ-ግብሮች ላይ በንቃት ይሳተፋል።'
               )}
             </p>
           </div>
@@ -837,7 +862,7 @@ function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
 export default function Team() {
   const { t } = useApp();
   const [selectedLeader, setSelectedLeader] = useState<TeamLeader | null>(null);
-  const [lightboxPhoto, setLightboxPhoto] = useState<(typeof CSR_PHOTOS)[0] | null>(null);
+  const [lightboxPhoto, setLightboxPhoto] = useState<LightboxPhoto | null>(null);
 
   // Cycling in modal
   const handleNextLeader = useCallback(() => {
@@ -915,6 +940,173 @@ export default function Team() {
               onSelect={(lead) => setSelectedLeader(lead)}
             />
           ))}
+        </div>
+
+        {/* Workforce Culture: Workers' Day Grand Overnight Program */}
+        <div className="mt-20">
+          <Reveal delay={0.08}>
+            <div className="border-line bg-panel card-glow relative overflow-hidden rounded-3xl border p-6 sm:p-10 shadow-xl">
+              {/* Subtle architectural ambient warm illumination */}
+              <div
+                className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-ember/10 blur-3xl"
+                aria-hidden="true"
+              />
+              <div
+                className="pointer-events-none absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-amber/5 blur-3xl"
+                aria-hidden="true"
+              />
+
+              {/* Header with Badges */}
+              <div className="relative z-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 border-b border-line pb-8">
+                <div className="max-w-2xl">
+                  <div className="flex flex-wrap items-center gap-2.5 text-ember">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-ember/15 text-ember">
+                      <Sparkles className="h-4 w-4" />
+                    </div>
+                    <span className="font-display text-xs font-bold tracking-[0.24em] uppercase">
+                      {t('Workforce Culture & Unity', 'የሰራተኞች ባህልና አንድነት')}
+                    </span>
+                    <span className="text-mute/40 hidden sm:inline">•</span>
+                    <span className="font-mono text-xs font-semibold text-mute hidden sm:inline">
+                      {t('Annual Workforce Retreat', 'ዓመታዊ የሰራተኞች ማረፊያ')}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display text-ink mt-3 text-2xl sm:text-4xl font-extrabold tracking-tight">
+                    {t(WORKFORCE_EVENT.title, WORKFORCE_EVENT.amTitle)}
+                  </h3>
+
+                  <p className="font-serif-i text-gradient-ember mt-2 text-lg sm:text-xl font-medium">
+                    "{t(WORKFORCE_EVENT.subtitle, WORKFORCE_EVENT.amSubtitle)}"
+                  </p>
+
+                  <p className="text-mute mt-3 text-xs sm:text-sm leading-relaxed max-w-xl">
+                    {t(WORKFORCE_EVENT.description, WORKFORCE_EVENT.amDescription)}
+                  </p>
+                </div>
+
+                {/* 4 Architectural Milestone Pills */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2.5 shrink-0">
+                  <div className="border-line bg-panel2/80 rounded-2xl border p-3 shadow-2xs">
+                    <div className="flex items-center gap-1.5 text-ember text-[0.68rem] font-bold uppercase tracking-wider">
+                      <MapPin className="h-3 w-3 shrink-0" />
+                      <span>{t('Resort Venue', 'የሪዞርት ቦታ')}</span>
+                    </div>
+                    <p className="font-display text-ink text-xs sm:text-sm font-bold mt-1">
+                      {t('Bisset Babogaya', 'ቢሴት ባቦጋያ')}
+                    </p>
+                    <p className="text-mute text-[0.68rem] font-medium">
+                      {t('Bishoftu, Ethiopia', 'ቢሾፍቱ፣ ኢትዮጵያ')}
+                    </p>
+                  </div>
+
+                  <div className="border-line bg-panel2/80 rounded-2xl border p-3 shadow-2xs">
+                    <div className="flex items-center gap-1.5 text-ember text-[0.68rem] font-bold uppercase tracking-wider">
+                      <Calendar className="h-3 w-3 shrink-0" />
+                      <span>{t('Program Dates', 'የመርሐ-ግብር ቀን')}</span>
+                    </div>
+                    <p className="font-display text-ink text-xs sm:text-sm font-bold mt-1">
+                      {t('August 1 & 2', 'ነሐሴ 1 እና 2')}
+                    </p>
+                    <p className="text-mute text-[0.68rem] font-medium">
+                      {t('Grand Overnight Stay', 'የሁለት ቀናት ማረፊያ')}
+                    </p>
+                  </div>
+
+                  <div className="border-line bg-panel2/80 rounded-2xl border p-3 shadow-2xs">
+                    <div className="flex items-center gap-1.5 text-ember text-[0.68rem] font-bold uppercase tracking-wider">
+                      <Users className="h-3 w-3 shrink-0" />
+                      <span>{t('Attendance', 'ተሳትፎ')}</span>
+                    </div>
+                    <p className="font-display text-ink text-xs sm:text-sm font-bold mt-1">
+                      {t('Entire Workforce', 'መላው ሰራተኞች')}
+                    </p>
+                    <p className="text-mute text-[0.68rem] font-medium">
+                      {t('All-Hands Unity', 'ሙሉ የቡድን ተሳትፎ')}
+                    </p>
+                  </div>
+
+                  <div className="border-line bg-panel2/80 rounded-2xl border p-3 shadow-2xs">
+                    <div className="flex items-center gap-1.5 text-ember text-[0.68rem] font-bold uppercase tracking-wider">
+                      <Award className="h-3 w-3 shrink-0" />
+                      <span>{t('Core Spirit', 'መሪ ቃል')}</span>
+                    </div>
+                    <p className="font-display text-ink text-xs sm:text-sm font-bold mt-1 truncate">
+                      {t('One Team', 'አንድ ቡድን')}
+                    </p>
+                    <p className="text-mute text-[0.68rem] font-medium truncate">
+                      {t('Endless Potential', 'የማይገደብ አቅም')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Showcase Photo Card */}
+              <div className="relative z-10 mt-8">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  onClick={() =>
+                    setLightboxPhoto({
+                      url: WORKFORCE_EVENT.photo,
+                      caption: WORKFORCE_EVENT.title,
+                      amCaption: WORKFORCE_EVENT.amTitle,
+                      category: 'Workforce Culture & Unity',
+                      amCategory: 'የሰራተኞች ባህልና አንድነት',
+                      meta: `${WORKFORCE_EVENT.date} · ${WORKFORCE_EVENT.location}`,
+                      amMeta: `${WORKFORCE_EVENT.amDate} · ${WORKFORCE_EVENT.amLocation}`,
+                      description: WORKFORCE_EVENT.description,
+                      amDescription: WORKFORCE_EVENT.amDescription,
+                    })
+                  }
+                  className="group border-line bg-panel2/80 relative cursor-pointer overflow-hidden rounded-2xl border shadow-lg transition-all duration-300 hover:border-ember/50 hover:shadow-2xl"
+                >
+                  <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/10] w-full overflow-hidden bg-slate-950">
+                    <img
+                      src={WORKFORCE_EVENT.photo}
+                      alt={t(
+                        "Yegna Trading entire workforce at Bisset Babogaya Resort in Bishoftu celebrating Workers' Day",
+                        "የየኛ ትሬዲንግ ሰራተኞች በቢሾፍቱ ቢሴት ባቦጋያ ሪዞርት"
+                      )}
+                      loading="lazy"
+                      decoding="async"
+                      width={1024}
+                      height={682}
+                      className="h-full w-full object-cover object-[center_35%] transition-transform duration-700 ease-out group-hover:scale-103"
+                    />
+
+                    {/* Gradient Overlay & Scrim */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-4 sm:p-6 lg:p-8">
+                      {/* Top Bar with Badges */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-[0.7rem] font-bold text-white backdrop-blur-md border border-white/15">
+                          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>{t('Grand Retreat', 'ታላቅ የሰራተኞች ማረፊያ')}</span>
+                        </span>
+
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-black/65 px-3.5 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur-md border border-white/20 transition-all group-hover:bg-ember group-hover:border-ember group-hover:scale-105">
+                          <Maximize2 className="h-3.5 w-3.5" />
+                          <span>{t('Click to Enlarge', 'ሙሉ ፎቶውን ይመልከቱ')}</span>
+                        </span>
+                      </div>
+
+                      {/* Bottom Caption Overlay */}
+                      <div className="max-w-2xl">
+                        <span className="font-mono text-xs font-semibold text-amber-300 uppercase tracking-widest block mb-1">
+                          {t('Bisset Babogaya Resort · Bishoftu', 'ቢሴት ባቦጋያ ሪዞርት · ቢሾፍቱ')}
+                        </span>
+                        <h4 className="font-display text-white text-lg sm:text-2xl font-bold tracking-tight drop-shadow-md">
+                          {t('The Complete Yegna Family: "One Team, Endless Potential"', 'መላው የየኛ ቤተሰብ፡ "አንድ ቡድን፣ የማይገደብ አቅም"')}
+                        </h4>
+                        <p className="text-white/80 text-xs sm:text-sm mt-1 line-clamp-2 drop-shadow-xs">
+                          {t(WORKFORCE_EVENT.description, WORKFORCE_EVENT.amDescription)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </Reveal>
         </div>
 
         {/* Community Program: Yegna Team Blood Donation Drive ("Heart of Yegna") */}
@@ -998,7 +1190,19 @@ export default function Team() {
                   <motion.div
                     key={p.url}
                     whileHover={{ y: -6 }}
-                    onClick={() => setLightboxPhoto(p)}
+                    onClick={() =>
+                      setLightboxPhoto({
+                        url: p.url,
+                        caption: p.caption,
+                        amCaption: p.amCaption,
+                        category: 'Social Responsibility & Impact',
+                        amCategory: 'ማኅበራዊ ኃላፊነትና ተሳትፎ',
+                        description:
+                          'Yegna Trading PLC team members actively donate blood annually in Addis Ababa to support emergency medical supplies and trauma care.',
+                        amDescription:
+                          'የየኛ ትሬዲንግ ቤተሰብ የአደጋ ጊዜ የጤና አገልግሎቶችን ለመደገፍና ሕይወት ለማዳን በየዓመቱ በፈቃደኝነት ደም ይለግሳል።',
+                      })
+                    }
                     className="group border-line bg-panel2/60 relative cursor-pointer overflow-hidden rounded-2xl border shadow-sm transition-all hover:border-ember/50 hover:shadow-lg"
                   >
                     <div className="relative h-60 w-full overflow-hidden">

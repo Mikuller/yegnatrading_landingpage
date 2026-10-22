@@ -365,6 +365,28 @@ export const TEAM = [
   },
 ];
 
+export const WORKFORCE_EVENT = {
+  title: "Workers' Day Grand Overnight Program",
+  amTitle: 'የሰራተኞች ቀን ታላቅ የቢሾፍቱ ማረፊያ መርሐ-ግብር',
+  subtitle: 'One Team · Endless Potential',
+  amSubtitle: 'አንድ ቡድን · የማይገደብ አቅም',
+  date: 'August 1 & 2',
+  amDate: 'ነሐሴ 1 እና 2 ቀን',
+  location: 'Bisset Babogaya Resort, Bishoftu',
+  amLocation: 'ቢሴት ባቦጋያ ሪዞርት፣ ቢሾፍቱ',
+  photo: '/images/workers-day-retreat.jpg',
+  description:
+    'Celebrated by the entire workforce at Bisset Babogaya Resort in Bishoftu. The grand event fostered team unity, high morale, and mutual company-employee appreciation.',
+  amDescription:
+    'መላው የየኛ ትሬዲንግ ቤተሰብ በቢሾፍቱ ቢሴት ባቦጋያ ሪዞርት ባሳለፉት የሁለት ቀናት ታላቅ የማረፊያ መርሐ-ግብር የቡድን አንድነትን፣ የላቀ የሥራ ተነሳሽነትን እና የጋራ አድናቆትን በደመቀ ሁኔታ አክብረዋል።',
+  highlights: [
+    { label: 'Venue', amLabel: 'ቦታ', value: 'Bisset Babogaya Resort', amValue: 'ቢሴት ባቦጋያ ሪዞርት' },
+    { label: 'Timeline', amLabel: 'ቀን', value: 'August 1 & 2', amValue: 'ነሐሴ 1 እና 2' },
+    { label: 'Participation', amLabel: 'ተሳትፎ', value: 'Entire Workforce', amValue: 'መላው ሰራተኞች' },
+    { label: 'Core Spirit', amLabel: 'መሪ ቃል', value: 'One Team, Endless Potential', amValue: 'አንድ ቡድን፣ የማይገደብ አቅም' },
+  ],
+};
+
 export const CSR_PHOTOS = [
   {
     url: '/images/blood-1.jpg',
