@@ -128,10 +128,10 @@ export default function PageShell({ children }: { children: ReactNode }) {
           } catch {}
           setIsNavigating(true);
 
-          // Fast, snappy architectural column wipe transition (~220ms)
+          // Fast, snappy fluid curtain sweep with ember laser blade (~240ms)
           setTimeout(() => {
             window.location.href = href;
-          }, 220);
+          }, 240);
         }
       }
     };
