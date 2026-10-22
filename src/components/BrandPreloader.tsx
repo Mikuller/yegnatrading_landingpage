@@ -24,6 +24,13 @@ const SLOW_NETWORK_PHASES = [
 ];
 
 export default function BrandPreloader({ isSlowNetwork = false, onComplete }: BrandPreloaderProps) {
+  // Prevent SSR hydration mismatch (#418) and keep initial static HTML 100% clean
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const { t } = useApp();
   const [phaseIndex, setPhaseIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -134,6 +141,8 @@ export default function BrandPreloader({ isSlowNetwork = false, onComplete }: Br
 
   const activePhases = isSlowNetwork ? SLOW_NETWORK_PHASES : FIRST_VISIT_PHASES;
   const currentPhase = activePhases[phaseIndex] || activePhases[0];
+
+  if (!hasMounted) return null;
 
   return (
     <AnimatePresence>

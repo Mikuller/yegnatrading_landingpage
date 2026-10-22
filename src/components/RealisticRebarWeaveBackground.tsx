@@ -19,15 +19,13 @@ export default function RealisticRebarWeaveBackground({
     return false;
   });
 
-  // Mobile / Touch screen detection: bypass heavy canvas rAF on mobile devices
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
-    }
-    return false;
-  });
+  // Mobile / Touch screen detection: initialized consistently with SSR to eliminate hydration error #418
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
+    // Settle mobile detection immediately on mount without hydration mismatch
+    setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
     };

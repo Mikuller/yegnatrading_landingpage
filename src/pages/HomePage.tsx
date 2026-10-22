@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PageShell from '../components/PageShell';
 import Hero from '../sections/Hero';
 import Marquee from '../sections/Marquee';
 import Products from '../sections/Products';
@@ -22,7 +21,7 @@ export default function HomePage() {
   };
 
   return (
-    <PageShell>
+    <>
       <Hero onQuote={handleQuote} />
       <Marquee />
 
@@ -84,6 +83,6 @@ export default function HomePage() {
       <div className="content-auto">
         <Quote prefill={quotePrefill} />
       </div>
-    </PageShell>
+    </>
   );
 }

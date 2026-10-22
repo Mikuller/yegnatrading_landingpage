@@ -1,10 +1,11 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import BrandPreloader from './BrandPreloader';
 import ArchitecturalTransition from './ArchitecturalTransition';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowUpRight, Phone, Send } from 'lucide-react';
 import { CONTACT } from '../data';
 import { useApp } from '../context/AppContext';
+import { useNavigation } from '../context/NavigationContext';
 import Nav from '../sections/Nav';
 import Footer from '../sections/Footer';
 import RealisticRebarWeaveBackground from './RealisticRebarWeaveBackground';
@@ -27,7 +28,7 @@ function NavigationProgress({ isNavigating }: { isNavigating: boolean }) {
       <motion.div
         initial={{ x: '-100%' }}
         animate={{ x: '0%' }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
         className="h-full w-full bg-gradient-to-r from-amber via-ember to-amber-300 shadow-[0_0_12px_rgba(245,124,0,0.9)]"
       />
     </div>
@@ -71,85 +72,7 @@ function MobileStickyBar() {
 }
 
 export default function PageShell({ children }: { children: ReactNode }) {
-  const [isNavigating, setIsNavigating] = useState(false);
-  const [isSlowNetwork, setIsSlowNetwork] = useState(false);
-
-  useEffect(() => {
-    let slowTimer: ReturnType<typeof setTimeout> | null = null;
-    let cancelTimer: ReturnType<typeof setTimeout> | null = null;
-
-    if (isNavigating) {
-      // Automatic safety fallback: unmount columns if navigation is aborted or delayed
-      cancelTimer = setTimeout(() => {
-        setIsNavigating(false);
-        try {
-          sessionStorage.removeItem('yegna_page_transition');
-        } catch {}
-      }, 500);
-
-      // If page navigation takes longer than 600ms (due to severe network lag), fall back to telemetry recovery
-      slowTimer = setTimeout(() => {
-        setIsSlowNetwork(true);
-      }, 600);
-    } else {
-      setIsSlowNetwork(false);
-    }
-    return () => {
-      if (slowTimer) clearTimeout(slowTimer);
-      if (cancelTimer) clearTimeout(cancelTimer);
-    };
-  }, [isNavigating]);
-
-  useEffect(() => {
-    // Intercept internal link navigations for sleek progress feedback & frosted acrylic lens transition
-    const handleAnchorClick = (e: MouseEvent) => {
-      // Ignore modified clicks (Ctrl, Cmd, Shift, Alt, middle-click)
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-
-      const target = (e.target as HTMLElement).closest('a');
-      if (!target) return;
-      const href = target.getAttribute('href');
-      if (!href) return;
-
-      if (
-        href.startsWith('/') &&
-        !href.startsWith('//') &&
-        target.getAttribute('target') !== '_blank' &&
-        !target.hasAttribute('download')
-      ) {
-        const [navTarget] = href.split('#');
-        const currentPath = window.location.pathname;
-
-        // If clicking a link to another page (not same-page hash jump)
-        if (navTarget && navTarget !== currentPath && navTarget !== `${currentPath}/` && `${navTarget}/` !== currentPath) {
-          e.preventDefault();
-          try {
-            sessionStorage.setItem('yegna_page_transition', '1');
-          } catch {}
-          setIsNavigating(true);
-
-          // Fast, snappy depth dissolve & horizon blade flare (~190ms)
-          setTimeout(() => {
-            window.location.href = href;
-          }, 190);
-        }
-      }
-    };
-
-    const handlePageShow = () => {
-      setIsNavigating(false);
-      setIsSlowNetwork(false);
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-    window.addEventListener('pageshow', handlePageShow);
-    window.addEventListener('popstate', handlePageShow);
-    return () => {
-      document.removeEventListener('click', handleAnchorClick);
-      window.removeEventListener('pageshow', handlePageShow);
-      window.removeEventListener('popstate', handlePageShow);
-    };
-  }, []);
+  const { isNavigating } = useNavigation();
 
   useEffect(() => {
     // If there is a hash in the URL on initial mount, scroll to it smoothly
@@ -166,20 +89,33 @@ export default function PageShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="bg-bg text-ink font-body min-h-screen overflow-x-hidden w-full max-w-full flex flex-col justify-between">
-      {/* Animation 1: Cinematic Cold-Boot Forge Intro (First visit only, or severe network lag fallback) */}
-      <BrandPreloader isSlowNetwork={isSlowNetwork} />
+      {/* Animation 1: Cinematic Cold-Boot Forge Intro (First cold visit only) */}
+      <BrandPreloader />
 
-      {/* Animation 2: Architectural Staggered 4-Column Wipe Transition (Page redirects / navigation) */}
-      <ArchitecturalTransition isNavigating={isNavigating} />
+      {/* Animation 2: Architectural Transition with Sculpted Logo Medallion (Instant, 0 blank screen) */}
+      <ArchitecturalTransition />
 
-      {/* Lightweight Top Ambient Progress Beam */}
+      {/* Zero-CPU Blueprint Grid on Mobile, Full Interactive Weave on Desktop */}
+      <RealisticRebarWeaveBackground />
+
+      {/* Scroll Reading Depth Progress Indicator */}
+      <ScrollProgress />
+
+      {/* Ultra-Fast Top Edge Laser Beam */}
       <NavigationProgress isNavigating={isNavigating} />
 
-      <RealisticRebarWeaveBackground />
-      <ScrollProgress />
+      {/* Primary Navigation Bar with Mega-Dropdown */}
       <Nav />
-      <main className="relative z-10 overflow-x-hidden w-full max-w-full min-w-0 flex-1">{children}</main>
+
+      {/* Main Page Content Body */}
+      <main className="relative z-10 overflow-x-hidden w-full max-w-full min-w-0 flex-1">
+        {children}
+      </main>
+
+      {/* Full Multi-Column Footer with Amharic Badges & Map */}
       <Footer />
+
+      {/* Mobile Sticky Quick Action Dock */}
       <MobileStickyBar />
     </div>
   );

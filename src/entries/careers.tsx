@@ -1,14 +1,9 @@
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import '../style.css';
-import { AppProvider } from '../context/AppContext';
-import CareersPage from '../pages/CareersPage';
+import App from '../App';
 
 const container = document.getElementById('root')!;
-const app = (
-  <AppProvider>
-    <CareersPage />
-  </AppProvider>
-);
+const app = <App />;
 
 if (container.hasChildNodes()) {
   hydrateRoot(container, app);

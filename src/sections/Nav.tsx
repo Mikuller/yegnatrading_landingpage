@@ -15,6 +15,7 @@ import {
 import { CONTACT, NAV_LINKS, SOCIALS } from '../data';
 import { BrandIcon, EASE } from '../ui';
 import { useApp } from '../context/AppContext';
+import { useNavigation, normalizePath } from '../context/NavigationContext';
 
 const BRAND_ICON_COLORS: Record<string, string> = {
   Telegram: 'text-[#229ED9]',
@@ -56,14 +57,15 @@ export function Logo({ className = '' }: { className?: string }) {
 
 export default function Nav() {
   const { theme, toggleTheme, lang, toggleLanguage, t } = useApp();
+  const { currentPath } = useNavigation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState('/');
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentPath(window.location.pathname);
-    }
+    setOpen(false);
+  }, [currentPath]);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -71,17 +73,17 @@ export default function Nav() {
   }, []);
 
   const isLinkActive = (href: string) => {
-    if (href === '/') {
-      return currentPath === '/' || currentPath === '' || currentPath === '/index.html';
+    const normHref = normalizePath(href);
+    if (normHref === '/') {
+      return currentPath === '/' || currentPath === '';
     }
-    return currentPath.startsWith(href);
+    return currentPath === normHref || currentPath.startsWith(`${normHref}/`);
   };
 
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
+      initial={false}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
       className="fixed inset-x-0 top-0 z-50"
     >
       {/* Top utility contact bar (Customer Support, Email, Head Office, Hours, Socials with logos) */}

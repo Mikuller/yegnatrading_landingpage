@@ -1,4 +1,3 @@
-import PageShell from '../components/PageShell';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Insights from '../sections/Insights';
 import { ArrowUpRight, BookOpen, CheckCircle2, HelpCircle, Newspaper, Sparkles, TrendingUp } from 'lucide-react';
@@ -29,7 +28,7 @@ export default function InsightsPage() {
   ];
 
   return (
-    <PageShell>
+    <>
       {/* Page Header Banner */}
       <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
@@ -123,6 +122,6 @@ export default function InsightsPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

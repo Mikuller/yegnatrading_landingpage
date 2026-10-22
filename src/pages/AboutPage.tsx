@@ -1,4 +1,3 @@
-import PageShell from '../components/PageShell';
 import Breadcrumbs from '../components/Breadcrumbs';
 import About from '../sections/About';
 import Ceo from '../sections/Ceo';
@@ -13,7 +12,7 @@ export default function AboutPage() {
   const { t } = useApp();
 
   return (
-    <PageShell>
+    <>
       {/* Page Header Banner */}
       <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
@@ -109,6 +108,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }
