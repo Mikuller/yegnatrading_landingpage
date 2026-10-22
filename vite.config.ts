@@ -15,6 +15,19 @@ export default defineConfig({
         careers: resolve(__dirname, 'careers/index.html'),
         contact: resolve(__dirname, 'contact/index.html'),
       },
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules/motion')) {
+            return 'vendor-motion';
+          }
+          if (id.includes('node_modules/lucide-react')) {
+            return 'vendor-icons';
+          }
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react';
+          }
+        },
+      },
     },
   },
 });
