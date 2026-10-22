@@ -128,10 +128,10 @@ export default function PageShell({ children }: { children: ReactNode }) {
           } catch {}
           setIsNavigating(true);
 
-          // Fast, snappy fluid curtain sweep with ember laser blade (~240ms)
+          // Fast, snappy depth dissolve & horizon blade flare (~190ms)
           setTimeout(() => {
             window.location.href = href;
-          }, 240);
+          }, 190);
         }
       }
     };

@@ -24,10 +24,10 @@ export default function ArchitecturalTransition({ isNavigating }: ArchitecturalT
         // Safe ignore
       }
 
-      // Finish reveal exit after curtain sweeps away (~280ms)
+      // Smooth dissolution finishes in ~260ms
       const timer = setTimeout(() => {
         setIsRevealing(false);
-      }, 300);
+      }, 280);
 
       return () => clearTimeout(timer);
     }
@@ -55,89 +55,76 @@ export default function ArchitecturalTransition({ isNavigating }: ArchitecturalT
       className="fixed inset-0 z-[95] pointer-events-none select-none overflow-hidden"
     >
       {/* =========================================================================
-          EXIT SWEEP: Departing Page -> Curtain surges UP from bottom with Laser Blade
+          EXIT: Departing Page -> Depth Dissolve & Horizon Laser Blade Flare
           ========================================================================= */}
       {isNavigating && (
-        <motion.div
-          key="exit-curtain"
-          initial={{ y: '100%' }}
-          animate={{ y: '0%' }}
-          transition={{
-            duration: 0.25,
-            ease: [0.77, 0, 0.175, 1], // High-speed fluid aerodynamic curve
-          }}
-          className="relative h-full w-full bg-gradient-to-b from-[#060911] via-[#090d18] to-[#04060b] shadow-[0_-20px_50px_rgba(0,0,0,0.8)] flex flex-col justify-between overflow-hidden"
-        >
-          {/* 1. Leading Edge: High-Intensity Blazing Ember Laser Blade */}
-          <div className="relative w-full z-20">
-            {/* Ambient Warm Volumetric Bloom */}
-            <div className="absolute -top-12 inset-x-0 h-24 bg-gradient-to-b from-transparent via-ember/40 to-transparent blur-xl pointer-events-none" />
+        <div className="relative h-full w-full flex items-center justify-center">
+          {/* 1. Subtle Cinematic Depth Veil: Keeps page visible with soft depth blur */}
+          <motion.div
+            key="depth-veil"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
+            className="absolute inset-0 bg-slate-950/20 dark:bg-black/30 backdrop-blur-[2.5px]"
+          />
+
+          {/* 2. Top Horizon Laser Blade (High-Intensity Blazing Beam) */}
+          <div className="absolute inset-x-0 top-0 z-30">
+            {/* Ambient Volumetric Bloom cascading down */}
+            <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ember/30 via-amber/15 to-transparent blur-2xl" />
 
             {/* Glowing Laser Rim Core */}
-            <div className="relative h-[3px] w-full bg-gradient-to-r from-amber-500/10 via-amber-300 via-white to-amber-500/10 shadow-[0_0_24px_rgba(245,124,0,1),0_0_50px_rgba(251,191,36,0.85)]" />
+            <div className="relative h-[3px] w-full bg-gradient-to-r from-amber-500/10 via-amber-300 via-white to-amber-500/10 shadow-[0_0_24px_rgba(245,124,0,1),0_0_48px_rgba(251,191,36,0.9)]" />
 
-            {/* High-Speed Traveling Laser Spark Sweep */}
+            {/* High-Speed Anamorphic Flare sweeping across top horizon */}
             <motion.div
               initial={{ x: '-100%' }}
-              animate={{ x: '200%' }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="absolute -top-2 h-2 w-48 bg-gradient-to-r from-transparent via-white to-transparent blur-sm"
+              animate={{ x: '100%' }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute -top-1.5 h-3 w-3/4 mx-auto bg-gradient-to-r from-transparent via-white via-amber-200 to-transparent blur-xs shadow-[0_0_30px_#fff]"
             />
           </div>
 
-          {/* 2. Curtain Interior: Precision Structural Blueprint Grid & Watermark */}
-          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(245,124,0,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(245,124,0,0.4)_1px,transparent_1px)] [background-size:32px_32px]" />
-
-          {/* 3. High-End Monolith Center Brand Pulse */}
-          <div className="relative z-10 m-auto flex flex-col items-center justify-center gap-2">
-            <motion.div
-              initial={{ scale: 0.88, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.18, delay: 0.05 }}
-              className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-slate-900/80 border border-ember/30 shadow-[0_0_30px_rgba(245,124,0,0.25)] backdrop-blur-md"
-            >
-              <span className="h-2 w-2 rounded-full bg-ember shadow-[0_0_8px_#f57c00] animate-ping" />
-              <span className="font-display text-[0.72rem] font-extrabold tracking-[0.3em] uppercase text-slate-100">
-                YEGNA TRADING
-              </span>
-              <span className="text-[0.62rem] font-mono text-amber font-bold">GRADE 75</span>
-            </motion.div>
-          </div>
-
-          {/* Bottom aesthetic anchor */}
-          <div className="h-1 w-full" />
-        </motion.div>
+          {/* 3. Floating Minimalist Fast-Route Capsule in Center */}
+          <motion.div
+            initial={{ scale: 0.88, opacity: 0, y: 12 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-20 flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-amber-500/35 bg-slate-900/90 dark:bg-slate-950/95 text-slate-100 shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_30px_rgba(245,124,0,0.3)] backdrop-blur-md"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
+            </span>
+            <span className="font-display text-[0.7rem] font-extrabold tracking-[0.26em] uppercase text-slate-100">
+              YEGNA · DISPATCH
+            </span>
+            <span className="text-amber text-xs font-mono">⚡</span>
+          </motion.div>
+        </div>
       )}
 
       {/* =========================================================================
-          ENTER REVEAL: Arriving Page -> Curtain sweeps UP and OUT offscreen
+          ENTER: Arriving Page -> Horizon Blade Flash Dissolves Away
           ========================================================================= */}
       {isRevealing && !isNavigating && (
-        <motion.div
-          key="enter-curtain"
-          initial={{ y: '0%' }}
-          animate={{ y: '-100%' }}
-          transition={{
-            duration: 0.24,
-            ease: [0.77, 0, 0.175, 1],
-          }}
-          className="relative h-full w-full bg-gradient-to-b from-[#060911] via-[#090d18] to-[#04060b] shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col justify-between overflow-hidden"
-        >
-          {/* Top anchor */}
-          <div className="h-1 w-full" />
+        <div className="relative h-full w-full">
+          {/* Dissolving Horizon Blade Flare */}
+          <motion.div
+            initial={{ scaleX: 0.9, opacity: 1 }}
+            animate={{ scaleX: 1.15, opacity: 0 }}
+            transition={{ duration: 0.26, ease: 'easeOut' }}
+            className="absolute inset-x-0 top-0 h-[3.5px] bg-gradient-to-r from-transparent via-amber-300 via-white to-transparent shadow-[0_0_30px_rgba(245,124,0,1)]"
+          />
 
-          {/* Curtain Interior Grid */}
-          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(245,124,0,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(245,124,0,0.4)_1px,transparent_1px)] [background-size:32px_32px]" />
-
-          {/* Trailing Bottom Edge: Blazing Laser Blade revealing the new page */}
-          <div className="relative w-full z-20">
-            {/* Glowing Laser Rim Core */}
-            <div className="relative h-[3px] w-full bg-gradient-to-r from-amber-500/10 via-amber-300 via-white to-amber-500/10 shadow-[0_0_24px_rgba(245,124,0,1),0_0_50px_rgba(251,191,36,0.85)]" />
-
-            {/* Ambient Bloom */}
-            <div className="absolute -bottom-8 inset-x-0 h-16 bg-gradient-to-t from-transparent via-ember/40 to-transparent blur-xl pointer-events-none" />
-          </div>
-        </motion.div>
+          {/* Dissolving Volumetric Ambient Top Bloom */}
+          <motion.div
+            initial={{ opacity: 0.7 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+            className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-amber-500/25 via-ember/15 to-transparent blur-2xl"
+          />
+        </div>
       )}
     </div>
   );
