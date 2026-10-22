@@ -38,7 +38,7 @@ function MobileStickyBar() {
   const { t } = useApp();
 
   return (
-    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pl-[max(0.625rem,env(safe-area-inset-left))] pr-[max(0.625rem,env(safe-area-inset-right))] pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xl md:hidden">
+    <div className="border-line bg-panel/98 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pl-[max(0.625rem,env(safe-area-inset-left))] pr-[max(0.625rem,env(safe-area-inset-right))] pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xs md:hidden">
       <div className="mx-auto flex max-w-md items-center justify-between gap-2.5">
         <a
           href={`tel:${CONTACT.phoneClean}`}

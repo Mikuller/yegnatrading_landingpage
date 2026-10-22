@@ -77,6 +77,7 @@ html.dark {
 }
 
 html {
+  background-color: var(--color-bg);
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
@@ -447,3 +448,30 @@ button, a, input, select, textarea {
   background-size: 200% 100%;
 }
 
+
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* High-performance mobile scrolling & touch responsiveness */
+@media (max-width: 767px) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+/* Offscreen section containment for smooth 60-120 FPS scrolling */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
