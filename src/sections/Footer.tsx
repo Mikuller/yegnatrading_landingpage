@@ -89,15 +89,10 @@ export default function Footer() {
                   />
                 </a>
 
-                {/* Live Factory & Stock Telemetry Beacon */}
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[0.65rem] font-semibold text-emerald-400 backdrop-blur-sm shadow-xs">
-                  <span className="relative flex h-1.5 w-1.5">
-                    {!shouldReduceMotion && (
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    )}
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-                  </span>
-                  <span>{t('Central Depot: Stock Verified · 8–32mm', 'ዋና መጋዘን፡ ክፍት · ስቶክ ተረጋግጧል (8–32ሚሜ)')}</span>
+                {/* Verified Warehouse Stock Badge */}
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-medium text-slate-300 shadow-2xs">
+                  <ShieldCheck className="h-3.5 w-3.5 text-ember shrink-0" />
+                  <span>{t('Central Depot: 8–32mm Certified Stock', 'ዋና መጋዘን፡ ከ8–32ሚሜ የተረጋገጠ ስቶክ')}</span>
                 </div>
               </div>
 

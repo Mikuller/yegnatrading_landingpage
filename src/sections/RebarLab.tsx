@@ -1407,30 +1407,17 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
               }`}
             >
               <div className="flex items-center gap-2 text-ink">
-                <span className="relative flex h-2.5 w-2.5 shrink-0">
-                  <span
-                    className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
-                      collapsedState
-                        ? 'bg-red-500'
-                        : isStressTesting
-                        ? 'bg-amber'
-                        : loadTestResult?.passed
-                        ? 'bg-emerald-500'
-                        : 'bg-ember'
-                    } opacity-75`}
-                  ></span>
-                  <span
-                    className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                      collapsedState
-                        ? 'bg-red-500'
-                        : isStressTesting
-                        ? 'bg-amber'
-                        : loadTestResult?.passed
-                        ? 'bg-emerald-500'
-                        : 'bg-ember'
-                    }`}
-                  ></span>
-                </span>
+                <span
+                  className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                    collapsedState
+                      ? 'bg-red-500'
+                      : isStressTesting
+                      ? 'bg-amber'
+                      : loadTestResult?.passed
+                      ? 'bg-emerald-500'
+                      : 'bg-ember'
+                  }`}
+                />
                 <span className="font-medium text-xs">
                   {collapsedState
                     ? t(
@@ -2105,7 +2092,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                       />
                       {/* Laser Reticle Target on Scan Line */}
                       <circle cx={splitCutX} cy="245" r="7" fill={laserCyan} />
-                      <circle cx={splitCutX} cy="245" r="14" fill="none" stroke={laserCyan} strokeWidth="1.5" className="animate-ping" />
+                      <circle cx={splitCutX} cy="245" r="14" fill="none" stroke={laserCyan} strokeWidth="1.5" opacity="0.6" />
                       <text
                         x={splitCutX + (splitCutX > 500 ? -12 : 12)}
                         y="48"
@@ -2800,9 +2787,9 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                 </span>
               </p>
               <div className="flex items-center gap-4 text-[11px]">
-                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  {t('Built Parts', 'የተጠናቀቁ')}: {builtCount}/5
+                <span className="flex items-center gap-1.5 text-mute font-semibold">
+                  <span>{t('Built Parts', 'የተጠናቀቁ')}:</span>
+                  <strong className="text-ink font-bold">{builtCount}/5</strong>
                 </span>
                 <button
                   type="button"
@@ -3262,8 +3249,8 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
                     >
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 text-xs font-bold text-ink">
-                          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                          <span>{t('All 5 Stages Built! Test your frame:', 'ሁሉም 5ቱ ደረጃዎች ተጠናቀዋል! መዋቅሩን ይፈትሹ፡')}</span>
+                          <CheckCircle2 className="h-4 w-4 text-ember shrink-0" />
+                          <span>{t('All 5 Stages Built! Ready for Load Test:', 'ሁሉም 5ቱ ደረጃዎች ተጠናቀዋል! የክብደት ጫናን ፈትሹ፡')}</span>
                         </div>
                         <span className="font-mono text-[10px] text-amber font-extrabold uppercase">
                           {t('1,420 kN · 0.18g PGA', '1,420 ኪ.ኒ · 0.18g')}

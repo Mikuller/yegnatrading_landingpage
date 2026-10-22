@@ -113,7 +113,6 @@ export default function Nav() {
 
             {/* Operating Hours: Clean status badge */}
             <div className="hidden xl:inline-flex items-center gap-2 rounded-full border border-line bg-panel/60 px-3 py-1 text-[0.72rem] text-mute shadow-2xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
               <Clock className="h-3 w-3 text-ember shrink-0" />
               <span>
                 <strong className="text-ink font-semibold">Mon–Fri</strong> 08:30–17:30 <span className="opacity-30">|</span> <strong className="text-ink font-semibold">Sat</strong> 08:30–12:30

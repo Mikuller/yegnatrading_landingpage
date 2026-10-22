@@ -459,21 +459,11 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
       {/* Top Controls Bar: Certified Badge + View Modes + Audio Toggle */}
       <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30 min-w-0">
         <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 flex-1 overflow-x-auto scrollbar-none">
-          {/* Certified Pill with Live Radar Pulse */}
-          <div className="shrink-0 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2 sm:px-2.5 py-0.5 sm:py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
-            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
-              {!shouldReduceMotion && (
-                <motion.span
-                  className="absolute inline-flex h-full w-full rounded-full bg-ember opacity-75"
-                  animate={{ scale: [1, 2.2], opacity: [0.75, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                />
-              )}
-              <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-ember" />
-            </span>
-            <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-ember shrink-0" />
-            <span className="text-[0.58rem] sm:text-[0.66rem] font-bold tracking-wider uppercase whitespace-nowrap">
-              {t('Certified', 'የተረጋገጠ')}
+          {/* Certified Pill */}
+          <div className="shrink-0 relative inline-flex items-center gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2.5 py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
+            <ShieldCheck className="h-3.5 w-3.5 text-ember shrink-0" />
+            <span className="text-[0.6rem] sm:text-[0.66rem] font-bold tracking-wider uppercase whitespace-nowrap">
+              {t('Certified Grade 75', 'የተረጋገጠ Grade 75')}
             </span>
           </div>
 
