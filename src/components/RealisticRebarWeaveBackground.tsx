@@ -19,6 +19,22 @@ export default function RealisticRebarWeaveBackground({
     return false;
   });
 
+  // Mobile / Touch screen detection: bypass heavy canvas rAF on mobile devices
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Cursor coordinates
   const mouseX = useMotionValue<number>(
     typeof window !== 'undefined' ? window.innerWidth / 2 : 500
@@ -51,6 +67,7 @@ export default function RealisticRebarWeaveBackground({
 
   // Main rendering engine
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -717,6 +734,7 @@ export default function RealisticRebarWeaveBackground({
       if (idleTimer) clearTimeout(idleTimer);
     };
   }, [
+    isMobile,
     shouldReduceMotion,
     isDarkMode,
     mouseX,
@@ -732,10 +750,14 @@ export default function RealisticRebarWeaveBackground({
       aria-hidden="true"
       className={`pointer-events-none fixed inset-0 z-0 overflow-hidden select-none ${className}`}
     >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 block h-full w-full"
-      />
+      {isMobile ? (
+        <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.055] pointer-events-none [contain:strict] [background-image:radial-gradient(#f57c00_1px,transparent_1px)] [background-size:28px_28px]" />
+      ) : (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 block h-full w-full"
+        />
+      )}
     </div>
   );
 }
