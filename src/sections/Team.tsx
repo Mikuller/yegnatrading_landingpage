@@ -304,6 +304,7 @@ function InteractiveTeamCard({ leader, index, onSelect }: TiltCardProps) {
             src={leader.photo}
             alt={leader.name}
             loading="lazy"
+            decoding="async"
             width={260}
             height={240}
             className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-106"
@@ -800,6 +801,7 @@ export default function Team() {
                         src={p.url}
                         alt={p.caption}
                         loading="lazy"
+            decoding="async"
                         width={400}
                         height={240}
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"

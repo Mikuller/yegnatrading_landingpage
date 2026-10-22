@@ -61,7 +61,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="preload" as="image" href="/rebar-hero.png" type="image/png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/rebar-hero.png" type="image/png" media="(min-width: 768px)" fetchpriority="high" />
     <link
       href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
@@ -241,16 +241,31 @@
         ]
       }
     </script>
-        ]
-      }
-    </script>
 
+        <style>
+      html, body {
+        background-color: #f8fafc;
+        color-scheme: light;
+      }
+      html.dark, html.dark body {
+        background-color: #0a0e17;
+        color-scheme: dark;
+      }
+    </style>
     <script>
       (function () {
         try {
           var t = localStorage.getItem('yegna_theme');
-          if (t === 'dark') document.documentElement.classList.add('dark');
-          else document.documentElement.classList.remove('dark');
+          var isDark = t === 'dark';
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#0a0e17';
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.backgroundColor = '#f8fafc';
+            document.documentElement.style.colorScheme = 'light';
+          }
           var lang = localStorage.getItem('yegna_lang');
           if (lang === 'am' || lang === 'en') document.documentElement.lang = lang;
         } catch (e) {}
