@@ -683,9 +683,8 @@ export default function CustomerSupportBot() {
     setInputValue('');
     setIsTyping(true);
 
-    // Primary: Google Gemini 2.5 Flash Free Tier
-    const geminiApiKey =
-      import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyDP4E9b9TXVSfLle-Y-emYZIinMgCGnCEo';
+    // Primary: Google Gemini 2.5 Flash Free Tier (from environment variable)
+    const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
     if (geminiApiKey) {
       try {
