@@ -119,16 +119,24 @@ A. Reinforcement Bar (Grade 75 Rebar / የኮንክሪት የብረት ቆራጭ
      * 32mm: 75.72 kg / 12m bar (6.310 kg/m) | ~1.32 pcs / quintal (100 kg) - Mega infrastructure, deep pile caps, industrial facilities
 
 =======================================================
-RULE 3: PRECISE REBAR CONVERSIONS & MATHEMATICAL CALCULATIONS
+RULE 3: PRECISE REBAR CONVERSIONS & MATHEMATICAL CALCULATIONS (MANDATORY)
 =======================================================
-When a user asks how much a specific quantity/pieces of rebar weighs (e.g. "how many kg is 400pcs of 16mm grade 75 rebar", "500 pcs 12mm in quintals", "weight of 100 pcs 20mm"):
-1. Multiply: Total Weight in kg = (Number of Pieces) × (Weight per 12m bar in kg).
+CRITICAL INSTRUCTION FOR WEIGHT VS PRICE:
+- DO NOT confuse questions asking for weight, kilograms, or piece counts ("ስንት ኪሎ ግራም ነው", "ስንት ኪሎ ይመዝናል", "how many kg is...", "weight of...") with questions asking for price/cost ("ስንት ብር ነው", "ዋጋ")!
+- NEVER output the daily mill price disclaimer when a customer asks how much a certain number of bars weigh! Always perform the exact mathematical conversion and return the weight in kg, quintals, and metric tons immediately!
+
+When a user asks how much a specific quantity/pieces of rebar weighs (e.g. "100 ፍሬ የ 20mm ፌሮ ስንት ኪሎ ግራም ነው", "how many kg is 400pcs of 16mm grade 75 rebar", "500 pcs 12mm in quintals", "weight of 100 pcs 20mm"):
+1. Multiply: Total Weight in kg = (Number of Pieces) × (Weight per 12m bar in kg from Table 4A above).
 2. Convert to Quintals: Total Quintals = Total kg / 100.
 3. Convert to Metric Tons: Total Metric Tons = Total kg / 1,000.
 4. Worked Calculation Examples:
-   - Example (16mm): "400 pieces of 16mm Grade 75 rebar (12m length) weighs exactly 7,584 kg (75.84 quintals or ~7.58 metric tons), based on the official standard of 18.96 kg per 12m bar (1.580 kg/m)."
-     (In Amharic: "400 ፍሬ 16ሚሜ Grade 75 ባለ 12 ሜትር ብረት 7,584 ኪሎ ግራም (75.84 ኩንታል ወይም ~7.58 ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት 18.96 ኪ.ግ (1.580 ኪ.ግ/ሜትር) በመሆኑ ነው።")
-   - Example (12mm): "250 pieces of 12mm Grade 75 rebar weighs exactly 2,665 kg (26.65 quintals or ~2.67 metric tons), based on 10.66 kg per 12m bar (0.888 kg/m)."
+   - Example 1 (20mm): "100 ፍሬ የ 20mm ፌሮ ስንት ኪሎ ግራም ነው" / "100 pcs of 20mm weight":
+     Answer: "100 ፍሬ 20ሚሜ Grade 75 ባለ 12 ሜትር ፌሮ ብረት በትክክል 2,964 ኪሎ ግራም (29.64 ኩንታል ወይም ~2.964 ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር 20ሚሜ ብረት 29.64 ኪ.ግ (2.470 ኪ.ግ/ሜትር) በመሆኑ ነው።"
+     (English: "100 pieces of 20mm Grade 75 rebar (12m length) weighs exactly 2,964 kg (29.64 quintals or ~2.964 metric tons), based on the official standard of 29.64 kg per 12m bar [2.470 kg/m].")
+   - Example 2 (16mm): "400 pieces of 16mm Grade 75 rebar (12m length) weighs exactly 7,584 kg (75.84 quintals or ~7.584 metric tons), based on the official standard of 18.96 kg per 12m bar (1.580 kg/m)."
+     (Amharic: "400 ፍሬ 16ሚሜ Grade 75 ባለ 12 ሜትር ብረት 7,584 ኪሎ ግራም (75.84 ኩንታል ወይም ~7.584 ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት 18.96 ኪ.ግ [1.580 ኪ.ግ/ሜትር] በመሆኑ ነው።")
+   - Example 3 (12mm): "250 pieces of 12mm Grade 75 rebar weighs exactly 2,665 kg (26.65 quintals or ~2.665 metric tons), based on 10.66 kg per 12m bar (0.888 kg/m)."
+   - Example 4 (Reverse conversion - Quintal to Pieces): "1 ኩንታል 12ሚሜ ስንት ፍሬ ነው" -> 1 ኩንታል (100 ኪ.ግ) 12ሚሜ ብረት ~9.38 ፍሬ (በግምት ከ9 እስከ 10 ፍሬ) ባለ 12 ሜትር ርዝመት ብረቶች አሉት (100 / 10.66 = 9.38)።
 Always calculate accurately using the table values. Never guess or hallucinate arbitrary weights.
 
 B. Portland Cement (ሲሚንቶ):
@@ -147,6 +155,8 @@ D. Formwork Plywood (ፕላይዉድ):
 - Direct mill offloading capabilities at construction sites.
 
 6. PRICING & QUOTATION INQUIRIES:
+- STRICT APPLICABILITY: This section applies ONLY to monetary price or quotation requests (e.g. "ዋጋ", "ዋጋው ስንት ነው", "ስንት ብር ነው", "price", "cost", "rates").
+- DO NOT apply this section when the customer is asking about kilograms, weight, pieces, or conversions ("ስንት ኪሎ", "ስንት ኪሎ ግራም", "ስንት ፍሬ", "ክብደት"). Weight conversions MUST be calculated per Rule 3!
 - Pricing is calculated per quintal (100 kg) or metric ton (1,000 kg).
 - Steel and cement prices fluctuate daily with factory mill indices.
 - Never guess or quote an arbitrary price in birr. Instead, inform the user that prices adjust daily with mill index and invite them to call our sales desk at +251 943 00 00 05 or use the online quote request form on the website to lock in today's official mill price.
@@ -567,6 +577,91 @@ export default function CustomerSupportBot() {
       };
     }
 
+    // 1.1 Specific Quantity & Rebar Weight Calculator Engine (e.g., "100 ፍሬ የ 20mm ፌሮ ስንት ኪሎ ግራም ነው", "how many kg is 400pcs of 16mm", "1 quintal 12mm")
+    const rebarWeights: Record<number, { kgPerBar: number; unitWeight: number; pcsPerQuintal: number }> = {
+      8: { kgPerBar: 4.74, unitWeight: 0.395, pcsPerQuintal: 21.1 },
+      10: { kgPerBar: 7.40, unitWeight: 0.617, pcsPerQuintal: 13.5 },
+      12: { kgPerBar: 10.66, unitWeight: 0.888, pcsPerQuintal: 9.38 },
+      14: { kgPerBar: 14.52, unitWeight: 1.210, pcsPerQuintal: 6.89 },
+      16: { kgPerBar: 18.96, unitWeight: 1.580, pcsPerQuintal: 5.27 },
+      20: { kgPerBar: 29.64, unitWeight: 2.470, pcsPerQuintal: 3.37 },
+      24: { kgPerBar: 42.66, unitWeight: 3.550, pcsPerQuintal: 2.34 },
+      32: { kgPerBar: 75.72, unitWeight: 6.310, pcsPerQuintal: 1.32 },
+    };
+
+    const diaMatch =
+      q.match(/(?:^|\D)(8|10|12|14|16|20|24|32)\s*(?:mm|ሚሜ)/i) ||
+      q.match(/(?:mm|ሚሜ|size|diameter|ባለ)\s*(8|10|12|14|16|20|24|32)(?:\D|$)/i);
+
+    const qtyMatch =
+      q.match(/(\d[\d,]*)\s*(?:pcs|pieces|bars?|ፍሬ|ባር)/i) ||
+      q.match(/(\d[\d,]*)\s*(?:ፍሬ|pcs|pieces)?\s*(?:of\s*|የ\s*)?(?:8|10|12|14|16|20|24|32)\s*(?:mm|ሚሜ)/i) ||
+      q.match(/(?:how many kg is|weight of|calculate|ስንት ኪሎ ነው|ስንት ኪሎ ግራም ነው|ስንት ኪሎ|ስንት ግራም|ክብደት)\s*(\d[\d,]*)/i) ||
+      q.match(/(\d[\d,]*)\s*(?:of\s*)?(?:8|10|12|14|16|20|24|32)\s*mm/i);
+
+    // Forward calculation: pieces -> kg, quintals, metric tons
+    if (diaMatch && qtyMatch) {
+      const dia = parseInt(diaMatch[1], 10);
+      const qty = parseInt(qtyMatch[1].replace(/,/g, ''), 10);
+      const spec = rebarWeights[dia];
+      if (spec && qty > 0) {
+        const totalKg = Number((qty * spec.kgPerBar).toFixed(2));
+        const quintals = Number((totalKg / 100).toFixed(2));
+        const tons = Number((totalKg / 1000).toFixed(3));
+
+        return {
+          text: preferAmharic
+            ? `${qty.toLocaleString()} ፍሬ ${dia}ሚሜ Grade 75 ባለ 12 ሜትር ፌሮ ብረት በትክክል ${totalKg.toLocaleString()} ኪሎ ግራም (${quintals.toLocaleString()} ኩንታል ወይም ~${tons.toLocaleString()} ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት ${spec.kgPerBar} ኪ.ግ (${spec.unitWeight} ኪ.ግ/ሜትር) በመሆኑ ነው።`
+            : `${qty.toLocaleString()} pieces of ${dia}mm Grade 75 rebar (12m length) weighs exactly ${totalKg.toLocaleString()} kg (${quintals.toLocaleString()} quintals or ~${tons.toLocaleString()} metric tons), based on the official standard of ${spec.kgPerBar} kg per 12m bar (${spec.unitWeight} kg/m).`,
+          actions: [
+            {
+              label: preferAmharic ? '📞 የዋጋ መረጃ ይጠይቁ' : '📞 Call Sales for Pricing',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ ቅጽ' : '📝 Request Official Quote',
+              href: '#quote',
+            },
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ' : '🧪 Open Rebar Lab Calculator',
+              href: '#structural-lab',
+            },
+          ],
+        };
+      }
+    }
+
+    // Reverse calculation: quintals -> pieces
+    const quintalMatch = q.match(/(\d[\d,]*)\s*(?:quintals?|ኩንታል)/i);
+    if (diaMatch && quintalMatch && (q.includes('pcs') || q.includes('pieces') || q.includes('ፍሬ') || q.includes('ስንት') || q.includes('how many'))) {
+      const dia = parseInt(diaMatch[1], 10);
+      const quintalCount = parseInt(quintalMatch[1].replace(/,/g, ''), 10);
+      const spec = rebarWeights[dia];
+      if (spec && quintalCount > 0) {
+        const totalKg = quintalCount * 100;
+        const totalPcs = Number((totalKg / spec.kgPerBar).toFixed(1));
+        return {
+          text: preferAmharic
+            ? `${quintalCount} ኩንታል (100 ኪ.ግ) ${dia}ሚሜ Grade 75 ብረት በግምት ~${totalPcs} ፍሬ ባለ 12 ሜትር ርዝመት ብረቶች አሉት (አንዱ ባለ 12 ሜትር ብረት ${spec.kgPerBar} ኪ.ግ ስለሚመዝን)።`
+            : `${quintalCount} quintal(s) (100 kg) of ${dia}mm Grade 75 rebar contains approximately ~${totalPcs} pieces of 12m bars (each 12m bar weighs ${spec.kgPerBar} kg).`,
+          actions: [
+            {
+              label: preferAmharic ? '📞 የዋጋ መረጃ ይጠይቁ' : '📞 Call Sales Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ' : '🧪 Open Rebar Lab Calculator',
+              href: '#structural-lab',
+            },
+          ],
+        };
+      }
+    }
+
     // 1.2 Structural Engineering Advisory & Interactive Structural Lab Recommendations
     const isStructuralAdviceQuery =
       q.includes('recommend') ||
@@ -860,16 +955,28 @@ export default function CustomerSupportBot() {
       };
     }
 
-    // 2. Price / Cost Queries
-    if (
-      q.includes('price') ||
-      q.includes('cost') ||
-      q.includes('rate') ||
-      q.includes('ዋጋ') ||
-      q.includes('ስንት') ||
-      q.includes('ክፍያ') ||
-      q.includes('ብር')
-    ) {
+    // 2. Price / Cost Queries (Strictly for monetary price inquiries, NOT weight/kilogram/pcs questions)
+    const isPriceQuery =
+      (
+        q.includes('price') ||
+        q.includes('cost') ||
+        q.includes('rate') ||
+        q.includes('ዋጋ') ||
+        q.includes('ስንት ብር') ||
+        q.includes('ዋጋው ስንት') ||
+        (q.includes('ስንት') && (q.includes('ብር') || q.includes('ያወጣል') || q.includes('ይሸጣል') || q.includes('ይሆናል')))
+      ) &&
+      !q.includes('ኪሎ') &&
+      !q.includes('ክብደት') &&
+      !q.includes('kg') &&
+      !q.includes('gram') &&
+      !q.includes('ግራም') &&
+      !q.includes('ፍሬ') &&
+      !q.includes('pcs') &&
+      !q.includes('pieces') &&
+      !q.includes('ኩንታል');
+
+    if (isPriceQuery) {
       return {
         text: preferAmharic
           ? 'የብረትና የሲሚንቶ ዋጋ በየቀኑ በፋብሪካ ኢንዴክስ ስለሚለዋወጥ፣ ወቅታዊና ቀጥተኛውን የፋብሪካ ዋጋ በደቂቃዎች ውስጥ ለማግኘት በቀጥታ ይደውሉልን (+251 943 00 00 05) ወይም የዋጋ መጠየቂያ ቅጹን ይሙሉ!'
@@ -1050,57 +1157,6 @@ export default function CustomerSupportBot() {
           },
         ],
       };
-    }
-
-    // 3.5 Specific Quantity & Rebar Weight Calculation (e.g., "how many kg is 400pcs of 16mm grade 75 rebar", "400 pcs 16mm", "400 ፍሬ 16ሚሜ")
-    const rebarWeights: Record<number, { kgPerBar: number; unitWeight: number; pcsPerQuintal: number }> = {
-      8: { kgPerBar: 4.74, unitWeight: 0.395, pcsPerQuintal: 21.1 },
-      10: { kgPerBar: 7.40, unitWeight: 0.617, pcsPerQuintal: 13.5 },
-      12: { kgPerBar: 10.66, unitWeight: 0.888, pcsPerQuintal: 9.38 },
-      14: { kgPerBar: 14.52, unitWeight: 1.210, pcsPerQuintal: 6.89 },
-      16: { kgPerBar: 18.96, unitWeight: 1.580, pcsPerQuintal: 5.27 },
-      20: { kgPerBar: 29.64, unitWeight: 2.470, pcsPerQuintal: 3.37 },
-      24: { kgPerBar: 42.66, unitWeight: 3.550, pcsPerQuintal: 2.34 },
-      32: { kgPerBar: 75.72, unitWeight: 6.310, pcsPerQuintal: 1.32 },
-    };
-
-    const diaMatch =
-      q.match(/(?:^|\D)(8|10|12|14|16|20|24|32)\s*(?:mm|ሚሜ)/i) ||
-      q.match(/(?:mm|ሚሜ|size|diameter|ባለ)\s*(8|10|12|14|16|20|24|32)(?:\D|$)/i);
-    const qtyMatch =
-      q.match(/(\d[\d,]*)\s*(?:pcs|pieces|bars?|ፍሬ|ባር)/i) ||
-      q.match(/(?:how many kg is|weight of|calculate|ስንት ኪሎ ነው)\s*(\d[\d,]*)/i) ||
-      q.match(/(\d[\d,]*)\s*(?:of\s*)?(?:8|10|12|14|16|20|24|32)\s*mm/i);
-
-    if (diaMatch && qtyMatch) {
-      const dia = parseInt(diaMatch[1], 10);
-      const qty = parseInt(qtyMatch[1].replace(/,/g, ''), 10);
-      const spec = rebarWeights[dia];
-      if (spec && qty > 0) {
-        const totalKg = Number((qty * spec.kgPerBar).toFixed(2));
-        const quintals = Number((totalKg / 100).toFixed(2));
-        const tons = Number((totalKg / 1000).toFixed(3));
-
-        return {
-          text: preferAmharic
-            ? `${qty.toLocaleString()} ፍሬ ${dia}ሚሜ Grade 75 ባለ 12 ሜትር ብረት በትክክል ${totalKg.toLocaleString()} ኪ.ግ (${quintals.toLocaleString()} ኩንታል ወይም ~${tons.toLocaleString()} ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት ${spec.kgPerBar} ኪ.ግ (${spec.unitWeight} ኪ.ግ/ሜትር) በመሆኑ ነው።`
-            : `${qty.toLocaleString()} pieces of ${dia}mm Grade 75 rebar (12m length) weighs exactly ${totalKg.toLocaleString()} kg (${quintals.toLocaleString()} quintals or ~${tons.toLocaleString()} metric tons), based on the official standard of ${spec.kgPerBar} kg per 12m bar (${spec.unitWeight} kg/m).`,
-          actions: [
-            {
-              label: preferAmharic ? '📞 የዋጋ መረጃ ይጠይቁ' : '📞 Call Sales for Pricing',
-              href: `tel:${CONTACT.phoneClean}`,
-            },
-            {
-              label: preferAmharic ? '📝 የዋጋ መጠየቂያ ቅጽ' : '📝 Request Official Quote',
-              href: '#quote',
-            },
-            {
-              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ' : '🧪 Open Rebar Lab Calculator',
-              href: '#structural-lab',
-            },
-          ],
-        };
-      }
     }
 
     // 4. Sizes, Weights, Specifications, Rebar Lab
