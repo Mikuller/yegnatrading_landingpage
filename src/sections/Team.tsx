@@ -1078,10 +1078,7 @@ export default function Team() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-4 sm:p-6 lg:p-8">
                       {/* Top Bar with Badges */}
                       <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-[0.7rem] font-bold text-white backdrop-blur-md border border-white/15">
-                          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                          <span>{t('Grand Retreat', 'ታላቅ የሰራተኞች ማረፊያ')}</span>
-                        </span>
+                        
 
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-black/65 px-3.5 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur-md border border-white/20 transition-all group-hover:bg-ember group-hover:border-ember group-hover:scale-105">
                           <Maximize2 className="h-3.5 w-3.5" />
