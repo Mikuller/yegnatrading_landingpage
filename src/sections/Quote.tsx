@@ -402,7 +402,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
         className="absolute inset-0 bg-[radial-gradient(900px_500px_at_50%_0%,rgba(245,124,0,0.06),transparent_60%)]"
         aria-hidden
       />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         {/* Welcome Banner */}
         <Reveal>
           <div className="border-line bg-panel2 mb-12 rounded-2xl border p-4 sm:p-5 text-center shadow-sm">

@@ -395,9 +395,9 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         aria-hidden
       />
 
-      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-4 py-6 sm:px-8 sm:gap-12 sm:py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12 min-w-0 max-w-full">
+      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-5 py-6 sm:px-8 sm:gap-12 sm:py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-12 min-w-0">
         {/* left column: copy & CTA */}
-        <div className="relative w-full min-w-0 max-w-full">
+        <div className="relative w-full min-w-0">
           {/* Soft ambient text-protective scrim halo ensuring 100% crisp legibility over background weave */}
           <div aria-hidden="true" className="text-protective-halo" />
 
@@ -420,7 +420,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
           </motion.div>
 
           {/* Main Headline */}
-          <h1 className="font-display headline-elevated text-ink mt-5 sm:mt-6 text-[clamp(2.15rem,7.5vw,5.6rem)] leading-[1.04] font-extrabold tracking-[-0.02em]">
+          <h1 className="font-display headline-elevated text-ink mt-5 sm:mt-6 text-[clamp(2.15rem,4.5vw,4.4rem)] lg:text-[3.9rem] xl:text-[4.4rem] leading-[1.04] font-extrabold tracking-[-0.02em]">
             <HeadlineWord word={t('FOR A', 'ለተሻለ')} delay={0.35} />{' '}
             <span className="text-gradient-ember inline-block pr-2">
               <HeadlineWord word={t('STRONGER', 'ጠንካራ')} delay={0.45} />
@@ -542,7 +542,7 @@ export default function Hero({ onQuote }: { onQuote?: (p: QuotePrefill) => void 
         </div>
 
         {/* right column: Real 3D Rebar Card Showcase */}
-        <div className="relative w-full min-w-0 max-w-full">
+        <div className="relative w-full min-w-0">
           <RealRebarCard onQuote={onQuote} />
         </div>
       </div>

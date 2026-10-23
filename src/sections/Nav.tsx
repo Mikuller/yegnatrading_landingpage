@@ -87,8 +87,8 @@ export default function Nav() {
       className="fixed inset-x-0 top-0 z-50"
     >
       {/* Top utility contact bar (Customer Support, Email, Head Office, Hours, Socials with logos) */}
-      <div className="border-line bg-panel2/95 text-mute hidden border-b px-5 py-2 text-xs backdrop-blur-md md:block sm:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 sm:gap-4 flex-nowrap">
+      <div className="border-line bg-panel2/95 text-mute hidden border-b py-2 text-xs backdrop-blur-md md:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 sm:gap-4 flex-nowrap px-5 sm:px-8">
           {/* Popping Contact & Location Information */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-nowrap">
             {/* Phone hotline: High-contrast popping pill button */}
@@ -155,7 +155,7 @@ export default function Nav() {
             : 'border-b border-line/40 bg-panel/85 backdrop-blur-xl'
         }`}
       >
-        <div className="mx-auto flex h-[64px] sm:h-[68px] max-w-7xl items-center justify-between px-4 sm:px-8">
+        <div className="mx-auto flex h-[64px] sm:h-[68px] max-w-7xl items-center justify-between px-5 sm:px-8">
           <Logo />
 
           {/* Desktop links */}

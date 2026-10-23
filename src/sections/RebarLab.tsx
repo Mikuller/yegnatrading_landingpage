@@ -1010,7 +1010,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
   return (
     <section
       id="structural-lab"
-      className="texture-noise relative overflow-hidden py-20 sm:py-28"
+      className="texture-noise relative overflow-hidden py-24 sm:py-32"
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Background ambient glow */}
@@ -1019,7 +1019,7 @@ export default function RebarLab({ onQuote }: { onQuote: (p: QuotePrefill) => vo
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header & Mode Toolbar */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
