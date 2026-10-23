@@ -64,7 +64,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'Executive Direction',
     amDept: 'የሥራ አመራርና ስትራቴጂ',
     category: 'executive',
-    photo: '/images/team-zelalem.jpg?v=2',
+    photo: '/images/team-zelalem.jpg?v=20261023',
     icon: Crown,
     color: '#d97706',
     quote:
@@ -96,7 +96,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'Logistics & Depot Network',
     amDept: 'የአቅርቦት ሰንሰለትና ሎጂስቲክስ',
     category: 'logistics',
-    photo: '/images/team-getahun.jpg',
+    photo: '/images/team-getahun.jpg?v=20261023',
     icon: Truck,
     color: '#b45309',
     quote:
@@ -128,7 +128,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'Human Resources & Talent Management',
     amDept: 'የሰው ኃይልና ተሰጥኦ አስተዳደር',
     category: 'hr',
-    photo: '/images/team-hanna.jpg',
+    photo: '/images/team-hanna.jpg?v=20261023',
     icon: Users,
     color: '#ea580c',
     quote:
@@ -160,7 +160,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'Financial Governance & Audits',
     amDept: 'የፋይናንስ አስተዳደርና ቁጥጥር',
     category: 'tech-finance',
-    photo: '/images/team-hiwot.jpg',
+    photo: '/images/team-hiwot.jpg?v=20261023',
     icon: ShieldCheck,
     color: '#0d9488',
     quote:
@@ -192,7 +192,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
     dept: 'MIS & Digital Inventory Systems',
     amDept: 'የመረጃ ቴክኖሎጂና ሥርዓት',
     category: 'tech-finance',
-    photo: '/images/team-mulugeta.jpg',
+    photo: '/images/team-mulugeta.jpg?v=20261023',
     icon: Cpu,
     color: '#6366f1',
     quote:
@@ -522,11 +522,7 @@ function InteractiveTeamCard({ leader, index, onSelect }: TiltCardProps) {
             decoding="async"
             width={260}
             height={240}
-            className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-106"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src =
-                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80';
-            }}
+            className="h-full w-full object-cover object-[center_15%] transition-transform duration-500 ease-out group-hover:scale-106"
           />
 
           {/* Clean Hover Overlay Cue */}
@@ -678,7 +674,7 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
                 <img
                   src={leader.photo}
                   alt={leader.name}
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-[center_15%]"
                 />
                 <div className="absolute bottom-2 right-2 rounded-lg bg-panel/90 p-2 shadow-md backdrop-blur-md">
                   <LeaderIcon className="h-5 w-5 text-ember" />

@@ -337,31 +337,31 @@ export const TEAM = [
     name: 'Ato Zelalem Alene',
     role: 'General Manager',
     amRole: 'ዋና ሥራ አስኪያጅ',
-    photo: '/images/team-zelalem.jpg?v=2',
+    photo: '/images/team-zelalem.jpg?v=20261023',
   },
   {
     name: 'Getahun Assefa',
     role: 'Supply Chain Director',
     amRole: 'የአቅርቦት ሰንሰለት ዳይሬክተር',
-    photo: '/images/team-getahun.jpg',
+    photo: '/images/team-getahun.jpg?v=20261023',
   },
   {
     name: 'Hanna Girma',
     role: 'HR Manager',
     amRole: 'የሰው ኃይል ሥራ አስኪያጅ',
-    photo: '/images/team-hanna.jpg',
+    photo: '/images/team-hanna.jpg?v=20261023',
   },
   {
     name: 'Hiwot Tilahun',
     role: 'Finance Manager',
     amRole: 'የፋይናንስ ሥራ አስኪያጅ',
-    photo: '/images/team-hiwot.jpg',
+    photo: '/images/team-hiwot.jpg?v=20261023',
   },
   {
     name: 'Mulugeta Awoke',
     role: 'MIS Manager',
     amRole: 'የመረጃ ስርዓት (MIS) ሥራ አስኪያጅ',
-    photo: '/images/team-mulugeta.jpg',
+    photo: '/images/team-mulugeta.jpg?v=20261023',
   },
 ];
 
