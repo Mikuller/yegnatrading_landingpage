@@ -16,6 +16,7 @@ import {
   Clock,
   ShieldCheck,
   Headphones,
+  Layers,
 } from 'lucide-react';
 import { CONTACT } from '../data';
 import { useApp } from '../context/AppContext';
@@ -167,9 +168,81 @@ E. Job Site Weight Verification:
    - Every steel delivery from Yegna Trading includes certified electronic weigh-bridge tickets from our central dispatch. Contractors can double-check accuracy on site by multiplying physical bar counts by standard metric weights (e.g. 10.66 kg per 12m bar for 12mm rebar, or 18.96 kg per bar for 16mm rebar).
 F. Why Timely Rebar Logistics Matters:
    - In construction sequencing, late rebar delivery creates catastrophic bottlenecks—stopping steel-fixers, idling concrete pump crews, and delaying structural pours. Yegna Trading's dedicated logistics, central warehouse stock, and prompt dispatch safeguard project timelines.
+
+8. INTERACTIVE STRUCTURAL LAB & BUILDING COMPONENT REBAR ADVISORY (IDEAL VS NON-IDEAL CHOICES):
+=======================================================
+Yegna Trading provides an advanced on-site interactive engineering simulator: the "Interactive Structural Lab" (የሬባር ምህንድስና ላብራቶሪ) on our website (accessible directly at #structural-lab).
+Engineers, contractors, and builders can configure a complete 5-stage building frame, simulate 1,420–2,130 kN factored structural gravity loads and 0.18g seismic ground motion, witness real-time failure animations if incompatible bars are chosen, and export an itemized bill of quantities (BOQ) with a structural integrity rating.
+
+MANDATORY ADVISORY & RECOMMENDATION RULE:
+Whenever a user asks what rebar diameter to use for a particular part of a building (footings, columns, beams, slabs, stairs), whether a specific rebar size is safe, or asks for structural recommendations:
+1. Provide the exact engineering advisory below, explaining the ideal sizes AND warning against non-ideal (under-reinforced or over-reinforced) sizes.
+2. ALWAYS EXPLICITLY RECOMMEND THE USER TO USE THE INTERACTIVE STRUCTURAL LAB:
+   - Invite them to test and simulate their load paths on the website's Interactive Structural Lab (action link: #structural-lab).
+   - In Amharic: "ለህንጻዎ ተስማሚውን የብረት መጠን በቀጥታ ለመፈተሽና የክብደት ጫናን (Structural Load Simulation) በቅጽበት ለመለካት በይነ-መረባችን ላይ ያለውን 'የሬባር ምህንድስና ላብራቶሪ' (Interactive Structural Lab) እንዲሞክሩ እንመክራለን!"
+   - In English: "We strongly recommend testing your structural configuration in our on-page Interactive Structural Lab (#structural-lab), where you can simulate seismic load paths and factored gravity loads for your project!"
+
+STAGE-BY-STAGE ENGINEERING ADVISORY & REBAR MATRIX:
+
+A. STAGE 1: FOOTING & FOUNDATION PADS (የመሠረት ማሰሪያ / Footings)
+   - Structural Function: The seismic anchor to bedrock. Carries the entire building weight and distributes high column axial loads evenly into the subsoil to prevent punch-through shear and differential settlement.
+   - IDEAL / RECOMMENDED SIZES: 14mm, 16mm, 20mm (Best Choice: 16mm).
+     * Engineering Requirements: Dense two-way bottom grid, minimum 50mm concrete cover (EBCS code to resist groundwater corrosion), and 90° hooked anchorages.
+   - ACCEPTABLE: 12mm (only for lightweight, single-story residential footings).
+   - NON-IDEAL / INCOMPATIBLE (STRUCTURAL DANGER): 06mm Coil, 08mm, 10mm.
+     * 06mm Coil: Zero structural capacity for high column axial loads (1,420+ kN); causes catastrophic punching shear rupture where the foundation pad snaps in half and the column punches into subsoil.
+     * 08mm: Tensile area is 72% below minimum EBCS flexural foundation code; snaps under building self-weight.
+     * 10mm: Insufficient bending moment resistance for two-way foundation action; causes bedrock settlement cracks that propagate vertically into columns.
+
+B. STAGE 2: COLUMNS & STAFFA STIRRUP CAGES (የህንጻ አምዶችና ስታፋ / Columns)
+   - Structural Function: The vertical spine carrying compression axial gravity loads and lateral earthquake shear.
+   - IDEAL / RECOMMENDED SIZES:
+     * Longitudinal Main Compression Bars: 16mm, 20mm, 24mm (Best Choice: 20mm).
+     * Confinement Ties / Stirrups: 06mm high-tensile wire coil (Staffa) tied at 100mm spacing near beam-column joints with 135° seismic safety hooks to confine concrete core and prevent lateral bar buckling.
+   - ACCEPTABLE: 14mm (for short residential columns).
+   - NON-IDEAL / INCOMPATIBLE FOR VERTICAL MAIN STEEL: 06mm Coil, 08mm, 10mm, 12mm.
+     * 06mm Coil: Cannot function as vertical compression steel (Euler critical load P_cr exceeded by 900%); triggers violent axial buckling and core burst.
+     * 08mm: Slenderness ratio lambda > 120, triggering explosive lateral buckling where concrete cover blows off.
+     * 10mm: Yields prematurely under axial dead load + seismic lateral shear; causes heavy building drift.
+     * 12mm: Violates Ethiopian Building Code (EBCS) minimum steel ratio for multi-story buildings, leading to micro-buckling and joint fractures under seismic motion.
+
+C. STAGE 3: PLINTH & INTER-FLOOR BEAMS (የወለልና የመሬት ጋሪ / Beams)
+   - Structural Function: The horizontal flexural bridge. Bottom tensile rebars fight positive bending (sag) at mid-span; top bars resist negative bending moments over columns; stirrups absorb diagonal splitting tension.
+   - IDEAL / RECOMMENDED SIZES: 14mm, 16mm, 20mm (Best Choice: 16mm).
+     * Engineering Requirements: Development lap length Ld >= 40 bar diameters where beams intersect column cores.
+   - ACCEPTABLE: 12mm (for short, light-duty spans).
+   - NON-IDEAL / INCOMPATIBLE: 06mm Coil, 08mm, 10mm.
+     * 06mm Coil: Zero tensile moment resistance across structural spans; snaps cleanly at mid-span causing sudden floor collapse (deflections exceeding 38cm).
+     * 08mm: Insufficient flexural yield strength; develops 45° diagonal shear tears near column joints.
+     * 10mm: Exceeds allowable deflection limits (L/250); causes heavy sag, cracked non-structural masonry walls, and ceiling rupture.
+
+D. STAGE 4: SUSPENDED FLOOR & ROOF SLAB (ጠፍጣፋ ወለልና ጣሪያ / Slabs)
+   - Structural Function: The continuous two-way live-load platform (150–200mm mesh) transferring furniture, occupants, and dead load smoothly into supporting beams.
+   - IDEAL / RECOMMENDED SIZES: 08mm, 10mm, 12mm (Best Choice: 10mm).
+     * Engineering Requirements: Use rebar spacer chairs to keep the top mesh elevated during concrete pour for proper effective depth.
+   - ACCEPTABLE: 14mm (for heavy commercial floors or long spans).
+   - NON-IDEAL / INCOMPATIBLE (UNDER-SIZED & OVER-SIZED DANGER):
+     * Under-sized (06mm Coil): Lacks tensile area for two-way distribution; causes cross-pattern cracking and punch-through tears.
+     * OVER-SIZED (20mm, 24mm, 32mm) — CRITICAL STRUCTURAL HAZARD:
+       Using 20mm, 24mm, or 32mm in a standard 150mm slab creates an "OVER-REINFORCED SECTION" violating EBCS ductility limits!
+       In an over-reinforced slab, steel never yields before the concrete crushes. Instead of ductile bending with visible hairline cracks giving advance warning, the top compression concrete crushes explosively without warning (brittle failure hazard). In addition, 32mm rebar cannot physically fit minimum concrete cover clearances in a 150mm slab, causing debonding along the entire bar length.
+
+E. STAGE 5: DOG-LEGGED REINFORCED STAIRCASE (የደረጃ መዋቅር / Stairs)
+   - Structural Function: The dynamic circulation spine carrying pedestrian footfall impact and continuous vibration.
+   - IDEAL / RECOMMENDED SIZES: 12mm, 14mm, 16mm (Best Choice: 12mm).
+     * Engineering Requirements: Anchor top and bottom flight reinforcement deeply into beam cores with cranked hooks to resist dynamic vibrations.
+   - ACCEPTABLE: 10mm (for light distribution / riser ties).
+   - NON-IDEAL / INCOMPATIBLE:
+     * Under-sized (06mm Coil): Snaps under dynamic pedestrian footfall impact; waist slab severs completely from landing beam.
+     * OVER-SIZED (20mm, 24mm, 32mm): Bend radius exceeds 150mm stair waist thickness, causing radial bursting tension, landing joint cleavage, and anchor hook concrete spalling.
 `;
 
 const EAGER_PROMPTS = [
+  {
+    en: 'Testing column or slab rebars? Try the Interactive Structural Lab! 🏗️',
+    am: 'ለአምድና ለወለል ተስማሚውን ብረት ለመፈተሽ የሬባር ላብራቶሪያችንን ይሞክሩ! 🏗️',
+    emoji: '🧪',
+  },
   {
     en: 'Psst! Ask me how many 12mm bars make a quintal! 👀',
     am: '1 ኩንታል 12ሚሜ ብረት ስንት ፍሬ እንደሆነ ያውቃሉ? ይጠይቁኝ! 👀',
@@ -230,6 +303,15 @@ export default function CustomerSupportBot() {
         {
           label: lang === 'am' ? '⚖️ የብረት ክብደትና ልኬት' : '⚖️ Rebar Sizes & Weights',
           onClick: () => handlePresetQuery(lang === 'am' ? 'የብረት ክብደት ዝርዝር' : 'Rebar weight conversion'),
+        },
+        {
+          label: lang === 'am' ? '🧪 ሬባር ላብራቶሪ' : '🧪 Structural Lab',
+          onClick: () =>
+            handlePresetQuery(
+              lang === 'am'
+                ? 'ለህንጻ ክፍሎች ተስማሚ የብረት መጠን ምክር'
+                : 'Rebar recommendations for building parts'
+            ),
         },
       ],
     },
@@ -485,21 +567,216 @@ export default function CustomerSupportBot() {
       };
     }
 
-    // 1.5 Material Availability & Stock Inquiries (e.g. "ፌሮ አለ", "ፌሮ አላችሁ", "ብረት አለ", "do you have rebar", "is steel in stock", "ፌሮ")
-    if (
-      q.includes('ፌሮ') ||
-      q.includes('fero') ||
-      (q.includes('rebar') && !q.includes('how many')) ||
-      (q.includes('ብረት') && !q.includes('ክብደት') && !q.includes('ልኬት') && !q.includes('ስንት ኪሎ')) ||
-      q.includes('አለ') ||
-      q.includes('አላችሁ') ||
-      q.includes('አለዎት') ||
-      q.includes('ይገኛል') ||
-      q.includes('ይኖራል') ||
-      q.includes('do you have') ||
-      q.includes('in stock') ||
-      q.includes('available')
-    ) {
+    // 1.2 Structural Engineering Advisory & Interactive Structural Lab Recommendations
+    const isStructuralAdviceQuery =
+      q.includes('recommend') ||
+      q.includes('building parts') ||
+      q.includes('building part') ||
+      q.includes('parts of building') ||
+      q.includes('parts of a building') ||
+      q.includes('column') ||
+      q.includes('beam') ||
+      q.includes('slab') ||
+      q.includes('footing') ||
+      q.includes('foundation') ||
+      q.includes('stair') ||
+      q.includes('structural') ||
+      q.includes('lab') ||
+      q.includes('ideal') ||
+      q.includes('over-reinforced') ||
+      q.includes('buckl') ||
+      q.includes('shear') ||
+      q.includes('ምክር') ||
+      q.includes('የህንጻ ክፍሎች') ||
+      q.includes('የህንፃ ክፍሎች') ||
+      q.includes('የህንጻ') ||
+      q.includes('የህንፃ') ||
+      q.includes('አምድ') ||
+      q.includes('ምሰሶ') ||
+      q.includes('መሠረት') ||
+      q.includes('ጋሪ') ||
+      q.includes('ቢም') ||
+      q.includes('ወለል') ||
+      q.includes('ጣሪያ') ||
+      q.includes('ደረጃ') ||
+      q.includes('ላብራቶሪ') ||
+      (q.includes('which') && (q.includes('rebar') || q.includes('size') || q.includes('fero') || q.includes('ብረት'))) ||
+      (q.includes('what') && (q.includes('size for') || q.includes('rebar for') || q.includes('best rebar') || q.includes('choice')));
+
+    if (isStructuralAdviceQuery) {
+      // Case A: Column (አምድ / ምሰሶ)
+      if (q.includes('column') || q.includes('አምድ') || q.includes('ምሰሶ')) {
+        return {
+          text: preferAmharic
+            ? 'ለህንጻ አምዶች (Columns) ተስማሚው የቁም ብረት 16ሚሜ፣ 20ሚሜ እና 24ሚሜ (በጣም ተመራጩ 20ሚሜ) ሲሆን፤ ለማሰሪያ ደግሞ 6ሚሜ ስታፋ በ100ሚሜ ክፍተት በ135° ማጠፊያ ማሰር ግዴታ ነው። ቀጭን ብረቶች (6ሚሜ፣ 8ሚሜ፣ 10ሚሜ፣ 12ሚሜ) ለቁም አምድ መጠቀም ፈጽሞ የተከለከለ ነው (የአምድ መጣመም/Euler buckling እና የኮንክሪት መፈንዳት ያስከትላል)። በይነ-መረባችን ላይ ያለውን "የሬባር ምህንድስና ላብራቶሪ" (Interactive Structural Lab) በመጠቀም የአምዶችን ጫና በቀጥታ እንዲሞክሩ እንመክራለን!'
+            : 'For structural Columns, the IDEAL main compression rebar sizes are 16mm, 20mm, and 24mm (Best: 20mm), confined with 6mm high-tensile staffa wire coils spaced at 100mm near joints with 135° seismic hooks. NON-IDEAL sizes (6mm, 8mm, 10mm, 12mm) are structurally dangerous for main vertical steel, violating EBCS code and triggering violent Euler buckling or core bursting. We strongly recommend testing your column configuration in our on-page Interactive Structural Lab!',
+          actions: [
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+              href: '#structural-lab',
+            },
+            {
+              label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Case B: Footing & Foundation (መሠረት)
+      if (q.includes('footing') || q.includes('foundation') || q.includes('መሠረት')) {
+        return {
+          text: preferAmharic
+            ? 'ለመሠረት ማሰሪያ (Footing Pads) ተስማሚው የብረት መጠን 14ሚሜ፣ 16ሚሜ እና 20ሚሜ (በጣም ተመራጩ 16ሚሜ) ሲሆን፤ ቢያንስ 50ሚሜ የኮንክሪት ሽፋን (Cover) እና የ90° ማጠፊያ ይፈልጋል። 6ሚሜ፣ 8ሚሜ ወይም 10ሚሜ መጠቀም ፈጽሞ አደገኛ ነው (የመሠረት መሰንጠቅና መደርመስ/Punching Shear Rupture ያስከትላል)። ለህንጻዎ መሠረት አስተማማኝ ምርመራ ለማድረግ የሬባር ላብራቶሪያችንን (Interactive Structural Lab) እንዲጠቀሙ እንመክራለን!'
+            : 'For Footing & Foundation Pads, IDEAL rebar sizes are 14mm, 16mm, and 20mm (Best: 16mm) with a dense two-way grid, minimum 50mm concrete cover (EBCS code), and 90° hook anchorages. NON-IDEAL sizes (6mm, 8mm, 10mm) lack tensile moment capacity and risk catastrophic punching shear rupture where the footing snaps in half. We recommend simulating your foundation load in our Interactive Structural Lab!',
+          actions: [
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+              href: '#structural-lab',
+            },
+            {
+              label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Case C: Beams (የወለልና የመሬት ጋሪ / ቢም)
+      if (q.includes('beam') || q.includes('ጋሪ') || q.includes('ቢም')) {
+        return {
+          text: preferAmharic
+            ? 'ለወለልና ለመሬት ጋሪዎች (Plinth & Floor Beams) ተስማሚው የብረት መጠን 14ሚሜ፣ 16ሚሜ እና 20ሚሜ (በጣም ተመራጩ 16ሚሜ) ሲሆን፤ በአምዶች መገጣጠሚያ ላይ ቢያንስ 40 እጥፍ የብረት ውፍረት የመደራረቢያ ርዝመት (Ld) ያስፈልጋል። 6ሚሜ፣ 8ሚሜ እና 10ሚሜ ብረቶች ለቢም በፍጹም ተስማሚ አይደሉም (በመሃል መቀደድና የ45° የጎንዮሽ መሰንጠቅ ያመጣሉ)። በይነ-መረባችን ላይ ያለውን "የሬባር ምህንድስና ላብራቶሪ" እንዲሞክሩ እንመክራለን!'
+            : 'For Floor & Plinth Beams, IDEAL rebar sizes are 14mm, 16mm, and 20mm (Best: 16mm) with development lap lengths (Ld >= 40 bar diameters) at column cores. NON-IDEAL sizes (6mm, 8mm, 10mm) have insufficient flexural moment capacity, resulting in mid-span flexural rupture, 38cm excessive sag, and 45° diagonal shear tears near column joints. Test and verify your beam spans in our Interactive Structural Lab!',
+          actions: [
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+              href: '#structural-lab',
+            },
+            {
+              label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Case D: Slab (ጠፍጣፋ ወለልና ጣሪያ)
+      if (q.includes('slab') || q.includes('ወለል') || q.includes('ጣሪያ')) {
+        return {
+          text: preferAmharic
+            ? 'ለውፍረቱ 150ሚሜ ለሆነ ጠፍጣፋ ወለልና ጣሪያ (Slabs) ተስማሚው የብረት መጠን 8ሚሜ፣ 10ሚሜ እና 12ሚሜ (በጣም ተመራጩ 10ሚሜ) ነው። ⚠️ ወሳኝ ማስጠንቀቂያ፦ 6ሚሜ ስታፋ የወለል መረብን ስለሚቀድደው ተስማሚ አይደለም፤ በሌላ በኩል ደግሞ ወፍራም ብረቶችን (20ሚሜ፣ 24ሚሜ፣ 32ሚሜ) በ150ሚሜ ወለል ውስጥ መጠቀም ከመጠን በላይ (Over-reinforced) በማድረግ ኮንክሪቱ ሳይታጠፍ በድንገት እንዲፈነዳ (brittle explosive crushing) ስለሚያደርግ በጣም አደገኛ ነው! ይህንን በሬባር ላብራቶሪያችን (Interactive Structural Lab) በቀጥታ መሞከር ይችላሉ።'
+            : 'For standard 150mm suspended Floor & Roof Slabs, IDEAL rebar sizes are 8mm, 10mm, and 12mm (Best: 10mm spaced at 150–200mm with spacer chairs). ⚠️ CRITICAL HAZARD: Under-sized 6mm coil tears under two-way load, while OVER-SIZED bars (20mm, 24mm, 32mm) create a hazardous "OVER-REINFORCED SECTION" where steel never yields, causing concrete to crush explosively in compression without ductile warning! We strongly recommend simulating slab loads in our Interactive Structural Lab.',
+          actions: [
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+              href: '#structural-lab',
+            },
+            {
+              label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Case E: Staircase (የደረጃ መዋቅር)
+      if (q.includes('stair') || q.includes('ደረጃ')) {
+        return {
+          text: preferAmharic
+            ? 'ለደረጃ መዋቅር (Stairs) ተስማሚው የብረት መጠን 12ሚሜ፣ 14ሚሜ እና 16ሚሜ (በጣም ተመራጩ 12ሚሜ) ሲሆን፤ ከወለልና ከመሬት ጋሪዎች ጋር በጥልቅ ታስሮ መዋሃድ አለበት። 6ሚሜ ስታፋ በሰዎች እንቅስቃሴ ንዝረት ስለሚበጠስ፤ እንዲሁም 20ሚሜ–32mm ከመጠን በላይ ወፍራም በመሆናቸው መታጠፊያ አንግላቸው ኮንክሪቱን ስለሚሰነጥቀው ተስማሚ አይደሉም። በይነ-መረባችን ላይ ያለውን "የሬባር ምህንድስና ላብራቶሪ" እንዲጠቀሙ እንመክራለን!'
+            : 'For dog-legged concrete Staircases, IDEAL rebar sizes are 12mm, 14mm, and 16mm (Best: 12mm) anchored deeply into beam cores with cranked hooks to resist pedestrian dynamic vibrations. NON-IDEAL sizes include 6mm coil (snaps under dynamic impact fatigue) and over-sized 20mm–32mm bars (bend radius exceeds waist thickness, causing radial bursting tension and joint spalling). Test this in our on-page Interactive Structural Lab!',
+          actions: [
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+              href: '#structural-lab',
+            },
+            {
+              label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Case F: General Structural Advisory / Complete Building Parts Guide
+      return {
+        text: preferAmharic
+          ? 'የኛ ትሬዲንግ በህንጻ መዋቅር 5 ዋና ዋና ክፍሎች ላይ ተስማሚ የሬባር ምርጫዎችን ይመክራል፦\n\n1. መሠረት (Footings)፦ 14–20ሚሜ (16ሚሜ ምርጥ)፤ ቢያንስ 50ሚሜ ሽፋን። 6–10ሚሜ መሰንጠቅ ያመጣሉ።\n2. አምድ (Columns)፦ 16–24ሚሜ (20ሚሜ ምርጥ) + 6ሚሜ ስታፋ ማሰሪያ። 6–12ሚሜ መጣመም (Euler buckling) ያመጣሉ።\n3. ጋሪ (Beams)፦ 14–20ሚሜ (16ሚሜ ምርጥ)። 6–10ሚሜ በመሃል መሰበርና መስመጥ ያመጣሉ።\n4. ወለል (Slabs 150mm)፦ 8–12ሚሜ (10ሚሜ ምርጥ)። ⚠️ 20–32ሚሜ ከመጠን በላይ (over-reinforced) በመሆኑ ኮንክሪቱ በድንገት እንዲፈነዳ ስለሚያደርግ የተከለከለ ነው!\n5. ደረጃ (Stairs)፦ 12–16ሚሜ (12ሚሜ ምርጥ)።\n\nለህንጻዎ ትክክለኛውን የክብደትና የመሬት መንቀጥቀጥ ጫና በቀጥታ ለመፈተሽ "የሬባር ምህንድስና ላብራቶሪ" (Interactive Structural Lab) እንዲጠቀሙ እንመክራለን!'
+          : 'Yegna Trading engineering guidelines for building structural stages:\n\n1. Footings & Foundation: 14mm, 16mm, 20mm (Best: 16mm). Min 50mm cover. (6mm–10mm risk punching shear failure).\n2. Columns & Stirrups: 16mm, 20mm, 24mm (Best: 20mm) + 6mm staffa stirrups at 100mm joints. (6mm–12mm cause violent Euler buckling).\n3. Beams: 14mm, 16mm, 20mm (Best: 16mm) with Ld ≥ 40d. (6mm–10mm cause midspan rupture and >38cm sag).\n4. Slabs (150mm): 8mm, 10mm, 12mm (Best: 10mm). ⚠️ CRITICAL: Avoid 20mm–32mm over-reinforced brittle crushing danger!\n5. Stairs: 12mm, 14mm, 16mm (Best: 12mm). (Avoid 6mm fatigue snap or 20mm+ bursting).\n\nWe strongly recommend testing your complete structural frame in our on-page Interactive Structural Lab to simulate live 1,420–2,130 kN gravity and seismic loads!',
+        actions: [
+          {
+            label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+            href: '#structural-lab',
+          },
+          {
+            label: preferAmharic ? '📞 ለምህንድስና ድጋፍ ደውል' : '📞 Call Engineering Desk',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+          {
+            label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+            href: '#quote',
+          },
+        ],
+      };
+    }
+
+    // 1.5 Material Availability & Stock Inquiries (e.g. "do you have rebar", "is steel in stock", "ፌሮ አለ", "ሲሚንቶ አላችሁ")
+    const isStockInquiry =
+      (
+        q.includes('in stock') ||
+        q.includes('out of stock') ||
+        q.includes('available') ||
+        q.includes('availability') ||
+        q.includes('do you have') ||
+        q.includes('do u have') ||
+        q.includes('have rebar') ||
+        q.includes('have cement') ||
+        q.includes('have steel') ||
+        q.includes('አላችሁ') ||
+        q.includes('አለዎት') ||
+        q.includes('ይገኛል') ||
+        q.includes('ይኖራል') ||
+        q.includes('ስቶክ') ||
+        q.includes('ክምችት') ||
+        q.includes('ፌሮ አለ') ||
+        q.includes('ብረት አለ') ||
+        q.includes('ሲሚንቶ አለ') ||
+        q.includes('ስታፋ አለ') ||
+        q.includes('ፕላይዉድ አለ') ||
+        q === 'ፌሮ' ||
+        q === 'ብረት' ||
+        q === 'rebar' ||
+        q === 'fero'
+      ) &&
+      !q.includes('recommend') &&
+      !q.includes('building') &&
+      !q.includes('ምክር') &&
+      !q.includes('how many') &&
+      !q.includes('calculate') &&
+      !q.includes('weight');
+
+    if (isStockInquiry) {
       // If asking specifically about cement availability
       if (q.includes('cement') || q.includes('ሲሚንቶ') || q.includes('ሙገር') || q.includes('ዳንጎቴ')) {
         return {
@@ -1141,14 +1418,43 @@ export default function CustomerSupportBot() {
           const data = await response.json();
           const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
           if (aiText && aiText.trim()) {
-            setMessages((prev) => [
-              ...prev,
-              {
-                id: `b-${Date.now()}`,
-                sender: 'bot',
-                text: aiText.trim(),
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                actions: [
+            const isStructuralQuery =
+              trimmed.toLowerCase().includes('structural') ||
+              trimmed.toLowerCase().includes('lab') ||
+              trimmed.toLowerCase().includes('column') ||
+              trimmed.toLowerCase().includes('beam') ||
+              trimmed.toLowerCase().includes('slab') ||
+              trimmed.toLowerCase().includes('footing') ||
+              trimmed.toLowerCase().includes('foundation') ||
+              trimmed.toLowerCase().includes('stair') ||
+              trimmed.toLowerCase().includes('ideal') ||
+              trimmed.toLowerCase().includes('rebar') ||
+              trimmed.toLowerCase().includes('ላብራቶሪ') ||
+              trimmed.toLowerCase().includes('አምድ') ||
+              trimmed.toLowerCase().includes('መሠረት') ||
+              trimmed.toLowerCase().includes('ጋሪ') ||
+              trimmed.toLowerCase().includes('ወለል') ||
+              trimmed.toLowerCase().includes('ደረጃ') ||
+              trimmed.toLowerCase().includes('ምክር') ||
+              aiText.toLowerCase().includes('structural lab') ||
+              aiText.toLowerCase().includes('ላብራቶሪ');
+
+            const dynamicActions = isStructuralQuery
+              ? [
+                  {
+                    label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ ሂድ' : '🧪 Open Structural Lab',
+                    href: '#structural-lab',
+                  },
+                  {
+                    label: preferAmharic ? '📞 ለምህንድስና ደውል' : '📞 Call Engineering Desk',
+                    href: `tel:${CONTACT.phoneClean}`,
+                  },
+                  {
+                    label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+                    href: '#quote',
+                  },
+                ]
+              : [
                   {
                     label: preferAmharic ? '📞 ደውል (+251 943 00 00 05)' : '📞 Call Hotline',
                     href: `tel:${CONTACT.phoneClean}`,
@@ -1157,7 +1463,16 @@ export default function CustomerSupportBot() {
                     label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
                     href: '#quote',
                   },
-                ],
+                ];
+
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: `b-${Date.now()}`,
+                sender: 'bot',
+                text: aiText.trim(),
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                actions: dynamicActions,
               },
             ]);
             setIsTyping(false);
@@ -1357,10 +1672,27 @@ export default function CustomerSupportBot() {
                       : 'Where is your Kazanchis office located?'
                   )
                 }
-                className="inline-flex items-center gap-1.5 rounded-full bg-panel2/90 hover:bg-ember/15 border border-line hover:border-ember/50 px-2.5 py-1 text-[0.68rem] font-semibold text-ink transition-colors cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-1.5 rounded-full bg-panel2/90 hover:bg-emerald-500/15 border border-line hover:border-emerald-500/50 px-2.5 py-1 text-[0.68rem] font-semibold text-ink transition-colors cursor-pointer shadow-2xs"
               >
                 <MapPin className="h-3 w-3 text-emerald-500" />
                 <span>{lang === 'am' ? 'ካዛንቺስ ቢሮ' : 'Kazanchis HQ'}</span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -1 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+                onClick={() =>
+                  handleQuickChip(
+                    lang === 'am'
+                      ? 'የህንጻ ክፍሎች ተስማሚ የብረት መጠን ምክር እና የሬባር ላብራቶሪ'
+                      : 'Rebar recommendations for building parts and Structural Lab'
+                  )
+                }
+                className="inline-flex items-center gap-1.5 rounded-full bg-panel2/90 hover:bg-cyan-500/15 border border-line hover:border-cyan-500/50 px-2.5 py-1 text-[0.68rem] font-semibold text-ink transition-colors cursor-pointer shadow-2xs"
+              >
+                <Layers className="h-3 w-3 text-cyan-500" />
+                <span>{lang === 'am' ? 'ሬባር ላብራቶሪ' : 'Structural Lab'}</span>
               </motion.button>
             </div>
           </motion.div>
