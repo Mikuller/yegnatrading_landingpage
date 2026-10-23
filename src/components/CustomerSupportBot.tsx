@@ -87,28 +87,49 @@ VERIFIED COMPANY INFORMATION:
 - Telegram Channel / Support: https://t.me/Yegna_Tradingplc (@Yegna_Tradingplc)
 - Help Desk: https://yegnatrading.crisp.help/en/
 - Verified Company Profile (PDF on Google Drive): https://drive.google.com/file/d/1TWE42u94PPmXz6wMW0-0htNIPRT1E4YV/view
-- Headquarters: Kazanchis Joburg Plaza, 5th Floor, Addis Ababa, Ethiopia (Plus Code: 2Q7F+H7, walking distance from UNECA and Interluxury Hotel).
+- Headquarters Office: Kazanchis Joburg Plaza, 5th Floor, Addis Ababa, Ethiopia (Plus Code: 2Q7F+H7, walking distance from UNECA and Interluxury Hotel). Google Maps: https://maps.app.goo.gl/FQVCfhaxFvV8goy7A?g_st=atm
+- Yegna Trading Physical Warehouse & Central Stock Depot:
+  * IMPORTANT: Yegna Trading owns and operates its own dedicated, fully stocked physical warehouse and storage depot with extensive inventory across all Grade 75 rebar diameters, Portland cement, staffa coils, and formwork plywood.
+  * Direct Warehouse Navigation Link (Google Maps): https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA
+  * Whenever a customer or contractor asks about our warehouse, depot, material storage, site pickup, or truck loading, ALWAYS confirm that Yegna Trading has its own warehouse and help them navigate directly using this link: https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA
 - Working Hours:
   * Monday – Friday: 08:30 AM – 05:30 PM
   * Saturday: 08:30 AM – 12:30 PM
   * Sunday: Closed
 
 4. PRODUCTS & TECHNICAL SPECIFICATIONS:
-A. Reinforcement Bar (Grade 75 Rebar / የኮንክሪት የብረት ቆራጭ):
+A. Reinforcement Bar (Grade 75 Rebar / የኮንክሪት የብረት ቆራጭ / ፌሮ ብረት):
+   - Local Amharic Terminology: In Ethiopia, deformed steel rebar is universally and colloquially known as "ፌሮ" (Fero), "የፌሮ ብረት", "ቆራጭ ብረት", or "የኮንክሪት ብረት".
+   - Material Availability Inquiries (e.g. "ፌሮ አለ?", "ፌሮ አላችሁ?", "ብረት አለ?", "do you have rebar?", "is rebar available?"):
+     ALWAYS CONFIRM WITH AN ENTHUSIASTIC AND FACTUAL YES: Yegna Trading PLC maintains extensive, continuous warehouse stock of certified Grade 75 ፌሮ (from 8mm to 32mm in full 12-meter lengths), 6mm staffa wire coils, Dangote and Mugher cement, and formwork plywood ready for immediate dispatch or truck pickup at our warehouse. Ask them what diameter (mm) or quantity they need.
    - Quality Standards: Full compliance with Ethiopian Standard ES ISO 6935-2 and American Standard ASTM A615.
    - Strength: Grade 75 Yield Strength ≥ 520 MPa (75,000+ PSI).
    - Length: Standard full 12-meter metric lengths.
    - Quality Assurance: Official mill test certificates (MTC) supplied with batch heat numbers.
-   - Exact Standard Metric Conversion (12m bar):
-     * 6mm (Staffa coil): 0.222 kg/m - Column stirrups, structural links, tie rings
-     * 8mm: 4.74 kg/bar (~21 pcs / quintal), 0.395 kg/m - Slab distribution, stairways, light foundations
-     * 10mm: 7.404 kg/bar (~13.5 pcs / quintal), 0.617 kg/m - Floor slabs, grade beams, lintels, retaining walls
-     * 12mm: 10.656 kg/bar (~9.4 pcs / quintal), 0.888 kg/m - Foundation pads, residential columns, cantilever beams
-     * 14mm: 14.52 kg/bar (~6.9 pcs / quintal), 1.210 kg/m - Heavy foundation footings, framed structures, shear walls
-     * 16mm: 18.96 kg/bar (~5.3 pcs / quintal), 1.580 kg/m - Multi-story structural columns, heavy transfer beams
-     * 20mm: 29.64 kg/bar (~3.4 pcs / quintal), 2.470 kg/m - High-rise structural columns, bridges, deep footings
-     * 24mm: 42.66 kg/bar (~2.3 pcs / quintal), 3.550 kg/m - Heavy commercial towers, mega raft foundations
-     * 32mm: 75.72 kg/bar (~1.3 pcs / quintal), 6.310 kg/m - Mega infrastructure, deep pile caps, industrial facilities
+   - Official Rebar Sizes & Standard Conversion Table (Official metric standard Pcs / Kg for 12m bars):
+     * 06mm (Steel coil / Staffa): Coil / Variable length | Unit weight: 0.222 kg/m - Column stirrups, structural links, tie rings
+     * 08mm: 4.74 kg / 12m bar (0.395 kg/m) | ~21.1 pcs / quintal (100 kg) - Slab distribution, stairways, light foundations
+     * 10mm: 7.40 kg / 12m bar (0.617 kg/m) | ~13.5 pcs / quintal (100 kg) - Floor slabs, grade beams, lintels, retaining walls
+     * 12mm: 10.66 kg / 12m bar (0.888 kg/m) | ~9.38 pcs / quintal (100 kg) - Foundation pads, residential columns, cantilever beams
+     * 14mm: 14.52 kg / 12m bar (1.210 kg/m) | ~6.89 pcs / quintal (100 kg) - Heavy foundation footings, framed structures, shear walls
+     * 16mm: 18.96 kg / 12m bar (1.580 kg/m) | ~5.27 pcs / quintal (100 kg) - Multi-story structural columns, heavy transfer beams
+     * 20mm: 29.64 kg / 12m bar (2.470 kg/m) | ~3.37 pcs / quintal (100 kg) - High-rise structural columns, bridges, deep footings
+     * 24mm: 42.66 kg / 12m bar (3.550 kg/m) | ~2.34 pcs / quintal (100 kg) - Heavy commercial towers, mega raft foundations
+     * 32mm: 75.72 kg / 12m bar (6.310 kg/m) | ~1.32 pcs / quintal (100 kg) - Mega infrastructure, deep pile caps, industrial facilities
+
+=======================================================
+RULE 3: PRECISE REBAR CONVERSIONS & MATHEMATICAL CALCULATIONS
+=======================================================
+When a user asks how much a specific quantity/pieces of rebar weighs (e.g. "how many kg is 400pcs of 16mm grade 75 rebar", "500 pcs 12mm in quintals", "weight of 100 pcs 20mm"):
+1. Multiply: Total Weight in kg = (Number of Pieces) × (Weight per 12m bar in kg).
+2. Convert to Quintals: Total Quintals = Total kg / 100.
+3. Convert to Metric Tons: Total Metric Tons = Total kg / 1,000.
+4. Worked Calculation Examples:
+   - Example (16mm): "400 pieces of 16mm Grade 75 rebar (12m length) weighs exactly 7,584 kg (75.84 quintals or ~7.58 metric tons), based on the official standard of 18.96 kg per 12m bar (1.580 kg/m)."
+     (In Amharic: "400 ፍሬ 16ሚሜ Grade 75 ባለ 12 ሜትር ብረት 7,584 ኪሎ ግራም (75.84 ኩንታል ወይም ~7.58 ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት 18.96 ኪ.ግ (1.580 ኪ.ግ/ሜትር) በመሆኑ ነው።")
+   - Example (12mm): "250 pieces of 12mm Grade 75 rebar weighs exactly 2,665 kg (26.65 quintals or ~2.67 metric tons), based on 10.66 kg per 12m bar (0.888 kg/m)."
+Always calculate accurately using the table values. Never guess or hallucinate arbitrary weights.
+
 B. Portland Cement (ሲሚንቶ):
    - Fresh mill batches from Mugher Cement and Dangote Cement.
    - OPC (Ordinary Portland Cement 42.5N/R) for rapid structural strength, columns, and heavy raft foundations.
@@ -128,6 +149,24 @@ D. Formwork Plywood (ፕላይዉድ):
 - Pricing is calculated per quintal (100 kg) or metric ton (1,000 kg).
 - Steel and cement prices fluctuate daily with factory mill indices.
 - Never guess or quote an arbitrary price in birr. Instead, inform the user that prices adjust daily with mill index and invite them to call our sales desk at +251 943 00 00 05 or use the online quote request form on the website to lock in today's official mill price.
+
+7. VERIFIED TECHNICAL BLOG INSIGHTS & ENGINEERING FACTS:
+(Strict Constraint: Only share verified engineering, structural, and material facts. DO NOT output or invent unverified contact details from blog text; all official hotlines are defined in Section 3 above).
+A. Grade 75 vs Grade 60 Rebar Differences:
+   - Grade 75 provides a guaranteed minimum yield strength of 500–520+ MPa (75,000+ PSI), compared to standard Grade 60's 415–420 MPa.
+   - Engineering benefit: Structural engineers can reduce total steel mass by ~15–20% while providing equal or superior tensile load capacity. This significantly reduces structural dead load on foundations and cuts project shipping/freight costs.
+B. OPC vs PPC Cement Technical Selection:
+   - Ordinary Portland Cement (OPC 42.5N/R - Dangote & Mugher): Achieves rapid early compressive strength. Essential for early formwork/shuttering removal, structural columns, suspended slabs, transfer beams, and pre-cast concrete.
+   - Pozzolana Portland Cement (PPC 32.5R - Dangote & Mugher): Contains reactive pozzolanic volcanic ash/silica. Generates significantly lower heat of hydration, which prevents thermal cracking in mass concrete pours. Offers superior long-term impermeability and chemical/sulfate resistance. Ideal for foundation rafts, substructures, hollow concrete block (HCB) masonry, bricklaying, and plastering.
+C. What is PPC in Cement (Chemical & Structural Dynamics):
+   - In PPC, calcium hydroxide released during clinker hydration reacts with pozzolanic silica to form additional calcium silicate hydrate (C-S-H) gel—the compound responsible for strength. This densifies concrete pore structure over time, drastically resisting water infiltration and ground sulfate attack.
+D. Formwork Plywood Cutting & Quality Best Practices:
+   - When cutting construction formwork plywood with a circular saw, use a fine-tooth carbide-tipped blade (60–80 teeth), score the cut line, or use zero-clearance backing to prevent face veneer tear-out. Clean, sealed edges prevent water intrusion and guarantee mirror-smooth concrete finishes with maximum reusability.
+   - Green / Eco Plywood: Uses low-emission, moisture-resistant bonding resins that eliminate hazardous off-gassing on modern sites while delivering heavy-duty multi-cycle reuse.
+E. Job Site Weight Verification:
+   - Every steel delivery from Yegna Trading includes certified electronic weigh-bridge tickets from our central dispatch. Contractors can double-check accuracy on site by multiplying physical bar counts by standard metric weights (e.g. 10.66 kg per 12m bar for 12mm rebar, or 18.96 kg per bar for 16mm rebar).
+F. Why Timely Rebar Logistics Matters:
+   - In construction sequencing, late rebar delivery creates catastrophic bottlenecks—stopping steel-fixers, idling concrete pump crews, and delaying structural pours. Yegna Trading's dedicated logistics, central warehouse stock, and prompt dispatch safeguard project timelines.
 `;
 
 const EAGER_PROMPTS = [
@@ -161,6 +200,7 @@ export default function CustomerSupportBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTeaser, setShowTeaser] = useState(false);
   const [isWiggling, setIsWiggling] = useState(false);
+  const [isScrolledDown, setIsScrolledDown] = useState(false);
   const [eagerPromptIndex, setEagerPromptIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -209,6 +249,40 @@ export default function CustomerSupportBot() {
       }
     }
   }, [messages, isOpen]);
+
+  // Auto-hide floating support trigger on scroll down, reveal on scroll up / top
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScrollDirection = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show near the top of the page
+      if (currentScrollY < 120) {
+        setIsScrolledDown(false);
+      } else if (currentScrollY > lastScrollY + 15) {
+        // Scrolling down past threshold -> hide
+        setIsScrolledDown(true);
+      } else if (currentScrollY < lastScrollY - 10) {
+        // Scrolling up -> reveal immediately
+        setIsScrolledDown(false);
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollDirection);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // =========================================================================
   // EAGER PROMPT CYCLING & ATTENTION HOP ENGINE
@@ -411,6 +485,104 @@ export default function CustomerSupportBot() {
       };
     }
 
+    // 1.5 Material Availability & Stock Inquiries (e.g. "ፌሮ አለ", "ፌሮ አላችሁ", "ብረት አለ", "do you have rebar", "is steel in stock", "ፌሮ")
+    if (
+      q.includes('ፌሮ') ||
+      q.includes('fero') ||
+      (q.includes('rebar') && !q.includes('how many')) ||
+      (q.includes('ብረት') && !q.includes('ክብደት') && !q.includes('ልኬት') && !q.includes('ስንት ኪሎ')) ||
+      q.includes('አለ') ||
+      q.includes('አላችሁ') ||
+      q.includes('አለዎት') ||
+      q.includes('ይገኛል') ||
+      q.includes('ይኖራል') ||
+      q.includes('do you have') ||
+      q.includes('in stock') ||
+      q.includes('available')
+    ) {
+      // If asking specifically about cement availability
+      if (q.includes('cement') || q.includes('ሲሚንቶ') || q.includes('ሙገር') || q.includes('ዳንጎቴ')) {
+        return {
+          text: preferAmharic
+            ? 'አዎ! ዳንጎቴና ሙገር OPC (42.5N) እና PPC (32.5R) ሲሚንቶ በበቂ ክምችት በመጋዘናችን ይገኛል። በ50 ኪ.ግ የታሸገ ወይም በቦቴ (Bulk) በፍጥነት እናቀርባለን።'
+            : 'Yes! We have fresh mill Dangote and Mugher OPC (42.5N) and PPC (32.5R) cement in stock in 50kg bags and bulk tankers ready for delivery or pickup.',
+          actions: [
+            {
+              label: preferAmharic ? '📞 ለሽያጭ ደውል (+251 943 00 00 05)' : '📞 Call Sales Hotline',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // If asking specifically about staffa / wire availability
+      if (q.includes('staffa') || q.includes('ስታፋ') || q.includes('ሽቦ')) {
+        return {
+          text: preferAmharic
+            ? 'አዎ! 6ሚሜ ከፍተኛ ጥንካሬ ያለው የስታፋ ብረት ሽቦ (Staffa Coil) ለማሰሪያና ለሊንክስ በበቂ ክምችት በመጋዘናችን አለን።'
+            : 'Yes! We stock 6mm high-tensile staffa steel wire coils for column stirrups and structural ties in our warehouse.',
+          actions: [
+            {
+              label: preferAmharic ? '📞 ለሽያጭ ደውል' : '📞 Call Sales',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // If asking specifically about plywood availability
+      if (q.includes('plywood') || q.includes('ፕላይዉድ') || q.includes('ሳንቃ')) {
+        return {
+          text: preferAmharic
+            ? 'አዎ! ፊልም የተለበጠ (Film-faced) እና ማሪን ግሬድ የኮንክሪት ፕላይዉድ በበቂ ክምችት በመጋዘናችን ይገኛል።'
+            : 'Yes! We have certified phenolic film-faced marine formwork plywood sheets in stock for smooth concrete casting.',
+          actions: [
+            {
+              label: preferAmharic ? '📞 ለሽያጭ ደውል' : '📞 Call Sales',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+              href: '#quote',
+            },
+          ],
+        };
+      }
+
+      // Rebar / Fero / General Steel Availability (e.g. "ፌሮ አለ", "ብረት አለ", "do you have rebar", "is steel in stock")
+      return {
+        text: preferAmharic
+          ? 'አዎ! የኛ ትሬዲንግ (Yegna Trading PLC) ከ8ሚሜ እስከ 32ሚሜ ደረጃቸውን የጠበቁ Grade 75 ፌሮ ብረቶች (ባለ 12 ሜትር ሙሉ ርዝመት) በበቂ ስቶክ በመጋዘናችን ይገኛሉ። እንዲሁም 6ሚሜ ስታፋ፣ ዳንጎቴና ሙገር ሲሚንቶ አለን። የሚፈልጉትን መጠን ወይም ዲያሜትር (ሚሜ) ይንገሩን!'
+          : 'Yes! Yegna Trading PLC maintains extensive warehouse stock of certified Grade 75 deformed rebar (from 8mm up to 32mm, full 12-meter lengths), 6mm staffa wire coils, Dangote & Mugher cement, and formwork plywood ready for immediate dispatch or truck pickup.',
+        actions: [
+          {
+            label: preferAmharic ? '⚖️ የፌሮ ክብደትና ልኬት' : '⚖️ Rebar Sizes & Weights',
+            href: '#structural-lab',
+          },
+          {
+            label: preferAmharic ? '📞 ለሽያጭ መስመር ደውል' : '📞 Call Sales Hotline',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+          {
+            label: preferAmharic ? '🗺️ የመጋዘን አድራሻ' : '🗺️ Warehouse Location',
+            href: 'https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA',
+          },
+          {
+            label: preferAmharic ? '📝 የዋጋ መጠየቂያ ቅጽ' : '📝 Request Official Quote',
+            href: '#quote',
+          },
+        ],
+      };
+    }
+
     // 2. Price / Cost Queries
     if (
       q.includes('price') ||
@@ -438,7 +610,40 @@ export default function CustomerSupportBot() {
       };
     }
 
-    // 3. Location / Office / Address
+    // 3. Warehouse / Depot Location (Direct Navigation)
+    if (
+      q.includes('warehouse') ||
+      q.includes('depot') ||
+      q.includes('store') ||
+      q.includes('storage') ||
+      q.includes('መጋዘን') ||
+      q.includes('ስቶር') ||
+      q.includes('ክምችት') ||
+      q.includes('pickup') ||
+      q.includes('ማከማቻ')
+    ) {
+      return {
+        text: preferAmharic
+          ? 'አዎ! የኛ ትሬዲንግ (Yegna Trading PLC) የራሱ የሆነ ሰፊና ሙሉ በሙሉ የተደራጀ የኮንስትራክሽን ግብአቶች መጋዘን አለው። ደንበኞች እቃ ለመመልከት፣ በሚዛን ለማስመዘን ወይም በራሳቸው መኪና በቀጥታ ለመጫን መምጣት ይችላሉ። የመጋዘኑ የቀጥታ የጉግል ካርታ (Google Maps) አድራሻ፦ https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA'
+          : 'Yes! Yegna Trading PLC operates its own dedicated, fully stocked physical warehouse and central depot for rebar, cement, and formwork plywood. You can visit directly for material inspection, weigh-bridge verification, or truck pickup. Navigate directly via Google Maps: https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA',
+        actions: [
+          {
+            label: preferAmharic ? '🗺️ ወደ መጋዘኑ ሂድ (Google Maps)' : '🗺️ Navigate to Warehouse (Google Maps)',
+            href: 'https://maps.app.goo.gl/iT4jNjBeeoQgr2JEA',
+          },
+          {
+            label: preferAmharic ? '🏢 ዋና ቢሮ (ካዛንቺስ)' : '🏢 Kazanchis HQ (Office)',
+            href: 'https://maps.app.goo.gl/FQVCfhaxFvV8goy7A?g_st=atm',
+          },
+          {
+            label: preferAmharic ? '📞 ለሽያጭ ደውል' : '📞 Call Sales Desk',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+        ],
+      };
+    }
+
+    // 3.1 Headquarters Office / Address
     if (
       q.includes('location') ||
       q.includes('address') ||
@@ -466,6 +671,159 @@ export default function CustomerSupportBot() {
           },
         ],
       };
+    }
+
+    // 3.2 Operating Schedule & Working Hours (e.g. "Working hours", "Contact Hours", "የስራ ሰዓት", "Are you open on Sunday?")
+    if (
+      q.includes('hour') ||
+      q.includes('working') ||
+      q.includes('schedule') ||
+      q.includes('time') ||
+      q.includes('open') ||
+      q.includes('close') ||
+      q.includes('sunday') ||
+      q.includes('saturday') ||
+      q.includes('weekend') ||
+      q.includes('ሰዓት') ||
+      q.includes('የስራ ሰዓት') ||
+      q.includes('ክፍት') ||
+      q.includes('ዝግ')
+    ) {
+      return {
+        text: preferAmharic
+          ? 'የስራ ሰዓታችን፦ ከሰኞ እስከ አርብ ከጠዋቱ 2:30 እስከ 11:30 (08:30 AM – 05:30 PM)፣ ቅዳሜ ከጠዋቱ 2:30 እስከ 6:30 (08:30 AM – 12:30 PM) ክፍት ነው። እሁድ ዝግ ነው። በስራ ሰዓት በስልክ (+251 943 00 00 05 / +251 941 15 15 15) ወይም በማንኛውም ሰዓት በቴሌግራም @Yegna_Tradingplc ያግኙን!'
+          : 'Our working hours are: Monday – Friday from 08:30 AM – 05:30 PM, Saturday from 08:30 AM – 12:30 PM. We are closed on Sunday. Reach our desk at +251 943 00 00 05 or on Telegram @Yegna_Tradingplc.',
+        actions: [
+          {
+            label: preferAmharic ? '📞 አሁን ይደውሉ' : '📞 Call Head Office',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+          {
+            label: preferAmharic ? '💬 በቴሌግራም አውራ' : '💬 Chat on Telegram',
+            href: CONTACT.telegram,
+          },
+          {
+            label: preferAmharic ? '📍 የቢሮ አድራሻ (ካዛንቺስ)' : '📍 Office Location (Kazanchis)',
+            href: 'https://maps.app.goo.gl/FQVCfhaxFvV8goy7A?g_st=atm',
+          },
+        ],
+      };
+    }
+
+    // 3.3 Product Catalog / What do you sell (e.g. "what products do you sell", "catalog", "materials", "ምን ምን አላችሁ")
+    if (
+      q.includes('what do you sell') ||
+      q.includes('product') ||
+      q.includes('material') ||
+      q.includes('catalog') ||
+      q.includes('ምን ምን አላችሁ') ||
+      q.includes('ምን ትሸጣላችሁ') ||
+      q.includes('ምርቶች')
+    ) {
+      return {
+        text: preferAmharic
+          ? 'የኛ ትሬዲንግ (Yegna Trading PLC) የሚያቀርባቸው ዋና ዋና የኮንስትራክሽን ግብአቶች፦ 1) Grade 75 ፌሮ ብረት (ከ8ሚሜ እስከ 32ሚሜ ባለ 12 ሜትር ርዝመት)፣ 2) 6ሚሜ ስታፋ የሽቦ ኮይል፣ 3) ዳንጎቴና ሙገር OPC (42.5N) እና PPC (32.5R) ሲሚንቶ፣ 4) ፊልም የተለበጠ የኮንክሪት ፕላይዉድ ናቸው።'
+          : 'Yegna Trading PLC supplies four certified construction product lines: 1) Grade 75 deformed steel rebar (8mm–32mm in full 12m bars), 2) 6mm high-tensile staffa wire coils, 3) Dangote & Mugher OPC (42.5N) and PPC (32.5R) cement, and 4) Phenolic film-faced marine formwork plywood.',
+        actions: [
+          {
+            label: preferAmharic ? '🧱 ምርቶችን በሙሉ ተመልከት' : '🧱 View Product Catalog',
+            href: '/products/',
+          },
+          {
+            label: preferAmharic ? '📝 የዋጋ መጠየቂያ' : '📝 Request Quote',
+            href: '#quote',
+          },
+          {
+            label: preferAmharic ? '📞 የሽያጭ መስመር' : '📞 Call Sales Hotline',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+        ],
+      };
+    }
+
+    // 3.4 Payment Methods & Invoicing (e.g. "payment", "bank transfer", "cbe", "telebirr", "ክፍያ", "ባንክ")
+    if (
+      q.includes('pay') ||
+      q.includes('bank') ||
+      q.includes('telebirr') ||
+      q.includes('cbe') ||
+      q.includes('cheque') ||
+      q.includes('check') ||
+      q.includes('receipt') ||
+      q.includes('vat') ||
+      q.includes('ክፍያ') ||
+      q.includes('ባንክ') ||
+      q.includes('ቼክ') ||
+      q.includes('ቴሌብር') ||
+      q.includes('ደረሰኝ') ||
+      q.includes('ቫት')
+    ) {
+      return {
+        text: preferAmharic
+          ? 'ክፍያ በባንክ ዝውውር (CBE እና ሌሎች ባንኮች)፣ በቴሌብር (Telebirr) ወይም በህጋዊ ቼክ መቀበል እንችላለን። ሁሉም ሽያጮቻችን ሙሉ የህጋዊ ቫት (VAT) ካሽ ሬጂስተር ደረሰኝ እና የጥራት ሰርተፊኬት አላቸው።'
+          : 'We accept bank transfers (CBE, Awash, etc.), Telebirr SuperApp, and certified company cheques. All purchases include legal VAT fiscal cash receipts and laboratory mill test certificates (MTC).',
+        actions: [
+          {
+            label: preferAmharic ? '📞 የፋይናንስ / ሽያጭ መስመር' : '📞 Contact Sales / Finance',
+            href: `tel:${CONTACT.phoneClean}`,
+          },
+          {
+            label: preferAmharic ? '📝 የዋጋ መጠየቂያ ቅጽ' : '📝 Request Official Quote',
+            href: '#quote',
+          },
+        ],
+      };
+    }
+
+    // 3.5 Specific Quantity & Rebar Weight Calculation (e.g., "how many kg is 400pcs of 16mm grade 75 rebar", "400 pcs 16mm", "400 ፍሬ 16ሚሜ")
+    const rebarWeights: Record<number, { kgPerBar: number; unitWeight: number; pcsPerQuintal: number }> = {
+      8: { kgPerBar: 4.74, unitWeight: 0.395, pcsPerQuintal: 21.1 },
+      10: { kgPerBar: 7.40, unitWeight: 0.617, pcsPerQuintal: 13.5 },
+      12: { kgPerBar: 10.66, unitWeight: 0.888, pcsPerQuintal: 9.38 },
+      14: { kgPerBar: 14.52, unitWeight: 1.210, pcsPerQuintal: 6.89 },
+      16: { kgPerBar: 18.96, unitWeight: 1.580, pcsPerQuintal: 5.27 },
+      20: { kgPerBar: 29.64, unitWeight: 2.470, pcsPerQuintal: 3.37 },
+      24: { kgPerBar: 42.66, unitWeight: 3.550, pcsPerQuintal: 2.34 },
+      32: { kgPerBar: 75.72, unitWeight: 6.310, pcsPerQuintal: 1.32 },
+    };
+
+    const diaMatch =
+      q.match(/(?:^|\D)(8|10|12|14|16|20|24|32)\s*(?:mm|ሚሜ)/i) ||
+      q.match(/(?:mm|ሚሜ|size|diameter|ባለ)\s*(8|10|12|14|16|20|24|32)(?:\D|$)/i);
+    const qtyMatch =
+      q.match(/(\d[\d,]*)\s*(?:pcs|pieces|bars?|ፍሬ|ባር)/i) ||
+      q.match(/(?:how many kg is|weight of|calculate|ስንት ኪሎ ነው)\s*(\d[\d,]*)/i) ||
+      q.match(/(\d[\d,]*)\s*(?:of\s*)?(?:8|10|12|14|16|20|24|32)\s*mm/i);
+
+    if (diaMatch && qtyMatch) {
+      const dia = parseInt(diaMatch[1], 10);
+      const qty = parseInt(qtyMatch[1].replace(/,/g, ''), 10);
+      const spec = rebarWeights[dia];
+      if (spec && qty > 0) {
+        const totalKg = Number((qty * spec.kgPerBar).toFixed(2));
+        const quintals = Number((totalKg / 100).toFixed(2));
+        const tons = Number((totalKg / 1000).toFixed(3));
+
+        return {
+          text: preferAmharic
+            ? `${qty.toLocaleString()} ፍሬ ${dia}ሚሜ Grade 75 ባለ 12 ሜትር ብረት በትክክል ${totalKg.toLocaleString()} ኪ.ግ (${quintals.toLocaleString()} ኩንታል ወይም ~${tons.toLocaleString()} ሜትሪክ ቶን) ይመዝናል። ይህም በደረጃው መሠረት አንዱ ባለ 12 ሜትር ብረት ${spec.kgPerBar} ኪ.ግ (${spec.unitWeight} ኪ.ግ/ሜትር) በመሆኑ ነው።`
+            : `${qty.toLocaleString()} pieces of ${dia}mm Grade 75 rebar (12m length) weighs exactly ${totalKg.toLocaleString()} kg (${quintals.toLocaleString()} quintals or ~${tons.toLocaleString()} metric tons), based on the official standard of ${spec.kgPerBar} kg per 12m bar (${spec.unitWeight} kg/m).`,
+          actions: [
+            {
+              label: preferAmharic ? '📞 የዋጋ መረጃ ይጠይቁ' : '📞 Call Sales for Pricing',
+              href: `tel:${CONTACT.phoneClean}`,
+            },
+            {
+              label: preferAmharic ? '📝 የዋጋ መጠየቂያ ቅጽ' : '📝 Request Official Quote',
+              href: '#quote',
+            },
+            {
+              label: preferAmharic ? '🧪 ወደ ሬባር ላብራቶሪ' : '🧪 Open Rebar Lab Calculator',
+              href: '#structural-lab',
+            },
+          ],
+        };
+      }
     }
 
     // 4. Sizes, Weights, Specifications, Rebar Lab
@@ -500,6 +858,65 @@ export default function CustomerSupportBot() {
           {
             label: preferAmharic ? '📋 ሙሉ የክብደት ሰንጠረዥ' : '📋 View Product Specs',
             href: '/products/',
+          },
+        ],
+      };
+    }
+
+    // 4.5 Engineering & Technical Insights (from official technical blog & FAQ)
+    if (
+      (q.includes('opc') && q.includes('ppc')) ||
+      (q.includes('difference') && (q.includes('cement') || q.includes('grade'))) ||
+      q.includes('ልዩነት') ||
+      q.includes('grade 60') ||
+      q.includes('grade 75 vs') ||
+      q.includes('weighbridge') ||
+      q.includes('weigh bridge') ||
+      q.includes('cut plywood') ||
+      q.includes('circular saw')
+    ) {
+      if (q.includes('grade 60') || q.includes('grade 75 vs')) {
+        return {
+          text: preferAmharic
+            ? 'ደረጃ 75 (Grade 75) ሬባር ከ500–520+ MPa በላይ የመሸከም አቅም ያለው ሲሆን፣ ከመደበኛው Grade 60 (415 MPa) ጋር ሲነጻጸር ከ15%–20% አነስተኛ ብረት በመጠቀም የሕንፃውን ጥንካሬ አስተማማኝ ለማድረግ እና የትራንስፖርት ወጪን ለመቀነስ ያስችላል።'
+            : 'Grade 75 rebar delivers 500–520+ MPa yield strength versus standard Grade 60 (415–420 MPa). This allows structural engineers to reduce total rebar tonnage by ~15–20% while maintaining superior tensile capacity and lowering dead load.',
+          actions: [
+            {
+              label: preferAmharic ? '📋 የብረት ዝርዝር' : '📋 View Rebar Specs',
+              href: '/products/',
+            },
+            {
+              label: preferAmharic ? '📖 የብሎግ ጽሑፎች' : '📖 Read Technical Articles',
+              href: '/insights/',
+            },
+          ],
+        };
+      }
+      if (q.includes('cut plywood') || q.includes('circular saw') || q.includes('saw')) {
+        return {
+          text: preferAmharic
+            ? 'ፕላይዉድ በሰርኩላር ሶው ሲቆረጥ የጠርዝ መሰንጠቅ እንዳይፈጠር ከ60–80 ጥርስ ያለው ጥሩ የካርባይድ ምላጭ መጠቀም፣ የቆራጭ መስመሩን አስቀድሞ ምልክት ማድረግ እና ጫፎቹን በውሃ መከላከያ ማሸግ ይመከራል።'
+            : 'When cutting formwork plywood with a circular saw, use a fine-tooth carbide blade (60–80 teeth) and score the cut line to prevent face tear-out. Clean, sealed edges prevent water intrusion for maximum reuse cycles.',
+          actions: [
+            {
+              label: preferAmharic ? '📖 የብሎግ መመሪያ' : '📖 Read Full Guide',
+              href: '/insights/',
+            },
+          ],
+        };
+      }
+      return {
+        text: preferAmharic
+          ? 'OPC ሲሚንቶ (42.5N/R) በፍጥነት ጥንካሬ ስለሚይዝ ለምሰሶዎች፣ ጨረሮችና አስቸኳይ የኮንክሪት ሥራዎች ይመረጣል። PPC ሲሚንቶ (32.5R) ደግሞ ስንጥቆችን የሚከላከልና የውሃ ውስጥ ኬሚካሎችን የሚቋቋም በመሆኑ ለመሠረት፣ ለማለስለስና ለግንብ ሥራዎች ተመራጭ ነው።'
+          : 'OPC cement (42.5N/R) achieves rapid early compressive strength—ideal for columns, beams, and early shuttering removal. PPC cement (32.5R) generates lower hydration heat to prevent thermal cracking and offers superior long-term impermeability for foundations and masonry.',
+        actions: [
+          {
+            label: preferAmharic ? '🧱 የሲሚንቶ ምርቶች' : '🧱 View Cement Products',
+            href: '/products/',
+          },
+          {
+            label: preferAmharic ? '📖 የብሎግ ጽሑፎች' : '📖 Read Technical Guide',
+            href: '/insights/',
           },
         ],
       };
@@ -831,7 +1248,7 @@ export default function CustomerSupportBot() {
       {/* 1. EAGER TEASER BUBBLE WITH INTERACTIVE QUICK-CHIPS                   */}
       {/* ===================================================================== */}
       <AnimatePresence>
-        {showTeaser && !isOpen && (
+        {showTeaser && !isOpen && !isScrolledDown && (
           <motion.div
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.9 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
@@ -953,7 +1370,15 @@ export default function CustomerSupportBot() {
       {/* ===================================================================== */}
       {/* 2. PERSISTENT CORNER FLOATING TRIGGER BUTTON (WITH EAGER HOP)        */}
       {/* ===================================================================== */}
-      <div className="fixed bottom-[74px] md:bottom-6 right-4 sm:right-6 z-40 select-none">
+      <motion.div
+        animate={
+          isScrolledDown && !isOpen
+            ? { y: 110, opacity: 0, pointerEvents: 'none' }
+            : { y: 0, opacity: 1, pointerEvents: 'auto' }
+        }
+        transition={{ type: 'spring', stiffness: 360, damping: 28 }}
+        className="fixed bottom-[74px] md:bottom-6 right-4 sm:right-6 z-40 select-none"
+      >
         <motion.button
           id="yegna-ai-bot-trigger"
           type="button"
@@ -1023,7 +1448,7 @@ export default function CustomerSupportBot() {
             </span>
           </div>
         </motion.button>
-      </div>
+      </motion.div>
 
       {/* ===================================================================== */}
       {/* 3. INTERACTIVE CHAT WINDOW DIALOG                                     */}
