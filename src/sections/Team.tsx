@@ -236,9 +236,37 @@ interface FloatingText {
   x: number;
 }
 
+const COUNTER_KEY = 'yegna_trading_crew_applause_v1';
+const BASELINE_CLAPS = 450;
+
+/**
+ * Format numbers with short abbreviations when large (e.g. 450, 1.2k, 10.2k, 1.5m)
+ */
+function formatClaps(count: number): string {
+  if (count < 1000) return count.toLocaleString();
+  return new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: 1,
+  })
+    .format(count)
+    .toLowerCase();
+}
+
 function CrewAppreciationWidget() {
   const { t } = useApp();
-  const [claps, setClaps] = useState(385);
+  const [claps, setClaps] = useState<number>(() => {
+    try {
+      const stored = localStorage.getItem('yegna_team_claps');
+      if (stored) {
+        const val = parseInt(stored, 10);
+        if (!isNaN(val) && val >= BASELINE_CLAPS) return val;
+      }
+    } catch {
+      // ignore
+    }
+    return BASELINE_CLAPS;
+  });
   const [particles, setParticles] = useState<SparkParticle[]>([]);
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([]);
   const [streak, setStreak] = useState(0);
@@ -246,19 +274,35 @@ function CrewAppreciationWidget() {
   const streakTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reduce = useReducedMotion();
 
-  // Hydrate stored claps safely on client to avoid SSR hydration mismatch
+  // Hydrate from global counter API on mount while respecting cached count
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('yegna_team_claps');
-      if (stored) {
-        setClaps(parseInt(stored, 10));
-      }
-    } catch {
-      // ignore
-    }
+    let isMounted = true;
+    fetch(`https://countapi.mileshilliard.com/api/v1/get/${COUNTER_KEY}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!isMounted || !data || typeof data.value !== 'number') return;
+        const serverVal = Math.max(data.value, BASELINE_CLAPS);
+        setClaps((prev) => {
+          const next = Math.max(prev, serverVal);
+          try {
+            localStorage.setItem('yegna_team_claps', String(next));
+          } catch {
+            // ignore
+          }
+          return next;
+        });
+      })
+      .catch(() => {
+        // Keep cached/baseline value if offline
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleClap = () => {
+    // 1. Optimistic instant UI increment
     setClaps((c) => {
       const next = c + 1;
       try {
@@ -268,6 +312,28 @@ function CrewAppreciationWidget() {
       }
       return next;
     });
+
+    // 2. Synchronize hit to shared global counter API
+    fetch(`https://countapi.mileshilliard.com/api/v1/hit/${COUNTER_KEY}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && typeof data.value === 'number') {
+          const serverVal = Math.max(data.value, BASELINE_CLAPS);
+          setClaps((prev) => {
+            const next = Math.max(prev, serverVal);
+            try {
+              localStorage.setItem('yegna_team_claps', String(next));
+            } catch {
+              // ignore
+            }
+            return next;
+          });
+        }
+      })
+      .catch(() => {
+        // Gracefully retain local state if network glitch
+      });
+
     setIsPressed(true);
     setTimeout(() => setIsPressed(false), 240);
 
@@ -379,8 +445,9 @@ function CrewAppreciationWidget() {
           animate={{ scale: 1, color: '#b45309' }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
           className="rounded-full bg-ember/15 px-2.5 py-0.5 font-mono text-xs font-black text-ember shadow-inner"
+          title={`${claps.toLocaleString()} applauds`}
         >
-          {claps}
+          {formatClaps(claps)}
         </motion.span>
 
         {streak > 1 && (
