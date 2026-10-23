@@ -73,7 +73,7 @@ VERIFIED COMPANY INFORMATION:
 - Four Pillars: Reliable Quality, Reasonable Price, Timely Delivery, Ethics & Integrity (with full legal VAT fiscal receipts and certified paperwork).
 
 2. REAL EXECUTIVE LEADERSHIP & KEY PERSONNEL:
-- Chief Executive Officer (CEO): Tilahun Tamrat (ጥላሁን ታምራት)
+- Chief Executive Officer (CEO): Tilahun Tamirat (ጥላሁን ታሚራት)
 - General Manager & Founder: Ato Zelalem Alene (አቶ ዘላለም አለነ)
 - Operation Director / Supply Chain Director: Getahun Assefa (ጌታሁን አሰፋ)
 - HR Manager: Hanna Girma (ሃና ግርማ)
@@ -526,8 +526,8 @@ export default function CustomerSupportBot() {
     ) {
       return {
         text: preferAmharic
-          ? 'የኛ ትሬዲንግ ኃ.የተ.የግ.ማ በዋና ሥራ አስፈፃሚ (CEO) ጥላሁን ታምራት እና በዋና ሥራ አስኪያጅና መሥራች አቶ ዘላለም አለነ ይመራል። የአመራር ቡድኑ አባላት፡ ጌታሁን አሰፋ (ኦፐሬሽን ዳይሬክተር)፣ ሃና ግርማ (የሰው ኃይል ሥራ አስኪያጅ)፣ ህይወት ጥላሁን (የፋይናንስ ዳይሬክተር) እና ሙሉጌታ አወቀ (የመረጃና ኢአርፒ ስርዓት ዳይሬክተር) ናቸው።'
-          : 'Yegna Trading PLC is led by Chief Executive Officer (CEO) Tilahun Tamrat and General Manager & Founder Ato Zelalem Alene, supported by our directors: Getahun Assefa (Operation Director), Hanna Girma (HR Manager), Hiwot Tilahun (Finance Director), and Mulugeta Awoke (IT & ERP Director).',
+          ? 'የኛ ትሬዲንግ ኃ.የተ.የግ.ማ በዋና ሥራ አስፈፃሚ (CEO) ጥላሁን ታሚራት እና በዋና ሥራ አስኪያጅና መሥራች አቶ ዘላለም አለነ ይመራል። የአመራር ቡድኑ አባላት፡ ጌታሁን አሰፋ (ኦፐሬሽን ዳይሬክተር)፣ ሃና ግርማ (የሰው ኃይል ሥራ አስኪያጅ)፣ ህይወት ጥላሁን (የፋይናንስ ዳይሬክተር) እና ሙሉጌታ አወቀ (የመረጃና ኢአርፒ ስርዓት ዳይሬክተር) ናቸው።'
+          : 'Yegna Trading PLC is led by Chief Executive Officer (CEO) Tilahun Tamirat and General Manager & Founder Ato Zelalem Alene, supported by our directors: Getahun Assefa (Operation Director), Hanna Girma (HR Manager), Hiwot Tilahun (Finance Director), and Mulugeta Awoke (IT & ERP Director).',
         actions: [
           {
             label: preferAmharic ? '👥 ሙሉ የአመራር ቡድን' : '👥 View Full Team',

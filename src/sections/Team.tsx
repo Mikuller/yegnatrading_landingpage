@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback, type MouseEvent } from 'react';
+import { createPortal } from 'react-dom';
 import {
   motion,
   AnimatePresence,
@@ -55,6 +56,38 @@ export interface TeamLeader {
 }
 
 const EXTENDED_TEAM: TeamLeader[] = [
+  {
+    id: 'tilahun',
+    name: 'Tilahun Tamirat',
+    amName: 'ጥላሁን ታሚራት',
+    role: 'Chief Executive Officer (CEO)',
+    amRole: 'ዋና ሥራ አስፈፃሚ (CEO)',
+    dept: 'Executive Direction & Strategy',
+    amDept: 'ከፍተኛ አመራርና ስትራቴጂ',
+    category: 'executive',
+    photo: '/images/ceo.jpg',
+    icon: Award,
+    color: '#f59e0b',
+    quote:
+      'Yegna Trading is built on unwavering trust and certified quality. We supply the structural backbone for Ethiopia’s most ambitious infrastructure projects.',
+    amQuote:
+      'የኛ ትሬዲንግ የተገነባው በማይናወጥ እምነት እና በተረጋገጠ ጥራት ላይ ነው። ለአገራችን ታላላቅ የኮንስትራክሽን ፕሮጀክቶች አስተማማኝ የጀርባ አጥንት ነን።',
+    pillars: [
+      {
+        en: 'Executive governance & nationwide corporate partnership expansion',
+        am: 'አገር አቀፍ የኮርፖሬት አጋርነቶችን ማጠናከርና ከፍተኛ የሥራ አመራር',
+      },
+      {
+        en: 'Strict legal compliance & Grade 75 certified quality assurance across all depots',
+        am: 'ደረጃቸውን የጠበቁ Grade 75 ሬባርና ጥራት የተረጋገጠላቸውን የግንባታ ግብዓቶች ማቅረብ',
+      },
+      {
+        en: 'Long-term value creation for contractors, developers, and public infrastructure',
+        am: 'ለኮንትራክተሮች፣ ሪል እስቴቶችና ለመንግሥት ፕሮጀክቶች አስተማማኝ አጋር መሆን',
+      },
+    ],
+    deskPhone: CONTACT.phoneClean,
+  },
   {
     id: 'zelalem',
     name: 'Ato Zelalem Alene',
@@ -656,6 +689,11 @@ interface DossierModalProps {
 
 function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModalProps) {
   const { t } = useApp();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Handle ESC key & Arrow navigation
   useEffect(() => {
@@ -664,39 +702,46 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
       if (e.key === 'ArrowRight') onNext();
       if (e.key === 'ArrowLeft') onPrev();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose, onNext, onPrev]);
+    if (leader) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [leader, onClose, onNext, onPrev]);
 
-  if (!leader) return null;
+  if (!mounted) return null;
 
-  const LeaderIcon = leader.icon;
+  const LeaderIcon = leader ? leader.icon : null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={t(leader.name, leader.amName)}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto pt-16 sm:pt-16 pb-24 sm:pb-16"
-      >
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-black/65 backdrop-blur-md"
-        />
-
-        {/* Modal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.94, y: 20 }}
-          transition={{ duration: 0.35, ease: EASE }}
-          className="border-line bg-panel card-glow relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl my-auto"
+      {leader && LeaderIcon && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t(leader.name, leader.amName)}
+          className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto"
         >
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/75 backdrop-blur-md"
+          />
+
+          {/* Modal Window */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 20 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="border-line bg-panel card-glow relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl my-auto"
+          >
           {/* Top Status Banner */}
           <div className="flex items-center justify-between border-b border-line bg-panel2/80 px-6 py-4">
             <div className="flex items-center gap-2">
@@ -818,8 +863,10 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
-  );
+    )}
+  </AnimatePresence>,
+  document.body
+);
 }
 
 // ==========================================
@@ -844,82 +891,96 @@ interface LightboxProps {
 
 function PhotoLightboxModal({ photo, onClose }: LightboxProps) {
   const { t } = useApp();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+    if (photo) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [photo, onClose]);
 
-  if (!photo) return null;
+  if (!mounted) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={t(photo.caption, photo.amCaption)}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto pt-16 sm:pt-16 pb-24 sm:pb-16"
-      >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-black/85 backdrop-blur-md"
-        />
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 16 }}
-          transition={{ duration: 0.3, ease: EASE }}
-          className="border-line bg-panel relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl flex flex-col my-auto"
+      {photo && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t(photo.caption, photo.amCaption)}
+          className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
         >
-          {/* Uncropped Image Display: NEVER crop, preserves complete authentic photograph */}
-          <div className="relative flex items-center justify-center bg-black/75 dark:bg-black/90 p-2 sm:p-4 overflow-hidden">
-            <img
-              src={photo.url}
-              alt={t(photo.caption, photo.amCaption)}
-              className="max-h-[58vh] sm:max-h-[64vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
-            />
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close lightbox"
-              className="absolute right-3 top-3 sm:right-4 sm:top-4 grid h-10 w-10 place-items-center rounded-full bg-black/70 text-white backdrop-blur-md border border-white/20 transition-all hover:bg-ember hover:scale-105 active:scale-95 cursor-pointer z-20 focus-visible:ring-2 focus-visible:ring-ember focus-visible:outline-none"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="p-5 sm:p-6 bg-panel">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs font-bold text-ember uppercase tracking-wider">
-                {t(photo.category || 'Company Culture & Milestone', photo.amCategory || 'የኩባንያችን ባህልና መርሐ-ግብር')}
-              </span>
-              {photo.meta && (
-                <span className="font-mono text-[0.72rem] text-mute font-semibold">
-                  {t(photo.meta, photo.amMeta || photo.meta)}
-                </span>
-              )}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/90 backdrop-blur-md"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="border-line bg-panel relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl border shadow-2xl flex flex-col my-auto"
+          >
+            {/* Uncropped Image Display: NEVER crop, preserves complete authentic photograph */}
+            <div className="relative flex items-center justify-center bg-black/75 dark:bg-black/90 p-2 sm:p-4 overflow-hidden">
+              <img
+                src={photo.url}
+                alt={t(photo.caption, photo.amCaption)}
+                className="max-h-[58vh] sm:max-h-[64vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
+              />
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close lightbox"
+                className="absolute right-3 top-3 sm:right-4 sm:top-4 grid h-10 w-10 place-items-center rounded-full bg-black/70 text-white backdrop-blur-md border border-white/20 transition-all hover:bg-ember hover:scale-105 active:scale-95 cursor-pointer z-20 focus-visible:ring-2 focus-visible:ring-ember focus-visible:outline-none"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <h4 className="font-display text-ink mt-1.5 text-base sm:text-xl font-bold">
-              {t(photo.caption, photo.amCaption)}
-            </h4>
-            <p className="text-mute mt-2 text-xs sm:text-sm leading-relaxed">
-              {t(
-                photo.description ||
-                  'Yegna Trading PLC team members actively engage in collaborative corporate and community events.',
-                photo.amDescription ||
-                  'የየኛ ትሬዲንግ ቤተሰብ በጋራ የቡድንና የማኅበረሰብ አቀፍ መርሐ-ግብሮች ላይ በንቃት ይሳተፋል።'
-              )}
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </AnimatePresence>
+            <div className="p-5 sm:p-6 bg-panel">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-mono text-xs font-bold text-ember uppercase tracking-wider">
+                  {t(photo.category || 'Company Culture & Milestone', photo.amCategory || 'የኩባንያችን ባህልና መርሐ-ግብር')}
+                </span>
+                {photo.meta && (
+                  <span className="font-mono text-[0.72rem] text-mute font-semibold">
+                    {t(photo.meta, photo.amMeta || photo.meta)}
+                  </span>
+                )}
+              </div>
+              <h4 className="font-display text-ink mt-1.5 text-base sm:text-xl font-bold">
+                {t(photo.caption, photo.amCaption)}
+              </h4>
+              <p className="text-mute mt-2 text-xs sm:text-sm leading-relaxed">
+                {t(
+                  photo.description ||
+                    'Yegna Trading PLC team members actively engage in collaborative corporate and community events.',
+                  photo.amDescription ||
+                    'የየኛ ትሬዲንግ ቤተሰብ በጋራ የቡድንና የማኅበረሰብ አቀፍ መርሐ-ግብሮች ላይ በንቃት ይሳተፋል።'
+                )}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>,
+    document.body
   );
 }
 
@@ -997,8 +1058,8 @@ export default function Team() {
           </div>
         </div>
 
-        {/* 5 Clean, Digestible 3D Tilt Cards */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Clean, Digestible 3D Tilt Cards for Executive & Operational Leaders */}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {EXTENDED_TEAM.map((m, i) => (
             <InteractiveTeamCard
               key={m.id}

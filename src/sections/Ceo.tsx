@@ -22,7 +22,7 @@ export default function Ceo() {
                   <img
                     src="/images/ceo.jpg"
                     decoding="async"
-                    alt="Tilahun Tamrat — Chief Executive Officer (CEO) of Yegna Trading PLC"
+                    alt="Tilahun Tamirat — Chief Executive Officer (CEO) of Yegna Trading PLC"
                     loading="lazy"
                     width={176}
                     height={192}
@@ -31,7 +31,7 @@ export default function Ceo() {
                 </div>
                 <div className="mt-4 text-center">
                   <h3 className="font-display text-ink text-base font-bold">
-                    {t('Tilahun Tamrat', 'ጥላሁን ታምራት')}
+                    {t('Tilahun Tamirat', 'ጥላሁን ታሚራት')}
                   </h3>
                   <p className="text-ember text-xs font-semibold tracking-wider uppercase">
                     {t('Chief Executive Officer (CEO)', 'ዋና ሥራ አስፈፃሚ (CEO)')}
