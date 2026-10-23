@@ -9,6 +9,7 @@ import { useNavigation } from '../context/NavigationContext';
 import Nav from '../sections/Nav';
 import Footer from '../sections/Footer';
 import RealisticRebarWeaveBackground from './RealisticRebarWeaveBackground';
+import CustomerSupportBot from './CustomerSupportBot';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -114,6 +115,9 @@ export default function PageShell({ children }: { children: ReactNode }) {
 
       {/* Full Multi-Column Footer with Amharic Badges & Map */}
       <Footer />
+
+      {/* 24/7 Bilingual Yegna AI Support Assistant with Lost-User Heuristics */}
+      <CustomerSupportBot />
 
       {/* Mobile Sticky Quick Action Dock */}
       <MobileStickyBar />

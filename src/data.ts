@@ -334,6 +334,12 @@ export const BRANCHES: Branch[] = [HEAD_OFFICE];
 
 export const TEAM = [
   {
+    name: 'Tilahun Tamirat',
+    role: 'Chief Executive Officer (CEO)',
+    amRole: 'ዋና ሥራ አስፈፃሚ (CEO)',
+    photo: '/images/ceo.jpg',
+  },
+  {
     name: 'Ato Zelalem Alene',
     role: 'General Manager',
     amRole: 'ዋና ሥራ አስኪያጅ',
