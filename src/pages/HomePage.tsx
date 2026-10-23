@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PageShell from '../components/PageShell';
 import Hero from '../sections/Hero';
 import Marquee from '../sections/Marquee';
 import Products from '../sections/Products';
@@ -22,7 +21,7 @@ export default function HomePage() {
   };
 
   return (
-    <PageShell>
+    <>
       <Hero onQuote={handleQuote} />
       <Marquee />
 
@@ -30,7 +29,7 @@ export default function HomePage() {
       <section className="relative">
         <Products />
         <div className="mx-auto max-w-7xl px-5 sm:px-8 pb-16">
-          <div className="border-line bg-panel2/80 rounded-2xl border p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg backdrop-blur-md">
+          <div className="border-line bg-panel2 rounded-2xl border p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg backdrop-blur-md">
             <div className="flex items-start gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-ember/15 text-ember border border-ember/30">
                 <ShieldCheck className="h-6 w-6" />
@@ -58,20 +57,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive Rebar Lab & Weight Calculator */}
-      <RebarLab onQuote={handleQuote} />
+      {/* Interactive Rebar Lab & Weight Calculator (Offscreen hardware containment) */}
+      <div className="content-auto">
+        <RebarLab onQuote={handleQuote} />
+      </div>
 
       {/* Why Choose Yegna & CEO Message */}
-      <Why />
-      <Ceo />
+      <div className="content-auto">
+        <Why />
+      </div>
+      <div className="content-auto">
+        <Ceo />
+      </div>
 
       {/* Insights Preview */}
-      <Insights />
+      <div className="content-auto">
+        <Insights />
+      </div>
 
-      <Faq />
+      <div className="content-auto">
+        <Faq />
+      </div>
 
       {/* Request For Quote Form */}
-      <Quote prefill={quotePrefill} />
-    </PageShell>
+      <div className="content-auto">
+        <Quote prefill={quotePrefill} />
+      </div>
+    </>
   );
 }

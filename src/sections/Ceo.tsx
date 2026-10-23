@@ -21,6 +21,7 @@ export default function Ceo() {
                   <div className="bg-ember/20 absolute -inset-2 rounded-2xl blur-lg transition-opacity group-hover:opacity-100" />
                   <img
                     src="/images/ceo.jpg"
+                    decoding="async"
                     alt="Tilahun Tamrat — Chief Executive Officer (CEO) of Yegna Trading PLC"
                     loading="lazy"
                     width={176}

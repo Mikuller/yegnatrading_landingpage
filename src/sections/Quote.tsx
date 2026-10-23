@@ -405,7 +405,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Welcome Banner */}
         <Reveal>
-          <div className="border-line bg-panel2/80 mb-12 rounded-2xl border p-4 sm:p-5 text-center shadow-sm">
+          <div className="border-line bg-panel2 mb-12 rounded-2xl border p-4 sm:p-5 text-center shadow-sm">
             <p className="font-display text-primary dark:text-amber text-sm sm:text-base font-bold">
               “እንኳን ወደ የኛ ትሬዲንግ በደኅና መጡ! የሚያስፈልግዎን የግንባታ ግብአት ይዘዙን በብቃት እናቀርባለን!”
             </p>
@@ -497,7 +497,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
                 </div>
 
                 {/* Help Desk */}
-                <div className="border-line bg-panel2/80 rounded-2xl border p-5 shadow-sm w-full min-w-0">
+                <div className="border-line bg-panel2 rounded-2xl border p-5 shadow-sm w-full min-w-0">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-ember">
                       <HelpCircle className="h-4 w-4" />
@@ -809,7 +809,7 @@ export default function Quote({ prefill = null }: { prefill?: QuotePrefill | nul
 
                           {/* Live Total Order Weight Box - Fully Contained */}
                           {itemRows.length > 0 && (
-                            <div className="border-line bg-panel2/80 mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-xs w-full min-w-0">
+                            <div className="border-line bg-panel2 mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-xs w-full min-w-0">
                               <div className="flex items-center gap-2 min-w-0">
                                 <Package className="text-ember h-3.5 w-3.5 shrink-0" />
                                 <span className="text-mute font-semibold truncate">

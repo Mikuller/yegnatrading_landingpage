@@ -1,4 +1,3 @@
-import PageShell from '../components/PageShell';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Branches from '../sections/Branches';
 import Quote from '../sections/Quote';
@@ -10,7 +9,7 @@ export default function ContactPage() {
   const { t } = useApp();
 
   return (
-    <PageShell>
+    <>
       {/* Page Header Banner */}
       <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
@@ -71,6 +70,6 @@ export default function ContactPage() {
 
       {/* Comprehensive RFQ Builder */}
       <Quote />
-    </PageShell>
+    </>
   );
 }

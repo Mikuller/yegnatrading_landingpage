@@ -1,8 +1,11 @@
 import { useEffect, type ReactNode } from 'react';
+import BrandPreloader from './BrandPreloader';
+import ArchitecturalTransition from './ArchitecturalTransition';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowUpRight, Phone, Send } from 'lucide-react';
 import { CONTACT } from '../data';
 import { useApp } from '../context/AppContext';
+import { useNavigation } from '../context/NavigationContext';
 import Nav from '../sections/Nav';
 import Footer from '../sections/Footer';
 import RealisticRebarWeaveBackground from './RealisticRebarWeaveBackground';
@@ -18,11 +21,25 @@ function ScrollProgress() {
   );
 }
 
+function NavigationProgress({ isNavigating }: { isNavigating: boolean }) {
+  if (!isNavigating) return null;
+  return (
+    <div className="fixed inset-x-0 top-0 z-[70] h-[3px] overflow-hidden pointer-events-none bg-ember/20">
+      <motion.div
+        initial={{ x: '-100%' }}
+        animate={{ x: '0%' }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
+        className="h-full w-full bg-gradient-to-r from-amber via-ember to-amber-300 shadow-[0_0_12px_rgba(245,124,0,0.9)]"
+      />
+    </div>
+  );
+}
+
 function MobileStickyBar() {
   const { t } = useApp();
 
   return (
-    <div className="border-line bg-panel/95 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pl-[max(0.625rem,env(safe-area-inset-left))] pr-[max(0.625rem,env(safe-area-inset-right))] pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xl md:hidden">
+    <div className="border-line bg-panel/98 fixed inset-x-0 bottom-0 z-40 border-t p-2.5 pl-[max(0.625rem,env(safe-area-inset-left))] pr-[max(0.625rem,env(safe-area-inset-right))] pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-xs md:hidden">
       <div className="mx-auto flex max-w-md items-center justify-between gap-2.5">
         <a
           href={`tel:${CONTACT.phoneClean}`}
@@ -55,6 +72,8 @@ function MobileStickyBar() {
 }
 
 export default function PageShell({ children }: { children: ReactNode }) {
+  const { isNavigating } = useNavigation();
+
   useEffect(() => {
     // If there is a hash in the URL on initial mount, scroll to it smoothly
     if (typeof window !== 'undefined' && window.location.hash) {
@@ -69,12 +88,34 @@ export default function PageShell({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div className="bg-bg text-ink font-body min-h-screen pb-28 md:pb-0 overflow-x-hidden">
+    <div className="bg-bg text-ink font-body min-h-screen overflow-x-hidden w-full max-w-full flex flex-col justify-between">
+      {/* Animation 1: Cinematic Cold-Boot Forge Intro (First cold visit only) */}
+      <BrandPreloader />
+
+      {/* Animation 2: Architectural Transition with Sculpted Logo Medallion (Instant, 0 blank screen) */}
+      <ArchitecturalTransition />
+
+      {/* Zero-CPU Blueprint Grid on Mobile, Full Interactive Weave on Desktop */}
       <RealisticRebarWeaveBackground />
+
+      {/* Scroll Reading Depth Progress Indicator */}
       <ScrollProgress />
+
+      {/* Ultra-Fast Top Edge Laser Beam */}
+      <NavigationProgress isNavigating={isNavigating} />
+
+      {/* Primary Navigation Bar with Mega-Dropdown */}
       <Nav />
-      <main className="relative z-10 overflow-x-clip">{children}</main>
+
+      {/* Main Page Content Body */}
+      <main className="relative z-10 overflow-x-hidden w-full max-w-full min-w-0 flex-1">
+        {children}
+      </main>
+
+      {/* Full Multi-Column Footer with Amharic Badges & Map */}
       <Footer />
+
+      {/* Mobile Sticky Quick Action Dock */}
       <MobileStickyBar />
     </div>
   );

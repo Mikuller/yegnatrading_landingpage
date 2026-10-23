@@ -15,6 +15,7 @@ import {
 import { CONTACT, NAV_LINKS, SOCIALS } from '../data';
 import { BrandIcon, EASE } from '../ui';
 import { useApp } from '../context/AppContext';
+import { useNavigation, normalizePath } from '../context/NavigationContext';
 
 const BRAND_ICON_COLORS: Record<string, string> = {
   Telegram: 'text-[#229ED9]',
@@ -56,14 +57,15 @@ export function Logo({ className = '' }: { className?: string }) {
 
 export default function Nav() {
   const { theme, toggleTheme, lang, toggleLanguage, t } = useApp();
+  const { currentPath } = useNavigation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState('/');
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentPath(window.location.pathname);
-    }
+    setOpen(false);
+  }, [currentPath]);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -71,17 +73,17 @@ export default function Nav() {
   }, []);
 
   const isLinkActive = (href: string) => {
-    if (href === '/') {
-      return currentPath === '/' || currentPath === '' || currentPath === '/index.html';
+    const normHref = normalizePath(href);
+    if (normHref === '/') {
+      return currentPath === '/' || currentPath === '';
     }
-    return currentPath.startsWith(href);
+    return currentPath === normHref || currentPath.startsWith(`${normHref}/`);
   };
 
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
+      initial={false}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
       className="fixed inset-x-0 top-0 z-50"
     >
       {/* Top utility contact bar (Customer Support, Email, Head Office, Hours, Socials with logos) */}
@@ -113,7 +115,6 @@ export default function Nav() {
 
             {/* Operating Hours: Clean status badge */}
             <div className="hidden xl:inline-flex items-center gap-2 rounded-full border border-line bg-panel/60 px-3 py-1 text-[0.72rem] text-mute shadow-2xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
               <Clock className="h-3 w-3 text-ember shrink-0" />
               <span>
                 <strong className="text-ink font-semibold">Mon–Fri</strong> 08:30–17:30 <span className="opacity-30">|</span> <strong className="text-ink font-semibold">Sat</strong> 08:30–12:30

@@ -77,9 +77,11 @@ html.dark {
 }
 
 html {
+  background-color: var(--color-bg);
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -92,6 +94,8 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   max-width: 100%;
+  width: 100%;
+  position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -175,12 +179,27 @@ button, a, input, select, textarea {
 
 .text-protective-halo {
   position: absolute;
-  inset: -1.75rem;
+  inset: -0.5rem;
   z-index: -1;
   border-radius: 2rem;
   pointer-events: none;
   background: radial-gradient(ellipse 90% 85% at 35% 45%, var(--color-bg) 0%, var(--color-bg) 70%, transparent 100%);
-  filter: blur(28px);
+  filter: blur(20px);
+}
+
+@media (min-width: 640px) {
+  .text-protective-halo {
+    inset: -1.75rem;
+    filter: blur(28px);
+  }
+}
+
+/* Solid isolation for interactive and focus-heavy UI over the rebar weave */
+.rebar-focus-solid {
+  background-color: var(--color-panel);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 @keyframes rebar-flow {
@@ -429,3 +448,30 @@ button, a, input, select, textarea {
   background-size: 200% 100%;
 }
 
+
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* High-performance mobile scrolling & touch responsiveness */
+@media (max-width: 767px) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+/* Offscreen section containment for smooth 60-120 FPS scrolling */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}

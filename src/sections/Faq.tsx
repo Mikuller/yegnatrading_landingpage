@@ -51,19 +51,19 @@ export default function Faq() {
           )}
         />
 
-        <div className="mt-10 space-y-3">
+        <div className="mt-10 space-y-3" data-rebar-suppress="true">
           {FAQS.map((item, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={item.q} delay={i * 0.05}>
-                <div className="border-line bg-panel/80 rounded-2xl border shadow-sm">
+                <div className="border-line bg-panel rounded-2xl border shadow-sm backdrop-blur-xl transition-all duration-300 hover:border-ember/40 hover:shadow-md">
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`faq-panel-${i}`}
                     id={`faq-button-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="text-ink flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-bold sm:text-base"
+                    className="text-ink flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-bold sm:text-base rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/60"
                   >
                     <span>{t(item.q, item.amQ)}</span>
                     <ChevronDown

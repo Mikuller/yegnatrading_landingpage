@@ -22,7 +22,7 @@ async function prerender() {
   console.log('==========================================\n');
 
   const vite = await createServer({
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, hmr: false },
     appType: 'custom',
     root: rootDir,
   });

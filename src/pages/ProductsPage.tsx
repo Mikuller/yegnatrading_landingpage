@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import PageShell from '../components/PageShell';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Products from '../sections/Products';
 import RebarLab, { type QuotePrefill } from '../sections/RebarLab';
 import { ArrowUpRight, Award, CheckCircle2, FileCheck2, FileSpreadsheet, Ruler, ShieldCheck, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useNavigation } from '../context/NavigationContext';
 import { REBAR_CONVERSION_TABLE } from '../data';
 
 export default function ProductsPage() {
   const { t } = useApp();
+  const { navigate } = useNavigation();
   const [quotePrefill, setQuotePrefill] = useState<QuotePrefill | null>(null);
 
   const handleQuote = (p: QuotePrefill) => {
-    // If the user clicks quote inside RebarLab, redirect them to /contact/#quote with state or scroll
-    if (typeof window !== 'undefined') {
-      window.location.href = '/contact/#quote';
-    }
+    navigate('/contact/#quote');
   };
 
   return (
-    <PageShell>
+    <>
       {/* Page Header Banner */}
       <section className="texture-noise relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 border-b border-line">
         <div
@@ -167,6 +165,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

@@ -19,6 +19,20 @@ export default function RealisticRebarWeaveBackground({
     return false;
   });
 
+  // Mobile / Touch screen detection: initialized consistently with SSR to eliminate hydration error #418
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Settle mobile detection immediately on mount without hydration mismatch
+    setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Cursor coordinates
   const mouseX = useMotionValue<number>(
     typeof window !== 'undefined' ? window.innerWidth / 2 : 500
@@ -51,6 +65,7 @@ export default function RealisticRebarWeaveBackground({
 
   // Main rendering engine
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -645,11 +660,27 @@ export default function RealisticRebarWeaveBackground({
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Pointer tracking: Bold & entertaining when moving, serene when reading
+    // Helper to check if cursor is over interactive or focused content
+    const isOverFocusElement = (target: EventTarget | null, clientX: number, clientY: number): boolean => {
+      let el = target instanceof Element ? target : null;
+      if (!el && typeof document !== 'undefined') {
+        el = document.elementFromPoint(clientX, clientY);
+      }
+      if (!el) return false;
+
+      // Check if hovering over any interactive control, form, accordion, or focus card
+      return !!el.closest(
+        'button, a, input, textarea, select, [role="button"], [role="region"], [role="dialog"], [role="tab"], [role="menuitem"], form, .faq-accordion, [data-rebar-suppress="true"], .rebar-focus-solid'
+      );
+    };
+
+    // Pointer tracking: Bold & entertaining when moving across canvas, gracefully receding on interactive UI
     const handlePointerMove = (e: PointerEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      mouseIntensity.set(0.95);
+
+      const isFocus = isOverFocusElement(e.target, e.clientX, e.clientY);
+      mouseIntensity.set(isFocus ? 0.0 : 0.95);
       wakeUp();
 
       if (idleTimer) clearTimeout(idleTimer);
@@ -672,9 +703,10 @@ export default function RealisticRebarWeaveBackground({
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
+        const isFocus = isOverFocusElement(e.target, touch.clientX, touch.clientY);
         mouseX.set(touch.clientX);
         mouseY.set(touch.clientY);
-        mouseIntensity.set(0.95);
+        mouseIntensity.set(isFocus ? 0.0 : 0.95);
         wakeUp();
 
         if (idleTimer) clearTimeout(idleTimer);
@@ -700,6 +732,7 @@ export default function RealisticRebarWeaveBackground({
       if (idleTimer) clearTimeout(idleTimer);
     };
   }, [
+    isMobile,
     shouldReduceMotion,
     isDarkMode,
     mouseX,
@@ -715,10 +748,14 @@ export default function RealisticRebarWeaveBackground({
       aria-hidden="true"
       className={`pointer-events-none fixed inset-0 z-0 overflow-hidden select-none ${className}`}
     >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 block h-full w-full"
-      />
+      {isMobile ? (
+        <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.055] pointer-events-none [contain:strict] [background-image:radial-gradient(#f57c00_1px,transparent_1px)] [background-size:28px_28px]" />
+      ) : (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 block h-full w-full"
+        />
+      )}
     </div>
   );
 }
