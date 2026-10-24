@@ -344,21 +344,47 @@ export default function CustomerSupportBot() {
 
   // Auto-hide floating support trigger on scroll down, reveal on scroll up / top
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastScrollY =
+      typeof window !== 'undefined'
+        ? Math.max(
+            0,
+            window.scrollY ||
+              window.pageYOffset ||
+              document.documentElement.scrollTop ||
+              document.body.scrollTop ||
+              0
+          )
+        : 0;
+    let accumulatedDelta = 0;
     let ticking = false;
 
     const updateScrollDirection = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = Math.max(
+        0,
+        window.scrollY ||
+          window.pageYOffset ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop ||
+          0
+      );
+      const delta = currentScrollY - lastScrollY;
 
-      // Always show near the top of the page
-      if (currentScrollY < 120) {
+      // Always show near the very top of the page
+      if (currentScrollY < 60) {
         setIsScrolledDown(false);
-      } else if (currentScrollY > lastScrollY + 15) {
-        // Scrolling down past threshold -> hide
-        setIsScrolledDown(true);
-      } else if (currentScrollY < lastScrollY - 10) {
-        // Scrolling up -> reveal immediately
-        setIsScrolledDown(false);
+        accumulatedDelta = 0;
+      } else if (delta > 0) {
+        // Scrolling down: accumulate downward movement
+        accumulatedDelta = Math.max(0, accumulatedDelta + delta);
+        if (accumulatedDelta > 20) {
+          setIsScrolledDown(true);
+        }
+      } else if (delta < 0) {
+        // Scrolling up: accumulate upward movement
+        accumulatedDelta = Math.min(0, accumulatedDelta + delta);
+        if (accumulatedDelta < -15) {
+          setIsScrolledDown(false);
+        }
       }
 
       lastScrollY = currentScrollY;
@@ -373,8 +399,24 @@ export default function CustomerSupportBot() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    document.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('scroll', onScroll);
+    };
   }, []);
+
+  // Prevent background body scroll when mobile sheet chat modal is open
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isOpen && window.innerWidth < 640) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
 
   // =========================================================================
   // EAGER PROMPT CYCLING & ATTENTION HOP ENGINE
@@ -1760,12 +1802,14 @@ export default function CustomerSupportBot() {
       {/* ===================================================================== */}
       <motion.div
         animate={
-          isScrolledDown && !isOpen
-            ? { y: 110, opacity: 0, pointerEvents: 'none' }
-            : { y: 0, opacity: 1, pointerEvents: 'auto' }
+          isOpen
+            ? { y: 80, opacity: 0, scale: 0.8, pointerEvents: 'none' }
+            : isScrolledDown
+              ? { y: 120, opacity: 0, pointerEvents: 'none' }
+              : { y: 0, opacity: 1, scale: 1, pointerEvents: 'auto' }
         }
         transition={{ type: 'spring', stiffness: 360, damping: 28 }}
-        className="fixed bottom-[74px] md:bottom-6 right-4 sm:right-6 z-40 select-none"
+        className="fixed bottom-[76px] md:bottom-6 right-3.5 sm:right-6 z-40 select-none"
       >
         <motion.button
           id="yegna-ai-bot-trigger"
@@ -1784,11 +1828,7 @@ export default function CustomerSupportBot() {
           }
           whileHover={shouldReduceMotion ? {} : { scale: 1.08, y: -2 }}
           whileTap={shouldReduceMotion ? {} : { scale: 0.94 }}
-          className={`group relative flex items-center gap-2 rounded-full border px-3.5 py-2.5 sm:px-4 sm:py-3 shadow-xl backdrop-blur-xl transition-colors cursor-pointer ${
-            isOpen
-              ? 'border-ember bg-panel text-ink shadow-ember/20'
-              : 'border-line bg-panel/95 hover:border-ember text-ink hover:shadow-[0_0_24px_rgba(245,124,0,0.35)]'
-          }`}
+          className="group relative flex items-center gap-2 rounded-full border border-line bg-panel/95 hover:border-ember text-ink px-3 py-2.5 sm:px-4 sm:py-3 shadow-xl hover:shadow-[0_0_24px_rgba(245,124,0,0.35)] backdrop-blur-xl transition-colors cursor-pointer"
         >
           {/* Eager bouncing badge over button */}
           {!isOpen && (
@@ -1820,15 +1860,13 @@ export default function CustomerSupportBot() {
             transition={{ duration: 0.6 }}
             className="relative grid h-7 w-7 place-items-center rounded-full bg-ember text-white shadow-xs"
           >
-            {isOpen ? <X className="h-4 w-4" /> : <MessageSquare className="h-4 w-4" />}
-            {!isOpen && (
-              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-500" />
-            )}
+            <MessageSquare className="h-4 w-4" />
+            <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-500" />
           </motion.div>
 
           <div className="hidden sm:flex flex-col text-left leading-none">
             <span className="font-display text-ink text-xs font-bold tracking-tight">
-              {isOpen ? t('Close Chat', 'ዝጋ') : t('Support Desk', 'የደንበኞች ድጋፍ')}
+              {t('Support Desk', 'የደንበኞች ድጋፍ')}
             </span>
             <span className="text-[0.62rem] text-mute font-medium mt-0.5 flex items-center gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -1838,6 +1876,21 @@ export default function CustomerSupportBot() {
         </motion.button>
       </motion.div>
 
+      {/* Mobile Backdrop Overlay when chat is open */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/55 backdrop-blur-[2px] z-50 sm:hidden"
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
+
       {/* ===================================================================== */}
       {/* 3. INTERACTIVE CHAT WINDOW DIALOG                                     */}
       {/* ===================================================================== */}
@@ -1845,37 +1898,52 @@ export default function CustomerSupportBot() {
         {isOpen && (
           <motion.div
             id="yegna-ai-bot-panel"
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 15 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 280 }}
-            className="fixed bottom-[130px] md:bottom-20 right-3 sm:right-6 z-50 flex flex-col w-[calc(100vw-1.5rem)] sm:w-[400px] h-[520px] max-h-[calc(100vh-160px)] rounded-3xl border border-line bg-panel/98 shadow-2xl backdrop-blur-2xl overflow-hidden card-glow"
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 35, scale: 0.96 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 35, scale: 0.96 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+            className="fixed inset-x-0 bottom-0 z-50 flex flex-col w-full sm:inset-auto sm:bottom-20 sm:right-6 sm:w-[395px] h-[75dvh] max-h-[620px] min-h-[460px] sm:h-[570px] rounded-t-[1.75rem] sm:rounded-3xl border-t sm:border border-line/80 bg-panel/98 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur-2xl overflow-hidden card-glow"
           >
+            {/* Mobile Sheet Pull / Close Handle */}
+            <div
+              onClick={() => setIsOpen(false)}
+              className="sm:hidden flex items-center justify-center pt-2.5 pb-1 bg-panel2/90 shrink-0 cursor-pointer"
+              title={t('Close sheet', 'ዝጋ')}
+            >
+              <div className="h-1.5 w-11 rounded-full bg-line/90 hover:bg-ember/60 transition-colors" />
+            </div>
+
             {/* Header */}
-            <div className="border-b border-line/70 bg-panel2/90 px-4 py-3 flex items-center justify-between shrink-0">
+            <div className="border-b border-line/70 bg-panel2/90 px-3.5 sm:px-4 py-2.5 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="relative grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-ember text-white shadow-xs">
-                  <Headphones className="h-4.5 w-4.5" />
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-500" />
+                <div className="relative grid h-8.5 w-8.5 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ember to-amber-600 text-white shadow-xs">
+                  <Headphones className="h-4 w-4" />
+                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-500 animate-pulse" />
                 </div>
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="font-display text-ink text-sm font-bold truncate">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-display text-ink text-xs sm:text-sm font-bold truncate">
                       {t('Yegna Support Desk', 'የኛ ደንበኞች ድጋፍ')}
                     </span>
-                    <span className="inline-flex items-center gap-1 text-[0.62rem] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded-full">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      {t('Online', 'ኦንላይን')}
+                    <span title="Verified Yegna Desk" className="inline-flex items-center text-ember">
+                      <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
                     </span>
                   </div>
-                  <p className="text-mute text-[0.68rem] leading-tight flex items-center gap-1 truncate mt-0.5">
-                    <MapPin className="h-3 w-3 text-ember shrink-0" />
-                    <span>{t('Kazanchis HQ, Addis Ababa', 'ካዛንቺስ ዋና ቢሮ፣ አዲስ አበባ')}</span>
+                  <p className="text-mute text-[0.65rem] sm:text-[0.68rem] leading-tight flex items-center gap-1 truncate">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span>{t('Kazanchis HQ • Online now', 'ካዛንቺስ ዋና ቢሮ • ኦንላይን')}</span>
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-1 shrink-0">
+                <a
+                  href={`tel:${CONTACT.phoneClean}`}
+                  title={t('Call sales desk', 'ለሽያጭ ደውል')}
+                  className="text-mute hover:text-ember grid h-8 w-8 place-items-center rounded-lg hover:bg-panel transition-colors cursor-pointer"
+                >
+                  <Phone className="h-3.5 w-3.5" />
+                </a>
                 <button
                   type="button"
                   onClick={resetChat}
@@ -1895,127 +1963,348 @@ export default function CustomerSupportBot() {
               </div>
             </div>
 
-            {/* Quick Human Fallback strip */}
-            <div className="bg-panel/90 border-b border-line/40 px-3 py-1.5 flex items-center justify-between text-[0.68rem] text-mute shrink-0">
-              <span className="flex items-center gap-1">
-                <Headphones className="h-3 w-3 text-ember" />
-                <span>{t('Need urgent human sales?', 'አስቸኳይ የሰው ድጋፍ?')}</span>
-              </span>
-              <a
-                href={`tel:${CONTACT.phoneClean}`}
-                className="text-ember font-bold hover:underline inline-flex items-center gap-1"
-              >
-                <span>{CONTACT.phone}</span>
-                <ArrowUpRight className="h-2.5 w-2.5" />
-              </a>
-            </div>
-
-            {/* Message Thread */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 scrollbar-thin">
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${
-                      m.sender === 'user'
-                        ? 'bg-ember text-white rounded-br-xs shadow-xs'
-                        : 'border-line bg-panel2 text-ink rounded-bl-xs border shadow-xs'
-                    }`}
-                  >
-                    <p className="whitespace-pre-wrap">{m.text}</p>
-                  </div>
-
-                  {/* Optional Action Pills */}
-                  {m.actions && m.actions.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1.5 max-w-[90%]">
-                      {m.actions.map((act, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => handleActionClick(act)}
-                          className="border-line bg-panel hover:border-ember hover:text-ember text-ink inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[0.68rem] font-semibold transition-all shadow-2xs hover:-translate-y-0.5 cursor-pointer"
-                        >
-                          <span>{act.label}</span>
-                          <ArrowUpRight className="h-2.5 w-2.5 opacity-60" />
-                        </button>
-                      ))}
+            {/* Main Content: Welcome Hub (if no user interaction) OR Active Conversation Thread */}
+            {!messages.some((m) => m.sender === 'user') && messages.length <= 1 ? (
+              /* ============================================================= */
+              /* A. WELCOME HUB (ZERO DEAD SPACE / STRUCTURED QUICK-LAUNCH)   */
+              /* ============================================================= */
+              <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 scrollbar-thin">
+                {/* Welcome Hero Card */}
+                <div className="rounded-2xl border border-line/80 bg-panel2/60 p-3.5 sm:p-4 shadow-xs">
+                  <div className="flex items-center gap-2.5">
+                    <div className="relative grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-ember/15 text-ember">
+                      <Sparkles className="h-4 w-4" />
                     </div>
-                  )}
+                    <div>
+                      <h3 className="font-display text-ink text-xs sm:text-sm font-bold">
+                        {t('Welcome to Yegna Support', 'እንኳን ወደ የኛ ድጋፍ በደህና መጡ!')}
+                      </h3>
+                      <p className="text-mute text-[0.65rem] sm:text-[0.68rem] leading-tight mt-0.5">
+                        {t('Certified Grade 75 Rebar • Cement • Structural Lab', 'ደረጃቸውን የጠበቁ Grade 75 ፌሮ ብረቶች • ሲሚንቶ')}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-2.5 text-xs text-ink/90 leading-relaxed">
+                    {lang === 'am'
+                      ? 'ስለ Grade 75 ፌሮ ብረት፣ የዛሬ ዋጋ፣ የክብደት ስሌት ወይም የካዛንቺስ ቢሮና የገላን መጋዘን አድራሻ ማንኛውንም ጥያቄ ይጠይቁን።'
+                      : 'Ask anything about certified Grade 75 deformed rebar, live pricing, weight conversions, or Kazanchis office and Gelan warehouse navigation.'}
+                  </p>
+                </div>
 
-                  <span className="text-[0.62rem] text-mute mt-1 px-1">
-                    {m.time}
+                {/* Quick-Launch 2x2 Bento Action Cards */}
+                <div className="space-y-1.5">
+                  <span className="text-[0.65rem] font-bold uppercase tracking-wider text-mute px-1">
+                    {t('Quick Pathways', 'ፈጣን ምርጫዎች')}
                   </span>
-                </div>
-              ))}
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* Tile 1: Prices */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handlePresetQuery(
+                          lang === 'am' ? 'የዛሬ የብረት ዋጋ ስንት ነው?' : 'What are current rebar prices?'
+                        )
+                      }
+                      className="group flex flex-col text-left p-3 rounded-xl border border-line bg-panel hover:border-ember/60 hover:bg-panel2 transition-all cursor-pointer shadow-2xs hover:shadow-xs active:scale-98"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5">
+                        <div className="grid h-6 w-6 place-items-center rounded-lg bg-ember/15 text-ember">
+                          <Sparkles className="h-3.5 w-3.5" />
+                        </div>
+                        <ArrowUpRight className="h-3 w-3 text-mute group-hover:text-ember group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <span className="text-xs font-bold text-ink group-hover:text-ember transition-colors">
+                        {t("Today's Prices", 'የዛሬ የብረት ዋጋ')}
+                      </span>
+                      <span className="text-[0.65rem] text-mute leading-snug mt-0.5 line-clamp-2">
+                        {t('Live quintal & ton rates with 15% VAT', 'የኩንታልና የቶን ዋጋ ከ15% ቫት ጋር')}
+                      </span>
+                    </button>
 
-              {isTyping && (
-                <div className="flex items-center gap-1.5 text-mute text-xs pl-2">
-                  <div className="h-2 w-2 rounded-full bg-ember animate-bounce" />
-                  <div className="h-2 w-2 rounded-full bg-ember animate-bounce [animation-delay:0.18s]" />
-                  <div className="h-2 w-2 rounded-full bg-ember animate-bounce [animation-delay:0.36s]" />
-                  <span className="text-[0.68rem] ml-1">{t('Yegna AI is typing...', 'የኛ አጋዥ በመጻፍ ላይ...')}</span>
-                </div>
-              )}
+                    {/* Tile 2: Weight Calculator */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handlePresetQuery(
+                          lang === 'am'
+                            ? 'የ 12ሚሜ እና 16ሚሜ ብረት ክብደት ስንት ነው?'
+                            : 'What are 12mm & 16mm rebar weights?'
+                        )
+                      }
+                      className="group flex flex-col text-left p-3 rounded-xl border border-line bg-panel hover:border-amber-500/60 hover:bg-panel2 transition-all cursor-pointer shadow-2xs hover:shadow-xs active:scale-98"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5">
+                        <div className="grid h-6 w-6 place-items-center rounded-lg bg-amber-500/15 text-amber-500">
+                          <Calculator className="h-3.5 w-3.5" />
+                        </div>
+                        <ArrowUpRight className="h-3 w-3 text-mute group-hover:text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <span className="text-xs font-bold text-ink group-hover:text-amber-500 transition-colors">
+                        {t('Weight Calculator', 'የክብደት ስሌት')}
+                      </span>
+                      <span className="text-[0.65rem] text-mute leading-snug mt-0.5 line-clamp-2">
+                        {t('Piece-to-kg conversion (8mm–32mm)', 'የፍሬ ወደ ኪ.ግ መቀየሪያ (8–32ሚሜ)')}
+                      </span>
+                    </button>
 
-              <div ref={messagesEndRef} />
-            </div>
+                    {/* Tile 3: Structural Lab */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handlePresetQuery(
+                          lang === 'am'
+                            ? 'ለህንጻ ክፍሎች ተስማሚ የብረት መጠን ምክር እና የሬባር ላብራቶሪ'
+                            : 'Rebar recommendations for building parts and Structural Lab'
+                        )
+                      }
+                      className="group flex flex-col text-left p-3 rounded-xl border border-line bg-panel hover:border-cyan-500/60 hover:bg-panel2 transition-all cursor-pointer shadow-2xs hover:shadow-xs active:scale-98"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5">
+                        <div className="grid h-6 w-6 place-items-center rounded-lg bg-cyan-500/15 text-cyan-500">
+                          <Layers className="h-3.5 w-3.5" />
+                        </div>
+                        <ArrowUpRight className="h-3 w-3 text-mute group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <span className="text-xs font-bold text-ink group-hover:text-cyan-500 transition-colors">
+                        {t('Structural Lab', 'ሬባር ላብራቶሪ')}
+                      </span>
+                      <span className="text-[0.65rem] text-mute leading-snug mt-0.5 line-clamp-2">
+                        {t('Optimal rebar for columns, beams & slabs', 'ለአምድ፣ ጋሪና ወለል ተስማሚ ብረት')}
+                      </span>
+                    </button>
+
+                    {/* Tile 4: Office & Warehouse */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handlePresetQuery(
+                          lang === 'am'
+                            ? 'የካዛንቺስ ቢሮና የገላን መጋዘን አድራሻ የት ነው?'
+                            : 'Where are your Kazanchis office and Gelan warehouse located?'
+                        )
+                      }
+                      className="group flex flex-col text-left p-3 rounded-xl border border-line bg-panel hover:border-emerald-500/60 hover:bg-panel2 transition-all cursor-pointer shadow-2xs hover:shadow-xs active:scale-98"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5">
+                        <div className="grid h-6 w-6 place-items-center rounded-lg bg-emerald-500/15 text-emerald-500">
+                          <MapPin className="h-3.5 w-3.5" />
+                        </div>
+                        <ArrowUpRight className="h-3 w-3 text-mute group-hover:text-emerald-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <span className="text-xs font-bold text-ink group-hover:text-emerald-500 transition-colors">
+                        {t('HQ & Warehouse', 'ቢሮና መጋዘን')}
+                      </span>
+                      <span className="text-[0.65rem] text-mute leading-snug mt-0.5 line-clamp-2">
+                        {t('Kazanchis Joburg Plaza & Gelan GPS', 'ካዛንቺስ ጆበርግ ፕላዛና ገላን')}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Urgent Human Hotline Card */}
+                <div className="flex items-center justify-between rounded-xl border border-line/70 bg-panel2/50 px-3 py-2 text-xs">
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-3.5 w-3.5 text-ember shrink-0" />
+                    <span className="text-[0.68rem] text-mute">
+                      {t('Urgent sales hotline:', 'አስቸኳይ የሽያጭ መስመር፦')}
+                    </span>
+                  </div>
+                  <a
+                    href={`tel:${CONTACT.phoneClean}`}
+                    className="text-[0.68rem] font-bold text-ember hover:underline inline-flex items-center gap-1"
+                  >
+                    <span>{CONTACT.phone}</span>
+                    <ArrowUpRight className="h-2.5 w-2.5" />
+                  </a>
+                </div>
+              </div>
+            ) : (
+              /* ============================================================= */
+              /* B. CONVERSATIONAL MESSAGE THREAD                              */
+              /* ============================================================= */
+              <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 scrollbar-thin">
+                {messages.map((m) => (
+                  <div
+                    key={m.id}
+                    className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
+                  >
+                    {m.sender === 'bot' && (
+                      <div className="flex items-center gap-1.5 mb-1 px-1">
+                        <div className="grid h-4 w-4 place-items-center rounded-full bg-ember/20 text-ember text-[9px] font-bold">
+                          <Bot className="h-2.5 w-2.5" />
+                        </div>
+                        <span className="text-[0.65rem] font-semibold text-mute">
+                          {t('Yegna AI Assistant', 'የኛ አጋዥ')}
+                        </span>
+                        <span className="text-[0.6rem] text-mute/60 ml-1">{m.time}</span>
+                      </div>
+                    )}
+
+                    <div
+                      className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs ${
+                        m.sender === 'user'
+                          ? 'bg-gradient-to-r from-ember to-amber-600 text-white rounded-br-xs'
+                          : 'border border-line/70 bg-panel2/90 text-ink rounded-bl-xs'
+                      }`}
+                    >
+                      <p className="whitespace-pre-wrap">{m.text}</p>
+                    </div>
+
+                    {/* Optional Action Pills */}
+                    {m.actions && m.actions.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1.5 max-w-[92%]">
+                        {m.actions.map((act, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => handleActionClick(act)}
+                            className="border border-line bg-panel hover:border-ember hover:text-ember text-ink inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.68rem] font-semibold transition-all shadow-2xs hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+                          >
+                            <span>{act.label}</span>
+                            <ArrowUpRight className="h-2.5 w-2.5 opacity-60" />
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {m.sender === 'user' && (
+                      <span className="text-[0.6rem] text-mute/70 mt-1 px-1">
+                        {m.time}
+                      </span>
+                    )}
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex items-center gap-2 text-mute text-xs pl-1 py-1">
+                    <div className="grid h-4 w-4 place-items-center rounded-full bg-ember/20 text-ember text-[9px]">
+                      <Bot className="h-2.5 w-2.5" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-ember animate-bounce" />
+                      <div className="h-2 w-2 rounded-full bg-ember animate-bounce [animation-delay:0.18s]" />
+                      <div className="h-2 w-2 rounded-full bg-ember animate-bounce [animation-delay:0.36s]" />
+                    </div>
+                    <span className="text-[0.68rem] text-mute">{t('Yegna AI is typing...', 'የኛ አጋዥ በመጻፍ ላይ...')}</span>
+                  </div>
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
+            )}
 
             {/* Suggested Starter Chips */}
-            <div className="px-3 py-1.5 border-t border-line/40 bg-panel2/50 overflow-x-auto scrollbar-none flex items-center gap-1.5 shrink-0">
+            <div className="px-3 py-1.5 border-t border-line/40 bg-panel2/40 overflow-x-auto scrollbar-none flex items-center gap-1.5 shrink-0">
               <button
                 type="button"
-                onClick={() => handlePresetQuery(lang === 'am' ? 'የዛሬ የብረት ዋጋ ስንት ነው?' : 'What are current rebar prices?')}
-                className="shrink-0 text-[0.65rem] font-medium border border-line rounded-full px-2.5 py-1 bg-panel hover:border-ember text-ink transition-colors cursor-pointer"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am' ? 'የዛሬ የብረት ዋጋ ስንት ነው?' : 'What are current rebar prices?'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
               >
                 💰 {lang === 'am' ? 'ዋጋ' : 'Prices'}
               </button>
               <button
                 type="button"
-                onClick={() => handlePresetQuery(lang === 'am' ? 'ቢሮአችሁ የት ነው?' : 'Where is your office?')}
-                className="shrink-0 text-[0.65rem] font-medium border border-line rounded-full px-2.5 py-1 bg-panel hover:border-ember text-ink transition-colors cursor-pointer"
-              >
-                📍 {lang === 'am' ? 'አድራሻ' : 'Office Location'}
-              </button>
-              <button
-                type="button"
-                onClick={() => handlePresetQuery(lang === 'am' ? 'የ 12ሚሜ እና 16ሚሜ ክብደት' : '12mm & 16mm rebar weights')}
-                className="shrink-0 text-[0.65rem] font-medium border border-line rounded-full px-2.5 py-1 bg-panel hover:border-ember text-ink transition-colors cursor-pointer"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am'
+                      ? 'የ 12ሚሜ እና 16ሚሜ ብረት ክብደት ስንት ነው?'
+                      : 'What are 12mm & 16mm rebar weights?'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
               >
                 ⚖️ {lang === 'am' ? 'ክብደት' : 'Weights'}
               </button>
               <button
                 type="button"
-                onClick={() => handlePresetQuery(lang === 'am' ? 'ሲሚንቶ እና ስታፋ አላችሁ?' : 'Cement and Staffa details')}
-                className="shrink-0 text-[0.65rem] font-medium border border-line rounded-full px-2.5 py-1 bg-panel hover:border-ember text-ink transition-colors cursor-pointer"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am'
+                      ? 'ለህንጻ ክፍሎች ተስማሚ የብረት መጠን ምክር እና የሬባር ላብራቶሪ'
+                      : 'Rebar recommendations for building parts and Structural Lab'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
               >
-                🧱 {lang === 'am' ? 'ሲሚንቶ' : 'Cement & Staffa'}
+                🧪 {lang === 'am' ? 'ሬባር ላብራቶሪ' : 'Structural Lab'}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am' ? 'የካዛንቺስ ቢሮ አድራሻችሁ የት ነው?' : 'Where is your Kazanchis office located?'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
+              >
+                📍 {lang === 'am' ? 'ካዛንቺስ ቢሮ' : 'Kazanchis HQ'}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am' ? 'የገላን መጋዘን አድራሻ የት ነው?' : 'Where is your Gelan warehouse located?'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
+              >
+                🏭 {lang === 'am' ? 'ገላን መጋዘን' : 'Warehouse'}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am' ? 'ሲሚንቶ እና ስታፋ አላችሁ?' : 'Cement and Staffa details'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
+              >
+                🧱 {lang === 'am' ? 'ሲሚንቶ' : 'Cement'}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handlePresetQuery(
+                    lang === 'am' ? 'የስራ ሰዓት' : 'Working hours'
+                  )
+                }
+                className="shrink-0 text-[0.65rem] font-semibold border border-line/70 rounded-full px-2.5 py-1 bg-panel hover:border-ember hover:text-ember text-ink transition-colors cursor-pointer shadow-2xs"
+              >
+                🕒 {lang === 'am' ? 'ሰዓታት' : 'Hours'}
               </button>
             </div>
 
             {/* Input Bar */}
-            <form onSubmit={handleSubmit} className="border-t border-line/70 bg-panel p-2.5 flex items-center gap-2 shrink-0">
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder={
-                  lang === 'am'
-                    ? 'ስለ ብረት፣ ዋጋ ወይም አድራሻ ይጠይቁ...'
-                    : 'Ask about rebar, prices, cement, or office...'
-                }
-                className="border-line bg-panel2 text-ink placeholder:text-mute flex-1 rounded-xl border px-3.5 py-2 text-xs focus:border-ember focus:outline-none transition-colors"
-              />
-              <button
-                type="submit"
-                disabled={!inputValue.trim() || isTyping}
-                aria-label="Send question"
-                className="bg-ember hover:bg-ember/90 disabled:opacity-40 text-white grid h-9 w-9 place-items-center rounded-xl shadow-xs transition-all cursor-pointer shrink-0 disabled:cursor-not-allowed"
-              >
-                <Send className="h-4 w-4" />
-              </button>
+            <form
+              onSubmit={handleSubmit}
+              className="border-t border-line/70 bg-panel p-2 sm:p-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shrink-0"
+            >
+              <div className="relative flex items-center gap-1.5 rounded-2xl border border-line/80 bg-panel2/80 px-2.5 py-1.5 focus-within:border-ember focus-within:ring-2 focus-within:ring-ember/20 focus-within:bg-panel2 transition-all shadow-inner">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder={
+                    lang === 'am'
+                      ? 'ስለ ብረት፣ ዋጋ፣ ክብደት ወይም አድራሻ ይጠይቁ...'
+                      : 'Ask about rebar, prices, weights, office...'
+                  }
+                  className="bg-transparent text-ink placeholder:text-mute/80 flex-1 px-1 py-1 text-[15px] sm:text-xs focus:outline-none transition-colors"
+                />
+                <button
+                  type="submit"
+                  disabled={!inputValue.trim() || isTyping}
+                  aria-label="Send question"
+                  className="bg-ember hover:bg-ember/90 disabled:opacity-30 text-white grid h-8 w-8 place-items-center rounded-xl shadow-xs transition-all cursor-pointer shrink-0 disabled:cursor-not-allowed active:scale-95 disabled:active:scale-100"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </form>
           </motion.div>
         )}
