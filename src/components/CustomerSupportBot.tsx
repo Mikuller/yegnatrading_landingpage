@@ -342,7 +342,7 @@ export default function CustomerSupportBot() {
     }
   }, [messages, isOpen]);
 
-  // Auto-hide floating support trigger on scroll down, reveal on scroll up / top
+  // Auto-hide floating support trigger FAST on scroll down, reveal on scroll up or top
   useEffect(() => {
     let lastScrollY =
       typeof window !== 'undefined'
@@ -355,7 +355,8 @@ export default function CustomerSupportBot() {
               0
           )
         : 0;
-    let accumulatedDelta = 0;
+    let accumulatedDown = 0;
+    let accumulatedUp = 0;
     let ticking = false;
 
     const updateScrollDirection = () => {
@@ -369,20 +370,23 @@ export default function CustomerSupportBot() {
       );
       const delta = currentScrollY - lastScrollY;
 
-      // Always show near the very top of the page
-      if (currentScrollY < 60) {
+      // Always show at the very top of the page
+      if (currentScrollY <= 12) {
         setIsScrolledDown(false);
-        accumulatedDelta = 0;
-      } else if (delta > 0) {
-        // Scrolling down: accumulate downward movement
-        accumulatedDelta = Math.max(0, accumulatedDelta + delta);
-        if (accumulatedDelta > 20) {
+        accumulatedDown = 0;
+        accumulatedUp = 0;
+      } else if (delta > 3) {
+        // Scrolling down: hide FAST (triggers on the very first downward movement >= 5px)
+        accumulatedUp = 0;
+        accumulatedDown += delta;
+        if (accumulatedDown >= 5) {
           setIsScrolledDown(true);
         }
-      } else if (delta < 0) {
-        // Scrolling up: accumulate upward movement
-        accumulatedDelta = Math.min(0, accumulatedDelta + delta);
-        if (accumulatedDelta < -15) {
+      } else if (delta < -3) {
+        // Scrolling up: reveal cleanly after intentional upward scroll (>= 8px)
+        accumulatedDown = 0;
+        accumulatedUp += Math.abs(delta);
+        if (accumulatedUp >= 8) {
           setIsScrolledDown(false);
         }
       }
@@ -441,14 +445,14 @@ export default function CustomerSupportBot() {
     return () => clearInterval(promptInterval);
   }, [isOpen]);
 
-  // Eager Bounce / Wiggle periodic trigger (hops every 7 seconds)
+  // Periodic subtle attention hop (every 8 seconds)
   useEffect(() => {
     if (isOpen || shouldReduceMotion) return;
-    const wiggleInterval = setInterval(() => {
+    const hopInterval = setInterval(() => {
       setIsWiggling(true);
-      setTimeout(() => setIsWiggling(false), 900);
-    }, 7000);
-    return () => clearInterval(wiggleInterval);
+      setTimeout(() => setIsWiggling(false), 500);
+    }, 8000);
+    return () => clearInterval(hopInterval);
   }, [isOpen, shouldReduceMotion]);
 
   // =========================================================================
@@ -1667,7 +1671,7 @@ export default function CustomerSupportBot() {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.94 }}
             transition={{ type: 'spring', stiffness: 400, damping: 24 }}
-            className="fixed bottom-[135px] md:bottom-22 right-3 sm:right-6 z-40 w-[calc(100vw-1.5rem)] sm:w-[330px] rounded-2xl border border-ember/30 bg-panel/95 p-3.5 shadow-2xl backdrop-blur-2xl card-glow select-none"
+            className="hidden sm:block fixed bottom-22 right-6 z-40 w-[330px] rounded-2xl border border-ember/30 bg-panel/95 p-3.5 shadow-2xl backdrop-blur-2xl card-glow select-none"
           >
             {/* Header: Eager emoji, live status, and close button */}
             <div className="flex items-center justify-between gap-2">
@@ -1803,13 +1807,13 @@ export default function CustomerSupportBot() {
       <motion.div
         animate={
           isOpen
-            ? { y: 80, opacity: 0, scale: 0.8, pointerEvents: 'none' }
+            ? { y: 90, opacity: 0, scale: 0.8, pointerEvents: 'none' }
             : isScrolledDown
-              ? { y: 120, opacity: 0, pointerEvents: 'none' }
+              ? { y: 110, opacity: 0, pointerEvents: 'none' }
               : { y: 0, opacity: 1, scale: 1, pointerEvents: 'auto' }
         }
-        transition={{ type: 'spring', stiffness: 360, damping: 28 }}
-        className="fixed bottom-[76px] md:bottom-6 right-3.5 sm:right-6 z-40 select-none"
+        transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+        className="fixed bottom-[74px] md:bottom-6 right-3.5 sm:right-6 z-40 select-none"
       >
         <motion.button
           id="yegna-ai-bot-trigger"
@@ -1819,56 +1823,47 @@ export default function CustomerSupportBot() {
           animate={
             isWiggling && !isOpen && !shouldReduceMotion
               ? {
-                  y: [0, -10, 0, -6, 0],
-                  rotate: [0, -7, 7, -5, 5, 0],
-                  scale: [1, 1.08, 0.96, 1.04, 1],
-                  transition: { duration: 0.85, ease: 'easeInOut' },
+                  y: [0, -6, 0],
+                  scale: [1, 1.05, 1],
+                  transition: { duration: 0.45, ease: 'easeOut' },
                 }
-              : { y: 0, rotate: 0, scale: 1 }
+              : { y: 0, scale: 1 }
           }
-          whileHover={shouldReduceMotion ? {} : { scale: 1.08, y: -2 }}
+          whileHover={shouldReduceMotion ? {} : { scale: 1.06, y: -2 }}
           whileTap={shouldReduceMotion ? {} : { scale: 0.94 }}
-          className="group relative flex items-center gap-2 rounded-full border border-line bg-panel/95 hover:border-ember text-ink px-3 py-2.5 sm:px-4 sm:py-3 shadow-xl hover:shadow-[0_0_24px_rgba(245,124,0,0.35)] backdrop-blur-xl transition-colors cursor-pointer"
+          className="group relative flex items-center justify-center rounded-full border border-line/80 bg-panel/95 hover:border-ember text-ink shadow-xl hover:shadow-[0_0_24px_rgba(245,124,0,0.35)] backdrop-blur-xl transition-all cursor-pointer h-12 w-12 sm:h-auto sm:w-auto sm:px-4 sm:py-2.5 sm:gap-2.5"
         >
-          {/* Eager bouncing badge over button */}
+          {/* Eager badge: centered, crisp, non-distorting */}
           {!isOpen && (
             <motion.span
               animate={
                 shouldReduceMotion
                   ? {}
-                  : { y: [0, -3, 0], rotate: [0, -3, 3, 0] }
+                  : { y: [0, -2, 0] }
               }
-              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-              className="absolute -top-3 -left-2 bg-gradient-to-r from-ember to-amber-500 text-white text-[0.62rem] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1 uppercase tracking-wider"
+              transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+              className="absolute -top-2.5 left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 bg-gradient-to-r from-ember to-amber-500 text-white text-[0.58rem] sm:text-[0.62rem] font-bold px-2 py-0.5 rounded-full shadow-md border border-white/20 flex items-center gap-1 uppercase tracking-wider whitespace-nowrap pointer-events-none select-none antialiased"
             >
-              <Sparkles className="h-2.5 w-2.5 animate-spin" />
+              <Sparkles className="h-2.5 w-2.5 shrink-0" />
               <span>{lang === 'am' ? 'ጠይቁኝ!' : 'Ask me!'}</span>
             </motion.span>
           )}
 
           {/* Pulsing online ambient glow ring */}
           {!isOpen && (
-            <span className="bg-ember/25 absolute -inset-1 rounded-full blur-md animate-pulse" />
+            <span className="bg-ember/20 absolute -inset-0.5 rounded-full blur-xs pointer-events-none -z-10 animate-pulse" />
           )}
 
-          <motion.div
-            animate={
-              isWiggling && !isOpen && !shouldReduceMotion
-                ? { rotate: [0, -15, 15, -10, 10, 0] }
-                : { rotate: 0 }
-            }
-            transition={{ duration: 0.6 }}
-            className="relative grid h-7 w-7 place-items-center rounded-full bg-ember text-white shadow-xs"
-          >
+          <div className="relative grid h-7 w-7 place-items-center rounded-full bg-ember text-white shadow-xs shrink-0">
             <MessageSquare className="h-4 w-4" />
-            <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-500" />
-          </motion.div>
+            <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full border-2 border-panel bg-emerald-500 animate-pulse" />
+          </div>
 
-          <div className="hidden sm:flex flex-col text-left leading-none">
+          <div className="hidden sm:flex flex-col text-left leading-tight">
             <span className="font-display text-ink text-xs font-bold tracking-tight">
               {t('Support Desk', 'የደንበኞች ድጋፍ')}
             </span>
-            <span className="text-[0.62rem] text-mute font-medium mt-0.5 flex items-center gap-1">
+            <span className="text-[0.62rem] text-mute font-medium flex items-center gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
               {t('Online', 'ኦንላይን')}
             </span>
