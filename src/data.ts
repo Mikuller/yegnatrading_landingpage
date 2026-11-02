@@ -346,6 +346,12 @@ export const TEAM = [
     photo: '/images/team-zelalem.jpg?v=2',
   },
   {
+    name: 'Fikadu Kassahun',
+    role: 'Chief Sales and Marketing Officer',
+    amRole: 'ዋና የሽያጭና ማርኬቲንግ ኃላፊ',
+    photo: '/images/team-fikadu.jpg',
+  },
+  {
     name: 'Getahun Assefa',
     role: 'Supply Chain Director',
     amRole: 'የአቅርቦት ሰንሰለት ዳይሬክተር',

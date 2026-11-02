@@ -29,6 +29,7 @@ import {
   Calendar,
   Award,
   Maximize2,
+  TrendingUp,
 } from 'lucide-react';
 import { CSR_PHOTOS, CONTACT, WORKFORCE_EVENT } from '../data';
 import { EASE, Reveal, Counter } from '../ui';
@@ -53,6 +54,7 @@ export interface TeamLeader {
   amQuote: string;
   pillars: { en: string; am: string }[];
   deskPhone: string;
+  objectPosition?: string;
 }
 
 const EXTENDED_TEAM: TeamLeader[] = [
@@ -119,6 +121,38 @@ const EXTENDED_TEAM: TeamLeader[] = [
       },
     ],
     deskPhone: CONTACT.phoneClean,
+  },
+  {
+    id: 'fikadu',
+    name: 'Fikadu Kassahun',
+    amName: 'ፍቃዱ ካሳሁን',
+    role: 'Chief Sales and Marketing Officer',
+    amRole: 'ዋና የሽያጭና ማርኬቲንግ ኃላፊ (CSMO)',
+    dept: 'Sales, Marketing & Commercial Growth',
+    amDept: 'የሽያጭ፣ ማርኬቲንግና ንግድ ልማት',
+    category: 'executive',
+    photo: '/images/team-fikadu.jpg',
+    icon: TrendingUp,
+    color: '#0284c7',
+    quote:
+      'Sustainable construction in Ethiopia thrives on genuine partnerships. We connect developers and contractors with certified steel at competitive factory pricing and dependable site delivery.',
+    amQuote:
+      'በኢትዮጵያ አስተማማኝ ግንባታ የሚረጋገጠው በታማኝ አጋርነት ነው። ለኮንትራክተሮችና ገንቢዎች ጥራት ያለው ሬባር በፋብሪካ ቀጥታ ተወዳዳሪ ዋጋ እና በታማኝ አገልግሎት እናቀርባለን።',
+    pillars: [
+      {
+        en: 'Strategic commercial partnerships & large-scale contractor supply agreements',
+        am: 'ለታላላቅ የኮንስትራክሽንና ሪል እስቴት ፕሮጀክቶች ስትራቴጂካዊ የሽያጭ ስምምነቶችን ማመቻቸት',
+      },
+      {
+        en: 'Transparent factory-direct rebar pricing, flexible billing, and instant certified invoicing',
+        am: 'ግልጽ የሆነ የፋብሪካ ቀጥታ ተወዳዳሪ ዋጋ፣ የተመቻቸ የክፍያ ሥርዓትና ሕጋዊ ደረሰኝ ማረጋገጥ',
+      },
+      {
+        en: 'Client-focused distribution coordination linking site engineers directly with central stock',
+        am: 'መሃንዲሶችንና የግንባታ ባለቤቶችን ከዋናው መጋዘን ክምችት ጋር በቀጥታ የሚያገናኝ ቀልጣፋ አገልግሎት',
+      },
+    ],
+    deskPhone: CONTACT.phones[0]?.tel || CONTACT.phoneClean,
   },
   {
     id: 'getahun',
@@ -622,7 +656,7 @@ function InteractiveTeamCard({ leader, index, onSelect }: TiltCardProps) {
             decoding="async"
             width={260}
             height={240}
-            className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-106"
+            className={`h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-106 ${leader.objectPosition || "object-top"}`}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src =
                 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80';
@@ -790,7 +824,7 @@ function ExecutiveDossierModal({ leader, onClose, onNext, onPrev }: DossierModal
                 <img
                   src={leader.photo}
                   alt={leader.name}
-                  className="h-full w-full object-cover object-top"
+                  className={`h-full w-full object-cover ${leader.objectPosition || "object-top"}`}
                 />
                 <div className="absolute bottom-2 right-2 rounded-lg bg-panel/90 p-2 shadow-md backdrop-blur-md">
                   <LeaderIcon className="h-5 w-5 text-ember" />
@@ -1059,15 +1093,52 @@ export default function Team() {
         </div>
 
         {/* Clean, Digestible 3D Tilt Cards for Executive & Operational Leaders */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {EXTENDED_TEAM.map((m, i) => (
-            <InteractiveTeamCard
-              key={m.id}
-              leader={m}
-              index={i}
-              onSelect={(lead) => setSelectedLeader(lead)}
-            />
-          ))}
+        <div className="mt-12 space-y-12">
+          {/* Executive Leadership Tier (3 Leaders) */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-ember">
+                {t('Executive Officers & Direction', 'ከፍተኛ የሥራ አመራር ቦርድ')}
+              </span>
+              <span className="h-px flex-1 bg-line" />
+              <span className="font-mono text-[0.68rem] text-mute uppercase tracking-wider hidden sm:inline">
+                {t('C-Suite Board', 'ዋና ሥራ አስፈፃሚዎች')}
+              </span>
+            </div>
+            <div className="grid gap-5 grid-cols-1 md:grid-cols-3">
+              {EXTENDED_TEAM.filter((m) => m.category === 'executive').map((m, i) => (
+                <InteractiveTeamCard
+                  key={m.id}
+                  leader={m}
+                  index={i}
+                  onSelect={(lead) => setSelectedLeader(lead)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Operational & Departmental Leadership Tier (4 Leaders) */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-mute">
+                {t('Operational & Functional Directorate', 'የክፍል ዳይሬክተሮችና ሥራ አስኪያጆች')}
+              </span>
+              <span className="h-px flex-1 bg-line" />
+              <span className="font-mono text-[0.68rem] text-mute uppercase tracking-wider hidden sm:inline">
+                {t('Operations · Finance · HR · Technology', 'ኦፐሬሽን · ፋይናንስ · የሰው ኃይል · ቴክኖሎጂ')}
+              </span>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {EXTENDED_TEAM.filter((m) => m.category !== 'executive').map((m, i) => (
+                <InteractiveTeamCard
+                  key={m.id}
+                  leader={m}
+                  index={i + 3}
+                  onSelect={(lead) => setSelectedLeader(lead)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Workforce Culture: Workers' Day Grand Overnight Program */}

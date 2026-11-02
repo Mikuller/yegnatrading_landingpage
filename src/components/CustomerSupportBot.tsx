@@ -75,6 +75,7 @@ VERIFIED COMPANY INFORMATION:
 2. REAL EXECUTIVE LEADERSHIP & KEY PERSONNEL:
 - Chief Executive Officer (CEO): Tilahun Tamirat (ጥላሁን ታሚራት)
 - General Manager & Founder: Ato Zelalem Alene (አቶ ዘላለም አለነ)
+- Chief Sales and Marketing Officer (CSMO): Fikadu Kassahun (ፍቃዱ ካሳሁን)
 - Operation Director / Supply Chain Director: Getahun Assefa (ጌታሁን አሰፋ)
 - HR Manager: Hanna Girma (ሃና ግርማ)
 - Finance Director / Manager: Hiwot Tilahun (ህይወት ጥላሁን)
@@ -568,6 +569,11 @@ export default function CustomerSupportBot() {
       q.includes('ceo') ||
       q.includes('zelalem') ||
       q.includes('tilahun') ||
+      q.includes('fikadu') ||
+      q.includes('ፍቃዱ') ||
+      q.includes('sales director') ||
+      q.includes('marketing director') ||
+      q.includes('csmo') ||
       q.includes('getahun') ||
       q.includes('hanna') ||
       q.includes('hiwot') ||
@@ -582,8 +588,8 @@ export default function CustomerSupportBot() {
     ) {
       return {
         text: preferAmharic
-          ? 'የኛ ትሬዲንግ ኃ.የተ.የግ.ማ በዋና ሥራ አስፈፃሚ (CEO) ጥላሁን ታሚራት እና በዋና ሥራ አስኪያጅና መሥራች አቶ ዘላለም አለነ ይመራል። የአመራር ቡድኑ አባላት፡ ጌታሁን አሰፋ (ኦፐሬሽን ዳይሬክተር)፣ ሃና ግርማ (የሰው ኃይል ሥራ አስኪያጅ)፣ ህይወት ጥላሁን (የፋይናንስ ዳይሬክተር) እና ሙሉጌታ አወቀ (የመረጃና ኢአርፒ ስርዓት ዳይሬክተር) ናቸው።'
-          : 'Yegna Trading PLC is led by Chief Executive Officer (CEO) Tilahun Tamirat and General Manager & Founder Ato Zelalem Alene, supported by our directors: Getahun Assefa (Operation Director), Hanna Girma (HR Manager), Hiwot Tilahun (Finance Director), and Mulugeta Awoke (IT & ERP Director).',
+          ? 'የኛ ትሬዲንግ ኃ.የተ.የግ.ማ በዋና ሥራ አስፈፃሚ (CEO) ጥላሁን ታሚራት፣ በዋና ሥራ አስኪያጅና መሥራች አቶ ዘላለም አለነ እና በዋና የሽያጭና ማርኬቲንግ ኃላፊ (CSMO) ፍቃዱ ካሳሁን ይመራል። የአመራር ቡድኑ አባላት፡ ጌታሁን አሰፋ (ኦፐሬሽን ዳይሬክተር)፣ ሃና ግርማ (የሰው ኃይል ሥራ አስኪያጅ)፣ ህይወት ጥላሁን (የፋይናንስ ዳይሬክተር) እና ሙሉጌታ አወቀ (የመረጃና ኢአርፒ ስርዓት ዳይሬክተር) ናቸው።'
+          : 'Yegna Trading PLC is led by Chief Executive Officer (CEO) Tilahun Tamirat, General Manager & Founder Ato Zelalem Alene, and Chief Sales and Marketing Officer (CSMO) Fikadu Kassahun, supported by our directors: Getahun Assefa (Operation Director), Hanna Girma (HR Manager), Hiwot Tilahun (Finance Director), and Mulugeta Awoke (IT & ERP Director).',
         actions: [
           {
             label: preferAmharic ? '👥 ሙሉ የአመራር ቡድን' : '👥 View Full Team',
