@@ -61,7 +61,7 @@ const EXTENDED_TEAM: TeamLeader[] = [
   {
     id: 'tilahun',
     name: 'Tilahun Tamirat',
-    amName: 'ጥላሁን ታሚራት',
+    amName: 'ጥላሁን ታምራት',
     role: 'Chief Executive Officer (CEO)',
     amRole: 'ዋና ሥራ አስፈፃሚ (CEO)',
     dept: 'Executive Direction & Strategy',
