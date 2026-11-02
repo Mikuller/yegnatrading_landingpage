@@ -457,26 +457,28 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
   return (
     <div className="relative mx-auto flex w-full flex-col items-center select-none min-w-0 max-w-full">
       {/* Top Controls Bar: Certified Badge + View Modes + Audio Toggle */}
-      <div className="mb-2.5 flex w-full items-center justify-between gap-1 sm:gap-2 px-0.5 z-30 min-w-0">
-        <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 flex-1 overflow-x-auto scrollbar-none">
-          {/* Certified Pill */}
-          <div className="shrink-0 relative inline-flex items-center gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2.5 py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
-            <ShieldCheck className="h-3.5 w-3.5 text-ember shrink-0" />
-            <span className="text-[0.6rem] sm:text-[0.66rem] font-bold tracking-wider uppercase whitespace-nowrap">
-              {t('Certified Grade 75', 'የተረጋገጠ Grade 75')}
-            </span>
-          </div>
+      <div className="mb-2.5 flex w-full items-center justify-between gap-1.5 sm:gap-2 px-0.5 z-30 min-w-0">
+        {/* Certified Pill */}
+        <div className="shrink-0 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-ember/25 bg-ember/10 px-2 sm:px-2.5 py-1 text-ember shadow-xs backdrop-blur-sm cursor-default">
+          <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-ember shrink-0" />
+          <span className="text-[0.58rem] sm:text-[0.64rem] font-bold tracking-wider uppercase whitespace-nowrap">
+            <span className="hidden md:inline">{t('Certified ', 'የተረጋገጠ ')}</span>
+            <span>{t('Grade 75', 'Grade 75')}</span>
+          </span>
+        </div>
 
+        {/* Mode Selector Pill + Audio Toggle */}
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
           {/* Mode Selector Pill */}
           <div
             data-interactive="true"
-            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.56rem] sm:text-[0.65rem] shadow-xs backdrop-blur-md shrink-0 relative min-w-0"
+            className="flex items-center rounded-full border border-line/70 bg-panel2/90 p-0.5 text-[0.56rem] sm:text-[0.64rem] shadow-xs backdrop-blur-md shrink-0 relative min-w-0"
           >
             {(
               [
                 { id: 'bundle', shortLabel: t('Bundle', 'ስቶክ'), fullLabel: t('Bundle Stack', 'የተጣመረ ስቶክ') },
                 { id: 'scale', shortLabel: t('Lineup', 'ንጽጽር'), fullLabel: t('Scale Lineup', 'የመጠኖች ንጽጽር') },
-                { id: 'flex', shortLabel: t('Flex', 'ፈተና'), fullLabel: t('Tensile Flex Test', 'የጥንካሬ ፈተና') },
+                { id: 'flex', shortLabel: t('Flex Test', 'የጥንካሬ ፈተና'), fullLabel: t('Flex Test', 'የጥንካሬ ፈተና') },
               ] as const
             ).map((tab) => {
               const isActive = viewMode === tab.id;
@@ -489,7 +491,7 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                     playAcousticFeedback('clink', soundEnabled);
                   }}
                   whileTap={{ scale: 0.94 }}
-                  className={`relative cursor-pointer rounded-full px-1.5 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-colors z-10 ${
+                  className={`relative cursor-pointer rounded-full px-2 sm:px-2.5 py-0.5 font-bold whitespace-nowrap transition-colors z-10 ${
                     isActive ? 'text-white' : 'text-mute hover:text-ink'
                   }`}
                 >
@@ -500,32 +502,32 @@ export default function InteractiveRebarBundle({ onQuote }: InteractiveRebarBund
                       transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                     />
                   )}
-                  <span className="inline sm:hidden">{tab.shortLabel}</span>
-                  <span className="hidden sm:inline">{tab.fullLabel}</span>
+                  <span className="inline lg:hidden">{tab.shortLabel}</span>
+                  <span className="hidden lg:inline">{tab.fullLabel}</span>
                 </motion.button>
               );
             })}
           </div>
-        </div>
 
-        {/* Audio Toggle */}
-        <motion.button
-          type="button"
-          data-interactive="true"
-          onClick={() => setSoundEnabled((prev) => !prev)}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.88 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="shrink-0 cursor-pointer inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border border-line/60 bg-panel2/80 text-mute hover:text-ink hover:border-ember/40 transition-colors"
-          title={soundEnabled ? t('Mute audio', 'ድምጽ አጥፋ') : t('Enable audio', 'ድምጽ ክፈት')}
-          aria-label="Toggle acoustic feedback"
-        >
-          {soundEnabled ? (
-            <Volume2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-ember" />
-          ) : (
-            <VolumeX className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          )}
-        </motion.button>
+          {/* Audio Toggle */}
+          <motion.button
+            type="button"
+            data-interactive="true"
+            onClick={() => setSoundEnabled((prev) => !prev)}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.88 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            className="shrink-0 cursor-pointer inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border border-line/60 bg-panel2/80 text-mute hover:text-ink hover:border-ember/40 transition-colors"
+            title={soundEnabled ? t('Mute audio', 'ድምጽ አጥፋ') : t('Enable audio', 'ድምጽ ክፈት')}
+            aria-label="Toggle acoustic feedback"
+          >
+            {soundEnabled ? (
+              <Volume2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-ember" />
+            ) : (
+              <VolumeX className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            )}
+          </motion.button>
+        </div>
       </div>
 
       {/* Diameter Selector Grid: Strictly fits width without any horizontal scrolling */}
